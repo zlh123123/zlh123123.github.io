@@ -73,7 +73,7 @@
         }
       },
       donate: {
-        enable: true,
+        enable: false,
         alipay: 'https://pic.izhaoo.com/alipay.jpg',
         wechat: 'https://pic.izhaoo.com/wechat.jpg'
       },
@@ -103,7 +103,7 @@
         },
       },
       qrcode: {
-        enable: true,
+        enable: false,
         type: 'url',
         image: 'https://pic.izhaoo.com/weapp-code.jpg',
       },
@@ -122,7 +122,7 @@
       },
       search: {
         enable: false,
-        path: ''
+        path: '/search.xml'
       }
     }
   </script>
@@ -145,8 +145,6 @@
         <i class="iconfont iconhome j-navbar-back-home"></i>
       
       
-        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
-      
       
         <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
       
@@ -156,8 +154,6 @@
     <div class="right">
       <i class="iconfont iconmenu j-navbar-menu"></i>
     </div>
-    
-      <div id="qrcode-navbar"></div>
     
   </nav>
 
@@ -191,15 +187,21 @@
   <section class="archive">
     <div class="archive-container">
       <div class="archive-post">
-        <h3 class="archive-total">归档: 3 篇</h3>
+        <h3 class="archive-total">归档: 4 篇</h3>
         
         
           
             <h3 class="archive-year">2024 年</h3>
           
           <div class="archive-item">
-            <a class="archive-date" href="/2024/01/04/%E4%BA%94%E5%8D%81%E9%9F%B3%E5%9B%BE/">一月 04</a>
-            <a class="archive-title" href="/2024/01/04/%E4%BA%94%E5%8D%81%E9%9F%B3%E5%9B%BE/"></a>
+            <a class="archive-date" href="/2024/01/11/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">一月 11</a>
+            <a class="archive-title" href="/2024/01/11/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Rust学习笔记</a>
+          </div>
+        
+          
+          <div class="archive-item">
+            <a class="archive-date" href="/2024/01/06/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/">一月 06</a>
+            <a class="archive-title" href="/2024/01/06/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/">大学物理</a>
           </div>
         
           
@@ -222,13 +224,6 @@
 
 <footer class="footer">
   <div class="footer-social"><a 
-        href="tencent://message/?Menu=yes&uin=894519210 "
-        target="_blank"
-        class="footer-social-item"
-        onMouseOver="this.style.color= '#12B7F5'" 
-        onMouseOut="this.style.color='#33333D'">
-          <i class="iconfont  iconQQ "></i>
-      </a><a 
         href="javascript:; "
         target="_blank"
         class="footer-social-item"
@@ -236,21 +231,14 @@
         onMouseOut="this.style.color='#33333D'">
           <i class="iconfont  iconwechat-fill "></i>
       </a><a 
-        href="https://www.instagram.com/izhaoo/ "
-        target="_blank"
-        class="footer-social-item"
-        onMouseOver="this.style.color= '#DA2E76'" 
-        onMouseOut="this.style.color='#33333D'">
-          <i class="iconfont  iconinstagram "></i>
-      </a><a 
-        href="https://github.com/zhaoo "
+        href="https://github.com/zlh123123 "
         target="_blank"
         class="footer-social-item"
         onMouseOver="this.style.color= '#9f7be1'" 
         onMouseOut="this.style.color='#33333D'">
           <i class="iconfont  icongithub-fill "></i>
       </a><a 
-        href="mailto:izhaoo@163.com "
+        href="mailto:zhanglinghao@sjtu.edu.cn "
         target="_blank"
         class="footer-social-item"
         onMouseOver="this.style.color=#FF3B00" 
@@ -299,10 +287,6 @@
 
 
 
-
-
-  
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 
 
 

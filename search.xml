@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Rust学习笔记</title>
+    <url>/2024/01/11/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><p>下面是一个“猜数游戏”的基本程序。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::io;<br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;猜数游戏&quot;</span>);<br><br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">guess</span> = <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">new</span>();<br><br>    io::<span class="hljs-title function_ invoke__">stdin</span>().<span class="hljs-title function_ invoke__">read_line</span>(&amp;<span class="hljs-keyword">mut</span> guess).<span class="hljs-title function_ invoke__">expect</span>(<span class="hljs-string">&quot;无法读取&quot;</span>);<br><br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;猜的数是： &#123;&#125;&quot;</span>, guess);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>语言</category>
+      </categories>
+      <tags>
+        <tag>Rust</tag>
+        <tag>代码学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2024/01/03/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>test</title>
+    <url>/2024/01/03/test/</url>
+    <content><![CDATA[<h1 id="计算机组成"><a href="#计算机组成" class="headerlink" title="计算机组成"></a>计算机组成</h1><p><a href=".%5CReview001.ipynb">详细内容</a></p>
+<h2 id="结构与发展"><a href="#结构与发展" class="headerlink" title="结构与发展"></a>结构与发展</h2><p>IAS指令集：P10、11</p>
+<p>指令执行速度和性能度量：P43</p>
+<p>![几个名词](.&#x2F;屏幕截图 2023-12-30 141057.jpg)</p>
+<h2 id="顶层互联"><a href="#顶层互联" class="headerlink" title="顶层互联"></a>顶层互联</h2><p>冯诺依曼体系：P60</p>
+<p>中断：P66</p>
+<p>PCI&#x2F;PCIe、南桥北桥：P78</p>
+<h2 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h2><p>Cache结构：P93</p>
+<p>设计要素：</p>
+<p>写操作：P106</p>
+<p>映射函数：直接、组相联、全相联P96</p>
+<p>替换算法：P105</p>
+<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><p>内存结构：P125</p>
+<p>模块组装：P127</p>
+<p>纠错码：P128</p>
+<p>构造全新纠错方法：P130</p>
+<h2 id="外部存储"><a href="#外部存储" class="headerlink" title="外部存储"></a>外部存储</h2><p>rpm：转每分，传输时间里的r代入的是 转&#x2F;秒</p>
+<p>![tupian](.&#x2F;屏幕截图 2023-12-30 153507.jpg)</p>
+<h2 id="I-O"><a href="#I-O" class="headerlink" title="I&#x2F;O"></a>I&#x2F;O</h2><p>可编程、中断、DMA：P171</p>
+<p>可编程IO：两种寻址模式：P172</p>
+<p>中断驱动：如何确定谁中断了？CPU先处理哪个中断？P175</p>
+<p>多中断信号线、软件轮询、菊花链（硬件轮询）、总线仲裁</p>
+<p>DMA：接管CPU，处理大量数据P181、３种布局方式</p>
+<h1 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h1><p><a href=".%5CReview002.ipynb">详细内容</a></p>
+<h2 id="计算机算术"><a href="#计算机算术" class="headerlink" title="计算机算术"></a>计算机算术</h2><h3 id="整数："><a href="#整数：" class="headerlink" title="整数："></a>整数：</h3><p>符号扩展：P242</p>
+<p>取反操作：P244 特殊情况</p>
+<p>加法溢出规则：P245</p>
+<p>无符号二进制乘法：P247</p>
+<p>有符号二进制乘法：Booth算法P250</p>
+<h3 id="浮点数："><a href="#浮点数：" class="headerlink" title="浮点数："></a>浮点数：</h3><p>表示及规格化：P254、255</p>
+<p>IEEE浮点数表示：P259</p>
+<p>浮点数加减法：保护位P261、263</p>
+<h2 id="指令集"><a href="#指令集" class="headerlink" title="指令集"></a>指令集</h2><p>操作码：类型（p309)    逻辑移位和算术移位</p>
+<p>操作数：位置P301、数目P303</p>
+<p>大数端、小数端：P317</p>
+<p>寻址方式：P332</p>
+<h2 id="CPU结构与功能"><a href="#CPU结构与功能" class="headerlink" title="CPU结构与功能"></a>CPU结构与功能</h2><p>处理器功能：P355</p>
+<p>寄存器分类：P356</p>
+<p>指令周期：P361</p>
+<p>流水线策略：P364   	条件分支影响？</p>
+<p>流水线性能计算公式：P367</p>
+<p>流水线三冲突：P368</p>
+<p>条件分支处理：</p>
+<p>1.非硬件方法：P370</p>
+<p>2.分支预测：P371</p>
+<h2 id="精简指令集计算机"><a href="#精简指令集计算机" class="headerlink" title="精简指令集计算机"></a>精简指令集计算机</h2><p>应该优化哪些方面？程序最耗时的地方在？P390</p>
+<p>硬件优化：更多的寄存器编组P392</p>
+<p>软件优化：编译器		图着色法P396</p>
+<p>精简指令集特点：P398</p>
+<p>RISC流水线：NOOP指令、条件分支下的特殊处理方法P402</p>
+<h2 id="指令并行与超标量"><a href="#指令并行与超标量" class="headerlink" title="指令并行与超标量"></a>指令并行与超标量</h2><p>面临的限制：（前三个简单的）P419</p>
+<p>按序、乱序  发射、完成：P421</p>
+<p>写后写（输出）相关、读后写（反）相关</p>
+<p>写后读是真数据相关。</p>
+<p>指令窗口缓存解决写后写（输出）相关问题。</p>
+<p>寄存器重命名：P424 解决读后写</p>
+<h2 id="并行处理"><a href="#并行处理" class="headerlink" title="并行处理"></a>并行处理</h2><p>分类：P447</p>
+<p>对称多处理器SMP：P448</p>
+<p>非均匀内存访问NUMA：P464</p>
+<p>集群：P459</p>
+<p>解决cache一致性：软件、硬件、MESI协议P452</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>大学物理</title>
+    <url>/2024/01/06/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/</url>
+    <content><![CDATA[<h1 id="量子光学"><a href="#量子光学" class="headerlink" title="量子光学"></a>量子光学</h1><h2 id="热辐射-黑体辐射"><a href="#热辐射-黑体辐射" class="headerlink" title="热辐射 黑体辐射"></a>热辐射 黑体辐射</h2><p>热辐射：</p>
+]]></content>
+  </entry>
+</search>

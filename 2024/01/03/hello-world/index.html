@@ -73,7 +73,7 @@
         }
       },
       donate: {
-        enable: true,
+        enable: false,
         alipay: 'https://pic.izhaoo.com/alipay.jpg',
         wechat: 'https://pic.izhaoo.com/wechat.jpg'
       },
@@ -103,7 +103,7 @@
         },
       },
       qrcode: {
-        enable: true,
+        enable: false,
         type: 'url',
         image: 'https://pic.izhaoo.com/weapp-code.jpg',
       },
@@ -122,7 +122,7 @@
       },
       search: {
         enable: false,
-        path: ''
+        path: '/search.xml'
       }
     }
   </script>
@@ -145,8 +145,6 @@
         <i class="iconfont iconhome j-navbar-back-home"></i>
       
       
-        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
-      
       
         <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
       
@@ -156,8 +154,6 @@
     <div class="right">
       <i class="iconfont iconmenu j-navbar-menu"></i>
     </div>
-    
-      <div id="qrcode-navbar"></div>
     
   </nav>
 
@@ -233,16 +229,6 @@
 </ul>
         
         
-          <section class="donate">
-  <div id="qrcode-donate">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
-  </div>
-  <div class="icon">
-    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
-    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
-  </div>
-</section>
-        
         
         
   <nav class="nav">
@@ -272,13 +258,6 @@
 
 <footer class="footer">
   <div class="footer-social"><a 
-        href="tencent://message/?Menu=yes&uin=894519210 "
-        target="_blank"
-        class="footer-social-item"
-        onMouseOver="this.style.color= '#12B7F5'" 
-        onMouseOut="this.style.color='#33333D'">
-          <i class="iconfont  iconQQ "></i>
-      </a><a 
         href="javascript:; "
         target="_blank"
         class="footer-social-item"
@@ -286,21 +265,14 @@
         onMouseOut="this.style.color='#33333D'">
           <i class="iconfont  iconwechat-fill "></i>
       </a><a 
-        href="https://www.instagram.com/izhaoo/ "
-        target="_blank"
-        class="footer-social-item"
-        onMouseOver="this.style.color= '#DA2E76'" 
-        onMouseOut="this.style.color='#33333D'">
-          <i class="iconfont  iconinstagram "></i>
-      </a><a 
-        href="https://github.com/zhaoo "
+        href="https://github.com/zlh123123 "
         target="_blank"
         class="footer-social-item"
         onMouseOver="this.style.color= '#9f7be1'" 
         onMouseOut="this.style.color='#33333D'">
           <i class="iconfont  icongithub-fill "></i>
       </a><a 
-        href="mailto:izhaoo@163.com "
+        href="mailto:zhanglinghao@sjtu.edu.cn "
         target="_blank"
         class="footer-social-item"
         onMouseOver="this.style.color=#FF3B00" 
@@ -349,10 +321,6 @@
 
 
 
-
-
-  
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 
 
 
