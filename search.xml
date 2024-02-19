@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>动手学深度学习_Chapter2</title>
+    <url>/2024/02/19/%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-Chapter2/</url>
+    <content><![CDATA[<h2 id="2-1"><a href="#2-1" class="headerlink" title="2.1"></a>2.1</h2><p><a href="https://zhuanlan.zhihu.com/p/86997775">torch广播机制</a></p>
+<p><a href="https://github.com/zlh123123/DeepLearning/blob/main/Chapter2_1.ipynb">代码</a></p>
+]]></content>
+      <tags>
+        <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Rust学习笔记</title>
     <url>/2024/01/11/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><p>下面是一个“猜数游戏”的基本程序。</p>
