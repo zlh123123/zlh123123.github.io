@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>排序算法 | 好急好急的Hexo博客</title><meta name="author" content="Linghao Zhang"><meta name="copyright" content="Linghao Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="半小时速通十大排序算法，核心原理 + 可视化_哔哩哔哩_bilibili 选择排序：相当于每次都找最小的插到前面  具体实现是：在数组中设定一个sortedIndex，序号小于sortedIndex代表已经排好序的，序号大于等于sortedIndex的就是没排序的。然后每次就是在没排序的里面找最小的，把这个最小的和arr[sortedIndex]交换值即可，然后sortedIndex++ 这个算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序算法">
+<meta property="og:url" content="https://zlh123123.github.io/2025/07/09/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="好急好急的Hexo博客">
+<meta property="og:description" content="半小时速通十大排序算法，核心原理 + 可视化_哔哩哔哩_bilibili 选择排序：相当于每次都找最小的插到前面  具体实现是：在数组中设定一个sortedIndex，序号小于sortedIndex代表已经排好序的，序号大于等于sortedIndex的就是没排序的。然后每次就是在没排序的里面找最小的，把这个最小的和arr[sortedIndex]交换值即可，然后sortedIndex++ 这个算法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%92%96%E5%95%A1%E5%B1%8B-%E5%A4%8F%E6%97%A5-%E6%8F%92%E7%94%BB.png">
+<meta property="article:published_time" content="2025-07-09T15:56:04.000Z">
+<meta property="article:modified_time" content="2025-07-09T15:58:58.000Z">
+<meta property="article:author" content="Linghao Zhang">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%92%96%E5%95%A1%E5%B1%8B-%E5%A4%8F%E6%97%A5-%E6%8F%92%E7%94%BB.png"><link rel="shortcut icon" href="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png"><link rel="canonical" href="https://zlh123123.github.io/2025/07/09/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '排序算法',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/welcome-image.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】咖啡屋-夏日-插画.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" alt="Logo"><span class="site-name">好急好急的Hexo博客</span></a><a class="nav-page-title" href="/"><span class="site-name">排序算法</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">排序算法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-07-09T15:56:04.000Z" title="发表于 2025-07-09 23:56:04">2025-07-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-07-09T15:58:58.000Z" title="更新于 2025-07-09 23:58:58">2025-07-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%BA%E7%A1%80%E8%AF%BE/%E5%A4%8F%E4%BB%A4%E8%90%A5/">夏令营</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1UVwUeLEzv/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">半小时速通十大排序算法，核心原理 + 可视化_哔哩哔哩_bilibili</a></p>
+<p><strong>选择排序</strong>：相当于每次都找最小的插到前面</p>
+<blockquote>
+<p>具体实现是：在数组中设定一个sortedIndex，序号小于sortedIndex代表已经排好序的，序号大于等于sortedIndex的就是没排序的。然后每次就是在没排序的里面找最小的，把这个最小的和arr[sortedIndex]交换值即可，然后sortedIndex++</p>
+<p>这个算法的复杂度是On^2，并且不稳定，会改变相同元素的相对位置</p>
+</blockquote>
+<p><strong>冒泡排序</strong>：相比选择排序，冒泡是把序号大于等于sortedIndex的进行前后项交换</p>
+<blockquote>
+<p>具体实现是：从后往前遍历，如果后项小于前项，交换两者，否则不变。如此一来，arr[sortedIndex]就是序号大于等于sortedIndex里最小的那个了</p>
+<p>复杂度也是On^2，但是是稳定的</p>
+</blockquote>
+<hr>
+<p><strong>插入排序</strong>：从第二个元素开始，把这个元素插入到已排完序部分的适当位置</p>
+<blockquote>
+<p>就是一开始第一个元素认为是有序的，然后从第二个开始，再去插入到已经排好序的数组中去。在插入过程中，是从sortedIndex（目前arr[sortedIndex]就是那个插入的元素）开始往前遍历，若后项小于前项，则交换。</p>
+<p>复杂度On^2，不过若数组有序度比较高，那这个插入操作就不需要了，相当于复杂度为On，这个算法也是稳定的</p>
+</blockquote>
+<p><strong>希尔排序</strong>：思路是先提升整个数组的有序度，再用插入排序</p>
+<blockquote>
+<p>相当于按一定分组进行插入排序，这里是设置了一个h变量（最开始是比较大的），然后就是每隔h的元素间进行插入排序；随后逐渐减小h至1（当h=1时就是普通插入排序）</p>
+<p>复杂度反正比On^2强，不好具体计算，不过是不稳定的</p>
+</blockquote>
+<hr>
+<p><strong>快速排序</strong>：选定随机元素后，对着该元素两边的数组进行递归排序</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1y4421Z7hK/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">数据结构合集 - 快速排序(算法过程, 效率分析, 稳定性分析)_哔哩哔哩_bilibili</a></p>
+<blockquote>
+<p>快速排序首先要选择一个元素作为枢轴（pivot），这个的选取是纯随机的，然后需要调整数组使得pivot左边的值都小于等于arr[pivot]，pivot右边的值都大于等于arr[pivot]，这个的调整方法是：</p>
+<p>例如把数组首位设置为pivot，那么定义变量pivot=arr[0]，然后定义两个指针left和right，初始位置即数组两段，left从左往右扫，right从右往左扫；left负责把比pivot大的搬到右边，right负责把比pivot小的搬到左边。在这里“把数组首位设置为pivot”的情况下，因为只有arr[0]是空的，所以首先由right将右边比pivot小的元素塞到左边，一直这样子下去，最后会在数组中出现一个空位，空位里塞pivot即可，在最终结果中，pivot左边的都小于等于它，右边的都大于等于它。</p>
+<p>随后就是递归过程，对pivot左边的（右边的）同样都选一个新pivot，不断做，直到这个pivot两边元素只剩1个或为空。</p>
+</blockquote>
+<p><strong>归并排序</strong>：分组执行归并操作</p>
+<blockquote>
+<p>啥是归并操作？</p>
+<p>就是如何把两个有序的数组合并为一个，其操作方式为：对两个数组都设定一个指针指向首元素，然后每次都比较两个指针指向的元素大小，谁小就把该元素存到一个临时数组中，并且指针向后移一位。如果某个数组已经全部取完，那么剩下数组中的元素就直接接到临时数组中去即可。</p>
+<p>在归并排序中，首先将每个元素都视作一个个长度为1的数组，他们都是有序的。然后每轮都对相邻的两个数组做归并</p>
+</blockquote>
+<hr>
+<p><strong>堆排序</strong>：先对原数组建小根堆，然后不断弹出最小根即可</p>
+<blockquote>
+<p>堆是这样的：首先是完全二叉树，即只有最后一行不为满，且最后一行必须从左向右排列，然后堆分为小根堆和大根堆，区别如下：</p>
+<ul>
+<li>小根堆即每个根节点都小于其所有子节点</li>
+<li>大根堆即每个根节点都大于其所有子节点</li>
+</ul>
+<p>然后堆主要有两个操作（以小根堆为例）：</p>
+<ul>
+<li>上浮：子节点很小，需要将子节点与父节点交换让子节点上去</li>
+<li>下沉：根节点很大，需要把根节点放下去</li>
+</ul>
+<p>在堆排序中，先对数组建小根堆，然后每次都输出最小的根节点，然后把最右下角的子节点补上最小根节点的空缺，重新再做下沉操作构建堆。就这样一直输出最小根即排序</p>
+</blockquote>
+<hr>
+<p><strong>计数排序</strong>：这个很好理解，先统计原数组中每个元素的出现次数，然后把每个元素从小到大根据其出现次数放入新数组即可</p>
+<hr>
+<p><strong>桶排序</strong>：这个使用的是分治的思想。根据数组中值的分布，创建多个桶（每个桶代表不同的取值范围），尽量确保每个桶中元素的个数差不多。然后在每个桶中进行排序（随便用什么排序算法），最后把每个桶的结果取出来即可组合成一个已经排完序的数组。</p>
+<hr>
+<p><strong>基数排序</strong>：这个排序不是基于比较去实现的，是一种逐位排序的方法。</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1KrzrYeEDw?spm_id_from=333.788.videopod.sections&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">数据结构合集 - 基数排序(算法过程, 效率分析, 稳定性分析)_哔哩哔哩_bilibili</a></p>
+<blockquote>
+<p>所谓“基数”，就是代表进制。</p>
+<p>基数排序的流程是这样的：</p>
+<p>首先先将数组中所有元素的位数统一（通过补前导0），在这里我们只考虑十进制数这种可能性，我们会创建10个桶（分别代表个位为0~10）：</p>
+<p>首先排个位上的值：将数组中的元素按个位放到对应的桶中，然后再按从0到9的顺序把各数取出，形成新数组；</p>
+<p>然后排十位上的值：与上面一致，按上面新数组的顺序将各元素按十位放入对应的桶中，然后再取出</p>
+<p>就这样一直做下去，直到最高位也排完就结束了</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io">Linghao Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io/2025/07/09/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">https://zlh123123.github.io/2025/07/09/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zlh123123.github.io" target="_blank">好急好急的Hexo博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/">算法</a></div><div class="post-share"><div class="social-share" data-image="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】咖啡屋-夏日-插画.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/07/17/CS336/" title="CS336"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】Chiikawa-吉伊卡哇.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">CS336</div></div><div class="info-2"><div class="info-item-1"> 这是25年春CS336的课堂笔记和作业，课程网站为Stanford CS336 | Language Modeling from Scratch，课程视频可在哔哩哔哩上观看：斯坦福CS336：大模型从0到1。 此课程内容涵盖分词、模型架构、系统优化、数据处理和模型对齐等方面，通过从零开始构建语言模型，深入理解NLP和AI的核心技术。 我的作业备份仓库：zlh123123/CS336_spring2025: CS336的作业与课程笔记  课程内容    阶段 对应视频课次 核心技术点 Assignments     基础架构 第 1 - 4 讲 字节对齐分词 (BPE Tokenization) Transformer (Attention/MLP/Norm) 架构AdamW 优化器与混合精度训练MoE (混合专家) 架构 Assignment1   系统与算子 第 5 - 8 讲 GPU 显存层次结构与算力瓶颈 Triton 内核编程：FlashAttention-2分布式训练：数据/张量/流水线并行 Assignment2   Scaling Law 第 9, 11...</div></div></div></a><a class="pagination-related" href="/2025/06/13/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8%E5%8F%8A%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84/" title="网络空间安全及法律法规"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】乡村-晴空-田野.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">网络空间安全及法律法规</div></div><div class="info-2"><div class="info-item-1">Teruteru的学习笔记 第一章 网络空间安全概述 第一节...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】可爱小狗-小狗-护眼.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-03</div><div class="info-item-2">leetcode刷题日记</div></div><div class="info-2"><div class="info-item-1">0325 学习了哈希表的一些基础的知识，哈希表定义：d={}，就是那种键值对 哈希表主要用来判断是否存在：if a in d 以及用于计数：d[a] 有一个语法关键字：enumerate，用法是for i, num in enumerate(nums)，i是序号，num是值 计数通常用这种方法（就是对着一个list或者一个string想计数） for ch in str: d[ch]=d.get(ch,0)+1 就是get函数就是拿到ch这个键对应的值，如果没有就是0 然后这种计数有一个包能直接解决： 1234from collections import Counterprint(Counter(&quot;aabcc&quot;))# Counter(&#123;&#x27;a&#x27;: 2, &#x27;c&#x27;: 2, &#x27;b&#x27;: 1&#125;) 如果想要遍历这种字典：遍历键用for key in d.keys()或者for key in d，遍历值用for value in d.values()，同时遍历for key, value in...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Linghao Zhang</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zlh123123"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/zlh123123" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lh.zhang.work@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，这里是我的个人博客，主要用来记录一些学习笔记和生活感悟，希望能给你带来一些帮助。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/dark.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="日语语法蓝宝书总结"/></a><div class="content"><a class="title" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结">日语语法蓝宝书总结</a><time datetime="2026-06-26T09:47:36.000Z" title="发表于 2026-06-26 17:47:36">2026-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】可爱小狗-小狗-护眼.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="leetcode刷题日记"/></a><div class="content"><a class="title" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记">leetcode刷题日记</a><time datetime="2026-04-03T06:26:47.000Z" title="发表于 2026-04-03 14:26:47">2026-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云彩-夜晚-夜景.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="口令复用综述"/></a><div class="content"><a class="title" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述">口令复用综述</a><time datetime="2026-01-21T12:58:23.000Z" title="发表于 2026-01-21 20:58:23">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】兔子朱迪-彩云-朱迪.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Github Page更换新域名后如何更新配置"/></a><div class="content"><a class="title" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置">Github Page更换新域名后如何更新配置</a><time datetime="2026-01-01T04:13:51.000Z" title="发表于 2026-01-01 12:13:51">2026-01-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】卡通羊-可爱小羊.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM Post-training"/></a><div class="content"><a class="title" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training">LLM Post-training</a><time datetime="2025-11-30T14:14:52.000Z" title="发表于 2025-11-30 22:14:52">2025-11-30</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2026 By Linghao Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":200,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body></html>

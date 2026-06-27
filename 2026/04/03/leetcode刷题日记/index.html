@@ -1,0 +1,759 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>leetcode刷题日记 | 好急好急的Hexo博客</title><meta name="author" content="Linghao Zhang"><meta name="copyright" content="Linghao Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="0325 学习了哈希表的一些基础的知识，哈希表定义：d&#x3D;{}，就是那种键值对 哈希表主要用来判断是否存在：if a in d 以及用于计数：d[a] 有一个语法关键字：enumerate，用法是for i, num in enumerate(nums)，i是序号，num是值 计数通常用这种方法（就是对着一个list或者一个string想计数） for ch in str: d[ch]&#x3D;d.get(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode刷题日记">
+<meta property="og:url" content="https://zlh123123.github.io/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/index.html">
+<meta property="og:site_name" content="好急好急的Hexo博客">
+<meta property="og:description" content="0325 学习了哈希表的一些基础的知识，哈希表定义：d&#x3D;{}，就是那种键值对 哈希表主要用来判断是否存在：if a in d 以及用于计数：d[a] 有一个语法关键字：enumerate，用法是for i, num in enumerate(nums)，i是序号，num是值 计数通常用这种方法（就是对着一个list或者一个string想计数） for ch in str: d[ch]&#x3D;d.get(">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%8F%AF%E7%88%B1%E5%B0%8F%E7%8B%97-%E5%B0%8F%E7%8B%97-%E6%8A%A4%E7%9C%BC.png">
+<meta property="article:published_time" content="2026-04-03T06:26:47.000Z">
+<meta property="article:modified_time" content="2026-06-26T09:45:33.042Z">
+<meta property="article:author" content="Linghao Zhang">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%8F%AF%E7%88%B1%E5%B0%8F%E7%8B%97-%E5%B0%8F%E7%8B%97-%E6%8A%A4%E7%9C%BC.png"><link rel="shortcut icon" href="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png"><link rel="canonical" href="https://zlh123123.github.io/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'leetcode刷题日记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/welcome-image.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】可爱小狗-小狗-护眼.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" alt="Logo"><span class="site-name">好急好急的Hexo博客</span></a><a class="nav-page-title" href="/"><span class="site-name">leetcode刷题日记</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">leetcode刷题日记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-03T06:26:47.000Z" title="发表于 2026-04-03 14:26:47">2026-04-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-26T09:45:33.042Z" title="更新于 2026-06-26 17:45:33">2026-06-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>0325</h1>
+<p>学习了哈希表的一些基础的知识，哈希表定义：d={}，就是那种键值对<br>
+哈希表主要用来判断是否存在：if a in d<br>
+以及用于计数：d[a]</p>
+<p>有一个语法关键字：enumerate，用法是for i, num in enumerate(nums)，i是序号，num是值</p>
+<p>计数通常用这种方法（就是对着一个list或者一个string想计数）<br>
+for ch in str:<br>
+d[ch]=d.get(ch,0)+1<br>
+就是get函数就是拿到ch这个键对应的值，如果没有就是0</p>
+<p>然后这种计数有一个包能直接解决：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from collections import Counter</span><br><span class="line"></span><br><span class="line">print(Counter(&quot;aabcc&quot;))</span><br><span class="line"># Counter(&#123;&#x27;a&#x27;: 2, &#x27;c&#x27;: 2, &#x27;b&#x27;: 1&#125;)</span><br></pre></td></tr></table></figure>
+<p>如果想要遍历这种字典：遍历键用for key in d.keys()或者for key in d，遍历值用for value in d.values()，同时遍历for key, value in d.items()</p>
+<hr>
+<p>题1：两数之和 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/two-sum/">https://leetcode.cn/problems/two-sum/</a><br>
+这个主要就是给一个target，然后要你去list里面找俩项，加起来就是target，然后输出是唯一的，并且对顺序没有要求，最后要你返回俩项的下标list。<br>
+在哈希表这块就是“判断是否存在”，所以这里的键用list里的项，而值就是序号<br>
+就是对于在list里遍历的num，你要找target-num。然后如果找到（if target-num in d），就直接返回键值对的值就行了；没找到反正还是把num和i存d里面去。</p>
+<p>题2：Valid Anagram <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-anagram/">https://leetcode.cn/problems/valid-anagram/</a><br>
+这个题就是给你俩字符串，然后判断他们是不是由相同的字符构成的，那不就是给俩字符串都各个字符计数一下，判断这俩d一不一样呗。</p>
+<p>题3：存在重复元素 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/contains-duplicate/">https://leetcode.cn/problems/contains-duplicate/</a><br>
+这个就是给你一个数字list，如果有两个重复的数字就返回True，全都不一样返回False<br>
+一开始的想法是直接计数，然后有&gt;=2的就直接返回就行了，但是这样子要遍历两次<br>
+还有一个想法是，我搞个集合set，然后把list里的项加到set里，最后set的长度小于list就返回True</p>
+<p>题4：存在重复元素v2 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/contains-duplicate-ii/">https://leetcode.cn/problems/contains-duplicate-ii/</a><br>
+这个就是在上面那道题的基础上，要求存在俩重复数字，同时这俩重复数字的序号差要&lt;=k<br>
+想法是，num遍历nums，然后在字典里存num和序号，然后后面每个新的num，先看看字典里有没有，没有就放进去，有的话就把自己的序号和那个有的元素的序号对比，如果差&lt;=k，就返回true，否则就false</p>
+<p>题5：数组交集 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/intersection-of-two-arrays/">https://leetcode.cn/problems/intersection-of-two-arrays/</a><br>
+这题就是给了俩数组，要求交集，而且输出的元素都是唯一的。<br>
+那这就很简单了，先把俩数组转set，然后set求交。就是别忘了语法就行。</p>
+<h2 id="题6：数组交集v2-https-leetcode-cn-problems-intersection-of-two-arrays-ii-还是求交集，但是现在重复的元素也要算进去，不能简简单单set了。一个想法是，按照计数的思路先做一个“项：出现次数”的dict，然后对两个dict的键相当于已经是set了，两个set再求交，交出来的那个值对应的键就取原两个dict的键的较小的值，最后返回较小的值个数个键组成的list就行了。但是上面那个想法有点繁琐了，问了AI，应该是就是你先对着nums1计数（仓库），然后nums2里遍历每个项，遍历到每一个，如果仓库中存在且计数不为0，就拿出来进list，并计数-1；如果仓库中不存在或者计数已经是0了，那就没必要拿出来进list了。">题6：数组交集v2 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/intersection-of-two-arrays-ii/">https://leetcode.cn/problems/intersection-of-two-arrays-ii/</a><br>
+还是求交集，但是现在重复的元素也要算进去，不能简简单单set了。<br>
+一个想法是，按照计数的思路先做一个“项：出现次数”的dict，然后对两个dict的键相当于已经是set了，两个set再求交，交出来的那个值对应的键就取原两个dict的键的较小的值，最后返回较小的值个数个键组成的list就行了。<br>
+但是上面那个想法有点繁琐了，问了AI，应该是就是你先对着nums1计数（仓库），然后nums2里遍历每个项，遍历到每一个，如果仓库中存在且计数不为0，就拿出来进list，并计数-1；如果仓库中不存在或者计数已经是0了，那就没必要拿出来进list了。</h2>
+<p>list set dict的函数操作，已经忘光光了：</p>
+<h1>1. <code>list</code> 常用操作</h1>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>写法</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建列表</td>
+<td><code>lst = [1, 2, 3]</code></td>
+<td>创建一个列表</td>
+<td><code>lst = [1, 2, 3]</code></td>
+</tr>
+<tr>
+<td>添加单个元素</td>
+<td><code>lst.append(x)</code></td>
+<td>在末尾加一个元素</td>
+<td><code>lst.append(4)</code></td>
+</tr>
+<tr>
+<td>添加多个元素</td>
+<td><code>lst.extend(iterable)</code></td>
+<td>在末尾加多个元素</td>
+<td><code>lst.extend([5, 6])</code></td>
+</tr>
+<tr>
+<td>指定位置插入</td>
+<td><code>lst.insert(i, x)</code></td>
+<td>在索引 <code>i</code> 前插入</td>
+<td><code>lst.insert(1, 100)</code></td>
+</tr>
+<tr>
+<td>删除指定元素</td>
+<td><code>lst.remove(x)</code></td>
+<td>删除第一个值为 <code>x</code> 的元素</td>
+<td><code>lst.remove(2)</code></td>
+</tr>
+<tr>
+<td>删除指定位置元素</td>
+<td><code>lst.pop(i)</code></td>
+<td>删除并返回索引 <code>i</code> 的元素</td>
+<td><code>lst.pop(0)</code></td>
+</tr>
+<tr>
+<td>删除最后一个元素</td>
+<td><code>lst.pop()</code></td>
+<td>默认删除最后一个</td>
+<td><code>lst.pop()</code></td>
+</tr>
+<tr>
+<td>清空列表</td>
+<td><code>lst.clear()</code></td>
+<td>删除所有元素</td>
+<td><code>lst.clear()</code></td>
+</tr>
+<tr>
+<td>获取长度</td>
+<td><code>len(lst)</code></td>
+<td>返回元素个数</td>
+<td><code>len(lst)</code></td>
+</tr>
+<tr>
+<td>访问元素</td>
+<td><code>lst[i]</code></td>
+<td>通过索引取值</td>
+<td><code>lst[0]</code></td>
+</tr>
+<tr>
+<td>切片</td>
+<td><code>lst[a:b]</code></td>
+<td>取一段元素</td>
+<td><code>lst[1:3]</code></td>
+</tr>
+<tr>
+<td>修改元素</td>
+<td><code>lst[i] = x</code></td>
+<td>修改指定位置元素</td>
+<td><code>lst[0] = 99</code></td>
+</tr>
+<tr>
+<td>判断是否存在</td>
+<td><code>x in lst</code></td>
+<td>判断元素是否在列表中</td>
+<td><code>3 in lst</code></td>
+</tr>
+<tr>
+<td>遍历列表</td>
+<td><code>for x in lst</code></td>
+<td>逐个访问元素</td>
+<td><code>for x in lst:</code></td>
+</tr>
+<tr>
+<td>带索引遍历</td>
+<td><code>for i, x in enumerate(lst)</code></td>
+<td>同时拿索引和元素</td>
+<td><code>for i, x in enumerate(lst):</code></td>
+</tr>
+<tr>
+<td>排序</td>
+<td><code>lst.sort()</code></td>
+<td>原地排序</td>
+<td><code>lst.sort()</code></td>
+</tr>
+<tr>
+<td>倒序</td>
+<td><code>lst.reverse()</code></td>
+<td>原地反转</td>
+<td><code>lst.reverse()</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1>2. <code>set</code> 常用操作</h1>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>写法</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建集合</td>
+<td><code>s = &#123;1, 2, 3&#125;</code></td>
+<td>创建一个集合</td>
+<td><code>s = &#123;1, 2, 3&#125;</code></td>
+</tr>
+<tr>
+<td>创建空集合</td>
+<td><code>s = set()</code></td>
+<td>注意不能写 <code>&#123;&#125;</code>，那是字典</td>
+<td><code>s = set()</code></td>
+</tr>
+<tr>
+<td>添加单个元素</td>
+<td><code>s.add(x)</code></td>
+<td>添加一个元素</td>
+<td><code>s.add(4)</code></td>
+</tr>
+<tr>
+<td>添加多个元素</td>
+<td><code>s.update(iterable)</code></td>
+<td>添加多个元素</td>
+<td><code>s.update([5, 6])</code></td>
+</tr>
+<tr>
+<td>删除元素</td>
+<td><code>s.remove(x)</code></td>
+<td>删除元素，不存在会报错</td>
+<td><code>s.remove(2)</code></td>
+</tr>
+<tr>
+<td>删除元素</td>
+<td><code>s.discard(x)</code></td>
+<td>删除元素，不存在不报错</td>
+<td><code>s.discard(2)</code></td>
+</tr>
+<tr>
+<td>随机删除一个</td>
+<td><code>s.pop()</code></td>
+<td>删除并返回一个元素</td>
+<td><code>s.pop()</code></td>
+</tr>
+<tr>
+<td>清空集合</td>
+<td><code>s.clear()</code></td>
+<td>删除所有元素</td>
+<td><code>s.clear()</code></td>
+</tr>
+<tr>
+<td>获取长度</td>
+<td><code>len(s)</code></td>
+<td>返回元素个数</td>
+<td><code>len(s)</code></td>
+</tr>
+<tr>
+<td>判断是否存在</td>
+<td><code>x in s</code></td>
+<td>判断元素是否在集合中</td>
+<td><code>3 in s</code></td>
+</tr>
+<tr>
+<td>遍历集合</td>
+<td><code>for x in s</code></td>
+<td>逐个访问元素</td>
+<td><code>for x in s:</code></td>
+</tr>
+<tr>
+<td>并集</td>
+<td><code>s1 | s2</code> 或 <code>s1.union(s2)</code></td>
+<td>合并两个集合</td>
+<td>`s1</td>
+</tr>
+<tr>
+<td>交集</td>
+<td><code>s1 &amp; s2</code> 或 <code>s1.intersection(s2)</code></td>
+<td>取共同元素</td>
+<td><code>s1 &amp; s2</code></td>
+</tr>
+<tr>
+<td>差集</td>
+<td><code>s1 - s2</code></td>
+<td>在 <code>s1</code> 中但不在 <code>s2</code> 中</td>
+<td><code>s1 - s2</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1>3. <code>dict</code> 常用操作</h1>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>写法</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建字典</td>
+<td><code>d = &#123;&quot;a&quot;: 1, &quot;b&quot;: 2&#125;</code></td>
+<td>创建一个字典</td>
+<td><code>d = &#123;&quot;name&quot;: &quot;Tom&quot;&#125;</code></td>
+</tr>
+<tr>
+<td>创建空字典</td>
+<td><code>d = &#123;&#125;</code></td>
+<td>创建空字典</td>
+<td><code>d = &#123;&#125;</code></td>
+</tr>
+<tr>
+<td>新增/修改键值对</td>
+<td><code>d[key] = value</code></td>
+<td>有就修改，没有就新增</td>
+<td><code>d[&quot;age&quot;] = 18</code></td>
+</tr>
+<tr>
+<td>获取值</td>
+<td><code>d[key]</code></td>
+<td>根据键取值，不存在会报错</td>
+<td><code>d[&quot;name&quot;]</code></td>
+</tr>
+<tr>
+<td>安全获取值</td>
+<td><code>d.get(key)</code></td>
+<td>键不存在返回 <code>None</code></td>
+<td><code>d.get(&quot;name&quot;)</code></td>
+</tr>
+<tr>
+<td>带默认值获取</td>
+<td><code>d.get(key, default)</code></td>
+<td>键不存在返回默认值</td>
+<td><code>d.get(&quot;age&quot;, 0)</code></td>
+</tr>
+<tr>
+<td>删除键值对</td>
+<td><code>d.pop(key)</code></td>
+<td>删除并返回对应值</td>
+<td><code>d.pop(&quot;age&quot;)</code></td>
+</tr>
+<tr>
+<td>删除指定项</td>
+<td><code>del d[key]</code></td>
+<td>删除某个键值对</td>
+<td><code>del d[&quot;name&quot;]</code></td>
+</tr>
+<tr>
+<td>清空字典</td>
+<td><code>d.clear()</code></td>
+<td>删除所有键值对</td>
+<td><code>d.clear()</code></td>
+</tr>
+<tr>
+<td>获取长度</td>
+<td><code>len(d)</code></td>
+<td>返回键值对个数</td>
+<td><code>len(d)</code></td>
+</tr>
+<tr>
+<td>判断键是否存在</td>
+<td><code>key in d</code></td>
+<td>判断键是否存在</td>
+<td><code>&quot;name&quot; in d</code></td>
+</tr>
+<tr>
+<td>遍历键</td>
+<td><code>for k in d</code></td>
+<td>遍历所有键</td>
+<td><code>for k in d:</code></td>
+</tr>
+<tr>
+<td>遍历值</td>
+<td><code>for v in d.values()</code></td>
+<td>遍历所有值</td>
+<td><code>for v in d.values():</code></td>
+</tr>
+<tr>
+<td>遍历键值对</td>
+<td><code>for k, v in d.items()</code></td>
+<td>同时遍历键和值</td>
+<td><code>for k, v in d.items():</code></td>
+</tr>
+</tbody>
+</table>
+<p>这里还有一个元组tuple和集合set的区别：<br>
+俩东西都是用()去包裹的<br>
+tuple用t=()去初始化，他里面的元素是有顺序的，可以重复的，不能修改的<br>
+set用s=set()去初始化，里面元素没有顺序（就是s[0]这种不行），也不会重复，但是可以增删元素</p>
+<h1>0326</h1>
+<p>今天依旧哈希的事。<br>
+之前哈希表的值都是存计数或者位置啊啥的，值也可以存更多的信息和数据结构。</p>
+<hr>
+<p>题1 字母异位词 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/group-anagrams/">https://leetcode.cn/problems/group-anagrams/</a><br>
+这里就是搞了一个字母异位词，比如ate tea eta就是一组字母异位词。题目里就是给你一个list，list里每项都是一个字符串，需要你把所有的字母异位词找到，最后返回一个list：[[“bat”],[“nat”,“tan”],[“ate”,“eat”,“tea”]]<br>
+一个想法就是我对着每一个字符串都做一个排序，然后搞一个dict，键是原字符串，值是排序后的字符串，我再把所有值相同的打包返回就行了。这里的打包返回，可以拿一个set去存所有的值，然后遍历这个set，再遍历dict，把那些值为s的打包出来append到返回的list里。<br>
+哦哦但是这种有点绕了，应该直接把排序后的结果当键的。对于list里的每一个字符串，先排序，然后看d里面有没有，有的话加到那个键的list值里去；如果没有那就新建一个键。最后只需要遍历这个dict把所有的list值返回就行了。</p>
+<p>题2 最长连续序列 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-consecutive-sequence/">https://leetcode.cn/problems/longest-consecutive-sequence/</a><br>
+就是给你一个没排过序的list，然后需要你返回里面最长的连续序列的长度。就是[100,4,200,1,3,2]的最长序列就是1 2 3 4，那长度就是4<br>
+没啥思路，问了AI。<br>
+这种相当于就是问某个东西存不存在的，一般会去用set。这里相当于要先去找这个最长连续序列的第一个元素是啥，也就是这个元素的-1元素不存在。那就是我先对着这个list排序一下（？其实不需要排序，因为只是找是否存在），然后放set里，然后遍历这里的每个元素，如果这个元素-1在set里，那他就不是最长连续序列的第一个元素；如果不在，那他就是最长连续序列的第一个元素。感觉这里把所有的首元素存一个begin_list里。<br>
+对于每个begin_list里面的元素，可以用while去看他的+1 +1+1 。。。在不在set里，同时去维护一个max_length。不过感觉这种方法的时间复杂度有点高。<br>
+AI评价，这个begin_list没啥存在的必要</p>
+<p>题3 快乐数 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/happy-number/">https://leetcode.cn/problems/happy-number/</a><br>
+快乐数就是把这个数的每个位上的值平方后加起来，然后得到的值再把每个位上的值平方后加起来，持续进行下去，最后的值为1的。<br>
+这个题就是给你一个值N，需要你判断是不是快乐数<br>
+暂时想不出这个和哈希有啥关系<br>
+不过我觉得应该逆向去考虑，最后的值为1，那倒数第二个的值只能是1，10，100，。。。，然后好像也没啥思路<br>
+AI思路，这里其实有些数学上的知识，就是这种击鼓传花的过程如果到不了1也会陷入一个循环，就是永远到不了1的循环。因为这样，这种可以生成的数的最大值就是9^2+9^2，所以包会有重复的。所以这里的做法就是每次计算出来的值都存到set里去，如果set里有重复的了，就不是快乐数了。<br>
+然后问题其实就是如何去计算N的各位平方和了。之前cpp的思路是先用10取余拿个位的，然后再while整除10拿其他各位的。</p>
+<h2 id="2-3题还没好，记得看下">2 3题还没好，记得看下</h2>
+<p>python里的sort排序，list的排序可以用li.sort()或者sorted(li)，倒序就加参数reverse=True。<br>
+字符串的排序用s = ‘’.join(sorted(s)) ，倒序就加参数reverse=True，不能用.sort()</p>
+<h1>0330</h1>
+<p>今天先是对双指针有一个基础的了解，主要涉及到左右指针和快慢指针，说白了就是一种用两个索引变量来减少重复搜索的方式</p>
+<hr>
+<p>题1 反转字符串 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-string/">https://leetcode.cn/problems/reverse-string/</a><br>
+这个题应该很经典了，给你的是一个由字母组成的list，相当于你就搞俩指针分别指向首末位置，然后while左指针小于右指针，就交换俩指针指向的元素就行了。</p>
+<p>题2 移除元素 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-element/">https://leetcode.cn/problems/remove-element/</a><br>
+给你一个数组list和数字target，要求你把数组中值==target的都移去，然后返回不为target的数量k。其实相当于就是要把不为target的值往前移，使得数组的前k个值都不是target。<br>
+这个问了AI，应该是快慢指针的做法。一开始快指针和慢指针都在0位置，先快指针往后扫，如果扫到不是target的，就在nums[slow]那边保存那个值，然后slow++；如果是target，不用理睬。</p>
+<p>题3 移动0 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/move-zeroes/">https://leetcode.cn/problems/move-zeroes/</a><br>
+这个是给你一个list nums，需要你把所有的0都放list的最后面，其他元素的顺序不改变。<br>
+这个的思路和题2差不多，也是快慢指针。<br>
+然后这个就是快指针去扫不是0的，扫到就由慢指针保存，最后把慢指针后面的都保存0就行。</p>
+<p>题4 验证回文串 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-palindrome">https://leetcode.cn/problems/valid-palindrome</a><br>
+首先给你一个字符串，这个字符串全部转小写，并且只保留字母和数字后，你正着读反着读都一样，最后你返回这个字符串是不是回文串。<br>
+一个想法是，首先“字符串全部转小写，并且只保留字母和数字”，然后就左右指针往中间移动，但凡出现一个不一样的就返回False；否则返回True</p>
+<p>题5 验证回文串v2 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-palindrome-ii/">https://leetcode.cn/problems/valid-palindrome-ii/</a><br>
+这个题就是在上面的基础上，字符串s仅由小写字母组成，但是你可以在s里删掉一个字符再判断是不是回文（不过你不删就是回文那就是回文了）。<br>
+最唐的思路那就是先直接判断是不是，直接是那就直接返回True了；然后遍历字符串里的每个字符，删了那个字符后再判断是不是，只要有一个是那就返回True。但是这种做法做下来超时了，应该是On^2的复杂度了。<br>
+问了AI，这里其实没必要真的去删，相当于还是对着原来的字符串做左右指针往中间扫的操作，一旦有一个不一样的，要么就跳过左边，要么就跳过右边，反正只要有一个是最终是回文就行了。这题有点烧，后面可以再看看。</p>
+<p>题6 有序数组的平方 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/squares-of-a-sorted-array/">https://leetcode.cn/problems/squares-of-a-sorted-array/</a><br>
+给你一个非递减的数组list，需要你返回该数组里各个元素的平方组成的list，且该list也非递减排序。<br>
+如果我不知道指针这档子事，那包是直接计算平方然后排序的，我试试看这个能不能过，感觉正常的想法那都是这样啊，不过这种复杂度是nlogn<br>
+问了AI，这个场景主要是利用了平方后的list左右两边的值是更大的，然后就是从两边开始，比较nums[left]和nums[right]哪个更大，往结果的list里面存就行了</p>
+<p>题7 两数之和v2 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/">https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/</a><br>
+数组nums现在是序列从1开始，就是第一个元素是nums[1]，且数组非递减排序。然后就是需要你返回和为target的两个值的下标，且结果唯一。<br>
+第一眼看感觉和原版两数之和不是一样的吗？不过这个题要求O1的空间复杂度，所以没法用哈希表了。<br>
+然后这个题就有点像是那种猜数字，左右指针各指向首末位置，然后两者相加去判断和target的大小关系。因为是有序的所以才能干这个。然后就是和偏大，那right指针左移；和偏小，left指针右移。</p>
+<hr>
+<p>list中交换数组中俩位置的元素：nums[left], nums[right] = nums[right], nums[left]<br>
+for循环扫下标：for i in range(len(nums))；同时扫下标和元素：for i,num in enumerate(nums)<br>
+字符串判断是否字母or数字：str.isalnum()；转大小写：str.lower() str.upper()<br>
+字符列表转字符串：‘’.join(list)；字符串转字符列表直接list(str)就行了<br>
+字符串去掉位置i上的元素：s=s[:i]+s[i+1:]<br>
+字符串去掉所有的元素ch：s=s.replace(‘ch’,‘’)</p>
+<p>list在排序的时候,nums.sort()这个是把nums排好序，返回None；如果需要返回排好序后的字符串，用sorted(nums)</p>
+<p><strong>字符串的常用操作</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>写法</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>获取长度</td>
+<td><code>len(s)</code></td>
+<td><code>len(&quot;hello&quot;)</code> → <code>5</code></td>
+</tr>
+<tr>
+<td>访问字符</td>
+<td><code>s[i]</code></td>
+<td><code>s[0]</code> → <code>'h'</code></td>
+</tr>
+<tr>
+<td>切片</td>
+<td><code>s[l:r]</code></td>
+<td><code>s[1:3]</code> → <code>'el'</code></td>
+</tr>
+<tr>
+<td>反转</td>
+<td><code>s[::-1]</code></td>
+<td><code>&quot;hello&quot;[::-1]</code> → <code>'olleh'</code></td>
+</tr>
+<tr>
+<td>拼接</td>
+<td><code>s1 + s2</code> 或 <code>s += ch</code></td>
+<td><code>&quot;he&quot; + &quot;llo&quot;</code> → <code>'hello'</code></td>
+</tr>
+<tr>
+<td>列表转字符串</td>
+<td><code>''.join(lst)</code></td>
+<td><code>''.join(['h','i'])</code> → <code>'hi'</code></td>
+</tr>
+<tr>
+<td>转小写</td>
+<td><code>s.lower()</code></td>
+<td><code>&quot;HI&quot;.lower()</code> → <code>'hi'</code></td>
+</tr>
+<tr>
+<td>转大写</td>
+<td><code>s.upper()</code></td>
+<td><code>&quot;hi&quot;.upper()</code> → <code>'HI'</code></td>
+</tr>
+<tr>
+<td>按空格分割</td>
+<td><code>s.split()</code></td>
+<td><code>&quot;a b&quot;.split()</code> → <code>['a','b']</code></td>
+</tr>
+<tr>
+<td>替换</td>
+<td><code>s.replace(old, new)</code></td>
+<td><code>&quot;aab&quot;.replace('a','x')</code> → <code>'xxb'</code></td>
+</tr>
+<tr>
+<td>是否包含</td>
+<td><code>sub in s</code></td>
+<td><code>'el' in 'hello'</code> → <code>True</code></td>
+</tr>
+<tr>
+<td>是否字母或数字</td>
+<td><code>s.isalnum()</code></td>
+<td><code>&quot;ab1&quot;.isalnum()</code> → <code>True</code></td>
+</tr>
+<tr>
+<td>字符转 ASCII</td>
+<td><code>ord(ch)</code></td>
+<td><code>ord('a')</code> → <code>97</code></td>
+</tr>
+<tr>
+<td>ASCII 转字符</td>
+<td><code>chr(n)</code></td>
+<td><code>chr(97)</code> → <code>'a'</code></td>
+</tr>
+<tr>
+<td>字符串转列表</td>
+<td><code>list(s)</code></td>
+<td><code>list(&quot;hi&quot;)</code> → <code>['h','i']</code></td>
+</tr>
+</tbody>
+</table>
+<h1>0331</h1>
+<p>今天依旧双指针。<br>
+就是加上了先排序后双指针的思路，此外就是排序后会有重复元素，需要能够跳过这些重复的元素。</p>
+<hr>
+<p>题1 盛最多水的容器 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/container-with-most-water/">https://leetcode.cn/problems/container-with-most-water/</a><br>
+这个题应该是十分经典了。<br>
+就是一个水缸里有n根柱子，高度组成了一个数组height，每两根柱子间距为1。要求你找两根柱子，使得装的水最多（即面积最大），最后返回面积即可。<br>
+初步的想法就是左右俩指针指向首末，然后始终维护一个max_water的变量，但是这样子还是On^2的复杂度啊<br>
+问了AI，这里其实不需要你去遍历两个指针的。根据“木桶理论”，一个桶能装的水取决于他的短板，也就是说对于height[left]和height[right]中较高的，你如果还把他往中间移，那能装的水量不还是取决于矮的那块板吗？更何况宽度还变小了，面积肯定变小了啊。所以你要移也只能移矮的板子，这样子才有希望找到更高的板子。</p>
+<p>题2 最接近的三数之和 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/3sum-closest/">https://leetcode.cn/problems/3sum-closest/</a><br>
+给你一个数组nums，要你去找这里的三个下标不同的整数，使得三个数的和与target最接近，最后返回三数之和。<br>
+一开始确实没思路，AI提示。首先的思路肯定是我要固定一个值，比如nums[i]，去遍历整个nums，然后另外俩值就在除了i这个位置之外去找，但是你这样就i的左右都要找了，这样复杂度又上去了，所以会想到就是先给数组排个序。<br>
+排完序之后，nums[i]依旧遍历每个元素（但是应该就遍历0到n-3吧），然后相当于在[i+1,n-1]这个区间里找俩元素，使得sum_3=nums[i]+nums[left]+nums[right]离target最近，然后相当于你要全局维护一个变量cur_gap=sum_3-target，如果sum_3&lt;target,那左指针右移；如果sum_3&gt;target，那右指针左移；如果正好相等，那直接返回target就行了。然后这里应该还需要去维护一个cur_sum，就是当cur_cha小于min_gap时，需要去更新min_gap和cur_sum。</p>
+<p>题3 三数之和 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/3sum/">https://leetcode.cn/problems/3sum/</a><br>
+给你一个整数数组，要你去找这里的三个下标不同的整数组成一个三元组，使得三个数的和是0，并且这个三元组不唯一，最后需要返回所有的三元组的list，对三元组的内部的顺序不要求，但是三元组不能重复。<br>
+最唐的整3层循环的这种就太唐了，这个题我第一次见的时候还是想着和两数之和是不是差不多，相当于在数组里遍历一个nums[i]，然后找俩数之和为-nums[i]的。感觉好像也不是不行，但是这里我的键值对存啥？这里又不要求返回下标。<br>
+那是不是可以和上面那个题差不多，先排个序，然后依旧是nums[i]先遍历，然后依旧在[i+1,n-1]这个区间里找俩元素，和如果大于0，右指针左移，和小于0，左指针右移，等于0就append到返回三元组的list里。还有一个要求是三元组不能重复，所以[-1,-1,0,1]这种，按照目前的思路会输出俩[-1,0,1]，那最简单的办法就是在返回的三元组的list里做一下去重，不过，nums[i]在遍历的时候是不是也可以直接跳过这些相同的，对的，这样子肯定能确保三元组是不同的（因为肯定有一个元素不同了）<br>
+问了一下AI，这里还存在这些问题：在找到三元组之后，left和right都要移啊，不然不就一直卡在这个else下了吗。而且这里移的时候也需要去重。</p>
+<p>题4 救生艇 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/boats-to-save-people/">https://leetcode.cn/problems/boats-to-save-people/</a><br>
+数组people代表第i个人的体重，然后每艘船的最大载重是limit，每个船最多装俩人，并且要求这俩人的体重之和小于等于limit，要求把这帮人全部运走最少需要几艘船。<br>
+那感觉就是我还是先排序，然后把那些体重就是limit的先运走，然后贪心来看就是装两个人并且这俩人的体重和就是limit呗。<br>
+问了AI，其实倒也不需要那么复杂，就是people[left]+people[right]&lt;=limit就两个指针一起往中间，boat+1；如果装不下，那就单独right移。所以没必要先把那些体重就是limit的先运走。想通后这个挺清晰的</p>
+<hr>
+<p>python中的浅拷贝和深拷贝：python中，变量存的是地址而非对象。对于python中所有的对象（无论是数值、字符串、list、dict、或者自己写的类）都成立。不过这些对象会被分为可变的（list、dict这些）和不可变的（数值、字符串这些）<br>
+也就是说nums=[1,2,3]，tmp=nums这个，实际上就是tmp指向了nums的地址，我去修改nums，tmp打印出来也一样会被修改；不过对于num=1,tmp=num,我去改num=99，由于数值不可变，所以相当于这里是创建了一个新的num对象，指向99，而tmp依旧指向1</p>
+<p>所谓浅拷贝，就是为tmp重新制定指向的内存空间了，在这种情况下，语法如下：</p>
+<ul>
+<li>a[:]	浅拷贝	只适用于列表</li>
+<li>list(a)	浅拷贝	只适用于列表</li>
+<li>a.copy()	浅拷贝	list / dict / set 通用</li>
+<li>copy.copy(a)	浅拷贝	所有对象通用<br>
+也就是说nums=[1,2,3]，tmp=nums[:]，我再去改nums，tmp依旧是[1,2,3]</li>
+</ul>
+<p>但是，当面对可变对象的嵌套时，比如list里套list，list中的list还是指向原地址，也就是我如果改了nums[1][1]，那tmp[1][1]也会变。这种情况下要完全新建一个对象就要使用深拷贝，语法是：copy.deepcopy(a)</p>
+<h1>0401</h1>
+<p>今天开始整滑动窗口的事。<br>
+滑动窗口其实就是左右俩下标去控制中间的那个区间，这个区间就是滑动窗口。如果窗口长度固定，那就是固定滑动窗口；不固定就是可变滑动窗口。然后就是这里的左右指针都只向右动，确保不会重复，右指针负责纳入新元素，左指针负责排除不需要的元素。<br>
+写法上一般用for控制right，while控制left更方便<br>
+而且使用滑动窗口关键在于窗口变化导致的结果应当是单调的，比如你右指针往右，字符串肯定变长了；左指针往右也肯定变短了。但是你如果对于一个数组（有正有负），然后要你去找和为k的子数组，那就不适合用这个了，因为你右指针往右和可以变大也可以变小。所以滑动窗口更适合对于长度这种单调的问题处理。</p>
+<hr>
+<p>题1 无重复字符的最长子串 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-substring-without-repeating-characters/">https://leetcode.cn/problems/longest-substring-without-repeating-characters/</a><br>
+那这个题目的名字就说明了问题了，给你一个字符串，你要找一个最长的子串（连续非空字符序列），且里面没有重复的字符，最后返回子串长度就行。<br>
+首先原字符串如果就是空的，那直接返回0就行。然后反正就是搞一个滑动窗口，最开始左右指针都指向首元素。但是这里还需要判断想加进来的新的元素是否已经在窗口里有了，那这里肯定需要维护一个set。然后就是右指针狠狠往右，右指针一旦碰到一个在窗口中有的，就需要移动左指针让窗口里不再有重复的元素。然后就是每次无论左右指针只要动，就要维护这个set和最长长度max_length</p>
+<p>题2 找字符串里的所有字母异位词 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-all-anagrams-in-a-string/">https://leetcode.cn/problems/find-all-anagrams-in-a-string/</a><br>
+所谓字母异位词就是字母组成是一样的，比如abc cba bca就是字母异位词。这个题就是给你字符串s和p，要你找到s中所有p的字母异位词，返回这些字母异位词在s中的起始下标。<br>
+那这个肯定是固定滑动窗口了，起始的时候左指针指向0，右指针指向len(p)-1，然后就是判断窗口里的东西和p是不是字母异位词。那就是把p和窗口里的东西都做一下计数，计数的那个dict一样就是异位的。这里正好把计数的语法复习一下，可以直接用Counter。<br>
+然后这种思路就美美超时了。其实这个没用上滑动窗口的优势，我这里说白了就是O(len(s)*len(p))的复杂度。应该就是你每次把窗口右移的时候，不需要重新统计窗口里的计数啊，只需要把right元素从counter里加上（如果不存在就新建），left元素去掉就行了（这个如果个数只有1个就可以把整个键值对删了）。</p>
+<p>题3 字符串排列 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/permutation-in-string/">https://leetcode.cn/problems/permutation-in-string/</a><br>
+给你一个字符串s1和s2，要你去判断s2中是不是包含s1的排列（排列就是s1中字符的重新排序），最后返回是不是就行了。<br>
+这个题和上面那个字母异位词的感觉差不多。首先如果s2的长度小于s1那包不行的，然后相当于依旧是s2中搞一个固定滑动窗口，起始的时候左指针指向0，右指针指向len(p)-1。这个题基本比上面那个还简单，不说了</p>
+<p>题4 长度最小子数组 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-size-subarray-sum/">https://leetcode.cn/problems/minimum-size-subarray-sum/</a><br>
+给你一个nums和一个值target，要你在nums里找长度最小的子数组（子数组就是连续的list元素组成的数组，和那个子串是差不多的概念），使得子数组的各元素之和&gt;=target，最后需要返回长度，如果没找到就返回0。<br>
+这个和题1其实挺像。一个想法是如果用固定窗口，那就是窗口长度从1到len(nums)-1一个个试，试到一个就返回True，但是这种算法复杂度都On^3了吧。还有一个想法是最开始的窗口笼罩整个nums，然后和昨天的左右指针一样往里面缩，但是这里的数组不是有序的，而且我也不能排序，所以这个也不行。<br>
+好像想到办法了，还是原来一样，left right先都指向0，然后如果和小于target，那right就狠狠往右，一旦大于等于target了，那left也往右，反复这样子搞，直到right到达nums右边界。然后每次只要俩指针中有一个动了，就需要更新min_length。<br>
+上面的思路超时了，原因是单独把求和拆出来做成一个函数，然后整体的复杂度就是On^2了。应该在指针发生变动的时候顺便就更新和的。</p>
+<p>题5 最长连续1的个数 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/max-consecutive-ones-iii/">https://leetcode.cn/problems/max-consecutive-ones-iii/</a><br>
+一个二进制数组nums（就是里面只有0和1），你可以最多把k个0变成1，需要返回变了之后数组中的最大的连续1的个数。<br>
+在滑动窗口这的话，就是窗口里最多有k个0，其他全是1，然后这个序列要尽可能长。然后右指针依旧库库往右，往右过程中记录当前0的个数和总长度；左指针的循环是在0的个数大于k时启动，一直往右到0的个数小于等于k为止，同时要更新最长长度</p>
+<p>题6 最小覆盖子串 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-window-substring/">https://leetcode.cn/problems/minimum-window-substring/</a><br>
+给你俩字符串s t，要你去找s中的最短窗口子串，并且这个最短子串要包含t中的所有字符（包括重复字符，就是如果s=“aa”，那最短窗口子串里需要包含两个a，可以不在一起，但是要有俩a），然后就是你返回这个最短子串（不存在就返回空串）。<br>
+初步想法，反正t不要求顺序，那就先把他变成计数。然后最短子串要包含而不是等于，那就是t的所有项，子串中都要有，并且元素数量要比t的要多。那我感觉左指针的while条件就是这个。然后对于最短子串的计数更新，应当参考题2的做法，不然超时。<br>
+这里这个看子串是否包含的方法需要遍历整个s，会超时，问了AI。在这里是采用一个新变量formed，代表窗口中已满足“包含t中的所有字符”的字符种类，就比如counter_t里有仨元素的计数，那当formed==len(counter_t)时，就代表满足“最短子串要包含t中的所有字符”。<br>
+整理一下整个题的思路：首先对字符串t进行计数得到counter_t，然后定义变量formed，并且你最后要返回具体的子串，直接保存子串的话不太好弄，就不太好判断是不是最短的，这里可以保存俩变量，分别是最短子串的长度res_len和最短子串的起始下标res_begin。右指针库库往右，首先将s[right]加入到counter_s中去（就是存在就+=1，不存在就新建=1），然后如果s[right]就在counter_t中，并且counter_s[s[right]]==counter_t[s[right]]，那formed+=1。然后左指针的任务就是在保证formed==len(counter_t)的前提下尽可能缩短子串长度，相当于while的条件就是formed==len(counter_t)，然后这里需要判断此时窗口是最短的，这里不太需要用min，不然没法更新res_begin；然后就是在counter_s[s[left]]进行更新，如果counter_s[s[left]]小于counter_t[s[left]]，那formed-=1</p>
+<hr>
+<p>赋值时的无穷大使用float(‘inf’)，无穷小就是-float(‘inf’)</p>
+<h1>0402</h1>
+<p>今天在弄前缀和、二分的事。<br>
+前缀和就是&quot;从头到每个位置的累计和&quot;。比如给你一个数组，要你求从第i项加到第j项的和，普通做法就是On的复杂度；而前缀和就是搞了个数组，第i项是原数组前i项的和。这样求从第i项加到第j项的和就变成nums[j]-nums[i]的差值了，复杂度就变成O1了<br>
+求前缀和的模版：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nums = [1, 2, 3, 4, 5]</span><br><span class="line"></span><br><span class="line">prefix = [0] * (len(nums) + 1)  # 多一位，prefix[0] = 0 表示空数组</span><br><span class="line"></span><br><span class="line">for i in range(len(nums)):</span><br><span class="line">    prefix[i+1] = prefix[i] + nums[i]</span><br></pre></td></tr></table></figure>
+<p>二分一方面用于在有序数组里找东西，也可以用于验证答案是否正确（就是不关心真的值是啥，只要求个对错的题）<br>
+二分法的模版：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">left, right = 0, len-1</span><br><span class="line">while left &lt;= right:</span><br><span class="line">    mid = (left + right) // 2</span><br><span class="line">    if ...: right = mid - 1</span><br><span class="line">    else:   left = mid + 1</span><br></pre></td></tr></table></figure>
+<hr>
+<p>题1 二分查找 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-search/">https://leetcode.cn/problems/binary-search/</a><br>
+给一个升序的数组nums，和数值target，要你去找nums里是否存在target，存在返回下标，不存在返回-1<br>
+基本的模版。<br>
+在这里就是如果找到了nums[mid]==target，就直接返回；nums[mid]&lt;target，说明目标在mid右边，那left=mid+1；反之那就right=mid-1；最后没找到就返回-1</p>
+<p>题2 和为k的子数组 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subarray-sum-equals-k/">https://leetcode.cn/problems/subarray-sum-equals-k/</a><br>
+给你一个数组nums，要你去找里面和为k的子数组（连续的list元素组成的数组），并返回其个数<br>
+本来还想用滑动窗口的，但是原理不成立，可见昨天的表述<br>
+问了AI，这里先生成一个前缀和数组，然后这个问题就是要找一个i j（i小于j），使得prefix[j]-prefix[i]==k。实际做的时候没必要真去创建这个数组。<br>
+相当于就是最开始初始化一个字典（初始化时，前缀和为0的也需要加上），字典里存的键是前缀和，值是出现的次数。然后对于你每次新插入的那个前缀和，你就去哈希表里找键为当前前缀和-k的项出现的次数（因为prefix[j]-prefix[i]==k，而prefix[j]目前已知，我们需要的是前面的次数，所以要找的是prefix[i]）。最后就是维护一个sum_num把查到的次数全部存起来就行了。</p>
+<p>题3 找元素的首末位置 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/">https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/</a><br>
+这个题给你一个非递减的nums，然后还有数值target，然后需要你找nums中target出现的首末位置（就是第一次出现的位置和最后一次出现的位置），最后返回[首次出现下标，最后一次出现下标]，nums里没有target就返回[-1,-1]。<br>
+同样的需求不放这里那肯定就是从前往后、从后往前各遍历一遍On的事，但是这个题看看能不能Ologn去解决。<br>
+那这里是那种有俩目标的（或者仅有一个目标但是也可以归并到俩目标）估计是二分处理。而且这里既然非递减，那target们肯定是粘在一起的。那就先二分，然后如果nums[mid]小于target的，那left=mid+1，大于则right=mid-1，等于了之后，我就left疯狂++直到碰到target，right库库–直到碰到target，最后返回[left,right]</p>
+<p>题4 连续子数组和 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/continuous-subarray-sum/">https://leetcode.cn/problems/continuous-subarray-sum/</a><br>
+给你一个数组nums和值k，要你去找nums里是否存在“好子数组”，返回是否存在的bool。“好子数组”要求首先是子数组，然后长度&gt;=2，且所有元素和为k的倍数。<br>
+依旧前缀和，其实和题2差不多，但是这里对于插入的每个新的前缀和，你在找是否有“好子数组”时，需要的应该是(prefix[j]-prefix[i])%k==0并且j-i&gt;=2，那这里prefix[i]应该是啥？<br>
+问了AI，你想，(prefix[j]-prefix[i])%k==0这个其实等价于prefix[j]和prefix[i]有一样的余数<br>
+所以这里在hash表里存的应当是每个前缀和%k后的余数:这个余数第一次出现时的下标（因为你要确保长度尽可能长，所以你存第一次的就行了，不然你存当前的下标那不是覆盖了吗）然后这个存余数第一次出现时的下标实现方法就是，只有有新的余数了才插入，出现已经出现过的余数不需要更新。然后就是对于每个新的前缀和，计算了余数后，就去hash表里找一样的余数的下标，然后如果满足j-i&gt;=2就返回True就行。</p>
+<p>题5 分割数组的最大值 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/split-array-largest-sum/">https://leetcode.cn/problems/split-array-largest-sum/</a><br>
+给一个非负的整数数组nums和数值k，需要你把nums分割成k个非空连续子数组，使得这k个子数组的和的最大值要最小，最后你需要返回这个最大值。<br>
+这啥啊有点晕。<br>
+TODO</p>
+<hr>
+<p>python里头不要这样子写赋值：left=0,right=len(nums)-1,mid=0，会报错的，分行写</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io">Linghao Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/">https://zlh123123.github.io/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zlh123123.github.io" target="_blank">好急好急的Hexo博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/">算法</a></div><div class="post-share"><div class="social-share" data-image="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】可爱小狗-小狗-护眼.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related  no-desc" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/dark.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">日语语法蓝宝书总结</div></div></div></a><a class="pagination-related" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云彩-夜晚-夜景.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">口令复用综述</div></div><div class="info-2"><div class="info-item-1">本综述更偏向targeted guessing这一领域。 targeted password guessing / target guessing / personalized password guessing 定义为：攻击者或评估者在猜测某个具体用户口令时，利用该用户的 PII、用户名/邮箱、社交/人口属性、目标站点上下文、已泄露旧口令/姊妹口令、多个历史口令、部分已知字符或口令掩码 等辅助信息，目标是在很小猜测预算下提高命中率。 这个方向已经从早期的规则/概率模型，明显转向 Transformer、LLM、pointer/copy 机制、检索增强、排序优化、多泄露口令建模和目标感知 PSM。一个有用的宏观分类是：普通 trawling guessing 面向群体分布，而 targeted guessing 面向单个用户的条件分布；近年综述也将这两类作为 password guessing 研究的核心分支。(MDPI)  1. 研究脉络总览 第一阶段：PII + 概率规则。 代表是 TarGuess 系列：把名字、生日、用户名、邮箱、手机号等 PII...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/07/09/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" title="排序算法"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】咖啡屋-夏日-插画.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-09</div><div class="info-item-2">排序算法</div></div><div class="info-2"><div class="info-item-1">半小时速通十大排序算法，核心原理 +...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Linghao Zhang</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zlh123123"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/zlh123123" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lh.zhang.work@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，这里是我的个人博客，主要用来记录一些学习笔记和生活感悟，希望能给你带来一些帮助。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">0325</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%986%EF%BC%9A%E6%95%B0%E7%BB%84%E4%BA%A4%E9%9B%86v2-https-leetcode-cn-problems-intersection-of-two-arrays-ii-%E8%BF%98%E6%98%AF%E6%B1%82%E4%BA%A4%E9%9B%86%EF%BC%8C%E4%BD%86%E6%98%AF%E7%8E%B0%E5%9C%A8%E9%87%8D%E5%A4%8D%E7%9A%84%E5%85%83%E7%B4%A0%E4%B9%9F%E8%A6%81%E7%AE%97%E8%BF%9B%E5%8E%BB%EF%BC%8C%E4%B8%8D%E8%83%BD%E7%AE%80%E7%AE%80%E5%8D%95%E5%8D%95set%E4%BA%86%E3%80%82%E4%B8%80%E4%B8%AA%E6%83%B3%E6%B3%95%E6%98%AF%EF%BC%8C%E6%8C%89%E7%85%A7%E8%AE%A1%E6%95%B0%E7%9A%84%E6%80%9D%E8%B7%AF%E5%85%88%E5%81%9A%E4%B8%80%E4%B8%AA%E2%80%9C%E9%A1%B9%EF%BC%9A%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E2%80%9D%E7%9A%84dict%EF%BC%8C%E7%84%B6%E5%90%8E%E5%AF%B9%E4%B8%A4%E4%B8%AAdict%E7%9A%84%E9%94%AE%E7%9B%B8%E5%BD%93%E4%BA%8E%E5%B7%B2%E7%BB%8F%E6%98%AFset%E4%BA%86%EF%BC%8C%E4%B8%A4%E4%B8%AAset%E5%86%8D%E6%B1%82%E4%BA%A4%EF%BC%8C%E4%BA%A4%E5%87%BA%E6%9D%A5%E7%9A%84%E9%82%A3%E4%B8%AA%E5%80%BC%E5%AF%B9%E5%BA%94%E7%9A%84%E9%94%AE%E5%B0%B1%E5%8F%96%E5%8E%9F%E4%B8%A4%E4%B8%AAdict%E7%9A%84%E9%94%AE%E7%9A%84%E8%BE%83%E5%B0%8F%E7%9A%84%E5%80%BC%EF%BC%8C%E6%9C%80%E5%90%8E%E8%BF%94%E5%9B%9E%E8%BE%83%E5%B0%8F%E7%9A%84%E5%80%BC%E4%B8%AA%E6%95%B0%E4%B8%AA%E9%94%AE%E7%BB%84%E6%88%90%E7%9A%84list%E5%B0%B1%E8%A1%8C%E4%BA%86%E3%80%82%E4%BD%86%E6%98%AF%E4%B8%8A%E9%9D%A2%E9%82%A3%E4%B8%AA%E6%83%B3%E6%B3%95%E6%9C%89%E7%82%B9%E7%B9%81%E7%90%90%E4%BA%86%EF%BC%8C%E9%97%AE%E4%BA%86AI%EF%BC%8C%E5%BA%94%E8%AF%A5%E6%98%AF%E5%B0%B1%E6%98%AF%E4%BD%A0%E5%85%88%E5%AF%B9%E7%9D%80nums1%E8%AE%A1%E6%95%B0%EF%BC%88%E4%BB%93%E5%BA%93%EF%BC%89%EF%BC%8C%E7%84%B6%E5%90%8Enums2%E9%87%8C%E9%81%8D%E5%8E%86%E6%AF%8F%E4%B8%AA%E9%A1%B9%EF%BC%8C%E9%81%8D%E5%8E%86%E5%88%B0%E6%AF%8F%E4%B8%80%E4%B8%AA%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%BB%93%E5%BA%93%E4%B8%AD%E5%AD%98%E5%9C%A8%E4%B8%94%E8%AE%A1%E6%95%B0%E4%B8%8D%E4%B8%BA0%EF%BC%8C%E5%B0%B1%E6%8B%BF%E5%87%BA%E6%9D%A5%E8%BF%9Blist%EF%BC%8C%E5%B9%B6%E8%AE%A1%E6%95%B0-1%EF%BC%9B%E5%A6%82%E6%9E%9C%E4%BB%93%E5%BA%93%E4%B8%AD%E4%B8%8D%E5%AD%98%E5%9C%A8%E6%88%96%E8%80%85%E8%AE%A1%E6%95%B0%E5%B7%B2%E7%BB%8F%E6%98%AF0%E4%BA%86%EF%BC%8C%E9%82%A3%E5%B0%B1%E6%B2%A1%E5%BF%85%E8%A6%81%E6%8B%BF%E5%87%BA%E6%9D%A5%E8%BF%9Blist%E4%BA%86%E3%80%82"><span class="toc-number">1.1.</span> <span class="toc-text">题6：数组交集v2 https:&#x2F;&#x2F;leetcode.cn&#x2F;problems&#x2F;intersection-of-two-arrays-ii&#x2F;
+还是求交集，但是现在重复的元素也要算进去，不能简简单单set了。
+一个想法是，按照计数的思路先做一个“项：出现次数”的dict，然后对两个dict的键相当于已经是set了，两个set再求交，交出来的那个值对应的键就取原两个dict的键的较小的值，最后返回较小的值个数个键组成的list就行了。
+但是上面那个想法有点繁琐了，问了AI，应该是就是你先对着nums1计数（仓库），然后nums2里遍历每个项，遍历到每一个，如果仓库中存在且计数不为0，就拿出来进list，并计数-1；如果仓库中不存在或者计数已经是0了，那就没必要拿出来进list了。</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">1. list 常用操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">2. set 常用操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">3. dict 常用操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">0326</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3%E9%A2%98%E8%BF%98%E6%B2%A1%E5%A5%BD%EF%BC%8C%E8%AE%B0%E5%BE%97%E7%9C%8B%E4%B8%8B"><span class="toc-number">5.1.</span> <span class="toc-text">2 3题还没好，记得看下</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">0330</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">0331</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">0401</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text">0402</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/dark.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="日语语法蓝宝书总结"/></a><div class="content"><a class="title" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结">日语语法蓝宝书总结</a><time datetime="2026-06-26T09:47:36.000Z" title="发表于 2026-06-26 17:47:36">2026-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】可爱小狗-小狗-护眼.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="leetcode刷题日记"/></a><div class="content"><a class="title" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记">leetcode刷题日记</a><time datetime="2026-04-03T06:26:47.000Z" title="发表于 2026-04-03 14:26:47">2026-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云彩-夜晚-夜景.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="口令复用综述"/></a><div class="content"><a class="title" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述">口令复用综述</a><time datetime="2026-01-21T12:58:23.000Z" title="发表于 2026-01-21 20:58:23">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】兔子朱迪-彩云-朱迪.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Github Page更换新域名后如何更新配置"/></a><div class="content"><a class="title" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置">Github Page更换新域名后如何更新配置</a><time datetime="2026-01-01T04:13:51.000Z" title="发表于 2026-01-01 12:13:51">2026-01-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】卡通羊-可爱小羊.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM Post-training"/></a><div class="content"><a class="title" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training">LLM Post-training</a><time datetime="2025-11-30T14:14:52.000Z" title="发表于 2025-11-30 22:14:52">2025-11-30</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2026 By Linghao Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":200,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body></html>

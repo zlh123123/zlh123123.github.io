@@ -1,0 +1,490 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>操作系统原理 | 好急好急的Hexo博客</title><meta name="author" content="Linghao Zhang"><meta name="copyright" content="Linghao Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="写在前面的话 这份文档主要是用来应付信安的操作系统原理课程，为考前一天能够速通设计。 本文档的所有图片和文字来自b站拯救者课程、教学PPT、某位热心同学的资料整理和Chatgpt，感激不尽！ 温馨提示：水平有限，有许多疏漏之处，文档还有许多没有涉及到的细节点（以后不知道会不会补？），敬请谅解。 划的重点     这重点是24年的哦(⊙o⊙)，请以自己的老师所划重点为准~~ 概述 操作系统的特征">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统原理">
+<meta property="og:url" content="https://zlh123123.github.io/2024/06/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="好急好急的Hexo博客">
+<meta property="og:description" content="写在前面的话 这份文档主要是用来应付信安的操作系统原理课程，为考前一天能够速通设计。 本文档的所有图片和文字来自b站拯救者课程、教学PPT、某位热心同学的资料整理和Chatgpt，感激不尽！ 温馨提示：水平有限，有许多疏漏之处，文档还有许多没有涉及到的细节点（以后不知道会不会补？），敬请谅解。 划的重点     这重点是24年的哦(⊙o⊙)，请以自己的老师所划重点为准~~ 概述 操作系统的特征">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E4%BA%91-%E5%8A%A8%E7%94%BB%E7%89%87-%E5%8A%A8%E7%94%BB%E7%94%B5%E5%BD%B1.png">
+<meta property="article:published_time" content="2024-06-14T13:47:59.000Z">
+<meta property="article:modified_time" content="2024-11-26T14:32:52.000Z">
+<meta property="article:author" content="Linghao Zhang">
+<meta property="article:tag" content="操作系统">
+<meta property="article:tag" content="基础课">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E4%BA%91-%E5%8A%A8%E7%94%BB%E7%89%87-%E5%8A%A8%E7%94%BB%E7%94%B5%E5%BD%B1.png"><link rel="shortcut icon" href="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png"><link rel="canonical" href="https://zlh123123.github.io/2024/06/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '操作系统原理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/welcome-image.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云-动画片-动画电影.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" alt="Logo"><span class="site-name">好急好急的Hexo博客</span></a><a class="nav-page-title" href="/"><span class="site-name">操作系统原理</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">操作系统原理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-06-14T13:47:59.000Z" title="发表于 2024-06-14 21:47:59">2024-06-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-26T14:32:52.000Z" title="更新于 2024-11-26 22:32:52">2024-11-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>写在前面的话</h1>
+<p>这份文档主要是用来应付信安的操作系统原理课程，为考前一天能够速通设计。</p>
+<p>本文档的所有图片和文字来自<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1nG411j72M/?spm_id_from=333.1007.top_right_bar_window_custom_collection.content.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">b站拯救者课程</a>、教学PPT、某位热心同学的资料整理和Chatgpt，感激不尽！</p>
+<p>温馨提示：水平有限，有许多疏漏之处，文档还有许多没有涉及到的细节点（以后不知道会不会补？），敬请谅解。</p>
+<h1>划的重点</h1>
+<p><img src="https://s2.loli.net/2024/06/14/iSVHYFn4WwglIcX.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/14/mUsZ1MxV9DHrgjk.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/14/w3PrFecqBtyXdZH.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/14/qUp4OV8zLkmCPZG.jpg" alt=""></p>
+<p>这重点是24年的哦(⊙o⊙)，请以自己的老师所划重点为准~~</p>
+<h1>概述</h1>
+<h2 id="操作系统的特征">操作系统的特征</h2>
+<p><img src="https://s2.loli.net/2024/06/14/wzKiF3oaIe6Ed5q.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/14/zRojSV7lIpQiFTP.jpg" alt=""></p>
+<h3 id="接口">接口</h3>
+<p>操作系统为用户提供命令接口和程序接口（系统调用）。命令接口就是用户从终端输入的命令，可以是一条命令（联机命令接口），也开始是一组命令（脱机命令接口，类似批处理程序）；程序接口就是被应用程序调用的东西，相当于应用程序让操作系统为自己提供的服务。</p>
+<h3 id="SPOOLING技术">SPOOLING技术</h3>
+<p>通过将输入/输出数据存储到磁盘或其他存储设备中，然后按需进行处理，以使输入/输出设备与主处理器并行运行。</p>
+<p><strong>为什么说它是一种缓冲技术？从该技术上如何体现操作系统的虚拟性？</strong></p>
+<p>答：因为它<strong>使用了临时存储来存储数据</strong>，以允许输入/输出设备与处理器并行工作。当输入/输出设备的数据传输速度与处理器处理速度不匹配时，SPOOLING技术可以缓冲数据，以使它们在适当的时候被处理。</p>
+<p>它的虚拟性体现在当有多个进程使用一个设备时，每个进程都认为自己独占了这个设备。在物理上只有一个设备，在逻辑上虚拟出多个设备。</p>
+<p><strong>该技术和内存缓冲技术、脱机技术间的区别在？</strong></p>
+<p>答：内存缓冲技术是一种通过使用内存中的缓冲区来暂时存储数据以优化系统性能的技术。内存缓冲技术主要用于优化数据访问和处理过程，提高系统的响应速度和性能。内存缓冲技术是将数据暂时存储在内存中，以便快速访问和处理。</p>
+<p>脱机技术是一种将某些处理任务从主处理器中脱机处理的技术，以减轻主处理器的工作负荷。脱机任务可以在后台或并行处理器上执行，而不会影响主处理器的性能。脱机技术主要用于提高系统吞吐量和处理能力，相当于脱机就是把这个任务独立在主系统以外运行来释放主系统资源。</p>
+<h3 id="中断技术">中断技术</h3>
+<p>中断技术是计算机系统中一种用于处理外部事件或异步事件的机制。当外部设备发生某个事件（如输入/输出操作完成、时钟信号等）或者某个程序达到某个条件时，中断技术能够暂停当前程序的执行，转而处理这个事件或条件，然后返回到原来的程序继续执行。</p>
+<p>**中断技术的主要目的是使计算机系统能够及时响应外部事件，提高系统的响应速度和效率。**它可以确保在程序执行的过程中，系统能够及时处理外部事件，而无需等待某些操作完成或某些条件发生才能继续执行。</p>
+<p><strong>中断和异常之间是什么关系</strong>？</p>
+<p><img src="https://s2.loli.net/2024/06/14/IbRGXnxVeQ8kMZt.jpg" alt=""></p>
+<p>异常就是这里内中断的3种情况。</p>
+<h3 id="DMA技术">DMA技术</h3>
+<p>DMA技术是一种计算机数据传输方式，可以<strong>让外围设备直接和主存储器进行数据交换，而不需CPU的干预</strong>。这样可以极大地减轻CPU的负担，<strong>提高数据传输效率，加快实时数据处理的速度</strong>。</p>
+<p>DMA技术的工作原理是在DMA控制器的控制下，外围设备可以直接访问主存储器，而不必通过CPU进行数据传递。DMA控制器负责将数据从外围设备中搬运到主存储器中，或反之，从主存储器中搬运数据到外围设备中。</p>
+<p>DMA技术主要应用于需要大量数据传输的场景，如磁盘读写、网络数据传输、图形处理等。它可以提高数据传输速度，减少CPU的占用率，提高系统的整体性能。</p>
+<h2 id="操作系统分类">操作系统分类</h2>
+<p><img src="https://s2.loli.net/2024/06/14/1xRhNqVGdETQjDX.jpg" alt=""></p>
+<p>多道批处理系统能够充分利用系统资源，系统吞吐量大（CPU和其他资源一直处于忙碌）；但是它缺乏人机交互能力，响应时间长，用户不知道系统里到底发生了什么。</p>
+<p>分时系统能让一台计算机连接多台终端，人机交互友好，时间片轮询。</p>
+<p>实时系统的交互性能不高，但是它不受时间片长度的局限，所以能够及时响应，而不会等到一个时间片结束后才开始下一个；同时对任务响应有时间上的限定。（及时性+可靠性）</p>
+<h2 id="现代操作系统的特征">现代操作系统的特征</h2>
+<p><strong>微内核</strong></p>
+<p><img src="https://s2.loli.net/2024/06/14/hRyViKM1gNF8pH9.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/14/qgQy8L9HP6IbxAn.jpg" alt=""></p>
+<p><strong>多线程</strong>：多线程是指在同一程序中的多个线程同时执行。每个线程都有自己的执行路径和执行状态，并且可以同时执行不同的任务。多线程可以提高程序的效率和响应速度，可以充分利用多核处理器的优势，也可以实现并发性操作。</p>
+<p><strong>对称多处理</strong>：对称多处理是指在计算机系统中有多个处理器核心或多个CPU同时工作，并且每个处理器核心都可以执行相同的任务。这种结构可以提高系统的并发性和性能，使得系统可以更好地支持多任务处理和多用户操作。</p>
+<p><strong>分布式</strong>：分布式是指通过网络连接多台计算机，将它们作为一个整体来工作。分布式系统中的多个计算机之间可以相互通信和协作，共同完成一个任务。分布式系统可以提高系统的可靠性、可扩展性和容错性，可以更灵活地分配资源和处理任务。</p>
+<p><strong>面向对象设计</strong>：面向对象设计强调将系统划分成多个对象，每个对象负责完成特定的功能，对象之间通过消息传递进行通信和协作。面向对象设计可以提高系统的模块化性、可维护性和扩展性，使得系统更易于理解和调试。</p>
+<h1>进程管理</h1>
+<h2 id="定义">定义</h2>
+<h3 id="进程">进程</h3>
+<p><img src="https://s2.loli.net/2024/06/14/cOCodkwTWI5KJGb.jpg" alt=""></p>
+<p>PCB+数据段+程序段=进程，PCB是判断进程是否存在的唯一标志。</p>
+<p>基本采用链表结构管理所有进程的PCB</p>
+<p><strong>进程和程序的区别</strong>？</p>
+<p><img src="https://s2.loli.net/2024/06/14/AcXlfKkai1L3ywP.jpg" alt=""></p>
+<p><strong>进程有哪些特性？</strong></p>
+<p><img src="https://s2.loli.net/2024/06/14/uvAxHzXZ8gUNEeP.jpg" alt=""></p>
+<h3 id="线程">线程</h3>
+<p>进程内部的执行线索，称为线程，又被称为轻量级进程。</p>
+<p><strong>进程：资源分配的基本单位。</strong></p>
+<p><strong>线程：调度和执行的基本单位。</strong></p>
+<p><strong>线程由哪些部分组成？</strong></p>
+<p><img src="https://s2.loli.net/2024/06/14/8zHkQh7jlmsuSFK.jpg" alt=""></p>
+<p><strong>一个线程被阻塞后</strong>，只代表该线程对应的执行线索暂停，不会必然导致整个进程的阻塞，同进程中的其它线程仍有可能被调度执行。</p>
+<p>同进程内的线程是<strong>并发执行</strong>的（单CPU环境）。</p>
+<p>同进程内的线程能够实现一些资源的共享，如全局变量等。</p>
+<p>对共享的资源，在访问时需要解决<strong>同步或互斥</strong>的问题。</p>
+<p><strong>引入线程的好处？</strong></p>
+<p><img src="https://s2.loli.net/2024/06/14/gzdf43MGa2wBqtD.jpg" alt=""></p>
+<h2 id="处理机调度">处理机调度</h2>
+<p><img src="https://s2.loli.net/2024/06/14/5k8iXGgnruSdMvx.jpg" alt=""></p>
+<p>实际系统中不一定同时存在这三种调度。高级调度一般只用在批处理系统中；分时系统中一般只有中级和低级调度。</p>
+<p><img src="https://s2.loli.net/2024/06/14/nfu2EzRjcZ5SxYw.jpg" alt=""></p>
+<h2 id="评判调度算法的标准（会算）">评判调度算法的标准（会算）</h2>
+<p><img src="https://s2.loli.net/2024/06/14/qrxMC1Hlf3KhVR8.jpg" alt=""></p>
+<h2 id="调度算法">调度算法</h2>
+<p><img src="https://s2.loli.net/2024/06/14/rQTVyf8MmDkuCNX.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/14/KHoLVzEDA37pnm1.jpg" alt=""></p>
+<p>这部分要考计算大题。</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qd4y177eA?p=5&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">大题-处理机调度算法_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1kJ411E7AQ?p=6&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">进程调度_Process _Scheduling_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1nG411j72M/?p=7&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=126">【精准空降到 02:06】</a></p>
+<p>要注意的是：周转时间=完成时间-到达时间</p>
+<p>​					带权周转时间=周转时间/服务（运行）时间</p>
+<p>​					平均周转时间=周转时间/进程数；平均带权周转时间同理</p>
+<p>​					等待时间=开始运行的时间-到达的时间</p>
+<p><strong>优先级调度算法中如何确定优先级？</strong></p>
+<p><img src="https://s2.loli.net/2024/06/14/SnI7oiXkTHMp2A5.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/14/RB9udMfa6CjhsNS.jpg" alt=""></p>
+<h2 id="进程状态转换">进程状态转换</h2>
+<p><img src="https://s2.loli.net/2024/06/14/vQruGMJEyAdzhw3.jpg" alt=""></p>
+<ul>
+<li>
+<p>单CPU系统中，处于同一时刻的运行态进程只有一个</p>
+</li>
+<li>
+<p>就绪状态的进程拥有除了处理机以外的所有资源，拿到处理机就能运行，这些进程以队列形式存在</p>
+</li>
+<li>
+<p>阻塞态的进程需要等待某资源可用（除了处理机以外），在这种情况下，哪怕处理机空闲，阻塞态的进程也无法运行，阻塞态的进程也以队列形式存在</p>
+</li>
+<li>
+<p>新建态的作用：便于限制进程数量</p>
+<p>终止态的作用：便于其他应用程序分析统计操作系统的性能。</p>
+</li>
+</ul>
+<p>有时还会存在“挂起态”：</p>
+<p><img src="https://s2.loli.net/2024/06/14/TneCxSAPJORZrpb.jpg" alt=""></p>
+<p><strong>两个挂起状态的好处?</strong></p>
+<p>仅一个挂起态时，挂起的进程都是阻塞的，再次调度到内存时，要立即评估其是否已经获得所需资源。两个状态可以仅仅把挂起/就绪进程调度进内存，因为其已经获得了资源，不需再进行评估。</p>
+<p><strong>导致挂起的原因?</strong></p>
+<p>1、内存不足时，把部分阻塞进程交换到交换区；2、程序调试；3、周期较大的可预期进程、如审计及监控进程；4、父进程由于协调等原因，要求子进程挂起；5、其他OS原因，例如，挂起后台进程、挂起怀疑有问题的程序等。</p>
+<p><strong>线程不存在挂起状态，为什么？</strong></p>
+<p>进程是面向资源的。挂起和资源最相关。因此，可以说挂起是进程级别的概念。</p>
+<h2 id="进程切换与模式切换">进程切换与模式切换</h2>
+<p><strong>进程控制采用哪两种模式？</strong></p>
+<p><img src="https://s2.loli.net/2024/06/14/WgjavFMc86rRO25.jpg" alt=""></p>
+<p><strong>设置用户模式和内核模式是为了提高操作系统的安全性和稳定性。</strong></p>
+<p>首先，用户模式和内核模式的设置可以有效隔离用户程序和核心操作系统，使得用户程序无法直接访问操作系统的关键资源和数据，从而防止用户程序对操作系统造成破坏或滥用。</p>
+<p>其次，内核模式具有更高的权限，可以访问操作系统的所有资源和功能，可以对系统进行管理和控制。而用户模式则仅能执行有限的操作，有一定的限制和隔离，从而保护操作系统的核心功能和数据。</p>
+<p>最后，用户模式和内核模式的设置可以帮助操作系统进行更好的资源管理和调度，提高系统的性能和效率，避免用户程序对系统资源的占用和浪费。</p>
+<p><img src="https://s2.loli.net/2024/06/14/9ILDzfECnyGmeha.jpg" alt=""></p>
+<p><strong>中断(Int n)发生时，通常会发生进程切换，但并不是必须伴随着进程切换。</strong></p>
+<p><strong>进程切换与模式切换间的依赖关系？</strong></p>
+<p>发生模式切换并不一定发生进程切换，此时，模式切换的开销比进程切换要小。（大多数操作系统都如此）</p>
+<p>发生进程切换时，必然伴随着模式切换，因为，进程切换是核心功能，无法在用户模式下完成。</p>
+<p><strong>中断和陷阱间的区别？</strong></p>
+<p>外部中断，就是我们通常所说的中断(interrupt)。对于执行的系统来说，这种中断发生完全是&quot;异步&quot;的，根本无法预测到此类中断会在什么时候发生。因此，CPU(或者软件)对于此类外部中断完全是&quot;被动&quot;的。</p>
+<p>由软件产生的中断则不同，它是由专设的指令，如Intel X86的&quot;INT n&quot;，在程序中有意地产生，所以是主动的，“同步&quot;的。只要CPU一执行一条int指令，就知道在开始执行下一条指令之前一定要先进入中断服务程序，这种主动的中断我们称之为&quot;陷阱”。</p>
+<p>**中断和异常有个比较大的共同点就是“不可预知性”,所以是被迫的；而陷阱有“有意为之”的含义。**实际上，cpu优先权不能屏蔽陷阱，所以说，实际上陷阱就是一种不可屏蔽中断。</p>
+<h2 id="用户级多线程与内核级多线程">用户级多线程与内核级多线程</h2>
+<ul>
+<li>用户级线程</li>
+</ul>
+<p>内核以进程为单位进行调度，<strong>不知道线程的存在</strong>。线程的所有状态变化都发生在用户空间中。管理线程的工作由应用程序来完成，操作系统感觉不到进程内部的多执行线索。</p>
+<p>进程按操作系统的进程调度方式竞争CPU。**进程竞争到CPU后，再按自己的调度方式选择合适的线程运行。**进程占有CPU期间，进程可以按既定的调度方式选择新线程运行，被剥夺CPU的线程的执行线程保存的工作由该进程负责。</p>
+<p>线程管理工作完全由<strong>应用程序员代码</strong>实现。为了便于使用，以<strong>函数库</strong>的形式提供，应用程序员可以通过<strong>对函数库的调用</strong>实现对线程的管理。</p>
+<p><strong>主要优点：</strong></p>
+<p>同一进程内的线程切换和调度开销小，<strong>不需要模式切换</strong>。进程内部的线程调度算法比较灵活，<strong>不同的应用程序可以采用不同的线程调度算法</strong>。实现<strong>独立于操作系统内核</strong>，便于维护，也便于在操作系统之间实现移植。</p>
+<p><strong>主要缺点：</strong></p>
+<p><strong>当线程进行系统调用时，不仅线程被阻塞，而且会引起进程的阻塞，即所有线程都被阻塞。<strong>不能把同进程中的多个线程调度到多个处理器上，即内核能够分配给进程的只有一个CPU，进程中只有一个线程能够运行。在多处理器环境下，同进程中</strong>多线程并行性差。</strong></p>
+<ul>
+<li>内核级线程</li>
+</ul>
+<p>**所有的线程管理工作全部由操作系统核心完成。**操作系统核心为进程中的每个线程维护上下文。操作系统基于线程实现处理器调度，任何进程都至少包含一个线程。</p>
+<p>**应用程序中不再包含线程管理代码。**应用程序员可以通过系统调用接口完成线程的创建和控制。</p>
+<p><strong>缺点：</strong></p>
+<p>即使<strong>同进程内的线程切换也需要进入核心态执行调度算法</strong>。（伴随着模式切换）因为用户进程的线程在用户态进行，但是线程管理和切换在内核态完成。</p>
+<p><strong>优点：</strong></p>
+<p>如果一个线程被阻塞，<strong>内核可以调度同进程中的其他线程执行</strong>，不会一个线程阻塞其他线程都阻塞。同进程内的线程<strong>并行度好</strong>，可以分别调度到多个处理器上。</p>
+<h2 id="进程同步与互斥">进程同步与互斥</h2>
+<ul>
+<li>进程互斥</li>
+</ul>
+<p><strong>两个或两个以上的进程同时竞争某资源</strong>，而该资源在同一时刻只能被一个进程使用。操作系统需要提供一种资源分配机制，来控制为这些进程分配资源的顺序，既保证各进程能够使用资源，又能保证各进程互斥使用资源。</p>
+<ul>
+<li>进程同步</li>
+</ul>
+<p><strong>两个或两个以上的进程要协作完成一个任务</strong>，它们之间就要互相配合，需要在某些动作之间进行同步。一个进程的某些动作需要与协作进程的某些动作之间在时序上要有一定的关系。如果协作进程的某些操作没有完成，那么进程就要在执行路径的某些点上等待这些操作的完成，之后才能继续执行下去。</p>
+<p><strong>能不能通过约定时间顺序来解决同步？</strong></p>
+<p>由于进程执行速度是不可预测的，不能通过约定时间等待的方式来实现进程间的同步。</p>
+<p><strong>互斥与同步之间的关系？</strong></p>
+<p>联系：</p>
+<p>都是关于并发进程如何共享资源的问题</p>
+<p>区别：</p>
+<p>互斥：要求各进程互斥地使用资源，当资源空闲时，任何进程都有资格使用该资源。</p>
+<p>同步：具有同步关系的进程之间必须按某种依赖关系相互合作，在指定的依赖关系未满足前，即使资源空闲也不允许被使用。</p>
+<h2 id="信号量PV机制">信号量PV机制</h2>
+<p><img src="https://s2.loli.net/2024/06/14/AF9mYkyGKDewVha.jpg" alt=""></p>
+<p>这个肯定有大题：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qd4y177eA?p=7&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">大题-进程的同步和互斥（PV操作）_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1nG411j72M/?p=7&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=1291">【精准空降到 21:31】</a></p>
+<h2 id="管程">管程</h2>
+<p><img src="https://s2.loli.net/2024/06/14/Hh9dcwvPq1Lsp8F.jpg" alt=""></p>
+<p>将临界资源和访问临界资源的代码（临界区）组织到同一个数据结构（对象）中。</p>
+<h2 id="进程通信方式">进程通信方式</h2>
+<ul>
+<li>共享存储</li>
+</ul>
+<p>两通信的进程间存在一块共享空间，两个进程通过对该空间的读写来完成通信。</p>
+<p><img src="https://s2.loli.net/2024/06/14/iC2XpM3FOrJR8Tx.jpg" alt=""></p>
+<ul>
+<li>消息传递</li>
+</ul>
+<p><img src="https://s2.loli.net/2024/06/14/p59MDjqeRZTs1c7.jpg" alt=""></p>
+<ul>
+<li>管道通信</li>
+</ul>
+<p><img src="https://s2.loli.net/2024/06/14/E2IZKNALdaUszpg.jpg" alt=""></p>
+<h2 id="死锁">死锁</h2>
+<h3 id="啥是死锁？产生的原因？"><strong>啥是死锁？产生的原因？</strong></h3>
+<p>死锁：如果在一个进程集合中的每个进程都在等待只能由该集合中的其他一个进程才能引发的事件（释放资源），则称一组进程或系统此时发生了死锁。</p>
+<p>原因可能在于：</p>
+<p>硬件资源竞争：每个进程都竞争到部分资源，但这部分资源又不能让其继续运行。硬件资源分配不当；软件资源竞争；wait、signal操作不当。</p>
+<h3 id="死锁的形成条件">死锁的形成条件</h3>
+<p><strong>必要条件</strong>：</p>
+<p>互斥使用：（资源）每次只能允许一个进程占有和使用，其它申请该资源的进程被阻塞。</p>
+<p>保持并等待 ：当进程等待分配给它新的资源时，保持占有已分配的资源。</p>
+<p>不可剥夺 ：不能强迫回收进程占有的未使用完的资源。</p>
+<p><strong>充分条件：</strong></p>
+<p>循环等待  ，存在一个闭合的进程─资源链</p>
+<h3 id="死锁预防">死锁预防</h3>
+<p><img src="https://s2.loli.net/2024/06/14/5lsv3W8MPwFgjR6.jpg" alt=""></p>
+<h3 id="死锁避免">死锁避免</h3>
+<p>进程启动时控制：仅在当前所有资源的最大请求加上新启动进程的资源请求都能得到满足时，才允许启动新进程。</p>
+<p>资源分配时控制：如果对资源的分配可能会导致死锁，就暂不允许进一步为进程分配资源。——银行家算法</p>
+<p><strong>银行家算法会考大题：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1kJ411E7AQ?p=4&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">银行家算法_Banker’s_Algorithm_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qd4y177eA?p=6&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">大题-银行家算法_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1nG411j72M/?p=7&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=669">【精准空降到 11:09】</a></p>
+<p><strong>银行家算法与coffman算法间的区别？</strong></p>
+<p>银行家算法和Coffman算法都是用于处理资源分配和避免死锁的算法，但它们的应用场景和原理有所不同。</p>
+<p>银行家算法：应用场景：主要用于操作系统中的资源分配，特别是在多道程序设计中，用于避免进程因争夺资源而发生死锁。<strong>（预防死锁）</strong></p>
+<p>原理：银行家算法通过在每次资源请求前检查系统是否能满足进程的请求，以确保资源分配不会导致系统进入不安全状态。它基于资源的最大需求量、当前已分配量和系统剩余可用量来进行判断，只有在资源请求不会导致系统进入不安全状态时才会分配资源。</p>
+<p>重点：主要关注资源的分配和保护，以确保系统处于安全状态。</p>
+<p>Coffman算法（也称为资源分配图算法）：</p>
+<p>应用场景：主要用于描述和分析并发系统中的资源分配情况，<strong>主要用于检测死锁。</strong></p>
+<p>原理：Coffman算法通过建立资源分配图，从而分析系统中资源的占用情况和进程之间的关系，以及资源请求的依赖关系。通过检测资源分配图中是否存在环路来判断系统是否处于死锁状态，从而采取相应的措施来解除死锁。</p>
+<p>重点：主要关注死锁的检测和解除，通过分析资源分配图中的结构来确定死锁的存在与否。</p>
+<p>总的来说，银行家算法主要用于操作系统中的资源分配，重点在于保证系统安全；而Coffman算法则更多地用于分析系统中的资源分配情况，重点在于死锁的检测和解除。虽然两者都与资源分配和死锁相关，但在具体应用场景和原理上有所不同。</p>
+<h3 id="死锁检测和解除">死锁检测和解除</h3>
+<p><img src="https://s2.loli.net/2024/06/14/rNz9s3tWo4nXEHB.jpg" alt=""></p>
+<h1>内存管理</h1>
+<h2 id="前置知识">前置知识</h2>
+<p><img src="https://s2.loli.net/2024/06/14/S1cv2Ejy96BepRr.jpg" alt=""></p>
+<h2 id="内存管理的概念和功能">内存管理的概念和功能</h2>
+<p><img src="https://s2.loli.net/2024/06/14/ehEZIVU5jqn3l7J.jpg" alt=""></p>
+<h2 id="覆盖与交换">覆盖与交换</h2>
+<p><img src="https://s2.loli.net/2024/06/14/Xk9rPq2ispx83ya.jpg" alt=""></p>
+<ul>
+<li>覆盖</li>
+</ul>
+<p>程序员将一个大程序按<strong>程序的逻辑结构</strong>划分成若干个程序（或数据）段，将<strong>不会同时运行</strong>的程序段分在一组内，该组称为<strong>覆盖段</strong>。同一个覆盖段中多个程序段分配到同一个称为<strong>覆盖区</strong>的存储区域。</p>
+<p><img src="https://s2.loli.net/2024/06/14/WujpzFPaDMY92dX.jpg" alt=""></p>
+<p>例如上图中，A和B不会同时运行，所以可以放进一个覆盖段中；CDE同理。覆盖区的大小则取决于覆盖段中占空间较大的程序的大小。</p>
+<p>操作系统不知道程序的逻辑结构，也不可能自动划分覆盖段，所以<strong>需要程序员在设计程序就要规划好各个覆盖段</strong>。（不透明）并用约定的描述语言，描述出覆盖段的划分，以及对每个覆盖段，何时执行特定程序段的调入和覆盖。并将该描述脚本按规定的方式提交给操作系统。操作系统按描述脚本的要求，在规定的时间调入合适的程序段到覆盖段。</p>
+<ul>
+<li>交换</li>
+</ul>
+<p><strong>交换技术用于不同的作业。覆盖技术用于一个作业的内部。</strong></p>
+<p>任一时刻，主存中只保留一个完整的用户作业。当该作业的时间片用完或因等待某一事件而不能继续运行时，系统就挑选下一个作业进入主存运行。</p>
+<p>为减少交换的数据量，如果新作业的内存需求不大，可只交换出原作业的一部分。</p>
+<p>交换技术对应用程序而言是透明的，无<strong>需程序员干预</strong>。</p>
+<h2 id="连续分区管理方式">连续分区管理方式</h2>
+<h3 id="单一连续分配">单一连续分配</h3>
+<p><img src="https://s2.loli.net/2024/06/14/YSTj2PuNVE61RhU.jpg" alt=""></p>
+<p>这种分配方式一次只能加载一个作业。实现简单不需要额外硬件，但是利用率很低。</p>
+<h3 id="固定分区分配">固定分区分配</h3>
+<p><img src="https://s2.loli.net/2024/06/14/y4g3omXOP7HauN5.jpg" alt=""></p>
+<p>如果程序太大，可能装不进分区，就需要采用覆盖技术；程序太小的话主存的利用率也很低。</p>
+<h3 id="动态（可变）分区分配">动态（可变）分区分配</h3>
+<p><img src="https://s2.loli.net/2024/06/14/yeWGMVwlDO9hXZq.jpg" alt=""></p>
+<p>四种算法对比：</p>
+<p><img src="https://s2.loli.net/2024/06/14/w2pif83qRoWzFsA.jpg" alt=""></p>
+<p>这块可能会考大题：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qd4y177eA?p=2&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">大题-分区分配算法_哔哩哔哩_bilibili</a></p>
+<h2 id="多重分区分配">多重分区分配</h2>
+<h3 id="简单分页">简单分页</h3>
+<p>地址结构为：页号+页内偏移量，如果页的大小为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">2^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6644em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span>，则页内偏移量为n位。</p>
+<p>这里会涉及逻辑地址到物理地址的转换：</p>
+<p><img src="https://s2.loli.net/2024/06/14/H2Y1ZxFr8gJVLS6.jpg" alt=""></p>
+<p>这边也涉及到计算：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1nG411j72M/?p=10&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=11">精准空降到 00:11</a></p>
+<h3 id="简单分段">简单分段</h3>
+<p><img src="https://s2.loli.net/2024/06/14/1i9EadYxVUwOkWb.jpg" alt=""></p>
+<h3 id="段页式">段页式</h3>
+<p><img src="https://s2.loli.net/2024/06/14/Anc9OfFsWt1rIe8.jpg" alt=""></p>
+<p><strong>简单分页与简单分段的区别在？</strong></p>
+<p><img src="https://s2.loli.net/2024/06/14/OXKMJ7ckvEzeAUr.jpg" alt=""></p>
+<h3 id="快表">快表</h3>
+<p><img src="https://s2.loli.net/2024/06/14/Xn3gcrqhvCNuD1Z.jpg" alt=""></p>
+<p>快表相当于就是用来提升寻找某个页表项的命中率的工具，是存储在cache中的。</p>
+<h3 id="多级页表">多级页表</h3>
+<p>多级页表的具体做法：</p>
+<p>把整个页表进行分页,分成一张张小页表,每个小页表的大小与页框相同。对小页表顺序编号,允许小页表分散存放在不连续的页框中。为了进行索引查找,应该为这些小页表建一张页目录表（一级页表）,其表项指出小页表（二级页表）所在页框号及相关信息。逻辑地址结构有三部分组成：页目录号、页号和位移。</p>
+<p>优点：</p>
+<p>可以减少页表占用主存的大小，多级页表将页表分成多个层次，每一层次的页表只包含下一层次页表的指针。这种分层结构使得只有在需要时才分配内存，从而减少了不必要的内存分配。</p>
+<p>缺点：</p>
+<p>地址转换时，CPU需要多访问多次内存。</p>
+<h3 id="反向页表">反向页表</h3>
+<p>前几种方法的弱点：页表的大小与虚拟地址空间成正比</p>
+<p>反向页表：虚拟地址的页号使用散列函数映射到哈希表中。把n位页号映射到m位帧号（n &gt; m）</p>
+<p>反向页表的大小：由物理内存的大小决定</p>
+<h2 id="连续分区与多重分区">连续分区与多重分区</h2>
+<p><img src="https://s2.loli.net/2024/06/14/ZY6OKPJIH9izVhj.jpg" alt=""></p>
+<h2 id="虚拟内存">虚拟内存</h2>
+<h3 id="局部性原理">局部性原理</h3>
+<p><img src="https://s2.loli.net/2024/06/14/smNebhcxdwvgqV3.jpg" alt=""></p>
+<h3 id="啥是虚拟内存">啥是虚拟内存</h3>
+<p><img src="https://s2.loli.net/2024/06/14/K8uSWqsNUybolXz.jpg" alt=""></p>
+<h2 id="页面替换算法">页面替换算法</h2>
+<p>当页表被装满以后，如何选择淘汰哪些页？</p>
+<p>尽量换出那些以后不再使用的页面。在尽可能长的时间内不使用的页面。**避免“抖动”：刚换出，又要使用需要再换入。**衡量指标：<strong>缺页中断次数/总的内存访问次数（缺页中断率）</strong></p>
+<p><img src="https://s2.loli.net/2024/06/14/6MNgHCjcLfxl52p.jpg" alt=""></p>
+<p>这部分会有大题：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1kJ411E7AQ?p=2&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">缺页问题_Page_Fault_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qd4y177eA?p=3&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">大题-页面置换算法_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1nG411j72M/?p=10&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=77">【精准空降到 01:17】 </a></p>
+<h2 id="页面置换策略">页面置换策略</h2>
+<p><img src="https://s2.loli.net/2024/06/14/E31ZKTLRv9OgaQM.jpg" alt=""></p>
+<h1>文件系统</h1>
+<h2 id="磁盘">磁盘</h2>
+<p><img src="https://s2.loli.net/2024/06/14/2jFMLNSHqP85Zah.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/14/bIJ16y3QYLrHUTo.jpg" alt=""></p>
+<h2 id="磁盘读写时间">磁盘读写时间</h2>
+<p>这玩意应该是计组里的计算吧，不知道会不会考</p>
+<p><img src="https://s2.loli.net/2024/06/14/hzcsyYTLb8U3Sk6.jpg" alt=""></p>
+<h2 id="磁盘调度算法">磁盘调度算法</h2>
+<p><img src="https://s2.loli.net/2024/06/14/8fwl1ksNivFX9bh.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/14/BjoXmtRgv3WVxw7.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/14/7Ybx9tGpsTJeDq5.jpg" alt=""></p>
+<p>这块没准会有大题：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qd4y177eA?p=4&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">大题-磁盘调度算法_哔哩哔哩_bilibili</a></p>
+<p><strong>为什么说机械硬盘慢？</strong></p>
+<p>因为传统机械硬盘需要寻道和找扇区的时间，相比固态而言。</p>
+<p>解决方法如下：</p>
+<ol>
+<li>磁盘高速缓存技术：磁盘高速缓存技术是通过在硬盘和内存之间加入缓存来提高读写速度。当系统需要访问数据时，先将数据存储到缓存中，如果数据已经在缓存中存在，就可以直接从缓存中读取，避免了频繁读取硬盘造成的延迟。这样可以大大提高系统的响应速度和读写性能。</li>
+<li>RAID技术：RAID技术是通过多个硬盘组合成一个逻辑卷，实现数据的备份和数据读写的并行操作。对于机械硬盘来说，RAID技术可以将数据分布在多个硬盘上，实现数据的分块读写，从而提高整体的读写速度。同时，RAID技术还可以提供数据冗余和数据备份功能，保证数据的安全性。</li>
+<li>保留部分RAM作为高速文件系统：这种方式是将一部分RAM内存作为高速缓存用于存储频繁访问的文件或数据，当系统需要访问这些数据时可以直接从RAM中读取，避免了频繁访问机械硬盘造成的延迟。通过这种方式，可以显著提高数据访问的速度和响应性。</li>
+<li>智能调度算法读写头调度元信息布置：这种方式包括优化硬盘磁头的访问路径、调度磁头的读写顺序、布置元数据的位置等优化方法。智能调度算法可以根据不同数据的访问情况和磁盘的工作状态，进行合理的调度和布局，从而减少磁头的寻道时间和等待时间，提高机械硬盘的读写效率。</li>
+</ol>
+<h1>写在最后的话</h1>
+<p>最后的文件部分和IO管理部分内容繁杂，且大多仅涉及选择题，资料不多，没有进行整理（好吧就是我已经考完了懒的再写了/(ㄒoㄒ)/~~</p>
+<p>将文中的b站链接视频都能融会贯通想必计算题肯定没问题了，简答题需要注意划的重点，选择题和判断题就自求多福吧（bushi）推荐把往年考研的选择题看一遍记住，会有原题哦(⊙﹏⊙)</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ug4y1f7Vb/?spm_id_from=333.788.top_right_bar_window_custom_collection.content.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">【考研408操作系统】29.2023年真题精讲（选择题）_哔哩哔哩_bilibili</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io">Linghao Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io/2024/06/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">https://zlh123123.github.io/2024/06/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zlh123123.github.io" target="_blank">好急好急的Hexo博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><a class="post-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a></div><div class="post-share"><div class="social-share" data-image="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云-动画片-动画电影.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2024/06/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】间谍过家家-阿尼亚.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">编译原理</div></div><div class="info-2"><div class="info-item-1">注意！这里的表述不一定精准，且不一定覆盖考点！ 基本定义 字母表 由字母、数字、标点符号组成的集合  乘积：A中取一个元素，B中取一个元素，两个连接起来后的集合 n次幂：长度为n的符号串构成的集合。n=0叫空串$\varepsilon $ 正闭包：各个正数次幂的并集，长度为正数的符号串构成的集合，用+号 克林闭包：正闭包⋃\bigcup⋃空串集合，长度为非负数的符号串构成的集合，用*号  串 由字母表中符号组成的有穷序列，包括空串。长度记作$\left | s \right | $，就是符号数  连接运算：x和y的连接就是xy，空串是单位元 x=yz：...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/04/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="操作系统安全技术"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】AI-AI风景-山景.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-10</div><div class="info-item-2">操作系统安全技术</div></div><div class="info-2"><div class="info-item-1">概述 安全等级 《可信计算机系统评估标准》将操作系统、网络组件和可信应用程序所提供的安全保护等级分为4大类，7小类，从高到低为： A1、B3、B2、B1、C2、C1、D。   目前尚没有任何操作系统满足A1等级；仅有很少一部分操作系统满足B等级；C2等级被认为针对通用操作系统来说已经足够安全的了。（目前的Windows、MAC、IOS等系统均是C2等级）    D级，最低保护（Minimal Protection） 没有通过其他安全等级测试项目的系统即属于该级，如DOS、Windows 9x系统   C级，自主访问控制（Discretionary Protection） 系统客体（被访问的，如文件、目录）可由系统主体（能够发起行为的，如用户、应用程序）自主定义访问权。例如：管理员可以决定系统中任意文件的权限。  客体的权限是可以自主决定的。    B级，强制访问控制（Mandatory Protection） 由系统强制对客体进行安全保护，每个系统客体（如文件、目录等资源）及主体（如系统管理员、用户、应用程序）都有自己的安全标签（Security...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】二次元-动漫.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-12</div><div class="info-item-2">密码学</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" title="数据库原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】多啦a梦-日本动漫.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-12</div><div class="info-item-2">数据库原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/06/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】间谍过家家-阿尼亚.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-19</div><div class="info-item-2">编译原理</div></div><div class="info-2"><div class="info-item-1">注意！这里的表述不一定精准，且不一定覆盖考点！ 基本定义 字母表 由字母、数字、标点符号组成的集合  乘积：A中取一个元素，B中取一个元素，两个连接起来后的集合 n次幂：长度为n的符号串构成的集合。n=0叫空串$\varepsilon $ 正闭包：各个正数次幂的并集，长度为正数的符号串构成的集合，用+号 克林闭包：正闭包⋃\bigcup⋃空串集合，长度为非负数的符号串构成的集合，用*号  串 由字母表中符号组成的有穷序列，包括空串。长度记作$\left | s \right | $，就是符号数  连接运算：x和y的连接就是xy，空串是单位元 x=yz：...</div></div></div></a><a class="pagination-related" href="/2025/06/13/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8%E5%8F%8A%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84/" title="网络空间安全及法律法规"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】乡村-晴空-田野.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-13</div><div class="info-item-2">网络空间安全及法律法规</div></div><div class="info-2"><div class="info-item-1">Teruteru的学习笔记 第一章 网络空间安全概述 第一节...</div></div></div></a><a class="pagination-related" href="/2024/11/26/%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8/" title="系统软件安全"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】全职高手-苏沐橙.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-26</div><div class="info-item-2">系统软件安全</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Linghao Zhang</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zlh123123"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/zlh123123" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lh.zhang.work@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，这里是我的个人博客，主要用来记录一些学习笔记和生活感悟，希望能给你带来一些帮助。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">写在前面的话</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">划的重点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%B9%E5%BE%81"><span class="toc-number">3.1.</span> <span class="toc-text">操作系统的特征</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-number">3.1.1.</span> <span class="toc-text">接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPOOLING%E6%8A%80%E6%9C%AF"><span class="toc-number">3.1.2.</span> <span class="toc-text">SPOOLING技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD%E6%8A%80%E6%9C%AF"><span class="toc-number">3.1.3.</span> <span class="toc-text">中断技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DMA%E6%8A%80%E6%9C%AF"><span class="toc-number">3.1.4.</span> <span class="toc-text">DMA技术</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB"><span class="toc-number">3.2.</span> <span class="toc-text">操作系统分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%B9%E5%BE%81"><span class="toc-number">3.3.</span> <span class="toc-text">现代操作系统的特征</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">进程管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">4.1.</span> <span class="toc-text">定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-number">4.1.1.</span> <span class="toc-text">进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B"><span class="toc-number">4.1.2.</span> <span class="toc-text">线程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6"><span class="toc-number">4.2.</span> <span class="toc-text">处理机调度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%84%E5%88%A4%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95%E7%9A%84%E6%A0%87%E5%87%86%EF%BC%88%E4%BC%9A%E7%AE%97%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">评判调度算法的标准（会算）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">4.4.</span> <span class="toc-text">调度算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.5.</span> <span class="toc-text">进程状态转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%88%87%E6%8D%A2%E4%B8%8E%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2"><span class="toc-number">4.6.</span> <span class="toc-text">进程切换与模式切换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BA%A7%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%86%85%E6%A0%B8%E7%BA%A7%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">4.7.</span> <span class="toc-text">用户级多线程与内核级多线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5"><span class="toc-number">4.8.</span> <span class="toc-text">进程同步与互斥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8FPV%E6%9C%BA%E5%88%B6"><span class="toc-number">4.9.</span> <span class="toc-text">信号量PV机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E7%A8%8B"><span class="toc-number">4.10.</span> <span class="toc-text">管程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">4.11.</span> <span class="toc-text">进程通信方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%BB%E9%94%81"><span class="toc-number">4.12.</span> <span class="toc-text">死锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%95%A5%E6%98%AF%E6%AD%BB%E9%94%81%EF%BC%9F%E4%BA%A7%E7%94%9F%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%9F"><span class="toc-number">4.12.1.</span> <span class="toc-text">啥是死锁？产生的原因？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E5%BD%A2%E6%88%90%E6%9D%A1%E4%BB%B6"><span class="toc-number">4.12.2.</span> <span class="toc-text">死锁的形成条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E9%A2%84%E9%98%B2"><span class="toc-number">4.12.3.</span> <span class="toc-text">死锁预防</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E9%81%BF%E5%85%8D"><span class="toc-number">4.12.4.</span> <span class="toc-text">死锁避免</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E6%A3%80%E6%B5%8B%E5%92%8C%E8%A7%A3%E9%99%A4"><span class="toc-number">4.12.5.</span> <span class="toc-text">死锁检测和解除</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">内存管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">5.1.</span> <span class="toc-text">前置知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E5%8A%9F%E8%83%BD"><span class="toc-number">5.2.</span> <span class="toc-text">内存管理的概念和功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A6%86%E7%9B%96%E4%B8%8E%E4%BA%A4%E6%8D%A2"><span class="toc-number">5.3.</span> <span class="toc-text">覆盖与交换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F"><span class="toc-number">5.4.</span> <span class="toc-text">连续分区管理方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E8%BF%9E%E7%BB%AD%E5%88%86%E9%85%8D"><span class="toc-number">5.4.1.</span> <span class="toc-text">单一连续分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D"><span class="toc-number">5.4.2.</span> <span class="toc-text">固定分区分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%EF%BC%88%E5%8F%AF%E5%8F%98%EF%BC%89%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D"><span class="toc-number">5.4.3.</span> <span class="toc-text">动态（可变）分区分配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E9%87%8D%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D"><span class="toc-number">5.5.</span> <span class="toc-text">多重分区分配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%88%86%E9%A1%B5"><span class="toc-number">5.5.1.</span> <span class="toc-text">简单分页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%88%86%E6%AE%B5"><span class="toc-number">5.5.2.</span> <span class="toc-text">简单分段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F"><span class="toc-number">5.5.3.</span> <span class="toc-text">段页式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E8%A1%A8"><span class="toc-number">5.5.4.</span> <span class="toc-text">快表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-number">5.5.5.</span> <span class="toc-text">多级页表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E9%A1%B5%E8%A1%A8"><span class="toc-number">5.5.6.</span> <span class="toc-text">反向页表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E4%B8%8E%E5%A4%9A%E9%87%8D%E5%88%86%E5%8C%BA"><span class="toc-number">5.6.</span> <span class="toc-text">连续分区与多重分区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">5.7.</span> <span class="toc-text">虚拟内存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86"><span class="toc-number">5.7.1.</span> <span class="toc-text">局部性原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%95%A5%E6%98%AF%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">5.7.2.</span> <span class="toc-text">啥是虚拟内存</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-number">5.8.</span> <span class="toc-text">页面替换算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E7%BD%AE%E6%8D%A2%E7%AD%96%E7%95%A5"><span class="toc-number">5.9.</span> <span class="toc-text">页面置换策略</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">文件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A3%81%E7%9B%98"><span class="toc-number">6.1.</span> <span class="toc-text">磁盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A3%81%E7%9B%98%E8%AF%BB%E5%86%99%E6%97%B6%E9%97%B4"><span class="toc-number">6.2.</span> <span class="toc-text">磁盘读写时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A3%81%E7%9B%98%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">6.3.</span> <span class="toc-text">磁盘调度算法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">写在最后的话</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/dark.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="日语语法蓝宝书总结"/></a><div class="content"><a class="title" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结">日语语法蓝宝书总结</a><time datetime="2026-06-26T09:47:36.000Z" title="发表于 2026-06-26 17:47:36">2026-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】可爱小狗-小狗-护眼.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="leetcode刷题日记"/></a><div class="content"><a class="title" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记">leetcode刷题日记</a><time datetime="2026-04-03T06:26:47.000Z" title="发表于 2026-04-03 14:26:47">2026-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云彩-夜晚-夜景.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="口令复用综述"/></a><div class="content"><a class="title" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述">口令复用综述</a><time datetime="2026-01-21T12:58:23.000Z" title="发表于 2026-01-21 20:58:23">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】兔子朱迪-彩云-朱迪.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Github Page更换新域名后如何更新配置"/></a><div class="content"><a class="title" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置">Github Page更换新域名后如何更新配置</a><time datetime="2026-01-01T04:13:51.000Z" title="发表于 2026-01-01 12:13:51">2026-01-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】卡通羊-可爱小羊.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM Post-training"/></a><div class="content"><a class="title" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training">LLM Post-training</a><time datetime="2025-11-30T14:14:52.000Z" title="发表于 2025-11-30 22:14:52">2025-11-30</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2026 By Linghao Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":200,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body></html>

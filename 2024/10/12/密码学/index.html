@@ -1,0 +1,1300 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>密码学 | 好急好急的Hexo博客</title><meta name="author" content="Linghao Zhang"><meta name="copyright" content="Linghao Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="几个要清楚的概念 信息安全面临的威胁  窃听 重传 伪造 篡改 行为否认 拒绝服务攻击 非授权访问 传播病毒  相关术语  密码技术：把可理解的消息变换成不可理解消息，同时又可恢复原消息的方法和原理的一门科学 明文：变换前的原始消息 密文：变换后的消息 加密算法：用于把原始消息变成密文的算法 解密算法：用于恢复明文消息的算法 密钥：用于密码变换的秘密消息,选自密钥空间 明文空间：加密算法能够加密的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="密码学">
+<meta property="og:url" content="https://zlh123123.github.io/2024/10/12/%E5%AF%86%E7%A0%81%E5%AD%A6/index.html">
+<meta property="og:site_name" content="好急好急的Hexo博客">
+<meta property="og:description" content="几个要清楚的概念 信息安全面临的威胁  窃听 重传 伪造 篡改 行为否认 拒绝服务攻击 非授权访问 传播病毒  相关术语  密码技术：把可理解的消息变换成不可理解消息，同时又可恢复原消息的方法和原理的一门科学 明文：变换前的原始消息 密文：变换后的消息 加密算法：用于把原始消息变成密文的算法 解密算法：用于恢复明文消息的算法 密钥：用于密码变换的秘密消息,选自密钥空间 明文空间：加密算法能够加密的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E4%BA%8C%E6%AC%A1%E5%85%83-%E5%8A%A8%E6%BC%AB.png">
+<meta property="article:published_time" content="2024-10-12T10:13:46.000Z">
+<meta property="article:modified_time" content="2025-02-21T05:53:54.000Z">
+<meta property="article:author" content="Linghao Zhang">
+<meta property="article:tag" content="基础课">
+<meta property="article:tag" content="密码学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E4%BA%8C%E6%AC%A1%E5%85%83-%E5%8A%A8%E6%BC%AB.png"><link rel="shortcut icon" href="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png"><link rel="canonical" href="https://zlh123123.github.io/2024/10/12/%E5%AF%86%E7%A0%81%E5%AD%A6/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '密码学',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/welcome-image.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】二次元-动漫.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" alt="Logo"><span class="site-name">好急好急的Hexo博客</span></a><a class="nav-page-title" href="/"><span class="site-name">密码学</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">密码学</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-12T10:13:46.000Z" title="发表于 2024-10-12 18:13:46">2024-10-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-02-21T05:53:54.000Z" title="更新于 2025-02-21 13:53:54">2025-02-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%BA%E7%A1%80%E8%AF%BE/%E5%AF%86%E7%A0%81%E5%AD%A6/">密码学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>几个要清楚的概念</h1>
+<h2 id="信息安全面临的威胁"><strong>信息安全面临的威胁</strong></h2>
+<ul>
+<li>窃听</li>
+<li>重传</li>
+<li>伪造</li>
+<li>篡改</li>
+<li>行为否认</li>
+<li>拒绝服务攻击</li>
+<li>非授权访问</li>
+<li>传播病毒</li>
+</ul>
+<h2 id="相关术语"><strong>相关术语</strong></h2>
+<ul>
+<li>密码技术：把可理解的消息变换成不可理解消息，同时又可恢复原消息的方法和原理的一门科学</li>
+<li>明文：变换前的原始消息</li>
+<li>密文：变换后的消息</li>
+<li>加密算法：用于把原始消息变成密文的算法</li>
+<li>解密算法：用于恢复明文消息的算法</li>
+<li>密钥：用于密码变换的秘密消息,选自密钥空间</li>
+<li>明文空间：加密算法能够加密的所有明文的集合</li>
+<li>密文空间：加密算法输出的所有密文的集合</li>
+<li>密码分析：在没有密钥的情况的情况下，破解密文的原理与方法</li>
+<li>加密：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>=</mo><mi>E</mi><mi>K</mi><mo stretchy="false">(</mo><mi>P</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">C=EK(P)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mclose">)</span></span></span></span></li>
+<li>解密：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mi>E</mi><msup><mi>K</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P=EK^{-1}(C)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mclose">)</span></span></span></span></li>
+</ul>
+<h2 id="加密方法分类"><strong>加密方法分类</strong></h2>
+<ul>
+<li>私钥（对称）加密：加解密密钥一致，分组密码（分块加密后再拼到一起）和流密码（一个字节一个字节加密）属于私钥加密</li>
+<li>公钥（非对称）加密：加解密密钥不一致</li>
+<li>数字签名</li>
+<li>哈希函数</li>
+</ul>
+<h2 id="密码分析（攻击）的种类"><strong>密码分析（攻击）的种类</strong></h2>
+<ul>
+<li>唯密文攻击：只给定公开的密码算法与一些密文，来推导明文或密钥。仅通过可得的密文（可能是多个密文）和已知的密码算法，攻击者试图推导出对应的明文或密钥。由于信息量较少，这种攻击通常是最具挑战性的。</li>
+<li>已知明文攻击：知道一些明文/密文对，利用这些明密文对来进行攻击。攻击者知道一些明文及其对应的密文，通过分析这些明密文对，利用已知信息推导出其它密文的明文或密钥。这种攻击通常比唯密文攻击简单，因为攻击者已具备一部分信息。</li>
+<li>选择明文攻击：可以选择明文并得到相应的密文，利用算法的结构进行攻击。**攻击者可以选择任意明文并获得相应的密文。**通过观察和分析密文与明文之间的关系，攻击者试图利用算法结构进行攻击。这种攻击相对有效，特别是针对对称加密算法。</li>
+<li>选择密文攻击：可以选择密文并得到对应的明文，利用算法的结构进行攻击。**攻击者可以选择任意密文并获得相应的明文。**这种情况下，攻击者利用明文与密文之间的映射关系来分析和破解密钥或加密算法。这类攻击可以非常有效，尤其是对某些不够安全的加密系统。</li>
+</ul>
+<h2 id="无条件安全与计算安全"><strong>无条件安全与计算安全</strong></h2>
+<ul>
+<li>无条件安全：由于密文没有泄露足够多的明文信息，无论计算能力有多大，都无法由密文唯一确定明文。就是不管怎么样都算不出来。</li>
+<li>计算安全：在有限的计算资源条件下，密文不能破解。就是算是能算，但是现在的算力不足以破解。</li>
+</ul>
+<h1>古典密码</h1>
+<p>古典密码就代换和置换两种。</p>
+<ul>
+<li><strong>代换密码</strong>（Substitution Cipher）：在这种密码中，每个字母或符号在明文中被替换为另一个字母或符号。例如，字母&quot;A&quot;可能被替换为字母&quot;D&quot;，字母&quot;B&quot;被替换为字母&quot;E&quot;，以此类推。代换可以是简单的，如凯撒密码（每个字母向后移动固定数量），也可以是复杂的，如使用随机替换的密码表。</li>
+<li><strong>置换密码</strong>（Transposition Cipher）：在这种密码中，明文中的字母顺序被重新排列，但字母本身不被替换。换句话说，置换密码保留了原始字符集的所有字符，只是改变它们在明文中的位置。例如，“HELLO&quot;可以被置换为&quot;LELHO”，其中字符的位置被调整。<strong>按一定规则写出明文，按另一规则读出密文。</strong></li>
+</ul>
+<p><strong>代换就是改明文的内容，置换就是改明文里字母的顺序。</strong></p>
+<h2 id="凯撒密码（代换密码）"><strong>凯撒密码（代换密码）</strong></h2>
+<p>凯撒最开始发明的版本是：把每个字母用其后面的第三个字母来替换，比如A拿D替代，B拿E替代。</p>
+<blockquote>
+<p>Plain:  ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+<p>Cipher: DEFGHIJKLMNOPQRSTUVWXYZABC</p>
+</blockquote>
+<p>当然这个是有一般形式的，就是“第三个字母”也能变成“第n个字母”，就是A拿F替代，B拿G替代。</p>
+<p>当然也没必要局限于固定长度，比如我A拿G替代，那么B可以拿除了G以外的所有字母来替代，以此类推，搞出一张一对一的密码表来。（<strong>混合单表替换密码</strong>）</p>
+<p>这里我们可以用一个简单的方法来确定密钥：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110001407391.png" alt="image-20241110001407391"></p>
+<ol>
+<li>密钥字是 “JULIUSCAESAR”。在生成密钥时，首先要去除密钥字中的重复字母。经过去重后，得到“JULISCAER”。</li>
+<li><strong>构建密钥字母表</strong>：从密钥字（去重后的字母）开始：<code>JULISCAER</code></li>
+<li><strong>添加剩余字母</strong>：
+<ul>
+<li>然后添加原始字母表中未包含在密钥字中的字母。原始字母表为：<code>ABCDEFGHIJKLMNOPQRSTUVWXYZ</code></li>
+<li>从原始字母表中去掉已经在密钥字母表中的字母，剩下的字母为：<code>BDFGHKMNOPQTVWXZY</code></li>
+</ul>
+</li>
+<li><strong>综合字母表</strong>：将去重后的密钥字母表和剩余字母结合起来，形成完整的密钥字母表：就是把剩余的字母<code>BDFGHKMNOPQTVWXZY</code>按字母顺序粘到<code>JULISCAER</code>后面，R后面是<code>TVWXYZ</code>（字母表是这样写的），然后再轮回来的<code>BDFGHKMNOPQ</code>。</li>
+</ol>
+<h2 id="维吉尼亚密码（代换）"><strong>维吉尼亚密码（代换）</strong></h2>
+<p>每个字母要变成啥都不知道。</p>
+<ul>
+<li>
+<p>明文和密钥的字符一一对应进行加密：</p>
+<p>例如，如果明文是 “ATTACKATDAWN”，而密钥是 “LEMON”，那么将密钥重复以匹配明文的长度：</p>
+<ul>
+<li>明文: A T T A C K A T D A W N</li>
+<li>密钥: L E M O N L E M O N L E M</li>
+</ul>
+</li>
+<li>
+<p>密钥的第i个字母确定了第i个明文字母所使用的替换表。例如，假设我们使用的是标准的字母表，那么：</p>
+</li>
+</ul>
+<blockquote>
+<p>假设明文是 “ATTACKATDAWN”，密钥是 “LEMON”，我们用Vigenère Cipher来加密。</p>
+<ul>
+<li>所有字母与对应的字母表相加作为简单的算术（例如，A为0，B为1，依此类推），则：</li>
+<li>A (0) + L (11) = L (11)</li>
+<li>T (19) + E (4) = X (23)</li>
+<li>T (19) + M (12) = F (5)</li>
+<li>A (0) + O (14) = O (14)</li>
+<li>C (2) + N (13) = P (15)</li>
+<li>K (10) + L (11) = V (21)</li>
+<li>A (0) + E (4) = E (4)</li>
+<li>T (19) + M (12) = F (5)</li>
+<li>D (3) + O (14) = R (17)</li>
+<li>A (0) + N (13) = N (13)</li>
+<li>W (22) + L (11) = H (7)</li>
+<li>N (13) + E (4) = R (17)</li>
+</ul>
+<p>因此，最终的密文可能是 “LXFOPVEFRENHR”。</p>
+</blockquote>
+<p>这个还是很牛的：</p>
+<ul>
+<li><strong>提高安全性</strong>：由于使用了多个替换表，Vigenère Cipher 能够避免简单频率分析的攻击，并且增强了密码的复杂性。</li>
+<li><strong>灵活性</strong>：密钥的变化会直接影响加密结果，即使用不同的密钥会得到不同的密文。</li>
+</ul>
+<h2 id="Scytale密码、轨道栅栏密码、几何图形密码（置换）"><strong>Scytale密码、轨道栅栏密码、几何图形密码（置换）</strong></h2>
+<p>都是抽象艺术大师</p>
+<p><strong>Scytale密码</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110004259580.png" alt="image-20241110004259580"></p>
+<p>这个纸条的位置变化，你横着读的结果就不一样。</p>
+<p><strong>轨道栅栏密码</strong></p>
+<blockquote>
+<p>Plain:     I A E S W C N U R D</p>
+<p>​       C M I A I O Q E E</p>
+<p>Cipher:   IAESW CNURD CMIAI OQEE</p>
+</blockquote>
+<p>先读第一行，再读第二行</p>
+<p><strong>几何图形密码</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110004450667.png" alt="image-20241110004450667"></p>
+<p>读的S型顺序不一样结果不一样。</p>
+<h2 id="行变换密码（置换）">行变换密码（置换）</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1So4y1578T/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">换位密码（矩阵密码）_哔哩哔哩_bilibili</a></p>
+<p>行变换总是有一个密钥对：写密钥和读密钥</p>
+<p>比如密钥是COMPUTER</p>
+<ul>
+<li>写密钥是把COMPUTER中各个字母按字母表排列，C是1，E是2，所以写密钥是14358726</li>
+<li>读密钥是看每个字母在COMPUTER里排在哪。C在COMPUTER里是第一个字母，所以是1；E在COMPUTER里是第7个字母，所以是7。因此读密钥是17324865</li>
+</ul>
+<h1>分组密码</h1>
+<h2 id="基本概念">基本概念</h2>
+<p>这个是现在最常用的，然后它是对称（私钥）密码的一种，通信双方用的密钥是一样的。</p>
+<p>分组密码的基本逻辑是拿代换和置换组合：</p>
+<ul>
+<li>
+<p>代换（S-box）：将一个二进制字用其他二进制字代换，可以看作一个大的查表运算</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110140330908.png" alt="image-20241110140330908"></p>
+</li>
+<li>
+<p>置换（P-box）：将二进制字次序打乱</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110140341809.png" alt="image-20241110140341809"></p>
+</li>
+</ul>
+<h2 id="Feistel密码"><strong>Feistel密码</strong></h2>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/v2-dcf7bcc86486fd287ce6b5fa2330471e_1440w.jpg" alt="img"></p>
+<p>这里的F是轮函数round function，K是每轮的子密钥。加密流程如下：</p>
+<ul>
+<li>把明文分成左右两部分</li>
+<li>右半部分不变，直接作为下一轮的左半部分</li>
+<li>右半部分和该轮的密钥在轮函数F里作用完后，得到的结果和原来的左半部分<strong>异或</strong>以后作为下一轮的右半部分</li>
+<li>然后就循环下去。</li>
+</ul>
+<p>解密过程和加密过程基本一样：就是<strong>密钥要改</strong>，例如加密是k0k1k2…，那解密就是K16K15K14…。</p>
+<p>该加密策略中涉及到了几个<strong>参数</strong>：</p>
+<ul>
+<li>分组大小：增加分组长度会提高安全性，但降低了密码运算速度，一般取64bit</li>
+<li>密钥大小：增加了密钥长度，可以提高安全性，但是也降低了密码速度，一般是128bit</li>
+<li>轮数：增加轮数可以提高安全性，但降低速度，一般是16轮</li>
+<li>子密钥生成：子密钥生成越复杂就越安全，但降低速度</li>
+<li>轮函数：复杂的轮函数可以使密码分析困难，但降低速度</li>
+</ul>
+<p><strong>S盒（代换）的作用</strong>：提供输入bits混合作用，其目的在于使作用于明文的密钥和密文之间的关系复杂化，使明文和密文之间、密文和密钥之间的统计相关特性极小化——<strong>“混淆”</strong></p>
+<p><strong>P盒（置换）的作用</strong>：将明文和密钥的影响尽可能迅速地散布到较多个输出的密文中（即将明文的冗余度分散到密文中）。这种效果进一步解释为“雪崩”和“完备性”——<strong>“扩散”</strong></p>
+<ul>
+<li>雪崩效应：输入1bit的改变，导致近一半的bit发生变化</li>
+<li>完备性效应：每个输出bit是所有输入bit的复杂函数的输出</li>
+</ul>
+<p><strong>“好的”密码设计具有: 雪崩特性,完备性,不可预料性</strong></p>
+<h2 id="Lucifier密码">Lucifier密码</h2>
+<p>第一个现代分组密码算法。它的总体运行思路和Feistel密码一样，但是它只用一个密钥。</p>
+<p>分组长度是 128-bit ,密钥长度是128-bit。每轮使用的子密钥是密钥的左半部分，密钥每次要向左旋转56-bits, 所以,密钥的每部分都参加运算。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110152945201.png" alt="image-20241110152945201"></p>
+<p>形如这样子论着改密钥。</p>
+<p>Lucifer没有经过很强的分析，利用差分攻击（<strong>属于选择明文攻击</strong>）可破解，现在已经不再使用，但它是<strong>DES</strong>的前身</p>
+<h2 id="S-DES密码">S-DES密码</h2>
+<p>顾名思义就是DES密码的简单版本。它是一个供教学而非安全的加密算法，它与DES的特性和结构类似，但参数小。</p>
+<p><strong>TODO</strong></p>
+<h2 id="DES加密算法">DES加密算法</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1KQ4y127AT/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">DES加密算法｜密码学｜信息安全_哔哩哔哩_bilibili</a></p>
+<p><strong>DES的核心</strong>是S-box（非线性部件），除此之外的计算是线性的。</p>
+<h3 id="总体流程"><strong>总体流程</strong></h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110160116343.png" alt="image-20241110160116343"></p>
+<p>基本逻辑仍然是<strong>Feistel密码</strong>这一套，但是使用的密钥、轮函数改了</p>
+<h3 id="几个参数"><strong>几个参数</strong></h3>
+<ul>
+<li>分组长度：64bit</li>
+<li>密钥长度：56bit，实际上密钥为64bit，有8bit为奇偶校验位</li>
+<li>子密钥长度：48bit</li>
+</ul>
+<h3 id="IP置换"><strong>IP置换</strong></h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110160200137.png" alt="image-20241110160200137"></p>
+<p>比如这里的第一个数字58，意思就是结果中的第1位=原文中的第58位。</p>
+<h3 id="轮函数"><strong>轮函数</strong></h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110160552521.png" alt="image-20241110160552521"></p>
+<p><strong>E扩展</strong></p>
+<p>因为R0是32bit，而子密钥是48bit，要运算那就要把R0扩展到48bit。</p>
+<p>在扩展的时候，把R0的32bit划分为8个4bit的数据，然后在每个4bit数据前后加上1bit扩展数据，就变成了8个6bit数据，即总共48bit。那这个扩展怎么弄？</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110161603206.png" alt="image-20241110161603206"></p>
+<p><strong>异或</strong></p>
+<p>那就顾名思义把子密钥和E扩展后的R0来异或</p>
+<p><strong>S盒</strong></p>
+<p>现在要把异或后得到的48bit数据重新压缩回32bit。还是先把48bit分成8个6bit，对于每个6比特，这样子操作：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110164949627.png" alt="image-20241110164949627"></p>
+<p>第3行第15列是13：这个是查表得到的</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110165151282.png" alt="image-20241110165151282"></p>
+<p><strong>P置换</strong></p>
+<p>操作方法和IP置换一样</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110165409289.png" alt="image-20241110165409289"></p>
+<p>比如这里的第一个数字16，意思就是结果中的第1位=原文中的第16位。</p>
+<h3 id="子密钥选取方法"><strong>子密钥选取方法</strong></h3>
+<ul>
+<li>密钥长度：56bit，实际上密钥为64bit，有8bit为奇偶校验位</li>
+<li>子密钥长度：48bit</li>
+</ul>
+<p>为什么子密钥是48bit？</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110165927454.png" alt="image-20241110165927454"></p>
+<p>这样子得到的k_i就是48bit的数据。注意这里每一次移位，都是在上次移位的基础上完成的，比如第一次移位后的密钥C1，第二次移位是在C1的基础上再移一位。</p>
+<blockquote>
+<p>比如1110001010，循环左移1位后变成1100010101这样子</p>
+</blockquote>
+<p>在实际使用中，可以采用<strong>双重DES</strong>与<strong>三重DES</strong>。其中，</p>
+<ul>
+<li>双重$$DES$$：在加密之后，再用另一个密钥进行加密。但它易受中间者攻击，与DES的安全性无明显区别。</li>
+<li>三重<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mi>E</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">DES</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord mathnormal" style="margin-right:0.05764em;">ES</span></span></span></span>：先用一个密钥加密，再用另一个密钥解密，然后再用第一个密钥加密<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>=</mo><msub><mi>E</mi><mrow><mi>k</mi><mn>1</mn></mrow></msub><mo stretchy="false">(</mo><msub><mi>D</mi><mrow><mi>k</mi><mn>2</mn></mrow></msub><mo stretchy="false">(</mo><msub><mi>E</mi><mrow><mi>k</mi><mn>1</mn></mrow></msub><mo stretchy="false">(</mo><mi>P</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">C=E_{k1}(D_{k2}(E_{k1}(P)))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mclose">)))</span></span></span></span>，解密时使用对应密钥解密即可，密钥长度达到112bit</li>
+</ul>
+<h2 id="IDEA加密">IDEA加密</h2>
+<p>IDEA的明文分组也是64位，密钥为128位。</p>
+<p>64bit的明文均分为4块，每块16bit，记为P1P2P3P4。</p>
+<p>每一轮循环均输入该64bit的明文和6个16bit的子密钥（这样的循环一共8轮）8轮过后进行输出变换，需要用4个16bit的子密钥，总共52个子密钥。流程图如下：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/fecd80eec319e2f2d58929b8e8e025ec.png" alt="在这里插入图片描述"></p>
+<p><strong>子密钥怎么生成？</strong></p>
+<p>子密钥编排算法：52个16bit的子密钥从128bit的密钥中生成</p>
+<ul>
+<li>前8个子密钥直接从密钥中取出</li>
+<li>对密钥进行25bit的循环左移，接下来的密钥就从中取出</li>
+</ul>
+<p>**每一次循环都在干什么？**如下图</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/f962a880999d7c4ba42fa58a7a6069dc.png" alt="在这里插入图片描述"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111212246220.png" alt="image-20241111212246220"></p>
+<p>IDEA的“混淆”和“扩散”设计原则来自三种运算：</p>
+<ul>
+<li>逐位异或</li>
+<li>模<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>16</mn></msup></mrow><annotation encoding="application/x-tex">2^{16}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">16</span></span></span></span></span></span></span></span></span></span></span></span>的整数加</li>
+<li>模<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>16</mn></msup><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2^{16}+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">16</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>的整数乘</li>
+</ul>
+<p><strong>IDEA使用128位密钥，没有DES意义下的弱密钥，能够抗差分分析和相关分析，非S-P盒类型。</strong></p>
+<h2 id="AES加密"><strong>AES加密</strong></h2>
+<p>由于DES加密密钥太短，容易被暴力破解，所以搞了它的进化版AES加密算法。当然AES加密仍然属于分组加密，当然也是对称（私钥）加密</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1i341187fK/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">【AES加密算法】| AES加密过程详解| 对称加密| Rijndael-128| 密码学| 信息安全_哔哩哔哩_bilibili</a></p>
+<h3 id="几个参数-2"><strong>几个参数</strong></h3>
+<ul>
+<li>明文长度：128bit</li>
+<li>密钥长度：128、192、256bit三种，相应的迭代轮数<em>R</em>为10、12和14。</li>
+</ul>
+<p>下面是以128bit密钥来举例。</p>
+<h3 id="加密流程"><strong>加密流程</strong></h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110181511368.png" alt="image-20241110181511368"></p>
+<p>这个最终轮和前9轮的循环运算的区别是：没有列混合操作。</p>
+<h3 id="初始变换"><strong>初始变换</strong></h3>
+<p>明文和密钥都是128bit，也就是16个字节，把两者写成4*4矩阵形式（注意顺序）：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110182815521.png" alt="image-20241110182815521"></p>
+<p>然后各对各来异或操作：比如p1和k1，把p1的8个bit和k1的8个bit异或后的结果填到新的矩阵中去。</p>
+<h3 id="循环运算"><strong>循环运算</strong></h3>
+<p><strong>字节代换</strong></p>
+<p>这是一个非线性操作</p>
+<p>实际在矩阵中存的是16进制数。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110184236330.png" alt="image-20241110184236330"></p>
+<p>比如这里的第一项19，在S-BOX表里就查第1行第9列，这里是d4；就把d4填到第一项里。就这样把16项都替代完就行了。</p>
+<p><strong>行移位</strong></p>
+<p>矩阵第一行不变，第二行循环左移1位，第三行循环左移2位，第四行循环左移3位。（这里的位都是指字节）</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110184611619.png" alt="image-20241110184611619"></p>
+<p><strong>列混合</strong></p>
+<p>把上面行移位得到的矩阵<strong>左乘</strong>一个给定的矩阵。这是对列的线性变换</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110185656007.png" alt="image-20241110185656007"></p>
+<p>当然这个乘法不是普普通通的矩阵乘法：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110193910167.png" alt="image-20241110193910167"></p>
+<p><strong>轮密钥加</strong></p>
+<p>就是上面的初始变换，把状态矩阵和密钥矩阵按位异或。</p>
+<h3 id="子密钥生成"><strong>子密钥生成</strong></h3>
+<p>我们最开始只有一个4*4的子密钥矩阵，但是我们一共要循环10次，每次都有轮密钥加这个环节，所以这些密钥怎么生成？</p>
+<p><strong>注意这里是从W0开始标号的。</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110190807759.png" alt="image-20241110190807759"></p>
+<p>i要分是不是4的倍数：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110191457294.png" alt="image-20241110191457294"></p>
+<ul>
+<li>
+<p>i不是4的倍数很简单，两列异或即可</p>
+</li>
+<li>
+<p>i是4的倍数时，要对W[i-1]做字循环、字节代换、轮常量异或三步操作（即这里的T函数）</p>
+<ul>
+<li>
+<p>字循环：把b0,b1,b2,b3变成b1,b2,b3,b0</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110192103583.png" alt="image-20241110192103583"></p>
+</li>
+<li>
+<p>字节代换：再把字循环的结果看着S-BOX表代换一波</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110184236330.png" alt="image-20241110184236330"></p>
+</li>
+<li>
+<p>轮常量异或：拿前两步得到的结果和给定的轮常量表进行异或。轮常量表一共10列，对应10次循环。第几次循环就对应拿第几列去异或。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110192502940.png" alt="image-20241110192502940"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="分组加密模式"><strong>分组加密模式</strong></h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1U8411f74f/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">【分组密码的工作模式】|分组密码 | 密码学 | 信息安全 | ECB | CBC | CFB| OF B| CTR|_哔哩哔哩_bilibili</a></p>
+<ul>
+<li>
+<p>ECB——电子密码本模式：用相同的密钥对明文分组进行单独加密</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110195411732.png" alt="image-20241110195411732"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110195435766.png" alt="image-20241110195435766"></p>
+</li>
+<li>
+<p>CBC——密码分组链接模式：</p>
+<p>适合加密长度大于64比特的消息</p>
+<p>还可以用来进行用户鉴别(见报文鉴别部分)</p>
+<p>该模式除了能获取保密性，也能用于认证。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110200227260.png" alt="image-20241110200227260"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110200350958.png" alt="image-20241110200350958"></p>
+</li>
+<li>
+<p>CFB——密码反馈模式：明文本身不加密（流密码工作特征）</p>
+<p>该模式除了能获取保密性，也能用于认证。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110200904792.png" alt="image-20241110200904792"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111213220804.png" alt="image-20241111213220804"></p>
+<p>这里的“部分解密数据”是指可以取前面的密码分组直接解密，而不像CBC这种需要全部拿出来才能解密，这样就有利于对数据进行随机访问。</p>
+</li>
+<li>
+<p>OFB ——输出反馈方式：每个明文分组加密时用到的密钥在不停套娃</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111213558284.png" alt="image-20241111213558284"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111213846233.png" alt="image-20241111213846233"></p>
+<p>这里“对密文分组的错误不敏感”是因为我只是在对密钥不停加密，没有碰过密文，哪怕密文有错也只会影响那一个分组，而不会像CFB一样拿着出错的密文去加密。</p>
+<p>这里的“不支持并行加密”有待商榷：计算密钥的套娃显然不能并行，但是在完成所有套娃计算后，每个明文分组的异或操作可以并行。</p>
+</li>
+<li>
+<p>CTR——计算器模式：密钥变成了计数器</p>
+<ul>
+<li>可以并行加密</li>
+<li>可以预处理</li>
+<li>吞吐量仅受可使用并行数量的限制</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111214442729.png" alt="image-20241111214442729"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111214522926.png" alt="image-20241111214522926"></p>
+</li>
+</ul>
+<h1>流密码</h1>
+<h2 id="几个概念"><strong>几个概念</strong></h2>
+<p>序列密码是<strong>对称密码体制</strong>的一类，将被加密的消息<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span></span></span></span>分成连续的符号（一般为bit串），<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><msub><mi>m</mi><mn>1</mn></msub><msub><mi>m</mi><mn>2</mn></msub><msub><mi>m</mi><mn>3</mn></msub><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">m=m_1m_2m_3...</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">...</span></span></span></span>，然后使用密钥流<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><msub><mi>k</mi><mn>1</mn></msub><msub><mi>k</mi><mn>2</mn></msub><msub><mi>k</mi><mn>3</mn></msub><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">k=k_1k_2k_3...</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0315em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0315em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0315em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">...</span></span></span></span>中的第<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span>个元素<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>k</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">k_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0315em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>对<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span></span></span></span>的第<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span>个元素<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>m</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">m_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>进行加密变换。所有的加密输出连接在一起就构成了对<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span></span></span></span>执行加密后的密文</p>
+<p>通常加、解密所需要的这种<strong>序列</strong>是由一个确定性密钥流生成器产生的，该生成器的输入是一个容易记住的密钥，称之为密钥流生成器的<strong>初始密钥或种子</strong>。最后得到的是一种<strong>伪随机序列</strong>。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241110204726017.png" alt="image-20241110204726017"></p>
+<p>从这个就可以体现出：流密码相比分组密码具有记忆性</p>
+<p><strong>流密码分类</strong></p>
+<ul>
+<li>同步流密码：
+<ul>
+<li>密钥流与明文串无关，所以同步流密码中的每个密文<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">c_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>不依赖于之前的明文<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>m</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><msub><mi>m</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">m_{i-1},...,m_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6389em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></li>
+<li>同步流密码的一个重要优点就是<strong>无错误传播</strong>，即在传输期间一个密文字符被改变只影响该符号的恢复，不会对后续的符号产生影响</li>
+</ul>
+</li>
+<li>自同步流密码：
+<ul>
+<li>密钥流的产生与之前已经产生的若干密文有关</li>
+</ul>
+</li>
+</ul>
+<h2 id="反馈移位寄存器"><strong>反馈移位寄存器</strong></h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1As4y1c7Tx/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">流密码 | 线性反馈移位寄存器 | 信息安全｜密码学 | 西安电子科技大学考研 | 期末速成_哔哩哔哩_bilibili</a></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111130247783.png" alt="image-20241111130247783"></p>
+<p>这里的滑动密钥生成器就是现在要讲的反馈移位寄存器和线性反馈移位寄存器。而这两种寄存器的作用就是生成密钥。</p>
+<p><strong>反馈移位寄存器</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111130709350.png" alt="image-20241111130709350"></p>
+<p>运作流程是：在最左边插入由f函数计算出的值，输出最右边的值，然后整体向右移动一位；如此循环下去。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111131406823.png" alt="image-20241111131406823"></p>
+<p><strong>线性反馈移位寄存器LFSR</strong></p>
+<p>反馈函数f是a1,a2…的线性函数，即不存在a1*a2这种。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111131529456.png" alt="image-20241111131529456"></p>
+<p>特点：</p>
+<ul>
+<li>LFSR的结构非常适合硬件实现；</li>
+<li>LFSR的结构便于使用代数方法进行理论分析；</li>
+<li>产生的序列的<strong>周期可以很大</strong>；</li>
+<li>产生的序列具有良好的统计特性。</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111133144019.png" alt="image-20241111133144019"></p>
+<p>一个n级LFSR序列的周期最大只能为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>n</mi></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2^n−1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7477em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>，要达到最大周期序列，要确保其联接多项式不可约（就是不能再被因式分解）</p>
+<p><em>m</em>序列：n级最大的线性移位寄存器周期序列.</p>
+<p>n如果一个<em>n</em>级LFSR产生了<em>m</em>序列，则该LFSR的状态转移图仅由2个圈构成，其中一个是由全零状态构成的长度为1的圈，另一个是由全部其余<em>2^n</em>-1个状态构成的长度为<em>2^n</em>-1的圈。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113144542241.png" alt="image-20241113144542241"></p>
+<h2 id="伪随机序列"><strong>伪随机序列</strong></h2>
+<p><strong>随机序列</strong></p>
+<p>每次试验的结果与以前各次试验不发生任何关系，因此这种序列是独立试验的结果</p>
+<p><strong>性质:</strong></p>
+<ul>
+<li>1出现的次数与-1出现次数近乎相等。用概率论的语言来说就是1与-1出现的概率是相等的，都是0.5</li>
+<li>联在一起的1的一段，它的两端都是-1，叫做1的<strong>游程</strong> ,其中1的个数叫做游程的长度。类似地，能够定义-1的游程。类似可以定义长度为k的游程</li>
+</ul>
+<p>线性复杂度 :能够输出该序列的最短线性移位寄存器的级数</p>
+<p>例如，给定序列011 011……，联接多项式<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>x</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x^2+x+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>为的LFSR可以生成该序列，联接多项式为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x^3+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>的LFSR也可以生成该序列。但联接多项式为x+1的LFSR则无法做到这一点，所以，该序列的线性复杂度为2</p>
+<p>安全的密钥流应该满足这样三个基本条件：<strong>周期充分长；随机统计特性好(即基本满足Golomb的随机性公设)；大的线性复杂度。</strong></p>
+<p><strong>基于LFSR的伪随机序列生成器</strong></p>
+<p><strong>滤波生成器</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113145208565.png" alt="image-20241113145208565"></p>
+<p>相当于我输出不再像原来那样只输出末位，而是再搞一个函数g</p>
+<p><strong>组合生成器</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113145525466.png" alt="image-20241113145525466"></p>
+<p>相当于把每个LFSR的末尾输出拿出来全部塞到函数f里面去再输出。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113145649124.png" alt="image-20241113145649124"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113145657064.png" alt="image-20241113145657064"></p>
+<p><strong>钟控生成器</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113150201492.png" alt="image-20241113150201492"></p>
+<p><strong>交错停走式生成器</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113150329870.png" alt="image-20241113150329870"></p>
+<h2 id="A5算法"><strong>A5算法</strong></h2>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113150410873.png" alt="image-20241113150410873"></p>
+<h2 id="RC4算法"><strong>RC4算法</strong></h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1G64y1Y7p4/?spm_id_from=333.999.0.0&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">RC4加密算法| 流密码| 对称密码| 密码学 | 信息安全_哔哩哔哩_bilibili</a></p>
+<p>RC4密钥长度可变，以足够大的表S为基础，对表进行<strong>非线性变换</strong>来产生密钥流。</p>
+<p><strong>加密过程</strong></p>
+<p><strong>S表初始化</strong></p>
+<ul>
+<li>
+<p>对S表进行256字节的线性填充，即S[0]=0,S[1]=1,…,S[255]=255这样子</p>
+</li>
+<li>
+<p>用种子密钥填充K表（也是256字节），如果种子密钥长度不够，就循环使用，直到填满K表为止。比如种子密钥是4,5,6，那K表就是4,5,6,4,5,6…</p>
+</li>
+<li>
+<p>用K表对S表进行初始置换</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111140336035.png" alt="image-20241111140336035"></p>
+</li>
+</ul>
+<p><strong>密钥流生成</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111140826993.png" alt="image-20241111140826993"></p>
+<h1>公钥密码</h1>
+<h2 id="几个概念-2"><strong>几个概念</strong></h2>
+<p>对称密码的缺陷：</p>
+<ul>
+<li>密钥分配问题：双方要共享密钥，其中使用的安全信道很难实现</li>
+<li>密钥管理问题：任何两个用户之间都要有共享的密钥，当用户数量很大时，需要管理的密钥数量也很大</li>
+<li>没有签名功能：当主体A收到主体B的电子文档时，无法向第三方证明此电子文档确实来源于B</li>
+</ul>
+<p><strong>公钥密码</strong>：</p>
+<ul>
+<li>
+<p>包括两个密钥，加密或验证签名者<strong>不能</strong>解密或生成签名：</p>
+<ul>
+<li>公钥：可以被任何人知道，用于<strong>加密</strong>或<strong>验证签名</strong></li>
+<li>私钥：只能被消息的接收者或签名者知道，用于<strong>解密</strong>或<strong>签名</strong></li>
+</ul>
+</li>
+<li>
+<p>由私钥及其他密码信息容易计算出公钥，由公钥及算法描述难计算出私钥</p>
+</li>
+<li>
+<p>安全性基于一些已知的困难问题，如：大整数分解、离散对数问题</p>
+</li>
+<li>
+<p>加密速度比对称算法慢</p>
+</li>
+</ul>
+<p><strong>公钥算法分类</strong></p>
+<ol>
+<li><strong>密钥分配 Public-Key Distribution Schemes</strong> (PKDS)</li>
+</ol>
+<ul>
+<li>用于交换秘密信息(依赖于双方主体)</li>
+<li>常用于对称加密算法的密钥</li>
+</ul>
+<ol>
+<li><strong>公钥加密算法 Public Key Encryption</strong> (PKE)</li>
+</ol>
+<ul>
+<li>用于加密任何消息</li>
+<li>任何人可以用公钥加密消息</li>
+<li>私钥的拥有者可以解密消息</li>
+<li>任何公钥加密方案能够用于密钥分配方案PKDS</li>
+<li>许多公钥加密方案也是数字签名方案</li>
+</ul>
+<ol>
+<li><strong>数字签名 Signature Schemes</strong></li>
+</ol>
+<ul>
+<li>用于生成对某消息的数字签名</li>
+<li>私钥的拥有者生成数字签名</li>
+<li>任何人可以用公钥验证签名</li>
+</ul>
+<p><strong>公钥的安全性</strong>：</p>
+<ul>
+<li>依赖于足够大的困难性差别</li>
+<li>类似与对称算法,穷搜索在理论上是能够破解公钥密码</li>
+<li>一般情况下,有一些已知的困难问题(大整数分解、离散对数问题）</li>
+<li>要求足够大的密钥长度 (&gt;512 bits)</li>
+<li>导致加密速度比对称算法慢</li>
+</ul>
+<h2 id="Diffie-Hellman-密钥交换协议"><strong>Diffie-Hellman 密钥交换协议</strong></h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV12w411f7c5/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">Diffie-Hellman密钥交换算法| 公钥加密| DH算法| 密码学| 信息安全_哔哩哔哩_bilibili</a></p>
+<ul>
+<li>不能用于交换任意消息</li>
+<li>可以建立共享密钥，这依赖于双方的公、私钥值</li>
+<li>基于有限域上的指数问题，安全性基于计算离散对数的困难性</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111143940267.png" alt="image-20241111143940267"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111163244474.png" alt="image-20241111163244474"></p>
+<h2 id="RSA公钥密码体制"><strong>RSA公钥密码体制</strong></h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1YQ4y1a7n1/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">【RSA加密算法】| RSA加密过程详解 | 公钥加密| 密码学| 信息安全|_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1XP4y1A7Ui?spm_id_from=333.788.videopod.sections&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">数学不好也能听懂的算法 - RSA加密和解密原理和过程_哔哩哔哩_bilibili</a></p>
+<p>使用最广泛的公钥加密算法，基于<strong>大整数分解</strong>构建</p>
+<h3 id="公私钥如何生成"><strong>公私钥如何生成</strong></h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111153146260.png" alt="image-20241111153146260"></p>
+<p>如果要破解私钥，就是要破解这里的E值。E值来源于T值，而T值来源于p、q的取值。事实上我们只知道N的取值（因为N是公钥中的一个参数），然后由N去推出p、q的过程就涉及到大整数分解，这个地方是RSA加密的数学基础。</p>
+<h3 id="加解密过程"><strong>加解密过程</strong></h3>
+<p><strong>加密</strong></p>
+<p>记公钥E=（e,N），待加密字符的十进制值为M（明文），则加密后的密文为</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mo>=</mo><msup><mi>M</mi><mi>e</mi></msup><mi>m</mi><mi>o</mi><mi>d</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">C=M^emodN
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7144em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7144em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">e</span></span></span></span></span></span></span></span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></span></p>
+<p><strong>解密</strong></p>
+<p>记私钥D=（d,N），待解密字符的十进制值为C（密文），则解密后</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>M</mi><mo>=</mo><msup><mi>C</mi><mi>d</mi></msup><mi>m</mi><mi>o</mi><mi>d</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">M=C^dmodN
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8991em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span></span></span></span></span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></span></p>
+<h3 id="攻击与对抗方法"><strong>攻击与对抗方法</strong></h3>
+<p><strong>共模攻击</strong></p>
+<p><strong>只需要两个公钥，不需要私钥就能恢复明文</strong>。若很多人<strong>共用同一模数n</strong>，各自选择不同的e和d，这样实现不安全。若消息以两个不同的密钥加密，在共用同一个模下，若两个密钥互素(一般如此)，则可用任一密钥恢复明文。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111161951953.png" alt="image-20241111161951953"></p>
+<p>显然为了对抗这种攻击，不同的用户应该使用不同的模数 N，或者至少确保公钥不互素。</p>
+<p><strong>低加密指数攻击</strong></p>
+<p>使用相同较小的e(e=3)时会发生。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111162626205.png" alt="image-20241111162626205"></p>
+<p>当然这里的e不一定取3，只要是一个娇小的值就行。因此，为抗击这种攻击e必须选得足够大(EDI国际标准规定<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mo>=</mo><msup><mn>2</mn><mn>16</mn></msup><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">e=2^{16}+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">16</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>)。</p>
+<h2 id="Rabin公钥密码体制"><strong>Rabin公钥密码体制</strong></h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Nb421v7ZD/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">【密码学】RSA算法和Rabin密码体制_哔哩哔哩_bilibili</a></p>
+<p>基于二次剩余困难问题：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113153450733.png" alt="image-20241113153450733"></p>
+<p><strong>密钥生成</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113153612225.png" alt="image-20241113153612225"></p>
+<p><strong>加密过程</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113153651524.png" alt="image-20241113153651524"></p>
+<p><strong>解密过程</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113153823016.png" alt="image-20241113153823016"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113154030383.png" alt="image-20241113154030383"></p>
+<p><strong>举例</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241113154054916.png" alt="image-20241113154054916"></p>
+<h2 id="EI-Gamal公钥密码体制"><strong>EI Gamal公钥密码体制</strong></h2>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/517009576">应用密码学 | ElGamal加密算法 - 知乎</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1zm4y1v7EB?spm_id_from=333.788.recommend_more_video.-1&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">Elgamal 算法总结_哔哩哔哩_bilibili</a></p>
+<p>基于<strong>离散对数</strong>问题构建</p>
+<p><strong>公私钥怎么生成</strong></p>
+<p>欧拉函数：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ϕ</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\phi(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">ϕ</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span>，小于p的数里面，与p互质的数的个数。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111165415319.png" alt="image-20241111165415319"></p>
+<p><strong>公钥：（p,g,g1）</strong></p>
+<p><strong>私钥：随机数<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span></strong></p>
+<p>那么，其他人知道这个公钥，有没有办法推出私钥呢？这个就是离散对数难题，在这里确保EI Gamal的安全性。</p>
+<p><strong>加密过程</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111165907678.png" alt="image-20241111165907678"></p>
+<p>这个（c1,c2）即密文。采用这个方法能使得相同的信息加密出不同的结果（因为选择的随机数不同）</p>
+<p><strong>解密过程</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111170101203.png" alt="image-20241111170101203"></p>
+<h1>消息认证与哈希</h1>
+<h2 id="几个概念-3"><strong>几个概念</strong></h2>
+<p>防止主动攻击的重要技术,对开发系统安全性有重要作用</p>
+<p><strong>认证的主要目的</strong></p>
+<ul>
+<li>实体认证(发送者非冒充)</li>
+<li>消息认证(验证信息的完整性)</li>
+</ul>
+<p><strong>网络环境中的攻击(认证的需求)</strong></p>
+<ol>
+<li>泄漏</li>
+<li>通信量分析</li>
+<li>伪装(假消息)</li>
+<li>内容篡改(插入,删除,调换和修改)</li>
+<li>序号篡改(消息序号的修改)</li>
+<li>计时篡改(消息延迟或回放)</li>
+<li>抵赖(否认收或发某消息)</li>
+</ol>
+<ul>
+<li>1,2<strong>加密,</strong> 3~6<strong>消息认证</strong>, 7<strong>数字签名</strong>(3~6)</li>
+</ul>
+<p>认证不能自动提供保密性，而保密性也不能自然提供认证功能。</p>
+<p><strong>三类产生认证符的函数</strong></p>
+<ul>
+<li><strong>消息加密</strong><br>
+以整个消息的密文为认证符号;</li>
+<li><strong>消息认证码(MAC)</strong><br>
+消息、密钥的公开函数，产生一个定长值作为认证符;</li>
+<li><strong>哈希函数（哈希函数）</strong><br>
+一个将任意长度的消息映射为定长的哈希（hash）值的公开函数,以hash值作为认证符;</li>
+</ul>
+<p>下面就分别叙述一下这三种函数；</p>
+<h2 id="消息加密"><strong>消息加密</strong></h2>
+<p>消息加密有两种：常规（对称）加密、公钥加密</p>
+<p><strong>常规（对称）加密</strong></p>
+<p>用户A为发送方，用户B为接收方。B收到信息后，通过解密来判决信息是否来自A，信息是否是完整的，有无窜扰。</p>
+<p>提供保密(仅A和B共享密钥K)，提供一定程度的认证，不提供签名（发送者可以否认消息）</p>
+<p><strong>公钥加密</strong></p>
+<p>这个有两种玩法：</p>
+<ul>
+<li>
+<p>发送方用接收方的公钥加密消息,接收方用私钥解密(与对称密钥加密原理相同,需要某种特定消息结构)。<strong>这种玩法提供保密(仅B能解密)，不提供认证(公钥公开，任何人都能加密)</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/upload_b519e4fdcdf6c15ef21238a05d299c2b.png" alt="img"></p>
+</li>
+<li>
+<p>发送方先用自己的密钥加密以<strong>提供认证</strong>,然后使用接收方公钥加密提供保密性.缺点是<strong>效率不高</strong>。<strong>这种玩法可提供保密，也可提供认证和签名</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/upload_91fcb535cabb65c4644644b8e7b419e8.png" alt="img"></p>
+</li>
+</ul>
+<h2 id="消息认证码-MAC"><strong>消息认证码(MAC)</strong></h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c34y1M7NW/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">【HMAC | MAC | 基于哈希函数的消息认证码| 消息认证码 |HMAC-MD5| 信息安全】_哔哩哔哩_bilibili</a></p>
+<p>消息认证码是用来确认消息<strong>完整性</strong>并进行<strong>认证</strong>的技术。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111185418952.png" alt="image-20241111185418952"></p>
+<p>在这里的完整性是看收发双方的MAC码是否一致(就是我收到的MAC和我算出的MAC是一样的），而认证则是因为只有知道共享密钥的人才能计算出正确的MAC码。如果都ok，确认消息未被更改;确信消息来自所谓的发送者;如果消息包含序号,可确信该序号的正确性**;**</p>
+<p><strong>为什么使用消息认证(而不是用常规加密)</strong></p>
+<ul>
+<li>适用于消息广播;</li>
+<li>消息加密解密的<strong>工作量比较大</strong>;</li>
+<li>某些应用不关心消息的保密而<strong>只关心消息的真实性</strong>;</li>
+<li><strong>认证函数与保密函数的分离</strong>能提供结构上的灵活性(认证与保密可在网络协议的不同层次进行).</li>
+<li>认证码可延长消息的保护期限,同时能处理消息内容(使用加密,当消息解密后,保护就失效了).</li>
+</ul>
+<p><strong>MAC函数应有如下性质(攻击者没有K)</strong></p>
+<ul>
+<li>有M和Ck(M),试图生成M’, 使得Ck(M’)= Ck(M), 这在计算上不可行;</li>
+<li>Ck(M)应能均匀分布;对于随机选取的消息M和M’, Ck(M)= Ck(M’)的概率为2^−n,其中n为MAC的比特长度;(抗选择明文攻击)</li>
+<li>消息M’为M的某种已知代换,即M’=f(M),则Ck(M)= Ck(M’)的概率为2^−n.(防碰撞)</li>
+</ul>
+<h2 id="哈希函数"><strong>哈希函数</strong></h2>
+<p>输入可任意长，但是输出为固定长度。</p>
+<p>已知x求H(x)是可行的，但是反过来在计算上是不可行的。（单向性）</p>
+<p><strong>抗碰撞性</strong>：不同的输入很难产生相同的哈希值。</p>
+<ul>
+<li>
+<p>任意给定分组x, 寻求不等于x的y, 使得H(y)= H(x)在计算上不可行(弱抗碰撞性);</p>
+</li>
+<li>
+<p>寻求对任何的(x,y)对使得H(x)=H(y)在计算上不可行(强抗碰撞性);</p>
+</li>
+</ul>
+<p>下面介绍两个安全的哈希算法。</p>
+<h2 id="MD5"><strong>MD5</strong></h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ZC4y1u7Hd/?share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=196">【MD5算法 | 消息认证 | 哈希函数 | 密码学 | 953考研 | 西安电子科技大学】 【精准空降到 03:16】</a></p>
+<p><strong>输入任意长度</strong>报文，<strong>输出128比特</strong>的摘要；输入<strong>分组长度为512比特</strong></p>
+<p><strong>基本流程</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111201405489.png" alt="image-20241111201405489"></p>
+<p>这里仍然是把报文分成512bit一组，当然不够512bit就要补，这个补位的方法和SHA-1一致</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111191259568.png" alt="image-20241111191259568"></p>
+<p>这里注意MD5在填充消息长度时采用的是<strong>小端序</strong>，而SHA-1采用的是<strong>大端序</strong>。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111203957116.png" alt="image-20241111203957116"></p>
+<p><strong>初始化MD缓存</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111204118138.png" alt="image-20241111204118138"></p>
+<p><strong>循环步骤</strong></p>
+<p>大致流程仍然与SHA-1一致</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111204355903.png" alt="image-20241111204355903"></p>
+<p>对于每个分组完的512bit，都要这样子循环一次，更新ABCD值。轮到下一个512bit时，abcd的初始值就变成刚刚更新过的ABCD了</p>
+<p>对于这个循环函数：</p>
+<ul>
+<li>
+<p>F值、M[g]：对于不同的i（i是第几次循环），有不同的公式计算</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111204757635.png" alt="image-20241111204757635"></p>
+</li>
+<li>
+<p>K[i]：来自常量表，i是谁就取谁</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111205242695.png" alt="image-20241111205242695"></p>
+</li>
+<li>
+<p>S[i]：来自位移表</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111205449752.png" alt="image-20241111205449752"></p>
+</li>
+</ul>
+<p><strong>MD4和MD5的区别</strong></p>
+<p>MD4的设计目标：</p>
+<ul>
+<li>安全性：寻找两个具有相同消息摘要的消息计算不可行</li>
+<li>速度：32位体系结构下计算速度快.</li>
+<li>简明与紧凑：易于编程.</li>
+<li>有利的小数在前的结构(Intel 80xxx, Pentium )</li>
+</ul>
+<p>MD4与MD5的区别：</p>
+<ul>
+<li>MD4用3轮,每轮16 步,MD5用4轮,每轮16步.</li>
+<li>MD4中第一轮没有常量加；MD5中64步每一步用了一个不同的常量  T[i]；</li>
+<li>MD5用了四个基本逻辑函数，每轮一个；MD4用了三个.</li>
+<li>MD5每轮加上前一步的结果；MD4没有.（雪崩效应）</li>
+</ul>
+<h2 id="SHA-1"><strong>SHA-1</strong></h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ua411679P/?spm_id_from=333.999.0.0&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">【SHA1算法】| 哈希算法 | Hash算法 | 密码学 | 信息安全| 消息摘要_哔哩哔哩_bilibili</a></p>
+<p><strong>输入输出情况</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111190540395.png" alt="image-20241111190540395"></p>
+<p><strong>基本流程</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111190714635.png" alt="image-20241111190714635"></p>
+<p>先把原消息进行补位，把位数补成512bit的倍数。然后把消息512bit一分，每个512bit经过80轮循环运算生成160bit的摘要，然后这160bit还会参与到下一个160bit的运算中去。</p>
+<p><strong>补位怎么补</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111191259568.png" alt="image-20241111191259568"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111191402026.png" alt="image-20241111191402026"></p>
+<p><strong>每个512bit怎么运算</strong></p>
+<p>512=16*32bit，记为M[0],M[1]…M[15]</p>
+<p>而我们需要把这个扩充到80份，即80*32bit,记为W[0],W[1],…,W[79]</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111191727413.png" alt="image-20241111191727413"></p>
+<p>这里的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mi>O</mi><mi>T</mi><msup><mi>L</mi><mn>1</mn></msup></mrow><annotation encoding="application/x-tex">ROTL^1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">ROT</span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span>是指把异或结果循环左移1位。</p>
+<p>然后就正式进入循环，最后的结果是160bit的数据，这些数据存放在5个32bit的参数中，如下图这几个是其初始参数。而我们的循环就是要改这5个值，最后的160bit就是由这5个值构成。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111193139994.png" alt="image-20241111193139994"></p>
+<p>将abcde（缓冲区链接变量）分别赋值为上面的5个初始参数，就是a=H0这样子。然后就开始跑80轮循环（也认为是4个循环，每个循环有20次操作）：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111193428965.png" alt="image-20241111193428965"></p>
+<p>这里的几个不明白的计算符号：</p>
+<ul>
+<li>
+<p>ft(b,c,d)：ft函数，输入b、c、d</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111193538434.png" alt="image-20241111193538434"></p>
+</li>
+<li>
+<p>Kt：固定参数，随t而变，见上</p>
+</li>
+<li>
+<p>Wt：就是上面扩展到80个的W[0],W[1],…,W[79]这些</p>
+</li>
+</ul>
+<p>跑完这80轮循环过后，我们就得到了全新的abcde。再把这个abcde分别加到刚才的H0,H1,…H5上面去，形成新的H0,H1,…H5，（当然这里加完以后可能要进位，这里的加法还需要对<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>32</mn></msup></mrow><annotation encoding="application/x-tex">2^{32}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">32</span></span></span></span></span></span></span></span></span></span></span></span>取模，把进位那个1丢掉就行）即下图：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111194037072.png" alt="image-20241111194037072"></p>
+<p>最后，如果说我们的数据就512bit（或者更小），那跑一轮的80循环得到的H0,H1,…H5就是SHA-1加密结果。当然数据更多的话，就把新的H0,H1,…H5再作为初始值，再让abcde初始化一下，再来几个80循环就老实了</p>
+<p><strong>我们仨</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111205151238.png" alt="image-20241111205151238"></p>
+<h2 id="对哈希函数的攻击"><strong>对哈希函数的攻击</strong></h2>
+<p><strong>哈希函数的安全性</strong></p>
+<ul>
+<li>很大程度上取决于<strong>抗强碰撞</strong>的能力，即攻击者找出两个信息MM，使得HM)=H(M”)。</li>
+<li>评价一个哈希函数的安全性，就是看攻击者在现有的条件下，是否可以找到该函数的一对碰撞。</li>
+<li>对哈希函数攻击的方法包括<strong>生日攻击</strong>、<strong>差分攻击</strong>等。</li>
+</ul>
+<p><strong>生日攻击</strong></p>
+<p>假如随机选择n个人，那么这个n个人中有两个人的生日相同的概率是多少。如果要想概率是100%，那么只需要选择367个人就够了。因为只有366个生日日期（包括2月29日）。</p>
+<p>如果想要概率达到99.9% ，那么只需要70个人就够了。50%的概率只需要23个人。</p>
+<p>假设有一个函数f，它的输出范围是H，那么我们的攻击就是找到两个不同的x，y，让f(x)=f(y)。这时候，我们可以称x和y发生了碰撞。</p>
+<p>根据概率论的公式，我们想要达到50%的几率，那么需要尝试的次数是：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>约为</mtext><msqrt><mrow><mfrac><mi>π</mi><mn>2</mn></mfrac><mi>H</mi></mrow></msqrt><mtext>，</mtext><mi>H</mi><mtext>为输出范围，比如生日问题中的</mtext><mn>366</mn></mrow><annotation encoding="application/x-tex">约为\sqrt{\frac{\pi}{2}H}，H为输出范围，比如生日问题中的366
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.44em;vertical-align:-0.8953em;"></span><span class="mord cjk_fallback">约为</span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5447em;"><span class="svg-align" style="top:-4.4em;"><span class="pstrut" style="height:4.4em;"></span><span class="mord" style="padding-left:1em;"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1076em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span></span></span><span style="top:-3.5047em;"><span class="pstrut" style="height:4.4em;"></span><span class="hide-tail" style="min-width:1.02em;height:2.48em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="2.48em" viewBox="0 0 400000 2592" preserveAspectRatio="xMinYMin slice"><path d="M424,2478
+c-1.3,-0.7,-38.5,-172,-111.5,-514c-73,-342,-109.8,-513.3,-110.5,-514
+c0,-2,-10.7,14.3,-32,49c-4.7,7.3,-9.8,15.7,-15.5,25c-5.7,9.3,-9.8,16,-12.5,20
+s-5,7,-5,7c-4,-3.3,-8.3,-7.7,-13,-13s-13,-13,-13,-13s76,-122,76,-122s77,-121,77,-121
+s209,968,209,968c0,-2,84.7,-361.7,254,-1079c169.3,-717.3,254.7,-1077.7,256,-1081
+l0 -0c4,-6.7,10,-10,18,-10 H400000
+v40H1014.6
+s-87.3,378.7,-272.6,1166c-185.3,787.3,-279.3,1182.3,-282,1185
+c-2,6,-10,9,-24,9
+c-8,0,-12,-0.7,-12,-2z M1001 80
+h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8953em;"><span></span></span></span></span></span><span class="mord cjk_fallback">，</span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mord cjk_fallback">为输出范围，比如生日问题中的</span><span class="mord">366</span></span></span></span></span></p>
+<p>怎么抵御这种攻击呢？根据我们生日攻击的公式，当然是将签名方案<strong>使用的哈希函数的输出长度选择得足够大</strong>，以使生日攻击在计算上变得不可行。</p>
+<p><strong>差分攻击</strong></p>
+<h1>数字签名</h1>
+<h2 id="几个概念-4"><strong>几个概念</strong></h2>
+<ul>
+<li>数字签名可以提供消息的不可否认性,</li>
+<li>通常不对整个消息签名，因为这将会使交换信息长度增加一倍</li>
+<li>使用消息的 hash 值</li>
+</ul>
+<p><strong>公钥签名方案：</strong></p>
+<ul>
+<li>利用私钥生成签名</li>
+<li>利用公钥验证签名</li>
+<li><strong>只有私钥的拥有者才能生成签名</strong></li>
+<li>所以能够用于证明谁生成的消息</li>
+<li>任何知道公钥的人可以验证消息</li>
+</ul>
+<p><strong>数字签名算法应该：</strong></p>
+<ul>
+<li>签名结果依赖于被签名信息的每一比特</li>
+<li>算法必须依赖于签名者的特有信息</li>
+<li>生成签名的算法须非常简单</li>
+<li>签名验证算法须非常简单</li>
+<li><strong>伪造一个签名</strong>或给定签名构造一个新的信息,在计算上是<strong>困难</strong>的</li>
+<li>易于保留签名的副本</li>
+</ul>
+<p><strong>数字签名算法包含</strong></p>
+<ul>
+<li>消息空间:需要签名的所有消息的集合</li>
+<li>签名空间:所有可能的签名结果</li>
+<li>密钥空间:签名与验证需要的所有可能的私钥/公钥对集合</li>
+<li>密钥生成算法:有效生成用于签名和验证的私钥/公钥对</li>
+<li>签名算法:有效生成对信息的签名</li>
+<li>验证算法:输入签名消息、签名以及公钥，可有效验证签名的真伪</li>
+</ul>
+<p><strong>算法分类</strong></p>
+<ul>
+<li>基于大整数分解的签名体制
+<ul>
+<li>RSA数字签名体制</li>
+<li>Rabin签名体制</li>
+</ul>
+</li>
+<li>基于离散对数问题的签名体制
+<ul>
+<li>ElGamal签名体制</li>
+<li>Schnorr签名体制</li>
+<li>DSA算法</li>
+</ul>
+</li>
+<li>基于哈希函数的数字签名</li>
+</ul>
+<h2 id="RSA签名体制"><strong>RSA签名体制</strong></h2>
+<p>RSA 加密解密是<strong>可交换</strong>的</p>
+<p><strong>公私钥生成</strong></p>
+<p>生成方法和RSA公钥密码一样：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111153146260.png" alt="image-20241111153146260"></p>
+<p>公钥（e，N）私钥（d，N）</p>
+<p><strong>签名算法</strong></p>
+<p>给定消息m，我拿着私钥去加密：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>σ</mi><mo>=</mo><mi>s</mi><mi>i</mi><mi>g</mi><msub><mi>n</mi><mi>d</mi></msub><mo stretchy="false">(</mo><mi>m</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mi>m</mi><mi>d</mi></msup><mtext>  </mtext><mi>m</mi><mi>o</mi><mi>d</mi><mtext>  </mtext><mi>n</mi></mrow><annotation encoding="application/x-tex">\sigma=sign_d(m)=m^d \; mod \; n
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">m</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8991em;"></span><span class="mord"><span class="mord mathnormal">m</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">n</span></span></span></span></span></p>
+<p><strong>验证算法</strong></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mi>m</mi><msup><mrow></mrow><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></msup><mo>=</mo><msup><mi>σ</mi><mi>e</mi></msup><mtext>  </mtext><mi>m</mi><mi>o</mi><mi>d</mi><mtext>  </mtext><mi>n</mi></mrow><annotation encoding="application/x-tex">m^{&#x27;}=\sigma^e\; mod \; n
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9925em;"></span><span class="mord"><span class="mord mathnormal">m</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9925em;"><span style="top:-2.9925em;margin-right:0.05em;"><span class="pstrut" style="height:2.5795em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278em;"><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7144em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7144em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">e</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">n</span></span></span></span></span></p>
+<p>如果m’=m，验证通过，否则验证不通过.</p>
+<h2 id="EI-Gamal签名体制"><strong>EI Gamal签名体制</strong></h2>
+<p><strong>ElGamal</strong> <strong>加密算法是不可交换的</strong></p>
+<p><strong>公私钥生成</strong></p>
+<p>生成方法和EI Gamal公钥密码一样：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241111165415319.png" alt="image-20241111165415319"></p>
+<p>公钥：（p，g，g1）私钥：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span></p>
+<p><strong>签名过程</strong></p>
+<p>待签名消息M。选择随机数k，且k和p-1互质。</p>
+<p>计算参数r：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>g</mi><mi>k</mi></msup><mi>m</mi><mi>o</mi><mi>d</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">g^k mod p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0435em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span></span></span></span></p>
+<p>计算参数s：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><msup><mi>k</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>⋅</mo><mo stretchy="false">(</mo><mi>H</mi><mo stretchy="false">(</mo><mi>M</mi><mo stretchy="false">)</mo><mo>−</mo><mi>α</mi><mo>⋅</mo><mi>r</mi><mo stretchy="false">)</mo><mo stretchy="false">]</mo><mi>m</mi><mi>o</mi><mi>d</mi><mo stretchy="false">(</mo><mi>p</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[k^{-1}\cdot(H(M)-\alpha\cdot r)] mod(p-1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mclose">)]</span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span></p>
+<p><strong>注意</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241112143006571.png" alt="image-20241112143006571"></p>
+<p>例如，如果k=5，p-1=18，因为5*11=55，而55mod18=1，所以k^-1=11。</p>
+<p>这里的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false">(</mo><mi>M</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">H(M)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span>认为是安全的Hash函数，一般H(M)=M</p>
+<p>则对消息M的数字签名为(r,s)</p>
+<p><strong>验签算法</strong></p>
+<p>验签人收到消息M和签名(r,s)，先计算<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false">(</mo><mi>M</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">H(M)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span>（一般H(M)=M）</p>
+<p>然后验证下面的等式是否成立：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mrow><mi>g</mi><mn>1</mn></mrow><mi>r</mi></msup><msup><mi>r</mi><mi>s</mi></msup><mo>=</mo><mo>=</mo><msup><mi>g</mi><mrow><mi>H</mi><mo stretchy="false">(</mo><mi>M</mi><mo stretchy="false">)</mo></mrow></msup><mi>m</mi><mi>o</mi><mi>d</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">{g1}^rr^s==g^{H(M)}mod p
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9088em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord">1</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7144em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7144em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">==</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.1324em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.938em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.08125em;">H</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight" style="margin-right:0.10903em;">M</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span></span></span></span></span></p>
+<p>成立签名有效，不成立就无效</p>
+<h2 id="DSA签名机制"><strong>DSA签名机制</strong></h2>
+<p><strong>公私钥生成</strong></p>
+<p>DSA 是 ElGamal 及Schnorr algorithms 的变形，生成 320 bit 签名，安全性是基于离散对数。</p>
+<ul>
+<li>p：一个<strong>素模数</strong>，其值满足：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mi>L</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>&lt;</mo><mi>p</mi><mo>&lt;</mo><msup><mn>2</mn><mi>L</mi></msup></mrow><annotation encoding="application/x-tex">2^{L-1} &lt; p &lt; 2^L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8804em;vertical-align:-0.0391em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">L</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8413em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">L</span></span></span></span></span></span></span></span></span></span></span>，其中L是64的倍数，且满足512≤ L ≤ 1024</li>
+<li>q：<strong>(p-1)的素因子</strong>，其值满足<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>159</mn></msup><mo>&lt;</mo><mi>q</mi><mo>&lt;</mo><msup><mn>2</mn><mn>160</mn></msup></mrow><annotation encoding="application/x-tex">2^{159} &lt; q &lt; 2^{160}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8532em;vertical-align:-0.0391em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">159</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">160</span></span></span></span></span></span></span></span></span></span></span></span>，即q长度为160位。</li>
+<li>g：g = powm(h,(p-1)/q,p)。h为满足1 &lt; h &lt; p-1 的任意整数，从而有powm(h,(p-1)/q,p) &gt; 1</li>
+<li>x：私钥。x为一个随机或伪随机生成的整数，其值满足 0 &lt; x &lt; q。</li>
+<li>y：公钥。y = powm(g,x,p)</li>
+</ul>
+<p>这里的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>o</mi><mi>w</mi><mi>m</mi><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo separator="true">,</mo><mi>c</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mi>a</mi><mi>b</mi></msup><mi>m</mi><mi>o</mi><mi>d</mi><mi>c</mi></mrow><annotation encoding="application/x-tex">powm(a,b,c)=a^bmodc</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">m</span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">c</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">b</span></span></span></span></span></span></span></span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord mathnormal">c</span></span></span></span></p>
+<p><strong>签名算法</strong></p>
+<ol>
+<li>产生一个随机数k，其值满足 0 &lt; k &lt; q</li>
+<li>计算r = powm(g,k,p) mod q，其值满足 r &gt; 0</li>
+<li>计算 s = (k^(-1)(SHA(M) + x * r)) mod q，其值满足 s &gt; 0</li>
+</ol>
+<p>SHA(M)： M 的 hash 值，M为待签名的明文。SHA 是一个单向散列函数。DSS中选用SHA1算法，此时SHA(M) 为160 bits长的数字串，其满足不可逆和抗碰撞性。</p>
+<p>最终的签名就是证书对(r, s)，它们和 M 一起发送到验证方。</p>
+<p>尽管 r 和 s 为 0 的概率相当小，但只要有任何一个为 0 ，必须重新生成 k，并重新计算 r 和 s 。</p>
+<p><strong>验签过程</strong></p>
+<p>验证签名, 计算:</p>
+<ul>
+<li>w = s^(-1)(mod q)</li>
+<li>u1= (SHA(M)*w)(mod q)</li>
+<li>u2= r*w(mod q)</li>
+<li>v = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msup><mi>g</mi><mrow><mi>u</mi><mn>1</mn></mrow></msup><mo>⋅</mo><msup><mi>y</mi><mrow><mi>u</mi><mn>2</mn></mrow></msup><mo stretchy="false">(</mo><mi>m</mi><mi>o</mi><mi>d</mi><mi>p</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mi>m</mi><mi>o</mi><mi>d</mi><mi>q</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(g^{u1}\cdot y^{u2}(mod p))(mod q)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">u</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">u</span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mclose">))</span><span class="mopen">(</span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mclose">)</span></span></span></span></li>
+</ul>
+<p>v=r 签名有效</p>
+<h2 id="带密钥的哈希函数">带密钥的哈希函数</h2>
+<p><strong>先前的签名方法</strong></p>
+<ul>
+<li>都是公钥技术</li>
+<li>计算与数据量较大</li>
+<li>需要私钥的认证方案</li>
+</ul>
+<p><strong>使用快速的哈希函数用于保证数据的完整性</strong></p>
+<ul>
+<li>密钥与消息同时参加运算KeyedHash =Hash(Key||Message)</li>
+<li>有一些弱点，易受碰撞攻击</li>
+<li>随后建议:KeyedHash = Hash(Key1|| Hash(Key2)||Message))</li>
+</ul>
+<h2 id="HMAC">HMAC</h2>
+<ul>
+<li>HMAC是使用带密钥的HASH函数的结果</li>
+</ul>
+<p><strong>具体形式如下:</strong></p>
+<p>Hash((K+XORopad)||Hash((K+XORipad)||M))Hash((K+XORopad)||Hash((K+XORipad)||M))</p>
+<ul>
+<li>K+是经过填充的密钥，长度为b</li>
+<li>opad,ipad特殊的填充值为，opad=01011010重复b/8次，ipad=00110110重复b/8次</li>
+<li>安全性是基于原来的HASH函数的安全性</li>
+</ul>
+<h1>信息隐藏与隐写分析</h1>
+<h2 id="多媒体安全"><strong>多媒体安全</strong></h2>
+<p><strong>四种一般类型的攻击</strong></p>
+<ul>
+<li>
+<p>中断： 系统资源被破坏或变得不可使用， 对<strong>可用性</strong>的攻击；就是我拿不到消息了。</p>
+</li>
+<li>
+<p>截获： 未授权方获取了对某个资源的访问， 对<strong>机密性</strong>的攻击；  就是我的消息被第三者拿到了</p>
+</li>
+<li>
+<p>篡改： 未授权方不仅获得访问， 而且篡改某些数据， 对<strong>完整性</strong>的攻击；就是第三方拿到我的数据后，还改了我的数据。</p>
+</li>
+<li>
+<p>伪造： 未授权方将伪造的对象插入系统， 对<strong>真实性</strong>的攻击；就是实际上没人发信息，但是第三者伪造了一个信息发过去</p>
+</li>
+</ul>
+<p><strong>多媒体信息安全的要素</strong></p>
+<ul>
+<li>
+<p>机密性： 信息不泄漏给非授权的个人和实体， 或供其利用的特性；</p>
+</li>
+<li>
+<p>完整性： 信息在存储或传输过程中保持不被修改、 不被破坏、 不被插入、 不延迟、 不乱序和不丢失的特性；</p>
+</li>
+<li>
+<p>可用性： 信息可被合法用户访问并按要求使用的特性， 指当需要时可以取用所需信息；</p>
+</li>
+<li>
+<p>真实性： 防止未授权方对信息的篡改和伪造；</p>
+</li>
+<li>
+<p>不可抵赖性： 防止发送方或接收方抵赖所传输的消息；</p>
+</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241112151218209.png" alt="image-20241112151218209"></p>
+<h2 id="什么是信息隐藏技术"><strong>什么是信息隐藏技术</strong></h2>
+<p>它是利用人类感觉器官对数字信号的感觉冗余， <strong>将一个消息(秘密信息)隐藏在另一个消息(非秘密信息)之中</strong>， 实现隐蔽通信或隐蔽标识。它隐藏了秘密信息的存在(与传统的密码技术有明显的区别)， 表面上看起来与一般的非保密信息没有两样， 因而十分容易跳过攻击者的破解。</p>
+<p>加密技术是最常见的数字产品保护技术， 但只保护传输过程， 对解密后的产品无法保护。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241112153133770.png" alt="image-20241112153133770"></p>
+<p><strong>隐蔽信道</strong></p>
+<p>在多级安全水平的系统环境中（比如军事计算机系统），那些既不是专门设计的也不打算用来传输信息的通信路径称为隐蔽信道。</p>
+<p><strong>匿名通信</strong></p>
+<p>匿名通信就是寻找各种途径来隐藏通信消息的主体，即<strong>消息的发送者和接收者</strong>。Web应用强调接收者的匿名性，而电子邮件用户们更关心发送者的匿名性。</p>
+<p><strong>数字隐写</strong></p>
+<p>在不引起任何怀疑的情况下秘密传送消息  。</p>
+<p>需求：不被检测，大容量</p>
+<p><strong>数字水印</strong></p>
+<p>嵌入载体相关信息，目的是进行版权保护、所有权证明、盗版源追踪、完整性保护</p>
+<p>要求：鲁棒性，不可感知性。</p>
+<h2 id="信息隐藏的分类"><strong>信息隐藏的分类</strong></h2>
+<p><strong>按对象分</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241112153830159.png" alt="image-20241112153830159"></p>
+<p><strong>按可见性分</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241112153851932.png" alt="image-20241112153851932"></p>
+<p><strong>按鲁棒性分</strong></p>
+<ul>
+<li>
+<p><strong>鲁棒水印 (Robust Watermark)</strong></p>
+<p>对所有攻击鲁棒,主要应用于认证,版权保护；</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>半易碎水印 (Semi-Fragile Watermark）</strong></p>
+<p>对一些攻击鲁棒；</p>
+</li>
+<li>
+<p><strong>易碎水印 (Fragile Watermark)</strong></p>
+<p>对恶意改动敏感,主要应用于完整性判定；</p>
+</li>
+</ul>
+<p><strong>按密钥分</strong></p>
+<ul>
+<li><strong>私钥水印 (Secret Key)</strong>：水印嵌入和检测用同一密钥;</li>
+</ul>
+<ul>
+<li><strong>公钥水印 (Public Key)</strong>：水印嵌入和检测用不同密钥;</li>
+</ul>
+<p><strong>按检测需不需要原始数据</strong></p>
+<ul>
+<li><strong>私有水印 (Private Watermark)</strong>：检测时需要原始数据;</li>
+</ul>
+<ul>
+<li><strong>盲水印 (Blind Watermark)</strong>：检测时不需要原始数据;</li>
+</ul>
+<p><strong>按能不能恢复分</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241112154128287.png" alt="image-20241112154128287"></p>
+<h2 id="信息隐藏的过程"><strong>信息隐藏的过程</strong></h2>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241112154834602.png" alt="image-20241112154834602"></p>
+<h3 id="水印生成"><strong>水印生成</strong></h3>
+<ul>
+<li>
+<p>有意义的水印：例如版权信息，有用信息等。</p>
+</li>
+<li>
+<p>无意义水印：例如任意随机序列。要求：类似噪声，具有不可预测的随机性 。</p>
+</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241112154930000.png" alt="image-20241112154930000"></p>
+<h3 id="水印嵌入"><strong>水印嵌入</strong></h3>
+<p><strong>嵌入域选择：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241112155414093.png" alt="image-20241112155414093"></p>
+<ol>
+<li>空域（例如，最低有效位 LSB）：
+<ul>
+<li>空域信息隐藏技术直接在媒体数据的像素值上进行操作，通过修改像素值来隐藏信息。</li>
+<li>最低有效位（LSB）技术是空域中常用的一种方法，它通过改变像素值的最低有效位来嵌入秘密信息，因为人眼对最低有效位的变化不敏感，所以这种方法具有较好的隐蔽性。</li>
+</ul>
+</li>
+<li>变换域（例如，离散傅里叶变换 DFT）：
+<ul>
+<li>变换域信息隐藏技术则是基于对媒体数据进行数学变换，如离散傅里叶变换（DFT）、离散余弦变换（DCT）或离散小波变换（DWT）等，然后在变换后的系数上进行信息的嵌入。</li>
+<li>变换域方法通常利用人类视觉或听觉系统对某些变换系数不敏感的特性，将信息嵌入到这些系数中，以达到隐藏信息的目的。</li>
+<li>这种方法的优点是鲁棒性较好，因为变换后的系数对原始媒体数据的小幅度修改不敏感，但计算复杂度相对较高。</li>
+</ul>
+</li>
+</ol>
+<p><strong>嵌入方法：</strong></p>
+<p>原始多媒体X0(k)，嵌入强度α(k)，水印信息ω(k)</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241112155624333.png" alt="image-20241112155624333"></p>
+<h3 id="水印检测"><strong>水印检测</strong></h3>
+<p>接收端<strong>无法收到</strong>没有嵌入水印的信息</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241112155829124.png" alt="image-20241112155829124"></p>
+<h3 id="水印攻击"><strong>水印攻击</strong></h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241112155936591.png" alt="image-20241112155936591"></p>
+<h2 id="正在使用的信息隐藏技术"><strong>正在使用的信息隐藏技术</strong></h2>
+<h3 id="图像信息隐藏算法">**图像信息隐藏算法  **</h3>
+<p><strong>空域信息隐藏算法</strong></p>
+<p>空域：直接修改像素值实现隐藏信息嵌入</p>
+<p>优点：简单、快速、容量大、对载体图像质量影响小<br>
+缺点：鲁棒性差</p>
+<p><strong>空域算法的弊端：</strong></p>
+<ul>
+<li>把信息隐藏在载体的最不重要部分，<strong>容易被噪声掩盖</strong>，有损压缩后丢失</li>
+<li>能否隐藏在载体的最重要部分?</li>
+<li>信息隐藏在载体的最重要部分，则只要载体不被破坏到无法使用的程度，隐藏的信息都能保留。</li>
+</ul>
+<p><strong>频域水印算法</strong></p>
+<ul>
+<li>在频域: 通过修改频域空间的系数实现水印嵌入</li>
+<li>常用变换域方法:
+<ul>
+<li>离散傅里叶变换(DFT)</li>
+<li>离散余弦变换(DCT)</li>
+<li>离散小波变换(DWT)</li>
+</ul>
+</li>
+<li>优点:鲁棒性好</li>
+<li>缺点:复杂度高</li>
+</ul>
+<p><strong>可见水印(Visible Watermark)</strong></p>
+<p>应用：</p>
+<ul>
+<li>数字电视</li>
+<li>数字图书馆</li>
+<li>电子商务</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://notes.sjtu.edu.cn/s/bnz4Nswn0#810-%E9%9F%B3%E9%A2%91%E6%B0%B4%E5%8D%B0">现代密码学 - CodiMD</a></p>
+<h2 id="隐写分析技术"><strong>隐写分析技术</strong></h2>
+<p>隐写（信息隐藏）(steganography)  ：以表面正常的数字载体如静止图象、 数字音频和视频信号等作为掩护，在其中隐藏秘密信息额外数据的嵌入既不改变载体信号的视、 听觉效果， 也不改变计算机文件的大小和格式（包括文件头） ， 使隐蔽信息能以不为人知的方式进行传输。</p>
+<p>隐写分析(steganalysis)  ：对多媒体信号进行统计分析， 判断其中是否含有隐蔽信息。</p>
+<p><strong>根据达到的效果隐秘分析技术分为三类</strong></p>
+<ul>
+<li>破坏技术
+<ul>
+<li>通过对载体对象无意或有意的攻击处理去除和破坏隐藏信息</li>
+</ul>
+</li>
+<li>检测技术
+<ul>
+<li>判断是否存在隐藏信息</li>
+</ul>
+</li>
+<li>提取技术
+<ul>
+<li>部分或完整提取出隐藏的信息内容</li>
+</ul>
+</li>
+</ul>
+<p><strong>隐写分析算法的衡量标准</strong></p>
+<ul>
+<li>准确性:辨别隐藏信息的准确程度(检测率、虚警率、报率)</li>
+<li>适用性:对不同隐写术的有效性</li>
+<li>实用性:可实际推广应用的程度</li>
+<li>复杂性:对计算所需的时间和内存空间的需求</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://notes.sjtu.edu.cn/s/bnz4Nswn0#%E7%AC%AC%E4%B9%9D%E7%AB%A0-%E9%9A%90%E5%86%99%E5%88%86%E6%9E%90">现代密码学 - CodiMD</a></p>
+<p><strong>隐写术和数字水印技术的区别何在？</strong></p>
+<p>隐写术和数字水印技术都是信息隐藏技术，主要用来保护信息的安全性和版权，但它们在目的、实现方式和应用场景上存在一些明显的区别。</p>
+<ol>
+<li><strong>目的</strong>：
+<ul>
+<li><strong>隐写术</strong>：隐写术的主要目的是将信息隐秘地嵌入到载体中（如图片、音频、视频等）以达到隐蔽传递信息的效果。隐写信息的存在通常是为了隐藏消息，使其在不被察觉的情况下传送。</li>
+<li><strong>数字水印技术</strong>：数字水印的目的在于标识和保护版权。水印通常是一个可以被识别的信息，它的存在是为了证明某个内容的所有权或进行版权保护，大多情况下，水印是可见或不可见的，但其存在意图是让接收者知道内容的归属。</li>
+</ul>
+</li>
+<li><strong>实现方式</strong>：
+<ul>
+<li><strong>隐写术</strong>：隐写术通过修改载体的一部分数据（如改变图片中的像素值）来嵌入秘密信息，其修改通常非常微小，以至于不影响载体的外观或使用性。</li>
+<li><strong>数字水印技术</strong>：数字水印同样改动载体数据，但这些修改旨在使得信息的存在能够在一定条件下被检测到，且一般不会破坏内容的可用性。水印信息通常更加显眼或可被检索。</li>
+</ul>
+</li>
+<li><strong>应用场景</strong>：
+<ul>
+<li><strong>隐写术</strong>：隐写术常用于军事、情报、秘密通信等领域，目的是在不被察觉的情况下传递敏感信息。</li>
+<li><strong>数字水印技术</strong>：数字水印技术通常用于数字版权管理、内容保护、认证、验证等领域，特别是在音乐、视频、图像等数字媒体中，旨在保护创作者的权益。</li>
+</ul>
+</li>
+</ol>
+<p>为了安全地将数据从A公司里的Alice传送到B公司里的Bob，可以采用以下步骤：</p>
+<ol>
+<li><strong>使用加密技术</strong>：
+<ul>
+<li>Alice可以使用对称加密（如AES）或非对称加密（如RSA）对数据进行加密。对于大量数据，对称加密更为高效。</li>
+</ul>
+</li>
+<li><strong>生成密钥</strong>：
+<ul>
+<li>如果使用对称加密，Alice需要生成一个随机的加密密钥，并使用Bob的公钥（如果使用非对称加密）对这个密钥进行加密。</li>
+<li>如果使用非对称加密，直接使用Bob的公钥加密数据。</li>
+</ul>
+</li>
+<li><strong>数据传输</strong>：
+<ul>
+<li>Alice将加密后的数据和加密后的密钥（如使用非对称加密）通过电子邮件、文件传输协议（FTP）或安全的云存储进行发送。</li>
+</ul>
+</li>
+<li><strong>确认身份</strong>：
+<ul>
+<li>为了确保数据接收方确实是Bob，Alice可以使用数字签名（如SHA-256加上RSA签名）对数据进行签名，让Bob在收到数据后核实身份。</li>
+</ul>
+</li>
+<li><strong>Bob解密数据</strong>：
+<ul>
+<li>Bob收到数据后，首先使用自己的私钥解密密钥（如果使用了非对称加密），然后使用解密后的密钥解密数据。</li>
+</ul>
+</li>
+<li><strong>传输协议选择</strong>：
+<ul>
+<li>Alice和Bob可以选择使用安全的传输协议，如HTTPS、SFTP或TLS，来确保数据传输过程中的安全性和完整性。</li>
+</ul>
+</li>
+</ol>
+<p>通过以上步骤，Alice可以有效地保护数据的安全性和隐私，确保数据安全地发送给Bob。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io">Linghao Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io/2024/10/12/%E5%AF%86%E7%A0%81%E5%AD%A6/">https://zlh123123.github.io/2024/10/12/%E5%AF%86%E7%A0%81%E5%AD%A6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zlh123123.github.io" target="_blank">好急好急的Hexo博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a><a class="post-meta__tags" href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/">密码学</a></div><div class="post-share"><div class="social-share" data-image="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】二次元-动漫.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/10/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" title="数据库原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】多啦a梦-日本动漫.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">数据库原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/10/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】动漫少女-樱花庄.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">计算机网络</div></div><div class="info-2"><div class="info-item-1">主要参考：计算机网络微课堂（有字幕无背景音乐版）_哔哩哔哩_bilibili、课程PPT 可看的题： 计算机网络期末复习汇总(附某高校期末真题试卷)-CSDN博客 《计算机网络(第7版)-谢希仁》期末考试复习题和答案（总结整理）_计算机网络期末考试题库-CSDN博客 概述 因特网 几个概念  网络(Network)由若干结点(Node)（节点可以是计算机、 集线器、 交换机或路由器等）和连接这些结点的**链路(Link)**组成。 小写字母开头的**internet（互连网）**是个通用名词，泛指多个计算机网络互连而成的计算机网络，对网络间的协议没有要求。 大写字母开头的Internet（互联网、因特网）是个专有名词，指全球范围的众多网络互连而成的特定的互连网，它采用TCP/IP协议族。互联网的两个重要基本特点是连通性和资源共享，是Internet提供诸多服务的基础。 以太网（Ethernet），是当今现有局域网采用的最通用的通信协议标准。  发展历程   ARPANET： 最初只是一个单个的分组交换网，不是一个互连网。1983 年， TCP/IP 协议成为 ARPANET...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/06/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云-动画片-动画电影.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-14</div><div class="info-item-2">操作系统原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" title="数据库原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】多啦a梦-日本动漫.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-12</div><div class="info-item-2">数据库原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/06/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】间谍过家家-阿尼亚.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-19</div><div class="info-item-2">编译原理</div></div><div class="info-2"><div class="info-item-1">注意！这里的表述不一定精准，且不一定覆盖考点！ 基本定义 字母表 由字母、数字、标点符号组成的集合  乘积：A中取一个元素，B中取一个元素，两个连接起来后的集合 n次幂：长度为n的符号串构成的集合。n=0叫空串$\varepsilon $ 正闭包：各个正数次幂的并集，长度为正数的符号串构成的集合，用+号 克林闭包：正闭包⋃\bigcup⋃空串集合，长度为非负数的符号串构成的集合，用*号  串 由字母表中符号组成的有穷序列，包括空串。长度记作$\left | s \right | $，就是符号数  连接运算：x和y的连接就是xy，空串是单位元 x=yz：...</div></div></div></a><a class="pagination-related" href="/2025/04/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="操作系统安全技术"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】AI-AI风景-山景.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-10</div><div class="info-item-2">操作系统安全技术</div></div><div class="info-2"><div class="info-item-1">概述 安全等级 《可信计算机系统评估标准》将操作系统、网络组件和可信应用程序所提供的安全保护等级分为4大类，7小类，从高到低为： A1、B3、B2、B1、C2、C1、D。   目前尚没有任何操作系统满足A1等级；仅有很少一部分操作系统满足B等级；C2等级被认为针对通用操作系统来说已经足够安全的了。（目前的Windows、MAC、IOS等系统均是C2等级）    D级，最低保护（Minimal Protection） 没有通过其他安全等级测试项目的系统即属于该级，如DOS、Windows 9x系统   C级，自主访问控制（Discretionary Protection） 系统客体（被访问的，如文件、目录）可由系统主体（能够发起行为的，如用户、应用程序）自主定义访问权。例如：管理员可以决定系统中任意文件的权限。  客体的权限是可以自主决定的。    B级，强制访问控制（Mandatory Protection） 由系统强制对客体进行安全保护，每个系统客体（如文件、目录等资源）及主体（如系统管理员、用户、应用程序）都有自己的安全标签（Security...</div></div></div></a><a class="pagination-related" href="/2025/06/13/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8%E5%8F%8A%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84/" title="网络空间安全及法律法规"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】乡村-晴空-田野.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-13</div><div class="info-item-2">网络空间安全及法律法规</div></div><div class="info-2"><div class="info-item-1">Teruteru的学习笔记 第一章 网络空间安全概述 第一节...</div></div></div></a><a class="pagination-related" href="/2024/11/26/%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8/" title="系统软件安全"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】全职高手-苏沐橙.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-26</div><div class="info-item-2">系统软件安全</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Linghao Zhang</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zlh123123"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/zlh123123" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lh.zhang.work@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，这里是我的个人博客，主要用来记录一些学习笔记和生活感悟，希望能给你带来一些帮助。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">几个要清楚的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E9%9D%A2%E4%B8%B4%E7%9A%84%E5%A8%81%E8%83%81"><span class="toc-number">1.1.</span> <span class="toc-text">信息安全面临的威胁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%9C%AF%E8%AF%AD"><span class="toc-number">1.2.</span> <span class="toc-text">相关术语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E6%96%B9%E6%B3%95%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.</span> <span class="toc-text">加密方法分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88%E6%94%BB%E5%87%BB%EF%BC%89%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="toc-number">1.4.</span> <span class="toc-text">密码分析（攻击）的种类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E6%9D%A1%E4%BB%B6%E5%AE%89%E5%85%A8%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%AE%89%E5%85%A8"><span class="toc-number">1.5.</span> <span class="toc-text">无条件安全与计算安全</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">古典密码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%AF%E6%92%92%E5%AF%86%E7%A0%81%EF%BC%88%E4%BB%A3%E6%8D%A2%E5%AF%86%E7%A0%81%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">凯撒密码（代换密码）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%B4%E5%90%89%E5%B0%BC%E4%BA%9A%E5%AF%86%E7%A0%81%EF%BC%88%E4%BB%A3%E6%8D%A2%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">维吉尼亚密码（代换）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scytale%E5%AF%86%E7%A0%81%E3%80%81%E8%BD%A8%E9%81%93%E6%A0%85%E6%A0%8F%E5%AF%86%E7%A0%81%E3%80%81%E5%87%A0%E4%BD%95%E5%9B%BE%E5%BD%A2%E5%AF%86%E7%A0%81%EF%BC%88%E7%BD%AE%E6%8D%A2%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">Scytale密码、轨道栅栏密码、几何图形密码（置换）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E5%8F%98%E6%8D%A2%E5%AF%86%E7%A0%81%EF%BC%88%E7%BD%AE%E6%8D%A2%EF%BC%89"><span class="toc-number">2.4.</span> <span class="toc-text">行变换密码（置换）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">分组密码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">3.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feistel%E5%AF%86%E7%A0%81"><span class="toc-number">3.2.</span> <span class="toc-text">Feistel密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lucifier%E5%AF%86%E7%A0%81"><span class="toc-number">3.3.</span> <span class="toc-text">Lucifier密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-DES%E5%AF%86%E7%A0%81"><span class="toc-number">3.4.</span> <span class="toc-text">S-DES密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DES%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95"><span class="toc-number">3.5.</span> <span class="toc-text">DES加密算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="toc-number">3.5.1.</span> <span class="toc-text">总体流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E5%8F%82%E6%95%B0"><span class="toc-number">3.5.2.</span> <span class="toc-text">几个参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IP%E7%BD%AE%E6%8D%A2"><span class="toc-number">3.5.3.</span> <span class="toc-text">IP置换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AE%E5%87%BD%E6%95%B0"><span class="toc-number">3.5.4.</span> <span class="toc-text">轮函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E5%AF%86%E9%92%A5%E9%80%89%E5%8F%96%E6%96%B9%E6%B3%95"><span class="toc-number">3.5.5.</span> <span class="toc-text">子密钥选取方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDEA%E5%8A%A0%E5%AF%86"><span class="toc-number">3.6.</span> <span class="toc-text">IDEA加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AES%E5%8A%A0%E5%AF%86"><span class="toc-number">3.7.</span> <span class="toc-text">AES加密</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E5%8F%82%E6%95%B0-2"><span class="toc-number">3.7.1.</span> <span class="toc-text">几个参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E6%B5%81%E7%A8%8B"><span class="toc-number">3.7.2.</span> <span class="toc-text">加密流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8F%98%E6%8D%A2"><span class="toc-number">3.7.3.</span> <span class="toc-text">初始变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E8%BF%90%E7%AE%97"><span class="toc-number">3.7.4.</span> <span class="toc-text">循环运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E5%AF%86%E9%92%A5%E7%94%9F%E6%88%90"><span class="toc-number">3.7.5.</span> <span class="toc-text">子密钥生成</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E5%8A%A0%E5%AF%86%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.8.</span> <span class="toc-text">分组加密模式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">流密码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5"><span class="toc-number">4.1.</span> <span class="toc-text">几个概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E9%A6%88%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">4.2.</span> <span class="toc-text">反馈移位寄存器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97"><span class="toc-number">4.3.</span> <span class="toc-text">伪随机序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A5%E7%AE%97%E6%B3%95"><span class="toc-number">4.4.</span> <span class="toc-text">A5算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RC4%E7%AE%97%E6%B3%95"><span class="toc-number">4.5.</span> <span class="toc-text">RC4算法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">公钥密码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5-2"><span class="toc-number">5.1.</span> <span class="toc-text">几个概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Diffie-Hellman-%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E5%8D%8F%E8%AE%AE"><span class="toc-number">5.2.</span> <span class="toc-text">Diffie-Hellman 密钥交换协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E4%BD%93%E5%88%B6"><span class="toc-number">5.3.</span> <span class="toc-text">RSA公钥密码体制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AC%E7%A7%81%E9%92%A5%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90"><span class="toc-number">5.3.1.</span> <span class="toc-text">公私钥如何生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E8%A7%A3%E5%AF%86%E8%BF%87%E7%A8%8B"><span class="toc-number">5.3.2.</span> <span class="toc-text">加解密过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%BB%E5%87%BB%E4%B8%8E%E5%AF%B9%E6%8A%97%E6%96%B9%E6%B3%95"><span class="toc-number">5.3.3.</span> <span class="toc-text">攻击与对抗方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rabin%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E4%BD%93%E5%88%B6"><span class="toc-number">5.4.</span> <span class="toc-text">Rabin公钥密码体制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EI-Gamal%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E4%BD%93%E5%88%B6"><span class="toc-number">5.5.</span> <span class="toc-text">EI Gamal公钥密码体制</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">消息认证与哈希</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5-3"><span class="toc-number">6.1.</span> <span class="toc-text">几个概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E5%8A%A0%E5%AF%86"><span class="toc-number">6.2.</span> <span class="toc-text">消息加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81-MAC"><span class="toc-number">6.3.</span> <span class="toc-text">消息认证码(MAC)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="toc-number">6.4.</span> <span class="toc-text">哈希函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MD5"><span class="toc-number">6.5.</span> <span class="toc-text">MD5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SHA-1"><span class="toc-number">6.6.</span> <span class="toc-text">SHA-1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0%E7%9A%84%E6%94%BB%E5%87%BB"><span class="toc-number">6.7.</span> <span class="toc-text">对哈希函数的攻击</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">数字签名</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5-4"><span class="toc-number">7.1.</span> <span class="toc-text">几个概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA%E7%AD%BE%E5%90%8D%E4%BD%93%E5%88%B6"><span class="toc-number">7.2.</span> <span class="toc-text">RSA签名体制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EI-Gamal%E7%AD%BE%E5%90%8D%E4%BD%93%E5%88%B6"><span class="toc-number">7.3.</span> <span class="toc-text">EI Gamal签名体制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DSA%E7%AD%BE%E5%90%8D%E6%9C%BA%E5%88%B6"><span class="toc-number">7.4.</span> <span class="toc-text">DSA签名机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%A6%E5%AF%86%E9%92%A5%E7%9A%84%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="toc-number">7.5.</span> <span class="toc-text">带密钥的哈希函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HMAC"><span class="toc-number">7.6.</span> <span class="toc-text">HMAC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">信息隐藏与隐写分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%AA%92%E4%BD%93%E5%AE%89%E5%85%A8"><span class="toc-number">8.1.</span> <span class="toc-text">多媒体安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E6%8A%80%E6%9C%AF"><span class="toc-number">8.2.</span> <span class="toc-text">什么是信息隐藏技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">8.3.</span> <span class="toc-text">信息隐藏的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">8.4.</span> <span class="toc-text">信息隐藏的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B0%B4%E5%8D%B0%E7%94%9F%E6%88%90"><span class="toc-number">8.4.1.</span> <span class="toc-text">水印生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B0%B4%E5%8D%B0%E5%B5%8C%E5%85%A5"><span class="toc-number">8.4.2.</span> <span class="toc-text">水印嵌入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B0%B4%E5%8D%B0%E6%A3%80%E6%B5%8B"><span class="toc-number">8.4.3.</span> <span class="toc-text">水印检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B0%B4%E5%8D%B0%E6%94%BB%E5%87%BB"><span class="toc-number">8.4.4.</span> <span class="toc-text">水印攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%9C%A8%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E6%8A%80%E6%9C%AF"><span class="toc-number">8.5.</span> <span class="toc-text">正在使用的信息隐藏技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E7%AE%97%E6%B3%95"><span class="toc-number">8.5.1.</span> <span class="toc-text">**图像信息隐藏算法  **</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%90%E5%86%99%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF"><span class="toc-number">8.6.</span> <span class="toc-text">隐写分析技术</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/dark.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="日语语法蓝宝书总结"/></a><div class="content"><a class="title" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结">日语语法蓝宝书总结</a><time datetime="2026-06-26T09:47:36.000Z" title="发表于 2026-06-26 17:47:36">2026-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】可爱小狗-小狗-护眼.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="leetcode刷题日记"/></a><div class="content"><a class="title" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记">leetcode刷题日记</a><time datetime="2026-04-03T06:26:47.000Z" title="发表于 2026-04-03 14:26:47">2026-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云彩-夜晚-夜景.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="口令复用综述"/></a><div class="content"><a class="title" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述">口令复用综述</a><time datetime="2026-01-21T12:58:23.000Z" title="发表于 2026-01-21 20:58:23">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】兔子朱迪-彩云-朱迪.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Github Page更换新域名后如何更新配置"/></a><div class="content"><a class="title" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置">Github Page更换新域名后如何更新配置</a><time datetime="2026-01-01T04:13:51.000Z" title="发表于 2026-01-01 12:13:51">2026-01-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】卡通羊-可爱小羊.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM Post-training"/></a><div class="content"><a class="title" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training">LLM Post-training</a><time datetime="2025-11-30T14:14:52.000Z" title="发表于 2025-11-30 22:14:52">2025-11-30</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2026 By Linghao Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":200,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body></html>

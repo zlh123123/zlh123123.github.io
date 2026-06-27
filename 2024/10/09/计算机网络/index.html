@@ -1,0 +1,2365 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>计算机网络 | 好急好急的Hexo博客</title><meta name="author" content="Linghao Zhang"><meta name="copyright" content="Linghao Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="主要参考：计算机网络微课堂（有字幕无背景音乐版）_哔哩哔哩_bilibili、课程PPT 可看的题： 计算机网络期末复习汇总(附某高校期末真题试卷)-CSDN博客 《计算机网络(第7版)-谢希仁》期末考试复习题和答案（总结整理）_计算机网络期末考试题库-CSDN博客 概述 因特网 几个概念  网络(Network)由若干结点(Node)（节点可以是计算机、 集线器、 交换机或路由器等）和连接这些结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络">
+<meta property="og:url" content="https://zlh123123.github.io/2024/10/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name" content="好急好急的Hexo博客">
+<meta property="og:description" content="主要参考：计算机网络微课堂（有字幕无背景音乐版）_哔哩哔哩_bilibili、课程PPT 可看的题： 计算机网络期末复习汇总(附某高校期末真题试卷)-CSDN博客 《计算机网络(第7版)-谢希仁》期末考试复习题和答案（总结整理）_计算机网络期末考试题库-CSDN博客 概述 因特网 几个概念  网络(Network)由若干结点(Node)（节点可以是计算机、 集线器、 交换机或路由器等）和连接这些结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%8A%A8%E6%BC%AB%E5%B0%91%E5%A5%B3-%E6%A8%B1%E8%8A%B1%E5%BA%84.png">
+<meta property="article:published_time" content="2024-10-09T00:56:18.000Z">
+<meta property="article:modified_time" content="2025-10-23T13:46:18.000Z">
+<meta property="article:author" content="Linghao Zhang">
+<meta property="article:tag" content="基础课">
+<meta property="article:tag" content="计网">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%8A%A8%E6%BC%AB%E5%B0%91%E5%A5%B3-%E6%A8%B1%E8%8A%B1%E5%BA%84.png"><link rel="shortcut icon" href="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png"><link rel="canonical" href="https://zlh123123.github.io/2024/10/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '计算机网络',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/welcome-image.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】动漫少女-樱花庄.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" alt="Logo"><span class="site-name">好急好急的Hexo博客</span></a><a class="nav-page-title" href="/"><span class="site-name">计算机网络</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">计算机网络</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-09T00:56:18.000Z" title="发表于 2024-10-09 08:56:18">2024-10-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-10-23T13:46:18.000Z" title="更新于 2025-10-23 21:46:18">2025-10-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>主要参考：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c4411d7jb?spm_id_from=333.788.videopod.episodes&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">计算机网络微课堂（有字幕无背景音乐版）_哔哩哔哩_bilibili</a>、课程PPT</p>
+<p>可看的题：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Dustinthewine/article/details/129071507">计算机网络期末复习汇总(附某高校期末真题试卷)-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_53303596/article/details/120311817">《计算机网络(第7版)-谢希仁》期末考试复习题和答案（总结整理）_计算机网络期末考试题库-CSDN博客</a></p>
+<h1>概述</h1>
+<h2 id="因特网">因特网</h2>
+<h3 id="几个概念">几个概念</h3>
+<ul>
+<li><strong>网络(Network)<strong>由若干</strong>结点(Node)</strong>（节点可以是计算机、 集线器、 交换机或路由器等）和连接这些结点的**链路(Link)**组成。</li>
+<li>小写字母开头的**internet（互连网）**是个通用名词，泛指多个计算机网络互连而成的计算机网络，对网络间的协议没有要求。</li>
+<li>大写字母开头的<strong>Internet（互联网、因特网）<strong>是个专有名词，指全球范围的众多网络互连而成的特定的互连网，它采用TCP/IP协议族。互联网的两个重要基本特点是</strong>连通性和资源共享</strong>，是Internet提供诸多服务的基础。</li>
+<li>以太网（Ethernet），是当今现有<strong>局域网</strong>采用的最通用的通信协议标准。</li>
+</ul>
+<h3 id="发展历程">发展历程</h3>
+<ul>
+<li>
+<p><strong>ARPANET</strong>： 最初只是一个单个的分组交换网，不是一个互连网。1983 年， <strong>TCP/IP 协议</strong>成为 ARPANET 上的标准协议， 使得所有使用 TCP/IP 协议的计算机都能利用互连网相互通信。</p>
+<p>人们将 <strong>1983 年作为互联网的诞生时间</strong></p>
+</li>
+<li>
+<p><strong>国家科学基金网 NSFNET</strong> ：三级结构： <strong>主干网、地区网和校园网</strong>（或企业网） ，覆盖了全美国主要的大学和研究所，并且成为互联网中的主要组成部分。</p>
+</li>
+<li>
+<p>出现了<strong>互联网服务提供者 ISP (Internet Service Provider)</strong>： 提供接入到互联网的服务并需要收取一定的费用</p>
+<p>其具有<strong>多层次 ISP 结构</strong>：主干 ISP、地区 ISP 和本地 ISP，其区分依据是覆盖面积大小和所拥有的 IP 地址数目的不同</p>
+<blockquote>
+<p>在下图中有详细阐述</p>
+</blockquote>
+</li>
+<li>
+<p><strong>万维网 WWW (World Wide Web)</strong>：由欧洲原子核研究组织 CERN 开发，成为互联网指数级增长的主要驱动力</p>
+</li>
+</ul>
+<h3 id="因特网服务提供者ISP">因特网服务提供者<strong>ISP</strong></h3>
+<p>组织或个人通过ISP获取IP地址，因特网上的主机只有通过IP地址才能进行通信。</p>
+<p>因特网基于ISP的三层结构：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241012184152470.png" alt="img"></p>
+<p>因此相隔较远的两台主机需要通过多个ISP才能完成通信。</p>
+<h3 id="因特网的标准化">因特网的标准化</h3>
+<p>因特网的标准化工作对因特网的发展起到了非常重要的作用。</p>
+<p>因特网在指定其标准上的一个很大的特点是<strong>面向公众。</strong></p>
+<ul>
+<li>因特网所有的<strong>RFC</strong>(Request For Comments)技术文档都可从因特网上免费下载；</li>
+<li>任何人都可以随时用电子邮件发表对某个文档的意见或建议。</li>
+<li>但<strong>并非所有的 RFC 文档都是互联网标准</strong>， 只有很少部分的 RFC 文档最后才能变成互联网标准</li>
+</ul>
+<p><strong>因特网协会ISOC</strong>是一个国际性组织，它负责对因特网进行全面管理，以及在世界范围内促进其发展和使用。</p>
+<ul>
+<li>因特网体系结构委员会IAB，负责管理因特网有关协议的开发；</li>
+<li>因特网工程部IETF，负责研究中短期工程问题，主要针对协议的开发和标准化；</li>
+<li>因特网研究部IRTF，从事理论方面的研究和开发一些需要长期考虑的问题。</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250110132938318.png" alt="image-20250110132938318" style="zoom:67%;" />
+<p>制订因特网的正式标准要经过一下<strong>4个阶段</strong>：</p>
+<ul>
+<li>因特网草案（在这个阶段还不是RFC文档）</li>
+<li>建议标准（从这个阶段开始就成为RFC文档）</li>
+<li>草案标准</li>
+<li>因特网标准</li>
+</ul>
+<h3 id="因特网的组成">因特网的组成</h3>
+<p>从互联网的工作方式上看，可以划分为两大块：</p>
+<ul>
+<li><strong>边缘部分（资源子网）</strong>：由所有连接在因特网上的<strong>主机</strong>组成。这部分是<strong>用户直接使用</strong>的，用来进行<strong>通信</strong>（传送数据、音频或视频）和<strong>资源共享。</strong></li>
+<li><strong>核心部分（通信子网）</strong>：由<strong>大量网络</strong>和连接这些网络的<strong>路由器</strong>组成。这部分是<strong>为边缘部分提供服务</strong>的(提供连通性和交换)。</li>
+</ul>
+<hr>
+<p><strong><u>边缘部分</u></strong></p>
+<p>处在互联网边缘部分的就是连接在互联网上的所有主机，这些主机又称为<strong>端系统 (end system)</strong>，端系统在<strong>功能上</strong>有差别：普通的个人电脑、手机这种属于<strong>小的端系统</strong>；当然还有那种大型计算机可作为<strong>大的端系统</strong>。</p>
+<p>端系统间的通信：主机 A 的某个进程和主机 B 上的另一个进程进行通信，通信方式有<strong>C/S和P2P</strong>两种方式。</p>
+<p><strong>C/S（Client/Server）通信方式</strong>：描述的是进程之间<strong>服务和被服务</strong>的关系。<strong>客户是服务的请求方，服务器是服务的提供方</strong>。客户与服务器的通信关系建立后，通信<strong>可以是双向的</strong>，客户和服务器都可发送和接收数据。</p>
+<p>C/S通信方式的特点：</p>
+<ul>
+<li>
+<p><strong>客户</strong>程序</p>
+<ul>
+<li>
+<p><strong>被用户调用</strong>后运行，需<strong>主动</strong>向远地服务器发起通信（请求服务）。<strong>必须知道服务器程序的地址</strong></p>
+</li>
+<li>
+<p>不需要特殊的硬件和很复杂的操作系统</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>服务器</strong>程序</p>
+<ul>
+<li>专门用来提供某种服务的程序，可同时处理多个客户请求</li>
+<li>一直<strong>不断地运行着</strong>， <strong>被动</strong>地等待并接受来自各地的客户的通信请求。<strong>不需要知道客户程序的地址</strong></li>
+<li>一般需要强大的硬件和高级的操作系统支持</li>
+</ul>
+</li>
+</ul>
+<p><strong>P2P对等连接方式</strong>：两台主机在通信时<strong>不区分服务请求方和服务提供方</strong>。只要都运行了 P2P 软件，就可以进行<strong>平等的、对等连接通信</strong>。  P2P从本质上看仍然是使用C/S方式，只是对等连接中的每一个主机<strong>既是客户又是服务器</strong></p>
+<hr>
+<p><u><strong>核心部分</strong></u></p>
+<ul>
+<li>是互联网中<strong>最复杂</strong>的部分</li>
+<li>向网络边缘中的主机<strong>提供连通性</strong>，使任何一台主机都能够向其他主机通信</li>
+<li>在网络核心部分起特殊作用的是<strong>路由器 (router)</strong></li>
+<li>路由器是实现<strong>分组交换(packet switching)</strong> 的关键构件，其任务是转发收到的分组。<strong>分组转发是网络核心部分最重要的功能</strong></li>
+</ul>
+<h2 id="三种交换方式">三种交换方式</h2>
+<p>互联网的核心部分采用<strong>分组交换技术</strong></p>
+<h3 id="电路交换">电路交换</h3>
+<p>电话交换机接通电话线的方式。直接进行两两连接，因此N台计算机就需要<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>N</mi><mo stretchy="false">(</mo><mi>N</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{N(N-1)}{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.355em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>对电线。</p>
+<p>分成3个步骤：</p>
+<ul>
+<li>建立连接（分配通信资源）</li>
+<li>进行通话（<strong>占据通信资源不放手</strong>）</li>
+<li>释放连接（归还通信资源）</li>
+</ul>
+<p>但是，不使用电路交换来传输计算机数据，因为这样的传输效率较低。比如用户正在编辑待传输的文件时，始终处于“进行通话”的阶段，导致其他用户无法使用传输功能，<strong>线路利用率低</strong>。</p>
+<h3 id="分组交换">分组交换</h3>
+<p>分组交换采用了<strong>存储转发</strong>机制。</p>
+<p>路由器负责将各种网络互连起来，并对接收到的分组进行转发，也就是分组交换。</p>
+<ul>
+<li>发送方：构造分组、发送分组</li>
+<li>路由器：缓存分组、转发分组（简称为分组转发）</li>
+<li>接受方：接受分组、还原报文</li>
+</ul>
+<p>将表示要发送的信息数据叫做<strong>报文</strong>，发送方会把较长的报文划分为几个更小的等长数据，在每个数据端前加入控制信息<strong>首部</strong>后，就构成了一个<strong>分组（包）</strong>。每个分组是互联网中被传送的数据单元。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111145056235.png" alt="image-20250111145056235"></p>
+<p>在整个传输过程中：</p>
+<ul>
+<li>发送方的任务就是依次发送分组</li>
+<li>路由器的任务则是根据分组首部的目的地址等控制信息进行存储转发（此过程可能会经历多个交换机），每个分组在传输过程中的路径都是独立的，路由表需要创建和动态维护转发表</li>
+<li>接受方再去掉受到数据的首部，把数据段还原出原始报文</li>
+</ul>
+<p>分组交换的优势在于：</p>
+<table>
+<thead>
+<tr>
+<th>高效</th>
+<th>在分组传输的过程中动态分配传输带宽，对通信链路是逐段占用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>灵活</td>
+<td>为每一个分组独立地选择最合适的转发路由</td>
+</tr>
+<tr>
+<td>迅速</td>
+<td>以分组作为传送单位，可以不先建立连接就能向其他主机发送分组</td>
+</tr>
+<tr>
+<td>可靠</td>
+<td>保证可靠性的网络协议、 分布式多路由的分组交换网，使网络有很好的生存性</td>
+</tr>
+</tbody>
+</table>
+<h3 id="报文交换">报文交换</h3>
+<p>主要用于早期的电报通信网，现在较少使用。</p>
+<p>数据的传输<strong>不需建立连接</strong>，数据的传输是一站一站往下送，所以数据中<strong>必须包含目的地址</strong>，并采用<strong>存储-转发（store-forward）</strong>（分组交换采用的也是存储转发）机制。正因为采用存储-转发机制，导致报文交换的<strong>延时较大且不可估计</strong>，导致其不适合于实时性要求高的业务，但是其<strong>线路利用率较高</strong>。</p>
+<h3 id="三种交换方式的对比">三种交换方式的对比</h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-e655a213714d1871.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-c56f91f290cbc92b.png" alt="img"></p>
+<p><strong>三种交换方式计算时延</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1me411H7sK/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">计算机网络 物理层三种交换方式时延计算例题_哔哩哔哩_bilibili</a></p>
+<ul>
+<li>若要连续传送<strong>大量的数据</strong>，且其<strong>传送时间远大于连接建立时间</strong>，则<strong>电路交换</strong>的传输速率较快</li>
+<li>报文交换和分组交换不需要预先分配传输带宽，在传送<strong>突发数据</strong>时可提高整个网络的信道利用率</li>
+<li>由于一个分组的长度往往远小于整个报文的长度，因此<strong>分组交换比报文交换的时延小</strong>，同时也具有更好的灵活性</li>
+</ul>
+<h2 id="计算机网络的定义与分类">计算机网络的定义与分类</h2>
+<h3 id="定义">定义</h3>
+<p>计算机网络的最简单的定义是:一些<strong>互</strong>相<strong>连</strong>接的、<strong>自治</strong>的计算机的<strong>集合</strong>。</p>
+<ul>
+<li><strong>互连</strong>︰是指计算机之间可以通过有线或无线的方式进行数据通信</li>
+<li><strong>自治</strong>︰是指<strong>独立的计算机</strong>，它有自己的硬件和软件，可以单独运行使用</li>
+<li><strong>集合</strong>：是指至少需要两台计算机</li>
+</ul>
+<p>计算机网络的较好的定义是：计算机网络主要是由一些<strong>通用的、可编程的硬件（就是说一定有CPU）互连</strong>而成的，而这些硬件<strong>并非</strong>专门用来实现某一特定目的（例如，传送数据或视频信号，说的就是显示器这种）。这些可编程的硬件能够用来<strong>传送多种不同类型的数据</strong>，并能<strong>支持广泛的和日益增长的应用</strong>。</p>
+<ul>
+<li>计算机网络所连接的硬件，并不限于一般的计算机，而是包括了智能手机等智能硬件。</li>
+<li>计算机网络并非专门用来传送数据，而是能够支持很多种的应用(包括今后可能出现的各种应用)。</li>
+</ul>
+<h3 id="分类">分类</h3>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111154436101.png" alt="image-20250111154436101" style="zoom:80%;" />
+<h4 id="按使用者分类">按使用者分类</h4>
+<table>
+<thead>
+<tr>
+<th>公用网(public network)</th>
+<th>按规定交纳费用的人都可以使用的网络，也可称为公众网</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>专用网(private network)</td>
+<td>为特殊业务工作的需要而建造的网络</td>
+</tr>
+</tbody>
+</table>
+<h4 id="按覆盖范围分类">按覆盖范围分类</h4>
+<p><strong>广域网WAN</strong>的覆盖范围通常为几十公里到几千公里，可以覆盖一个国家、地区、甚至横跨几个洲，因而有时也称为远程网。广域网是因特网的核心部分，其任务是为核心路由器提供远距离（例如，跨越不同的国家的）高速连接，互连分布在不同区域的城域网和局域网。</p>
+<p><strong>城域网MAN</strong>的覆盖范围一般是一个城市，可跨越几个街区甚至整个城市，其作用距离为5至50公里。城域网通常作为城市骨干网，互连大量企业、机构和校园局域网。逅九年。城域网已开始成为现代城市的信息服务基础设施，为大量用户提供接入和各种信息服务，并有趋势将传统的电信服务、有线电视服务和互联网服务融为一体。</p>
+<p><strong>局域网LAN</strong>一般用微型计算机或工作站通过高速通信线路相连,速率通常在10Mbit/s以上，但地理上则局限在较小的范围内，如一个实验室，一幢楼或一个校园内，距离一般在1公里左右。局域网通常由某个单位单独拥有、使用和维护。一个学校或企业大都拥有许多个互连的局域网,这样的网络常称为校园网或企业网。</p>
+<p><strong>个域网PAN</strong>是个人局域网络的简称，不是用来连接普通计算机的而是在个人工作的地方把属于个人使用的电子设备，如鼠标键盘用无线技术连接起来的网络，因此也常成为无线个人区域网WPAN，其覆盖范围为10米。</p>
+<p>需要注意的是，若中央处理机之间的距离非常近，例如仅1米的数量级甚至更小，则一般就称之为<strong>多处理机系统</strong>。而不称它为计算机网络。</p>
+<h4 id="按拓扑结构分类">按拓扑结构分类</h4>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111154458241.png" alt="image-20250111154458241"></p>
+<blockquote>
+<p><strong>总线型网络</strong>使用单根传输线把计算机连接起来。</p>
+<p>优点:建网容易、增减结点方便、节省线路。</p>
+<p>缺点：重负载时通信效率不高。总线任意一处出现故障，则全网瘫痪。</p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111154511884.png" alt="image-20250111154511884"></p>
+<blockquote>
+<p><strong>星型网络</strong>是将每个计算机都以单独的线路与中央设备相连。中央设备早期是计算机，后来是集线器，现在一般是交换机或路由器。</p>
+<p>优点：这种网络拓扑便于网络的集中控制和管理，因为端用户之间的通信必须经过中央设备。</p>
+<p>缺点是成本高，中央设备对故障敏感。</p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111154522262.png" alt="image-20250111154522262"></p>
+<blockquote>
+<p><strong>环型网络</strong>是将所有计算机的网络接口连接成一个环，最典型的例子是令牌环局域网。</p>
+<p>环可以是单环，也可以是双环，环中信号是单向传输的。</p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111154533895.png" alt="image-20250111154533895"></p>
+<blockquote>
+<p><strong>网状结构</strong>一般情况下，每个结点至少由两条路径与其他结点相连，多用在广域网中。</p>
+<p>其优点是可靠性高。缺点是控制复杂、线路成本高。</p>
+</blockquote>
+<p>当然，这几种拓扑结构还可以相互组合不断套娃，组成新的结构。</p>
+<h2 id="性能指标">性能指标</h2>
+<h3 id="速率">速率</h3>
+<p>主机连接在计算机网络中，它在信道中<strong>传输数据的速率</strong>，也叫比特率、数据率。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-ba6c4e627a62c05e.png" alt="img"></p>
+<p>**注意这里的k、M等为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><msup><mn>0</mn><mn>3</mn></msup><mtext>和</mtext><mn>1</mn><msup><mn>0</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">10^3和10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mord cjk_fallback">和</span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span>，而不是1024这种。**但是实际在计算中没准可以约去。</p>
+<h3 id="带宽">带宽</h3>
+<p>用来表征网络的通信线路所能传输数据的能力。即单位时间内，从网络中一个点到另一个点能通过的<strong>最高数据速率</strong>。</p>
+<p>因此带宽就是一种速率，它的单位和速率一致。</p>
+<h3 id="吞吐量">吞吐量</h3>
+<p><strong>单位时间内通过某个网络的实际数据量</strong>，是通过测量现实世界的网络后得出的，会<strong>受网络带宽和额定速率</strong>的限制。通常<strong>吞吐量达不到带宽那么大</strong>。</p>
+<h3 id="时延">时延</h3>
+<p>时延由<strong>发送时延、传播时延、处理时延和排队时延</strong>四部分组成。由于实际网络转发过程中会经过多个路由器转发，因此会存在多个传播时延和处理时延。</p>
+<ul>
+<li>
+<p>发送时延：即源头计算机发送报文的速率。<strong><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>发送时延</mtext><mo>=</mo><mfrac><mtext>分组长度</mtext><mtext>发送速率</mtext></mfrac></mrow><annotation encoding="application/x-tex">发送时延=\frac{\text{分组长度}}{\text{发送速率}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">发送时延</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.2173em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8723em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord cjk_fallback mtight">发送速率</span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord cjk_fallback mtight">分组长度</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></strong>。其中的发送速率受网卡的发送速率、信道带宽和路由器接口速率限制，<strong>3个里取最小值</strong>。因此实际弄的时候，要注意设备间速率匹配。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111155045221.png" alt="image-20250111155045221"></p>
+</li>
+<li>
+<p>传播时延：在信道中传输消耗的时间。<strong><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>传播时延</mtext><mo>=</mo><mfrac><mtext>信道长度</mtext><mtext>电磁波传播速率</mtext></mfrac></mrow><annotation encoding="application/x-tex">传播时延=\frac{\text{信道长度}}{\text{电磁波传播速率}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">传播时延</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.2173em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8723em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord cjk_fallback mtight">电磁波传播速率</span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord cjk_fallback mtight">信道长度</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></strong>。注意在不同介质中，电磁波的传输速率并不相同。</p>
+</li>
+<li>
+<p>处理时延：路由器进行存储转发的时间。这个不好计算，因为网络中的流量动态变化，路由器的繁忙持续也动态变化，不好量化计算。<strong>一般我们会把这个时延忽略不计。</strong></p>
+</li>
+<li>
+<p>排队时延：分组在路由器输入输出队列中<strong>排队等待处理和转发</strong>所经历的时延，排队时延的长短往往取决于网络中当时的通信量。当网络的通信量很大时会发生队列溢出，使<strong>分组丢失，这相当于排队时延为无穷大</strong></p>
+</li>
+</ul>
+<p>此外，对于任何网络，并不是说发送时延或者传播时延一定占据主导地位，对不同问题有不同分析结果。</p>
+<h3 id="时延带宽积">时延带宽积</h3>
+<p>顾名思义，时延带宽积=<strong><u>传播</u>时延</strong>×带宽。</p>
+<p>若发送端持续不断发送数据，那么当它发送的第一个bit到达终点时，发送端已经发送了时延带宽积个bit。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-bdca296e77c59e48.png" alt="img" style="zoom: 80%;" />
+<h3 id="往返时间RTT">往返时间RTT</h3>
+<p>因特网上的信息通常是双向交互的，往返时间就是<strong>双向交互一次的时间</strong>。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-73f29eb38db9983c.png" alt="img" style="zoom:80%;" />
+<h3 id="利用率">利用率</h3>
+<ul>
+<li>信道利用率：该信道有百分之几的时间是被利用的，即有数据通过的。</li>
+<li>网络利用率：全网络的<strong>信道利用率的加权平均</strong>。</li>
+</ul>
+<p>事实上，当信道的利用率增大时，该信道引起的时延也会增加。因此<strong>信道利用率并不是越高越好。</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-62d6da59682ef67f.png" alt="img"></p>
+<h3 id="丢包率">丢包率</h3>
+<p>即分组丢失率，在一定时间范围内，传输过程中<strong>丢失的分组数量与总分组数量的比值</strong>。</p>
+<p>分组丢失可能出现在下面两种情况下：</p>
+<ul>
+<li>分组在传输过程中<strong>出现误码</strong>后被交换机检测出，就被交换机丢弃。</li>
+<li>一台<strong>交换机队列已满</strong>（通信繁忙时），分组到达后塞不进去就被丢弃。</li>
+</ul>
+<h2 id="计算机网络体系结构">计算机网络体系结构</h2>
+<h3 id="OSI体系结构和TCP-IP体系结构">OSI体系结构和TCP/IP体系结构</h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/f98103c1797103a3e83c17e0c7e24929.png" alt="在这里插入图片描述"></p>
+<h3 id="计算机网络分层的必要性">计算机网络分层的必要性</h3>
+<p>**计算机网络是个非常复杂的系统。**早在最初的ARPANET设计时就提出了分层的设计理念。<br>
+**“分层”**可将庞大而复杂的问题，转化为若干较小的局部问题，而这些较小的局部问题就比较易于研究和处理。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-d29fee34f68a16b9.png" alt="img"></p>
+<blockquote>
+<p>注：在数据传输过程中，只有<strong>主机</strong>是拥有所有的这五层结构的；而对于中间的路由器等，就只有物理层、数据链路层和网络层。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112131449227.png" alt="image-20250112131449227"></p>
+</blockquote>
+<h3 id="专业术语解释">专业术语解释</h3>
+<h4 id="实体">实体</h4>
+<p>任何可发送或者接收信息的<strong>硬件或软件进程</strong>。</p>
+<p><strong>对等实体</strong>：收发双方相同层次中的实体。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-b4c748c8f731e416.png" alt="img" style="zoom:80%;" />
+<h4 id="协议">协议</h4>
+<p>控制两个<strong>对等实体</strong>进行逻辑通信的规则集合。</p>
+<p>协议三要素：<strong>语法、语义、同步</strong></p>
+<ul>
+<li>语法：定义所交换信息的格式，例如定义IP报文由哪些部分组成这样子</li>
+<li>语义：定义收发双方所要完成的操作</li>
+<li>同步：定义收发双方的时序关系</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-01d621fd0afde0a2.png" alt="img"></p>
+<h4 id="服务">服务</h4>
+<ul>
+<li>在协议的控制下，两个对等实体间的逻辑通信使得本层能够向上一层提供服务。例如，物理层向数据链路层提供服务。</li>
+<li>要实现本层协议，还需要使用下面一层所提供的服务。</li>
+<li>协议是“<strong>水平的</strong>”，服务是“<strong>垂直的</strong>”。</li>
+<li>实体看得见相邻下层所提供的服务，但并不知道实现该服务的具体协议。也就是说，下面的协议对上面的实体是&quot;<strong>透明</strong>&quot;的。</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111155920047.png" alt="image-20250111155920047"></p>
+<h4 id="服务访问点SAP">服务访问点SAP</h4>
+<p>在同一系统中<strong>相邻两层的实体交换信息的逻辑接口</strong>，用于区分不同的服务类型。</p>
+<ul>
+<li>数据链路层的服务访问点为帧的“类型”字段。</li>
+<li>网络层的服务访问点为lP数据报首部中的“协议字段”。</li>
+<li>运输层的服务访问点为“端口号”。</li>
+</ul>
+<h4 id="服务原语">服务原语</h4>
+<p>上层使用下层所提供的服务必须通过与下层<strong>交换一些命令</strong>，这些命令称为服务原语。</p>
+<ul>
+<li><strong>协议数据单元PDU</strong>：<strong>对等层次之间传送的数据包</strong>称为该层的协议数据单元。</li>
+<li><strong>服务数据单元SDU</strong> ：<strong>同一系统内，层与层之间交换的数据包</strong>称为服务数据单元。</li>
+<li>多个SDU可以合成为一个PDU;一个SDU也可划分为几个PDU。</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111155956235.png" alt="image-20250111155956235"></p>
+<h2 id="习题">习题</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c4411d7jb?spm_id_from=333.788.videopod.episodes&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4&amp;p=12">1.8 第1章 概述 习题课（1）— 体系结构相关习题_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c4411d7jb?spm_id_from=333.788.videopod.episodes&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4&amp;p=13">1.8 第1章 概述 习题课（2）— 时延相关习题_哔哩哔哩_bilibili</a></p>
+<h1>物理层</h1>
+<h2 id="基本概念">基本概念</h2>
+<p>计算机网络的物理层就是要<u>解决在各种传输媒介上传输比特0和1的问题</u>，进而给数据链路层提供透明传输比特流的服务。</p>
+<p>而解决在各种传输媒介上传输比特0和1的问题中，物理层协议主要有以下四个任务：分别是机械特性、电器特性、功能特性以及过程特性。</p>
+<ul>
+<li>
+<p><strong>机械特性</strong>：指明接口所用接线器的<strong>形状</strong>和<strong>尺寸</strong>、<strong>引脚数目</strong>和<strong>排列</strong>、<strong>固定</strong>和<strong>锁定</strong>装置。</p>
+</li>
+<li>
+<p><strong>电气特性</strong>：指明在接口电缆的各条线上出现的<strong>电压的范围</strong>。</p>
+</li>
+<li>
+<p><strong>功能特性</strong>：指明某条线上出现的某一电平的<strong>电压表示何种意义</strong>。</p>
+</li>
+<li>
+<p><strong>过程特性</strong>：指明对于不同功能的各种<strong>可能事件的出现顺序</strong>。</p>
+</li>
+</ul>
+<p>物理层考虑的是怎样才能在连接各种计算机的传输媒体上传输数据比特流。</p>
+<p>物理层为数据链路层屏蔽了各种传输媒体的差异，使数据链路层只需要考虑如何完成本层的协议和服务，而不必考虑网络具体的传输媒体是什么。</p>
+<h2 id="物理层下的传输媒体">物理层下的传输媒体</h2>
+<h3 id="导引型传输媒体">导引型传输媒体</h3>
+<h4 id="同轴电缆">同轴电缆</h4>
+<p>内导体铜质芯线（可以是单股实心线或者是多股绞合线)、绝缘层、网状编织的外导体屏蔽层、绝缘保护套层所组成。</p>
+<p>其中同轴电缆有两类：一类是50欧阻抗的基带同轴电缆，另一类是75欧阻抗的宽带同轴电缆。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-50d3acc8eff03935.png" alt="img"></p>
+<h4 id="双绞线">双绞线</h4>
+<p>双绞线是最古老且最常用的传输媒体。把两根互相绝缘的铜导线并放在一起,然后按照一定规则绞合起来就构成了双绞线。</p>
+<p><strong>屏蔽</strong>双绞线电缆比<strong>无屏敝</strong>双绞线电缆增加了<strong>金属丝编织的屏蔽层</strong>，提高了抗电磁干扰的能力。</p>
+<blockquote>
+<p>绞合的作用：<strong>抵御部分来自外界的电磁波干扰和减少相邻导线的电磁干扰</strong></p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-692dde0bbbc49a1d.png" alt="img"></p>
+<h4 id="光纤">光纤</h4>
+<p>由于光纤非常细，所以必须将它做成很结实的光缆。一根光缆少则只有一根光纤，多则可包括数十至数百根光纤，再加上加强芯和填充物就回以大大提高机械强度，必要时回放入远供电源线。最后加上包带层和外护套，就可以使抗拉强度达到几千克，完全可以满足工程施工的强度要求。</p>
+<p>纤芯是由非常透明的石英玻璃拉成细丝(直径8~100微米)，光纤的纤芯非常细，多模光纤的纤芯直径有50微米和62.5微米。而纤芯外面的包层也非常细，直径不超过125微米。</p>
+<p>在光纤通信中，常用工作波长的中心分别位于0.85微米、1.30微米和1.55微米。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-fc85597b91c2cd7a.png" alt="img"></p>
+<p><strong>光纤通信的原理：</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-060d940d8451692e.png" alt="img" style="zoom:67%;" />
+<p><strong>多模光纤与单模光纤：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111223531264.png" alt="image-20250111223531264"></p>
+<p><u>多模光纤：</u></p>
+<p>实际上，只要从纤芯中射到纤芯表面的光线的入射角大于某一个临界角度，就可产生全反射。 因此，可以<strong>存在许多条不同角度入射的光线在一条光纤中传输</strong>，这种光纤被称为<strong>多模光纤</strong>。</p>
+<p>由于光的色散问题，光在多模光纤中传输一定距离后必然产生<strong>信号失真</strong>，也就是<strong>脉冲展宽</strong>(也就是输入脉冲和输出脉冲不一样)。因此，<strong>多模光纤</strong>只适合<strong>近距离传输</strong>(例如在建筑物内)。多模光纤对光源的要求不高，可以使用较便宜的<strong>发光二极管</strong>，相应地接收可采用<strong>光电二极管</strong>检测光脉冲。</p>
+<hr>
+<p><u>单模光纤：</u></p>
+<p>若<strong>光纤的直径减小到只有一个光的波长</strong>，则光纤就像一根波导那样。它可使<strong>光线一直向前传播</strong>，而不会产生多次反射，这样的光纤被称为单模光纤。</p>
+<p>单模光纤没有模式色散，在1.31微米波长附近材料色散和波导色散大小相等符号相反，两者正好抵消，<strong>没有脉冲展宽问题</strong>(也就是输入脉冲和输出脉冲一样)。</p>
+<p>单模光纤<strong>适合长距离传输且衰减小</strong>，但其制造成本高，对光源要求高。需要使用昂贵的半导体激光器作为光源，相应地。需要采用激光检波器检测脉冲。</p>
+<h4 id="电力线">电力线</h4>
+<p>应用电力线传输信号的实例最早是电力线电话。目前，如果要构建家庭高性能局域网，采用电力线作为传输媒体是不能满足要求的。对于装修时没有进行网络布线的家庭，可以采用这种方式。对于一些采用独立房间进行办公的企业来说每间办公室的电脑数量不多，而又不希望跨办公室进行布线，也可以采用这种方式。每个办公室只需根据需求，在电源插座上插入一个或多个电力猫即可。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-2c23cb1d18aa345c.png" alt="img" style="zoom:67%;" />
+<h3 id="非导引型传输媒体">非导引型传输媒体</h3>
+<p>我们可以利用<strong>电磁波在自由空间的传播</strong>来传送数据信息。中间的一段可以使用，这段频等范围的电磁波可以通过调制波的振幅、频率或相位来传输信息。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-8432039f51003722.png" alt="img"></p>
+<h4 id="无线电波">无线电波</h4>
+<p>从<strong>低频到甚高频</strong>（也就是从长波到米波），这些频段的电磁波又称为<strong>无线电波</strong>，用于国际广播、海事和航空通讯、电台广播、电视广播等。</p>
+<p>其中无线电波中的<strong>低频和中频</strong>频段，主要利用<strong>地面波</strong>进行传输。而<strong>高频和甚高频</strong>频段主要是<strong>靠电离层的反射</strong>。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-357bc29ed7591006.png" alt="img" style="zoom:80%;" />
+<h4 id="微波">微波</h4>
+<p>从<strong>特高频到极高频</strong>（也就是从分米波到毫米波），这些频段的电磁波又称为<strong>微波</strong>，用于无线电话、无线网络、雷达、人造卫星接受、射电天文、人体扫描等。</p>
+<p>微波通信在数据通信中占有重要地位，频率范围为300MHz到300GHz（波长1m到1mm)，但主要使用2~40GHz的频率范围。微波在空间主要是直线传播，由于微波会穿透电离层而进入宇宙空间,因此它<strong>不能经过电离层的反射</strong>传播到地面很远的地方。</p>
+<p>传统的微波通信主要有两种方式：<strong>地面微波接力通信和卫星通信。</strong></p>
+<p>微波在空间主要是直线传播，地球表面是一个曲面，因此其传播距离受到限制，一般只有50公里左右。但若采用100米高的天线塔，则传播距离可增大到100公里。为实现远距离通信，<strong>必须在一条微波通信信道的两个终端之间建立着干个中继站</strong>。中继站把前一站送来的信号经过放大后再发送到下一站，故称为“接力”。</p>
+<p>常用的<strong>卫星通信</strong>方法是在地球站之间，利用位于约3万6千公里高空的人造同步地球卫星，作为中继器的一种微波接力通信。其最大特点是通信距离远，相应地传播时延也比较大一般在250~300ms之间。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-f042b478ef808a1a.png" alt="img" style="zoom:80%;" />
+<h4 id="红外线">红外线</h4>
+<p>很多家用电器(例如:电视、空调等)都配套有红外遥控器。以前的笔记本电脑基本都带有红外接口，可以进行红外通信，红外通信属于<strong>点对点无线传输</strong>，中间不能又障碍物，传输距离短，传输速率也很低。</p>
+<h2 id="传输方式">传输方式</h2>
+<h3 id="串行与并行">串行与并行</h3>
+<p><strong>串行传输</strong>是指数据是一个比特一个比特依次发送的，在发送端和接受端之间只需要一条数据传输线路。</p>
+<p><strong>并线传输</strong>是指一次发送n个比特而不是一个比特，在<strong>发送端和接受端之间需要有n条数据传输线路</strong>。并行传输的优点是速度为串行传输的n倍。缺点就是成本高。</p>
+<p><strong>远距离传输</strong>例如计算机网络是通过<strong>串行传输</strong>实现的，而<strong>计算机内部的数据传输</strong>，常采用<strong>并行传输</strong>方式。（例如CPU与内存之间通过总线进行数据传输）</p>
+<h3 id="同步与异步">同步与异步</h3>
+<p><u><strong>同步传输</strong></u></p>
+<p><strong>为什么要同步？</strong></p>
+<p>数据块以稳定的比特流的形式传输。字节之间没有间隔，接收端在每个比特信号的中间时刻进行检测，以判别接收到的是比特0是比特1。由于<strong>不同设备的时钟频率存在一定差异</strong>，不可能做到完全相同，在传输大量数据的过程中所产生的判别时刻的累计误差，会导致接收端对比特信号的判别错位。因此，需要采取方法使收发双方的时钟保持同步。</p>
+<p><strong>如何让收发双方的时钟同步？</strong></p>
+<p><strong>外同步：<strong>也就是在收发双方之间</strong>添加一条单独的时钟信号线</strong>，发送端在发送数据信号的同时，另外发送一路时钟同步信号。接收端按照时钟同步信号的节奏来接收数据。</p>
+<p><strong>内同步：<strong>也就是发送端将时钟同步信号</strong>编码到发送数据中</strong>一起传输。例如，传统以太网所采用的就是曼彻斯特编码。</p>
+<hr>
+<p><u><strong>异步传输</strong></u></p>
+<p>采用异步传输方式时，以字节为独立的传输单位。字节之间的时间间隔不是固定的。接收端仅在每个字节的起始处对字节内的比特实现同步。为此，通常要在每个字节前后分别加上<strong>起始位和结束位</strong>。</p>
+<h3 id="单向与双向">单向与双向</h3>
+<p>一条通信电路往往包含一条发送信道和一条接收信道。从通信的双方信息交互的方式来看，可以有以下三种基本方式：</p>
+<ul>
+<li>单工通信（单工）：又称为单向通信。通信双方<strong>只有一个数据传输方向</strong>。例如无线电广播</li>
+<li>双向交替通信（半双工）：通信双方<strong>可以相互传输</strong>数据，但<strong>不能同时进行</strong>。例如对讲机</li>
+<li>全双工通信（全双工）：又称为双向同时通信，通信双方<strong>可以同时发送和接收信息</strong>。例如电话</li>
+</ul>
+<blockquote>
+<p>单向通信只需要一条信道，而双向交替通信或全双工通信，则都需要两条信道（每个方向各一条）。显然全双工通信的效率最高</p>
+</blockquote>
+<h2 id="编码与调制">编码与调制</h2>
+<h3 id="基本概念-2">基本概念</h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-acc59055804f0890.png" alt="img"></p>
+<p>计算机需要处理和传输用户的文字，图片，音频和视频，这些可以统称为<strong>消息</strong>。<strong>数据</strong>是运输消息的实体，而计算机中的网卡将比特0和比特1变换成相应的<strong>电信号</strong>发送到网线，而信号是数据的电磁表现。</p>
+<p><strong>由信源发出的原始电信号称为基带信号</strong>。而基带**<u>信号</u><strong>又分为两类，一类是</strong>数字基带信号**，例如计算机内部CPU与内存之间传输的信号。另一类是<strong>模拟基带信号</strong>，例如麦克风收到声音后产生的音频信号。</p>
+<hr>
+<p>信号需要在**<u>信道</u><strong>中进行传输，信道可分为</strong>数字信道<strong>和</strong>模拟信道**两种。</p>
+<p>在不改变信号性质的前提下，仅对数字基带信号的波形进行变换，称为<strong>编码</strong>。<strong>编码后产生的信号仍为数字信号</strong>，可以在<strong>数字信道</strong>中传输。</p>
+<p>把数字基带信号的频率范围搬移到较高的频段并转换为<strong>模拟信号</strong>称为<strong>调制</strong>。调制后产生的信号是<strong>模拟信号</strong>，可以在<strong>模拟信道</strong>中传输。</p>
+<p>同样的，对于模拟基带信号的处理，也有编码和调制两种方法。在计算机网络中，更常见的是将数字基带信号通过编码或调制的方式进行传输。</p>
+<hr>
+<p><strong>码元</strong>：在使用时间域的波形表示数字信号时，代表不同离散数值的<strong>基本波形</strong>成为码元。简单来说，码元就是构成信号的一段波形。</p>
+<hr>
+<p><strong>之前提到的传输媒体和这里的信道是一个东西吗？</strong></p>
+<p>传输媒体和信道<strong>不能直接画等号</strong>。对于单工传输，传输媒体中只包含一个信道，要么是发送信道，要么是接收信道。而对于半双工和全双工传输，传输媒体中要包含两个信道，一个是发送信道，另一个是接收信道。（如果使用信道复用技术，一条传输媒体还可以包含多个信道。）</p>
+<h3 id="常用编码方法">常用<strong>编码</strong>方法</h3>
+<h4 id="不归零编码">不归零编码</h4>
+<p>在整个码元时间内，<strong>电平不会出现零电平</strong>。例如，该码元在其时间内全部是正电平，而该码元在其时间内全部是负电平。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-2f6b70fef84339ec.png" alt="img" style="zoom:67%;" />
+<p><strong>接收端如何判断出到底有几个码元连在一起？</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-0732d0edc74846b5.png" alt="img" style="zoom:67%;" />
+<p>这需要发送方的发送与接收方的接收做到<strong>严格的同步</strong>，那么就<strong>需要额外一根传输线来传输时钟信号</strong>，接收方按时钟信号的节拍来逐个接收码元。当然这个额外的传输线显然是不必要的，因此，由于不归零编码存在同步问题，<strong>计算机网络中的数据传输不采用这类编码</strong>。</p>
+<h4 id="归零编码">归零编码</h4>
+<p>每个码源<strong>传输结束后信号都要归零</strong>，所以接收方只要在信号归零后进行采样即可，<strong>不需要单独的时钟信号</strong>。</p>
+<p>实际上，归零编码相当于把时钟信号用归零方式编码在了数据之内，这称为<strong>自同步信号</strong>。但是归零编码中大部分的数据带宽都用来传输归零而浪费掉了。也就是说，归零编码的<strong>优点是自同步，但缺点是编码效率低</strong>。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-8aa838a116fdafb4.png" alt="img"></p>
+<h4 id="曼彻斯特编码">曼彻斯特编码</h4>
+<p>如图所示，在每个码元时间的<strong>中间时刻</strong>，信号都会发生跳变，例如负跳变表示比特1（也就是向下），正跳变表示比特0（也就是向上）。码元中间时刻的跳变既表示时钟，又表示数据。<strong>传统以太网使用的就是曼彻斯特编码</strong>。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-a34a686a9d052e9c.png" alt="img"></p>
+<blockquote>
+<p>当然这里到底向上是1还是向下是1，要看具体的规定</p>
+</blockquote>
+<h4 id="差分曼彻斯特编码">差分曼彻斯特编码</h4>
+<p>如图所示，在每个码元时间的中间时刻，信号都会发生跳变。与曼彻斯特的编码不同，<strong>跳变仅表示时钟</strong>。而用<strong>码元开始处电平是否发生变化</strong>来表示比特0或者比特1。<strong>差分曼彻斯特编码比曼彻斯特编码变化少，更适合较高的传输速率</strong>。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-9a758474e374329a.png" alt="img"></p>
+<p>如上图，每个码元结束和下一个码元开始处的电平变化用于表示0或者1。同样的，具体哪个表示1或者0，要看具体规定。</p>
+<h3 id="常用调制方法">常用<strong>调制</strong>方法</h3>
+<h4 id="基本调制方法">基本调制方法</h4>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-7ce461637de91b6e.png" alt="img"></p>
+<ul>
+<li><strong>调幅</strong>所产生的模拟信号。无载波输出表示比特0，有载波输出表示比特1。</li>
+<li><strong>调频</strong>所产生的模拟信号。频率F1的波形表示比特0，频率F2的波形表示比特1。</li>
+<li><strong>调相</strong>所产生的模拟信号。初相位0度的波形表示比特0，初相位180度的波形表示比特1。</li>
+</ul>
+<blockquote>
+<p>显然使用基本调制方法，一个码元只能包含一个比特的信息。如何让一个码元能包含更多的信息，就要用到下面的混合调制。</p>
+</blockquote>
+<h4 id="混合调制">混合调制</h4>
+<p>为了使一个码元包含更多的比特，可以采用混合调制的方法。由于<strong>频率</strong>和<strong>相位</strong>是相关的，所以这两个不能同时调。通常情况下，<strong>相位</strong>和<strong>振幅</strong>可以结合起来一起调制，称为<strong>正交振幅调制QAM。</strong></p>
+<p>一个混合调制例子：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c4411d7jb/?p=17&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=633">https://www.bilibili.com/video/BV1c4411d7jb/?p=17&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=633</a></p>
+<h2 id="信道的极限容量">信道的极限容量</h2>
+<h3 id="信号失真">信号失真</h3>
+<p>数字信号通过实际的信道后，波形会产生失真，当失真不严重时，在输出端还可以根据已失真的波形还原出发送的码元。当失真严重时，在输出端就很难判断这个信号在什么时候是1和在什么时候是0。信号波形失去了码元之间的清晰界限，这种现象叫做<strong>码间串扰</strong>。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111232942501.png" alt="image-20250111232942501" style="zoom:67%;" />
+<p>产生失真的原因主要有：码元传输速率、信号传输距离、噪声干扰、传输媒体质量等。</p>
+<h3 id="奈氏准则">奈氏准则</h3>
+<p>在假定的理想条件下，<strong>为了避免码间串扰，码元传输速率是有上限的</strong>。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-b90918937a54faa6.png" alt="img"></p>
+<p>当然，实际上的码元传输速率要显著低于奈式准则给出的速率。因为奈式准则没有考虑传输距离等因素，是理想条件下的结果。</p>
+<hr>
+<p>那么，尽管奈氏准则限制了最高码元传输速率，但是只要采用技术更为复杂的信号调制方法，让码元可以携带更多的比特，岂不是可以无限制地提高信息的传输速率吗？</p>
+<p>回答是否定的。信道的极限数据传输速率还受到信噪比的影响。因为在实际的信道中会有<strong>噪声</strong>，噪声是随机产生的，其瞬时值有时会很大，这会影响接收端对码元的识别（噪声功率相对于信号功率越大，影响就越大）。</p>
+<h3 id="香农公式">香农公式</h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-57e105e5df793b93.png" alt="img"></p>
+<p>c的单位是bit/s</p>
+<p>依据香农公式和奈氏准则，在信道带宽一定时，要提<strong>高传输速率</strong>就要使用<strong>多元制</strong>（调制方法要牛以提升带宽W），也要<strong>提高信噪比</strong>。</p>
+<p><a id="section1"></a></p>
+<h2 id="信道复用技术">信道复用技术</h2>
+<p><strong>为什么要信道复用？</strong></p>
+<p>为了要把信道资源彻底榨干，在实际网络里，通常是很多对用户共用一个信道来传输信息（<strong>共享信道</strong>）。但是这样的传输就可能会导致相互干扰，传输就失败了，所以我们要搞多路复用技术来解决这个干扰问题。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111235353398.png" alt="image-20250111235353398"></p>
+<h3 id="频分复用FDM">频分复用FDM</h3>
+<p>将整个带宽分为多份，用户在分配到一定的频带后，在通信过程中<strong>自始至终</strong>都占用这个频带。所有用户在同样的时间占用<strong>不同的带宽（即频带）资源</strong>。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111235431446.png" alt="image-20250111235431446" style="zoom:67%;" />
+<hr>
+<p><strong>频分多址</strong>：可让N 个用户各使用一个频带，或让更多的用户<strong>轮流使用</strong>这N 个频带，这种方式称为频分多址接入<strong>FDMA</strong>，即频分多址。也就是说，我有10个频带可供使用，但是有20个客户，那我就会前10用户先用，11-20用户再用，再轮流交替。</p>
+<h3 id="时分复用TDM">时分复用TDM</h3>
+<p>将时间划分为一段段<strong>等长</strong>的时分复用帧（<strong>TDM帧</strong>），每一个时分复用的用户在每一个TDM 帧中占用<strong>固定序号</strong>的时隙， 每一个用户所占用的时隙是周期性地出现（其周期就是TDM帧的长度）。</p>
+<p>TDM 信号也称为<strong>等时</strong>(isochronous) 信号，所有用户在不同的时间占用<strong>同样的频带宽度</strong>。</p>
+<blockquote>
+<p>时分复用会导致信道利用率不高，例如被分配到A时隙的用户只在第一个TDM帧中发送了数据，那么其在后面的TDM帧中A时隙就一直处于空闲状态。解决这个问题我们会采用<strong>统计时分复用STDM</strong>的方法。</p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111235600201.png" alt="image-20250111235600201"></p>
+<hr>
+<p><strong>时分多址</strong>：可让N 个用户各使用一个时隙，或让更多的用户<strong>轮流使用</strong>这N 个时隙，这种方式称为时分多址接入<strong>TDMA</strong> (Time  Division Multiple Access)，简称为时分多址。</p>
+<h3 id="统计时分复用STDM">统计时分复用STDM</h3>
+<p>因为对于时分复用而言，当某个用户在某个TDM帧中无数据发送时，这个时隙也不会给别人用，而是处于空闲状态，导致线路的利用率不高。</p>
+<p>因此采用统计时分复用可以按需动态地分配时隙，因此可以提高线路的利用率。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111235858442.png" alt="image-20250111235858442"></p>
+<h3 id="波分复用WDM">波分复用WDM</h3>
+<p>**即光的频分复用。**使用一根光纤来同时传输多个光载波信号，按光的波长（频段）来区分不同用户。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250111235952822.png" alt="image-20250111235952822"></p>
+<h3 id="码分复用CDM">码分复用CDM</h3>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1xq4y197NY/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">2.4.3-码分复用_哔哩哔哩_bilibili</a></p>
+<p>各用户在<strong>相同的时间</strong>使用<strong>相同的频带</strong>，各用户使用经过特殊挑选的<strong>不同码型</strong>，因此彼此不会造成干扰。相当于结合了时分复用和码分复用的优点。</p>
+<p>当码分复用信道被多个不同地址的用户所共享时，就被称为<strong>码分多址CDMA</strong>。</p>
+<hr>
+<p><strong><u>码分复用是如何工作的？</u></strong></p>
+<p>我们把发送一个bit所需的时间划分为m个短间隔，每个间隔叫<strong>码片</strong>。每一个站有自己<strong>独特唯一</strong>的码片序列。<u>每个站如果想发送比特1，就发送自己的m bit码片序列；如果想发送比特0，就发送该码片序列的二进制反码。</u></p>
+<blockquote>
+<p>例如，S站的码片序列为00011011，那么</p>
+<ul>
+<li>如果S站想要发送比特1，那它应该发送的是序列(-1 -1 -1 +1 +1 -1 +1 +1)</li>
+<li>如果S站想要发送比特0，那它应该发送的是序列(+1 +1 +1 -1 -1 +1 -1 -1)，即上述序列的反码。</li>
+</ul>
+</blockquote>
+<hr>
+<p><strong><u>码片的特点？</u></strong></p>
+<p>每个站分配的码片序列：<strong>各不相同</strong>，且必须<strong>互相正交</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112002256019.png" alt="image-20250112002256019"></p>
+<hr>
+<p><u><strong>例子</strong></u></p>
+<p>如果我们已知几个站的码片和收到的一段码片序列，如何判断是哪个站发送了数据？发送数据的站发送的是0还是1？</p>
+<p>方法是对收到的码片序列和各个站的码片做规格化内积运算，其结果讨论如下：</p>
+<ul>
+<li>结果为0，说明该站没有发送数据</li>
+<li>结果为1，说明该站发送数据，且发送了1</li>
+<li>结果为-1，说明该站发送数据，且发送了0</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112002724616.png" alt="image-20250112002724616"></p>
+<hr>
+<p>假设某站原来要发送信息的数据率为 b bit/s，现在由于每一个比特都要转换为m bit的码片再发送，<strong>该站实际发送的数据率就提高到了mb bit/s</strong>，同时， 所占用<strong>频带宽度也提高到原来的m 倍</strong>。</p>
+<blockquote>
+<p>这种系统发送的信号有很强的抗干扰能力，其频谱类似于白噪声，不易被对手发现。因为对手听到的相当于是多种声音混杂在一起的声音，会把这样的认为是噪音。</p>
+</blockquote>
+<p>码分复用实际上实现了扩频，扩频通常有两类：</p>
+<ul>
+<li>直接序列扩频 DSSS (Direct Sequence Spread Spectrum)</li>
+<li>跳频扩频 FHSS (Frequency Hopping Spread Spectrum)</li>
+</ul>
+<h2 id="数字传输系统与宽带接入技术">数字传输系统与宽带接入技术</h2>
+<p><strong>数字传输系统</strong></p>
+<p>早期，电话网长途干线采用频分复用 FDM 的模拟传输方式；<strong>目前，大都采用时分复用 PCM 的数字传输方式。</strong></p>
+<p>现代电信网业务包括语音、视频、图像和各种数据业务，因此需要一种能承载来自其他各种业务网络数据的传输网络。在数字化的同时， <strong>光纤开始成为长途干线最主要的传输媒体。</strong></p>
+<hr>
+<p><strong>同步光纤网 SONET</strong>  ：各级时钟都来自一个非常精确的主时钟。</p>
+<p>为光纤传输系统定义了<strong>同步传输</strong>的线路速率等级结构：</p>
+<ul>
+<li>传输速率以 51.84 Mbit/s 为基础</li>
+<li>对电信号称为：第 1 级同步传送信号 STS-1 (Synchronous Transport Signal)</li>
+<li>对光信号称为：第 1 级光载波 OC-1 (Optical Carrier)</li>
+</ul>
+<hr>
+<p><strong>同步数字系列 SDH</strong>  ：ITU-T以美国标准 SONET 为基础制订的国际标准</p>
+<p>与 SONET 的主要不同： SDH的基本速率为 155.52 Mbit/s</p>
+<ul>
+<li>称为第 1 级同步传递模块 (Synchronous Transfer Module)，即 STM-1</li>
+<li>相当于 SONET 体系中的 OC-3 速率</li>
+</ul>
+<hr>
+<p>SONET / SDH 标准的意义：</p>
+<ul>
+<li>定义了标准光信号，规定了波长为 1310 nm 和 1550 nm 的激光源</li>
+<li>在物理层定义了帧结构</li>
+<li>使北美、日本和欧洲这三个地区三种不同的数字传输体制在 STM-1 等级上获得了统一</li>
+<li>已成为公认的新一代理想的传输网体制</li>
+<li>SDH 标准也适合于微波和卫星传输的技术体制</li>
+</ul>
+<hr>
+<p><strong>接入网</strong>：将主机连接到边缘路由器上  ，边缘路由器是端系统Host去往任何其他远程端系统的路径上的第一台路由器。</p>
+<p><strong>接入技术：</strong></p>
+<ul>
+<li>有线网络接入技术：光纤到户FTTH、以太网、同轴电缆、双绞线的DSL、古老的拨号上网</li>
+<li>无线网络接入技术： WiFi、 4G/5G、卫星广域覆盖</li>
+</ul>
+<p><strong>接入场景：</strong> 住宅（家庭）接入网、机构（学校、公司）接入网、移动接入网络（WiFi、4G/5G）</p>
+<hr>
+<p><strong>不同接入网的方式：</strong></p>
+<ul>
+<li><strong>数字用户线DSL</strong>：使用电话线连接到数字用户线接入复用器(DSLAM)  。
+<ul>
+<li>DSL电话线上，语音和数据可以同时传输</li>
+<li>数据进入互联网，语音连接到电话网</li>
+<li>上下行速率不对称</li>
+</ul>
+</li>
+<li><strong>同轴电缆</strong>：家庭利用传统有线电视信号线（同轴电缆）接入头端上网
+<ul>
+<li>多个家庭共享有线电视的头端</li>
+<li>不对称：高达40 Mbps–1.2 Gbps下行传输速率，30-100 Mbps上行传输速率</li>
+</ul>
+</li>
+<li>光纤到户FTTH：我国及全球先进地区普遍采用的光纤通信传输方法。
+<ul>
+<li>分为两类： 有源光纤网络AON（点对点连接） 和无源光纤网络PON（点对多点连接）。</li>
+<li>带宽大、线路稳定</li>
+</ul>
+</li>
+<li>无线接入：无线接入网通过 “接入点” 将终端系统连接到路由器上
+<ul>
+<li>无线局域网（WLAN）：通常在建筑物内或周围（10米），即WiFi</li>
+<li>广域蜂窝接入网：由移动蜂窝网络运营商提供（10公里），即2G/3G/4G/5G等蜂窝网络</li>
+</ul>
+</li>
+</ul>
+<h2 id="习题-2">习题</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c4411d7jb/?p=18&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=371">https://www.bilibili.com/video/BV1c4411d7jb/?p=18&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=371</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c4411d7jb?spm_id_from=333.788.videopod.episodes&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4&amp;p=20">2.7 第2章 物理层 习题课_哔哩哔哩_bilibili</a></p>
+<h1>数据链路层</h1>
+<h2 id="概述">概述</h2>
+<p><strong>链路</strong>是从一个结点到相邻结点的一段物理线路，中间没有其他交换节点。</p>
+<p><strong>数据链路</strong>则是在链路的基础上增加了一些必要的硬件（如网络适配器）和软件（如协议的实现）。</p>
+<p>数据链路层以<strong>帧</strong>为单位进行数据传输与处理。</p>
+<p><strong>数据链路层使用的信道主要有以下两种类型：</strong></p>
+<ul>
+<li>点对点信道</li>
+<li>广播信道</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104144638993.png" alt="image-20241104144638993"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241024172051146.png" alt="image-20241024172051146"></p>
+<p>对于<strong>点对点信道</strong>而言，数据链路层存在3个<strong>主要问题</strong>：</p>
+<ul>
+<li>封装成帧：主机的各层会依次向下提供协议数据单元，当网络层为数据链路层提供网络层数据单元后，数据链路层为该数据单元添加<strong>帧头和帧尾</strong>的过程。首部和尾部的一个重要作用就是进行<strong>帧定界</strong>。</li>
+<li>差错检测：帧在传输过程中可能发生误码，即原来是0现在变成了1。计算机一般会采用<strong>检错码</strong>的方式来检验出错误。</li>
+<li>可靠传输：接收方收到含有误码的帧后，会直接将其丢弃。此时，如果数据链路层向上层提供的是<strong>不可靠服务</strong>，那么这样的丢弃是合理的，不会再管这个有误码的帧；如果提供<strong>可靠服务</strong>，那就还需要想办法让接收方主机再重新收到该帧的正确副本。<strong>事实上，误码无法避免，而能够确保发送方发什么，接收方就收到什么，就叫做可靠传输。</strong></li>
+</ul>
+<p>而对于<strong>广播信道</strong>而言，除了上述3个问题外，还存在其他问题：</p>
+<ul>
+<li>主机ABCDE通过总线互联，若A需要向C发送消息，那A会直接往总线上传输信息，那么BDE如何知道这个不是自己要接收的信息？C又如何知道知道这是自己要的信息？<strong>这个问题一般会采用把帧的目的地址加入到帧中一起传输。</strong></li>
+<li>当总线上同时发生多个传输时，会发生<strong>数据碰撞</strong>，这是共享式局域网所无法避免的。在以太网中我们会采用<strong>媒体接入控制协议CSMA/CD</strong>来解决这个问题。</li>
+</ul>
+<p>如今，在<strong>有线局域网</strong>领域，采用<strong>点对点信道和链路层交换机的交换式局域网</strong>已经能够取代上述的共享式信道局域网；而在<strong>无线局域网</strong>领域，我们仍然采用的是<strong>共享式信道局域网</strong>。</p>
+<h2 id="封装成帧">封装成帧</h2>
+<p>封装成帧是指数据链路层给上层交付的协议数据单元添加帧头和帧尾使之成为帧。</p>
+<ul>
+<li>
+<p><strong>帧头和帧尾中包含有重要的控制信息</strong></p>
+</li>
+<li>
+<p>帧头和帧尾的作用之一是<strong>帧定界</strong>：发送方数据链路层的帧给到物理层后，会发送一串比特流给到接收方的物理层，而接收方的数据链路层就靠帧头和帧尾来界定比特流中哪些能构成一个完整的帧。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104154718010.png" alt="image-20241104154718010"></p>
+<p>在上图PPP帧中，前后1字节的标志字段就是用来帧定界的，反应在比特流上就是01111110。</p>
+</li>
+<li>
+<p>当然，有的协议并不会采用帧头和帧尾的方式进行定界，而是由物理层在帧前添加<strong>前导码</strong>。前导码分为<strong>前同步码（使得发送方和接收方时钟同步）<strong>和</strong>帧开始定界符（表明后面紧跟的就是MAC帧）</strong>。此外以太网还规定了帧间间隔为96比特时间，因此，MAC帧不需要帧结束定界符。</p>
+<p><a id="section2"></a></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104154737601.png" alt="image-20241104154737601"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104154922518.png" alt="image-20241104154922518"></p>
+</li>
+</ul>
+<hr>
+<p><strong>透明传输</strong>是指<strong>数据链路层对上层交付的传输数据没有任何限制</strong>，好像数据链路层不存在一样。如下列情况所示，<strong>帧中含有界定符</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104205119861.png" alt="image-20241104205119861"></p>
+<p>此时接收方会<strong>错误接收</strong>这个较短的数据，也就是说，数据链路层对其上层交付的数据有特殊需求（至少不能包括界定符），这样的数据链路层就没什么用了。</p>
+<p><strong><u>那么我们如何实现透明传输？</u></strong></p>
+<ul>
+<li>
+<p>对于<strong>面向字节</strong>的物理链路：使用<strong>字符填充</strong>的方式，即在flag前插入转义字符的方式（当然转义字符前也可以插入转义字符）。注意这里的转义字符是一个控制字符，长度为1字节，用ESC来表示（不是说转义字符就是ESC这三个字母噢）</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104205526934.png" alt="image-20241104205526934"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104205705467.png" alt="image-20241104205705467"></p>
+</li>
+<li>
+<p><strong>面向比特</strong>的物理链路：采用<strong>比特填充</strong>的方式</p>
+<p>例如下图中标志符为01111110，而在帧数据部分有两个01111110，采用0比特填充法：在帧数据这每逢5个1就在后面加上一个0；然后接收方接收的时候只要把那个0给剔除就行了</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104210040397.png" alt="image-20241104210040397"></p>
+</li>
+</ul>
+<p>当然，为了提高传输效率，我们应该让帧中真正有用的数据长度更长一些。而每一种数据链路层协议都规定了这个数据长度的上限，即<strong>最大传送单元MTU</strong>。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104211002662.png" alt="image-20241104211002662"></p>
+<h2 id="差错检测">差错检测</h2>
+<p><strong>比特差错</strong>：比特在传输过程中可能出错，1变0，0变1这种。</p>
+<p><strong>误码率BER</strong>：一段时间内，传输错误的比特数占传输比特总数的比率</p>
+<p>在差错检测中，使用<strong>差错检测码</strong>（FCS字段）来检测是否发生了比特差错。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112135425125.png" alt="image-20250112135425125"></p>
+<hr>
+<p>差错检测方法如下：</p>
+<ul>
+<li>
+<p><strong>奇偶校验</strong>：在待发送的数据后面加1位奇偶检验位，使得整个数据（包括那个校验位）中“1”的个数为奇数（奇检验）或偶数（偶校验）。</p>
+<p>采用这种方式需要收发双方首先约定是奇校验还是偶校验。如果是奇校验，发送方就要补0或者1来使得“1”的个数为奇数；接收方也要进行奇校验，看收到的比特流中1的个数是不是奇数。偶校验同理。</p>
+<p>显然奇偶校验的漏检率比较高，在数据链路层中一般不采用这个方法。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104212609108.png" alt="image-20241104212609108"></p>
+</li>
+<li>
+<p><strong>循环冗余校验CRC</strong>：通过生成多项式来构造差错检测码，一般常用这个</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104212914786.png" alt="image-20241104212914786"></p>
+<p>举例题型：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c4411d7jb/?p=23&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=417">https://www.bilibili.com/video/BV1c4411d7jb/?p=23&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=417</a></p>
+<p>注意这里的除法并不是传统的二进制除法，而是采用模2相除，具体看例子</p>
+<p><u><strong>例子</strong></u></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112144509579.png" alt="image-20250112144509579"></p>
+</li>
+</ul>
+<p>这里的检错码只能进行检错而不能纠错，想纠错就要使用冗余信息更多的纠错码，但这个开销大，在计算机网络中不使用。实际上的做法是采用检错重传方式来纠错，或者直接丢弃差错帧，取决于数据链路层向上层提供的是可靠传输还是不可靠传输。</p>
+<h2 id="可靠传输">可靠传输</h2>
+<h3 id="概述-2">概述</h3>
+<p>当帧传输出现误码时，数据链路层应该怎么做？</p>
+<ul>
+<li>如果数据链路层提供不可靠传输服务：直接把误码帧丢掉</li>
+<li>如果数据链路层提供可靠传输服务：想办法发送端发什么，接收端就该收到什么。</li>
+</ul>
+<p>一般而言，<strong>有线链路误码率比较低</strong>，所以<strong>不要求</strong>数据链路层提供可靠传输服务（一般由它的上级处理）；但<strong>无线链路受干扰大</strong>，数据链路层<strong>必须</strong>提供可靠传输服务。</p>
+<p>此外，<strong>比特差错</strong>只是传输差错中的一种，（从整个计算机网络体系结构看）还可能存在<strong>分组丢失、分组失序和分组重复</strong>。不过，分组丢失、分组失序和分组重复一般不会出现在数据链路层，而是出现在其上层。</p>
+<ul>
+<li>
+<p>分组丢失：路由器输入队列满，分组直接被路由器丢掉了</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104214604103.png" alt="image-20241104214604103" style="zoom:67%;" />
+</li>
+<li>
+<p>分组失序：我的分组发送数据是ABC，但是实际收到的分组是BAC（比如）因为每个分组走的传输链路不同，到达的速度有快有慢。</p>
+</li>
+<li>
+<p>分组重复：一个分组A被发出去以后，卡比在路由器（或者其他地方），到不了目标主机。然后发送端主机会触发超时重传，又发了一个分组A’，最后两个相同的数据包到了接收端。</p>
+</li>
+</ul>
+<h3 id="停止-等待协议SW">停止-等待协议SW</h3>
+<p>TODO：这里3种实现可靠传输的协议不在考试范围内。</p>
+<h3 id="回退N帧协议GBN">回退N帧协议GBN</h3>
+<h3 id="选择重传协议SR">选择重传协议SR</h3>
+<h2 id="点对点协议PPP">点对点协议PPP</h2>
+<p>点对点协议PPP（Point-to-Point Protocol）是目前使用最广泛的点对点数据链路层协议。</p>
+<p>它的特点是：</p>
+<ul>
+<li>简单</li>
+<li>只检测差错，而不是纠正差错</li>
+<li>不使用序号，也不进行流量控制</li>
+<li>可同时支持多种网络层协议。</li>
+</ul>
+<p><strong>PPP协议在哪里用得到？</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104215729185.png" alt="image-20241104215729185"></p>
+<hr>
+<p><strong>PPP协议的组成</strong>：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104215946719.png" alt="image-20241104215946719" style="zoom:67%;" />
+<hr>
+<p><strong>PPP帧格式</strong>：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104221341279.png" alt="image-20241104221341279" style="zoom:67%;" />
+<hr>
+<p><strong>PPP协议的透明传输（即数据部分出现标志字段F）如何实现？</strong></p>
+<ul>
+<li>
+<p>面向字节的异步链路：字节填充法，插入转义字符</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104221803783.png" alt="image-20241104221803783"></p>
+</li>
+<li>
+<p>面向比特的同步链路：比特填充法，插入比特0</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104222057692.png" alt="image-20241104222057692"></p>
+</li>
+</ul>
+<hr>
+<p><strong>PPP协议的差错检测如何实现？</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241104222244097.png" alt="image-20241104222244097"></p>
+<p>这里FCS的计算范围是A、C、P和数据部分，且其不提供可靠传输服务，意味着会直接把差错帧删除。</p>
+<h2 id="媒体接入控制MAC">媒体接入控制MAC</h2>
+<h3 id="概述-3">概述</h3>
+<p><strong>为什么要媒体接入控制？</strong></p>
+<p>当使用广播信道时，会存在<strong>共享信道</strong>的问题，多台设备在同一信道上一起发送数据，就会发生碰撞。而媒体接入控制就是一种用来协调多个发送和接收站点对同一信道的占用问题的方法。</p>
+<p><strong>媒体接入控制的分类和现状：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241105162437427.png" alt="image-20241105162437427"></p>
+<p>随着技术的发展，交换技术的成熟和成本的降低，具有更高性能的使用点对点链路和链路层交换机的交换式局域网在有线领域已完全取代了共享式局域网，但由于无线信道的广播天性，无线局域网仍然使用的是共享媒体技术。</p>
+<h3 id="静态划分信道">静态划分信道</h3>
+<p>有关频分、时分、码分多址的内容，这部分在<a href="#section1">物理层</a>这里有讲过</p>
+<h3 id="动态接入控制">动态接入控制</h3>
+<p>受控接入已经被狠狠淘汰了，下面讨论随机接入的方式。</p>
+<p>随机接入的目标是解决如何尽量避免冲突以及发生冲突后如何尽快恢复通信。早期的共享式以太网采用CSMA/CD来解决这个问题</p>
+<h4 id="CSMA-CD协议">CSMA/CD协议</h4>
+<p>这个东西的中文名叫：<strong>载波监听多址接入/碰撞检测</strong></p>
+<ul>
+<li>
+<p><strong>多址接入MA</strong>：多个站接在一根总线上，竞争一个总线</p>
+</li>
+<li>
+<p><strong>载波监听CS</strong>：每个站在发帧之前要先看看总线上有没有其他人，再发送帧。如果总线连续<a href="#section2">96比特时间</a>（发送96bit数据要的时间，即<strong>帧间最小间隔</strong>）空闲我就发；如果总线忙我就等，直到连续96比特时间空闲我再发。</p>
+<p>这里96比特时间的作用是：使接收方可以检测出一个帧的结束，同时也使得其他站点有机会平等竞争信道并发送帧。</p>
+</li>
+<li>
+<p><strong>碰撞检测CD</strong>：边发送帧边检测有没有碰撞。一旦碰撞我就停止发送，等待一段时间后再发。</p>
+</li>
+</ul>
+<blockquote>
+<p>在以太网中还会采用<strong>强化碰撞</strong>的措施，即发送帧的站点一旦检测到碰撞，不仅要立即停止发送帧，还要继续发送32bit或64bit的人为干扰信号，以<strong>确保有足够多的碰撞信号使得所有的站点都能检测出碰撞。</strong></p>
+</blockquote>
+<hr>
+<p><strong>争用期（碰撞窗口）</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241105170607637.png" alt="image-20241105170607637"></p>
+<hr>
+<p><strong>最小帧长</strong></p>
+<p>之所以会产生这个问题，考虑下图中主机A发送一个很短的帧，主机C在检测到96比特时间空闲后就发送帧结果导致了与主机A发送的帧碰撞。主机D收到了主机A发来的、受碰撞损坏的帧就会直接丢弃该帧；但是主机A不知道这个已经发送完毕的帧遭受碰撞就不会重发。</p>
+<p>最小帧长的大小即**<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>争用期</mtext><mo>×</mo><mtext>带宽</mtext></mrow><annotation encoding="application/x-tex">\text{争用期}\times \text{带宽}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord text"><span class="mord cjk_fallback">争用期</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord cjk_fallback">带宽</span></span></span></span></span>**，注意单位！</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241105171119486.png" alt="image-20241105171119486" style="zoom:80%;" />
+<hr>
+<p><strong>最大帧长</strong></p>
+<p>最大帧长也是存在的，毕竟不能让一个主机一直占据总线不放，而且每一个主机也会存在自己的缓冲区，帧长太长缓冲区也放不下。具体帧长多少取决于用的什么协议。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112153246814.png" alt="image-20250112153246814" style="zoom:80%;" />
+<hr>
+<p><strong>退避时间</strong>：截断二进制指数退避</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241105171925205.png" alt="image-20241105171925205" style="zoom:80%;" />
+<hr>
+<p><strong>信道利用率</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241105172141739.png" alt="image-20241105172141739" style="zoom: 80%;" />
+<p>要提升信道利用率，就要</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span></span></span></span>要小一点，即以太网端到端的距离要小一点</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">T_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>要大一点，即帧长度要大一点</li>
+</ul>
+<p>一个题： <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c4411d7jb/?p=31&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=957">https://www.bilibili.com/video/BV1c4411d7jb/?p=31&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=957</a></p>
+<hr>
+<p>使用 CSMA/CD 协议的以太网不能进行全双工通信而<strong>只能进行双向交替通信（半双工通信）。<strong>每个站在发送数据之后的一小段时间内，存在着遭遇碰撞的可能性。这种</strong>发送的不确定性</strong>使整个以太网的平均通信量远小于以太网的最高数据率。<strong>现在的以太网基于交换机和全双工连接，不会有碰撞，因此没有必要使用CSMA/CS协议</strong></p>
+<h4 id="CSMA-CA协议">CSMA/CA协议</h4>
+<p>TODO：非考试内容</p>
+<h2 id="MAC地址、IP地址和ARP协议">MAC地址、IP地址和ARP协议</h2>
+<ul>
+<li>MAC地址是以太网的MAC子层使用的地址</li>
+<li>IP地址是TCP/IP体系结构网际层所使用的地址</li>
+<li>ARP协议是用来当已知设备分配到的IP地址时，能够获取到设备的MAC地址</li>
+<li><strong>MAC地址属于数据链路层，而IP地址和ARP协议则属于网际层</strong>，三者具有千丝万缕的联系</li>
+</ul>
+<h3 id="MAC地址">MAC地址</h3>
+<p>使用点对点信道的数据链路层不需要使用地址，直接一对一通信即可。而使用<strong>广播信道</strong>的数据链路层则必须要用地址来区分主机谁是谁。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112155211146.png" alt="image-20250112155211146" style="zoom:80%;" />
+<p>每个主机发送的帧中都必须包括发送主机的地址和接收主机的地址，这些地址是<strong>用于媒体接入控制</strong>的，所以被称为<strong>MAC地址</strong>，MAC地址也被叫做<strong>硬件地址</strong>、<strong>物理地址（但不是说MAC地址属于物理层！）</strong>。</p>
+<p>对于有线局域网适配器（有线网卡）和无线局域网适配器（无线网卡）来说，每个适配器的MAC地址是全球唯一的。对于交换机和路由器这种有多接口的，就会有更多的MAC地址。所以说<strong>MAC地址是接口的唯一标识，而不是设备的唯一标识。</strong></p>
+<hr>
+<p><strong>MAC地址的格式：</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241106213803574.png" alt="image-20241106213803574" style="zoom:80%;" />
+<ul>
+<li>第一字节的b0如果取0代表单播地址；取1代表多播地址</li>
+<li>第一字节的b1如果取0代表全球管理地址（全球唯一）；取1代表本地管理地址</li>
+<li>对于广播地址而言：格式为FF-FF-FF-FF-FF-FF</li>
+<li>MAC地址的发送顺序：从第一字节发送到第六字节；字节内从b0发送到b7。</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-70ee74506eca1df4.png" alt="img"></p>
+<hr>
+<p><strong>单播MAC地址</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241106214811253.png" alt="image-20241106214811253" style="zoom:80%;" />
+<p>主机B给主机C发送<strong>单播帧</strong>，主机B首先要构建该<strong>单播帧</strong>，<strong>在帧首部中的目的地址字段填入主机C的MAC地址</strong>，源地址字段填入自己的MAC地址，再加上帧首部的其他字段、数据载荷以及帧尾部，就构成了该<strong>单播帧</strong>。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241106214925539.png" alt="image-20241106214925539" style="zoom:80%;" />
+<p>主机B将该<strong>单播帧</strong>发送出去，主机A和C都会收到该<strong>单播帧</strong>。主机A的网卡发现该<strong>单播帧</strong>的目的MAC地址与自己的MAC地址不匹配，丢弃该帧；主机C的网卡发现该<strong>单播帧</strong>的目的MAC地址与自己的MAC地址匹配，接受该帧，并将该帧交给其上层处理。</p>
+<hr>
+<p><strong>广播MAC地址</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241106215032619.png" alt="image-20241106215032619" style="zoom:80%;" />
+<p>假设主机B要发送一个<strong>广播帧</strong>，主机B首先要构建该<strong>广播帧</strong>，<strong>在帧首部中的目的地址字段填入广播地址</strong>，也就是<strong>十六进制的全F</strong>，源地址字段填入自己的MAC地址，再加上帧首部中的其他字段、数据载荷以及帧尾部，就构成了该<strong>广播帧</strong>。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241106215419266.png" alt="image-20241106215419266" style="zoom:80%;" />
+<p>主机B讲该<strong>广播帧</strong>发送出去，主机A和C都会收到该<strong>广播帧</strong>，<strong>发现该帧首部中的目的地址字段的内容是广播地址</strong>，就知道该帧是<strong>广播帧</strong>，主机A和主机C都接受该帧，并将该帧交给上层处理。</p>
+<hr>
+<p><strong>多播MAC地址</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241106222253399.png" alt="image-20241106222253399" style="zoom:80%;" />
+<p>每个主机都可以设置自己的多播组列表，假设主机B，C和D支持多播，各用户给自己的主机配置多播组列表如下所示</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241106222514291.png" alt="image-20241106222514291" style="zoom:80%;" />
+<p>主机A首先要构建该<strong>多播帧</strong>，<strong>在帧首部中的目的地址字段填入该多播地址</strong>，源地址点填入自己的MAC地址，再加上帧首部中的其他字段、数据载荷以及帧尾部，就构成了该<strong>多播帧</strong>。</p>
+<p>主机A将该<strong>多播帧</strong>发送出去，主机B、C、D都会收到该<strong>多播帧</strong>。<strong>主机B和C发现该多播帧的目的MAC地址在自己的多播组列表中</strong>，主机B和C都会接受该帧；主机D发现该<strong>多播帧</strong>的目的MAC地址不在自己得多播组列表中，则丢弃该<strong>多播帧</strong>。</p>
+<h3 id="IP地址">IP地址</h3>
+<p>IP地址的具体内容见网络层。</p>
+<p>IP地址分成两部分：以192.168.0.1为例</p>
+<ul>
+<li>网络编号：标识以太网上无数的网络，即192.168.0</li>
+<li>主机编号：标识同一网络中的不同主机，即1</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241106223751814.png" alt="image-20241106223751814" style="zoom:80%;" />
+<p><strong>MAC地址和IP地址间的关系</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241106223941322.png" alt="image-20241106223941322" style="zoom:67%;" />
+<p>有道题可以看下： <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c4411d7jb/?p=34&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=642">https://www.bilibili.com/video/BV1c4411d7jb/?p=34&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=642</a></p>
+<h3 id="ARP协议">ARP协议</h3>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241106225625399.png" alt="image-20241106225625399" style="zoom:67%;" />
+<p>主机B现在想要知道主机C的MAC地址，所以B会先去查询自己的ARP高速缓存表，如果有就直接读取，没有就还要向主机C发送ARP请求报文来获取主机C的MAC地址。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241106225745913.png" alt="image-20241106225745913"></p>
+<p>随后B发送的ARP请求报文应为：告知自己的IP和MAC地址，想知道IP地址为192.168.0.3的主机MAC地址。这个报文被<strong>封装在MAC帧中</strong>，并进行<strong>广播</strong>（即目的地址为FF-FF-FF-FF-FF-FF）。</p>
+<p>主机A和主机C都会收到这个ARP请求报文，两台主机会把报文交给上层的ARP处理流程。A发现不对应自己的IP地址就不理会；C发现对应自己的IP就要动。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112162456182.png" alt="image-20250112162456182"></p>
+<p>C会<strong>首先将B的IP和MAC地址存到自己的ARP高速缓存表中</strong>，然后向B进行<strong>单播</strong>（即目的地址为B的MAC地址），告知自己C的MAC地址，且该响应报文也封装在MAC帧中发送。B收到以后就会把C的IP和MAC存入ARP高速缓存表。</p>
+<hr>
+<p>对于高速缓存表中的项，存在动态和静态两种类型：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112162628910.png" alt="image-20250112162628910"></p>
+<ul>
+<li><strong>动态数据</strong>为主机自动获取，生命周期为默认两分钟。是因为IP和MAC并不是永远固定，比如我一台主机换网卡，MAC地址就会变。</li>
+<li><strong>静态数据</strong>为手动设置，不同操作系统下生命周期不同。</li>
+</ul>
+<p>注意ARP协议只能在一段链路或一个网络中使用，跨网络不能用。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241106230550905.png" alt="image-20241106230550905" style="zoom:67%;" />
+<h2 id="集线器与交换机">集线器与交换机</h2>
+<h3 id="集线器HUB">集线器HUB</h3>
+<p>集线器是从早期的总线型以太网发展而来的，现在常用的是使用<strong>双绞线和集线器HUB的星型以太网</strong>，其具有如下特性：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112171004585.png" alt="image-20250112171004585"></p>
+<p><strong>集线器</strong>的以太网在逻辑上仍是个总线网，需要使用CSMA/CD协议来协调各主机争用总线，<strong>只能工作在半双工模式，收发帧不能同时进行</strong></p>
+<hr>
+<p>使用集线器可以在<strong>物理层</strong>对以太网进行扩展：将多个以太网段连成更大的、多级星形结构的以太网。</p>
+<blockquote>
+<ul>
+<li><strong>碰撞域（collision domain）<strong>又称为</strong>冲突域</strong>，是指网络中一个站点发出的帧会与其他站点发出的帧产生碰撞或冲突的那部分网络。</li>
+<li>碰撞域越大，发生碰撞的概率越高。</li>
+</ul>
+</blockquote>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-0f8d87b7f79e94c8.png" alt="img" style="zoom:80%;" />
+<p>这样做能够使原来属于不同碰撞域的以太网上的计算机能够进行跨碰撞域的通信。但是也使得碰撞域增大，消息冲突更加容易发饰，总吞吐量没有提高。</p>
+<h3 id="以太网交换机">以太网交换机</h3>
+<p>其与集线器的区别在于：当主机A向主机B单播消息时，集线器会对该消息进行广播，而交换机则可以把消息单播给主机B。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112194346961.png" alt="image-20250112194346961" style="zoom:67%;" />
+<p>交换机具有以下特点：</p>
+<ul>
+<li>
+<p>交换机有多个接口，每个接口都能和主机或者其他交换机连接。交换机工作在<strong>全双工模式</strong>（即可以同时收发信息）</p>
+</li>
+<li>
+<p>交换机可以并行处理，可以同时连接多对接口，使多对主机间能相互通信无碰撞，<strong>不使用CSMA/CD协议</strong>。</p>
+</li>
+<li>
+<p>交换机有多种速率的接口</p>
+</li>
+<li>
+<p>交换机工作在<strong>数据链路层</strong>（当然也包括网络层），在收到帧后，会在<strong>帧交换表</strong>中查找帧目的MAC地址对应的接口号然后进行转发。其内部的帧交换表是通过<strong>自学习算法</strong>自动建立起来的。</p>
+</li>
+<li>
+<p>帧的两种转发方式：</p>
+<ul>
+<li>存储转发：经典的做法</li>
+<li>直通交换：不必缓存帧后再进行发送，而是在接收帧的同时就立刻按其目的MAC地址决定转发接口，从而提高帧转发速率。但是直通交换也存在缺点，不会检查帧是否有差错</li>
+</ul>
+</li>
+<li>
+<p>对于交换机而言，还可以提升带宽：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-df6859d2396549cf.png" alt="img"></p>
+</li>
+</ul>
+<h3 id="集线器与交换机的对比">集线器与交换机的对比</h3>
+<p><strong>单独使用集线器或交换机时</strong></p>
+<ul>
+<li>
+<p>一个主机进行单播与广播：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-2e2faba35d2d7852.png" alt="img" style="zoom:50%;" />
+<p>可以看出在广播情况下，集线器和交换机的效果是一致的</p>
+</li>
+<li>
+<p>两个主机同时向另外一个主机单播：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-4638409baba882e8.png" alt="img" style="zoom: 50%;" />
+<p>可以看出在集线器中会发生碰撞；而在交换机中，交换机会受到两台主机发来的帧后缓存下来，并依次通过对应端口进行转发。</p>
+</li>
+</ul>
+<hr>
+<p><strong>集线器扩展以太网和交换机扩展以太网区别</strong></p>
+<ul>
+<li>
+<p>单播：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-34c587f82d3a1286.png" alt="img" style="zoom: 50%;" />
+</li>
+<li>
+<p>广播：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-134f67554e64e22b.png" alt="img" style="zoom:50%;" />
+<p>可见在广播情况下，扩展后的集线器和交换机的表现也是一样的。说明无论采用哪种方式来扩展以太网，扩展后以太网中各主机都属于同一广播域。</p>
+</li>
+<li>
+<p>多单播：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-d80949431bd76379.png" alt="img" style="zoom:50%;" />
+</li>
+</ul>
+<p>由此可见，扩展后的<strong>集线器不仅扩大了广播域，也扩大了碰撞域</strong>；而扩展后的<strong>交换机则只是扩大了广播域，隔离了碰撞域</strong>。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-d5c429a2f92149ff.png" alt="img" style="zoom:67%;" />
+<hr>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-25db1be3ca96bc2f.png" alt="img"></p>
+<hr>
+<p>还有一个值得讨论的问题：<strong>中继器、集线器、网桥、交换机、路由器、网关之间的区别是？</strong></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_25606103/article/details/51288459">中继器、集线器、网桥、交换机、路由器、网关的超全总结_交换机路由器网卡网桥集线器中继器分别工作在哪一层-CSDN博客</a></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113234410623.png" alt="image-20250113234410623"></p>
+<ol>
+<li>集线器 (Hub)</li>
+</ol>
+<ul>
+<li><strong>功能</strong>: 集线器是一种简单的网络设备，主要用于连接多个计算机或网络设备。它将接收到的信号广播到所有端口。</li>
+<li><strong>工作层次</strong>: 工作在物理层（即OSI模型的第1层）。</li>
+<li><strong>特点</strong>: 不具备智能，无法区分数据包的目标地址，适合小型网络。</li>
+</ul>
+<ol start="2">
+<li>网桥 (Bridge)</li>
+</ol>
+<ul>
+<li><strong>功能</strong>: 网桥用于连接两个或多个网络段，以减少碰撞域，优化网络流量。它根据MAC地址转发数据。</li>
+<li><strong>工作层次</strong>: 工作在数据链路层（第2层）。</li>
+<li><strong>特点</strong>: 具有过滤和转发功能，可以提升网络性能，但仍不具备高级的流量管理能力。</li>
+</ul>
+<ol start="3">
+<li>交换机 (Switch)</li>
+</ol>
+<ul>
+<li><strong>功能</strong>: 交换机也用于连接多个设备，但比集线器和网桥更智能。它根据MAC地址进行数据包的转发和过滤。</li>
+<li><strong>工作层次</strong>: 工作在数据链路层（第2层），有些交换机可以在网络层（第3层）工作。</li>
+<li><strong>特点</strong>: 能够创建多个碰撞域，支持全双工通信，大幅提高了网络传输效率。</li>
+</ul>
+<ol start="4">
+<li>路由器 (Router)</li>
+</ol>
+<ul>
+<li><strong>功能</strong>: 路由器用于连接不同的网络（例如不同的子网或互联网），并根据IP地址转发数据包。</li>
+<li><strong>工作层次</strong>: 工作在网络层（第3层）。</li>
+<li><strong>特点</strong>: 具有路由选择功能，可以执行网络地址转换（NAT），支持QoS和安全策略。</li>
+</ul>
+<ol start="5">
+<li>网关 (Gateway)</li>
+</ol>
+<ul>
+<li><strong>功能</strong>: 网关是一个连接不同协议或网络之间的设备。它不仅转发数据，还能进行协议转换。</li>
+<li><strong>工作层次</strong>: 可以工作在多个层次（1-7层），取决于具体实现。</li>
+<li><strong>特点</strong>: 常用于连接不同类型的网络（如LAN和WAN），支持多种通信协议和数据格式转换。</li>
+</ul>
+<h2 id="交换机自学习与转发帧、生成树协议STP">交换机自学习与转发帧、生成树协议STP</h2>
+<p>假设有一个由两个交换机组成的以太网如下：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112203132249.png" alt="image-20250112203132249"></p>
+<ul>
+<li>
+<p><strong>主机A向主机B</strong>发送帧：该帧从接口 1 进入到交换机，交换机收到帧后，首先会把主机A的MAC地址和接口记录到帧交换表中。再查找帧交换表，显然此时没有查到应从哪个接口转发这个帧给主机B。</p>
+<p>此时交换机会向除接口 1 以外的所有的接口广播这个帧（泛洪），当该帧从交换机1的接口4进入到交换机2的接口2时，交换机2也要进行同样操作（登记+泛洪）</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-1ef3dc4a6841b1ce.png" alt="img"></p>
+</li>
+<li>
+<p><strong>主机B向主机A发送帧</strong>：该帧从接口 3 进入到交换机。交换机收到帧后，首先对B的MAC地址和接口进行登记。先查找帧交换表，发现（图中左边）交换表中的 MAC 地址有 A，表明要发送给A的帧应从接口1转发出去。于是就把这个帧传送到接口 1 转发给 A。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-dbe273924b7c8eea.png" alt="img"></p>
+</li>
+<li>
+<p><strong>主机E向主机A发送帧</strong>：交换机收到帧后，还是先登记E。再查找帧交换表。发现交换表2中的 MAC 地址有 A，表明要发送给A的帧应从接口2转发出去。于是就把这个帧传送到接口 2 转发给交换机1的接口 4。</p>
+<p>接口 4 到交换机1，先登记E，再查找交换表1。发现交换表1中的 MAC 地址有 A，表明要发送给A的帧应从接口1转发出去。于是就把这个帧传送到接口 1 转发给 A。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-cf46c0c890cfa2a4.png" alt="img"></p>
+</li>
+<li>
+<p><strong>交换机丢弃帧</strong>的情况：新增一个主机G与A共同连在端口1上</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-4ee1af4bc8187125.png" alt="img"></p>
+<p>主机 G 发送给 主机 A 一个帧，主机 A 和 交换机接口 1都能接收到，主机 A 的网卡收到后，根据帧的目的MAC地址A，就知道是发送给自己的帧，就接受该帧。</p>
+<p>交换机 1收到该帧后，首先进行登记工作。然后交换机 1对该帧进行转发，该帧的MAC地址是A，在交换表1查找MAC 地址有 A</p>
+<p>MAC 地址为 A的接口号是1，但是该帧正是从接口 1 进入交换机的，交换机不会再从该接口 1 讲帧转发出去，因为这是没有必要的，于是<strong>丢弃</strong>该帧</p>
+</li>
+</ul>
+<hr>
+<p>随着网络中各主机都发送了帧后，网络中的各交换机就可以学习到各主机的MAC地址，以及它们与自己各接口的对应关系。</p>
+<p>考虑到可能有时要在交换机的接口更换主机，或者主机要更换其网络适配器，这就需要更改交换表中的项目。为此，在交换表中每个项目都设有一定的<strong>有效时间</strong>。<strong>过期的项目就自动被删除</strong>。</p>
+<p><strong>以太网交换机的这种自学习方法使得以太网交换机能够即插即用，不必人工进行配置，因此非常方便。</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-071ec78303db43c3.png" alt="img"></p>
+<hr>
+<p><strong>如何提高以太网的可靠性？</strong></p>
+<p>显然，<strong>添加冗余链路</strong>可以提升可靠性（一根线不行了还有另一根），但是，添加冗余链路也会带来负面效应，即形成<strong>网络环路</strong>。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-a65d811129786ec6.png" alt="img"></p>
+<hr>
+<p>由此有了生成树协议STP，能够在增加冗余链路的同时又避免网络环路带来的问题。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112210135075.png" alt="image-20250112210135075"></p>
+<p>其<strong>要点</strong>是：<strong>不改变</strong>网络的实际拓扑，但在逻辑上则切断某些链路，使得从一台主机到所有其他主机的路径是<strong>无环路的树状结构</strong>，从而消除了兜圈子现象。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-36746a91a09f583c.png" alt="img"></p>
+<h2 id="虚拟局域网VLAN">虚拟局域网VLAN</h2>
+<p>使用多个交换机互联而产生的以太网中，所有的站点都属于同一个广播域。当这个<strong>广播域非常大</strong>时，就会带来许多弊端：</p>
+<ul>
+<li>广播风暴：浪费网络资源和各主机CPU资源</li>
+<li>难以管理维护</li>
+<li>有潜在安全问题</li>
+</ul>
+<p>因此我们需要分割广播域。一种方法是使用<strong>路由器</strong>对广播域进行隔离（因为路由器默认下不会转发广播消息），但是其成本较高；另一种方法就是使用<strong>虚拟局域网VLAN</strong>技术。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-3f98534c040b90f4.png" alt="img"></p>
+<ul>
+<li><strong>虚拟局域网 VLAN</strong> 是由一些局域网网段构成的<strong>与物理位置无关的逻辑组</strong>，而这些网段具有某些共同的需求。每一个 VLAN 的帧都有一个明确的标识符，指明发送这个帧的计算机是属于哪一个 VLAN。</li>
+<li>同一个VLAN内部可以广播通信，不同VLAN不可以广播通信</li>
+<li><strong>虚拟局域网其实只是局域网给用户提供的一种服务，而并不是一种新型局域网。</strong></li>
+</ul>
+<hr>
+<p><strong>下面来叙述一下虚拟局域网VLAN的实现机制。</strong></p>
+<p>虚拟局域网VLAN技术是在交换机上实现的，需要交换机能够实现以下功能：</p>
+<ul>
+<li>能够处理带有VLAN标记的帧——<strong>IEEE 802.1 Q帧</strong></li>
+<li><strong>交换机的各端口可以支持不同的端口类型</strong>，不同端口类型的端口对帧的处理方式有所不同</li>
+</ul>
+<hr>
+<p><strong>IEEE 802.1 Q帧：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-5d3549cc02f9a3b4.png" alt="img"></p>
+<hr>
+<p>**交换机端口类型：**Access、Trunk、Hybrid</p>
+<p><strong>交换机各端口的缺省VLAN ID</strong>：所有端口在未配置VLAN时的默认VLAN，也记为PVID。交换机的每个端口有且仅有一个PVID。</p>
+<hr>
+<p><strong>Access端口</strong>：交换机与用户计算机之间的互连</p>
+<ul>
+<li>Access端口一般用于连接用户计算机</li>
+<li>Access端口只能属于一个VLAN</li>
+<li>Access端口的PVID值与端口所属VLAN的ID相同(默认为1)</li>
+<li>Access端口<strong>接收</strong>处理方法：一般只接受“未打标签”的普通以太网MAC帧。根据接收帧的端口的PVID给帧“打标签”，即插入4字节VLAN标记字段，字段中的VID取值与端口的PVID取值相等。</li>
+<li>Access端口<strong>发送</strong>处理方法：若帧中的VID与端口的PVID相等，则“去标签”并转发该帧;否则不转发。</li>
+</ul>
+<p>TODO：非考试范围</p>
+<h1>网络层</h1>
+<h2 id="概述-4">概述</h2>
+<p>网络层的主要任务是<strong>实现网络互连</strong>，进而<strong>实现数据包在<u>各网络</u>之间的传输</strong>。</p>
+<p>网络层面临的主要问题：</p>
+<ul>
+<li>
+<p>网络层向其上一层运输层提供<strong>可靠服务还是不可靠服务</strong>（可靠传输就是指网络层对<strong>分组丢失</strong>、<strong>分组失序</strong>、<strong>分组重复</strong>这三种错误采取措施以确保接收方接收数据正确；如果不能保证正确，就是不可靠传输）</p>
+</li>
+<li>
+<p><strong>网络层寻址问题</strong>：各个路由器间IP地址的关系</p>
+</li>
+<li>
+<p><strong>路由选择问题</strong>：路由器收到数据后，<strong>依据数据包的目的地址和路由器中的路由表</strong>来决定将数据包从自己的哪个接口转发出去</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-14fffa90e5256d53.png" alt="img"></p>
+</li>
+</ul>
+<p>关于路由选择问题，实际操作中如何构造路由表？</p>
+<ul>
+<li>
+<p>由用户或网络管理员进行<strong>人工配置</strong>，这种方法只适用于<strong>规模较小且网络拓扑不改变</strong>的小型互联网</p>
+</li>
+<li>
+<p>另一种是实现各种<strong>路由选择协议</strong>，由路由器执行路由选择协议中所规定的路由选择算法，而自动得出路由表中的路有记录，这种方法更适合规模较大且网络拓扑经常改变的大型互联网</p>
+</li>
+</ul>
+<p>因特网作为最大用户最多的互联网，使用TCP/IP协议栈，该协议栈的网络层使用网际协议IP，因此我们也把网络层称为网际层。<strong>网络层（网际层）<strong>除了 <strong>IP协议</strong>外，还有之前介绍过的</strong>地址解析协议ARP</strong>，还有<strong>网际控制报文协议ICMP</strong>，<strong>网际组管理协议IGMP</strong>。</p>
+<h2 id="网络层提供的两种服务">网络层提供的两种服务</h2>
+<p>本节注重处理“网络层向其上一层运输层提供可靠服务还是不可靠服务”这一个问题。<strong>提供可靠服务的是面向连接的虚电路服务；提供不可靠服务的是无连接的数据报服务。</strong></p>
+<h3 id="面向连接的虚电路服务">面向连接的虚电路服务</h3>
+<p>该连接方式的核心在于：可靠通信由<strong>网络</strong>来保证。</p>
+<ul>
+<li>通信之前先建立<strong>虚电路</strong> (Virtual Circuit)，以保证双方通信所需的一切网络资源。随后通信双方沿着建立的虚电路发送分组。</li>
+<li>目的主机的地址只有第一个分组要携带，后续分组的首部只需要携带选中的<strong>虚电路编号</strong>即可。</li>
+<li>如果<strong>再使用可靠传输的网络协议</strong>，就可使所发送的分组无差错按序到达终点，不丢失、不重复。</li>
+<li>通信结束后，需要释放建立的虚电路。</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241124181139970.png" alt="image-20241124181139970"></p>
+<blockquote>
+<p><strong>发送方</strong> 发送给 <strong>接收方</strong> 的所有分组都沿着<strong>同一条虚电路</strong>传送</p>
+<ul>
+<li>虚电路表示这只是一条<strong>逻辑上的连接</strong>，分组都沿着这条逻辑连接按照存储转发方式传送，而并不是真正建立了一条物理连接。</li>
+<li>而<strong>电路交换的电话通信</strong>是先建立了一条真正的连接。分组交换的虚连接和电路交换的连接只是类似，但并不完全一样。</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="无连接的数据报服务">无连接的数据报服务</h3>
+<p>该连接方式的核心在于：可靠通信由<strong>用户主机</strong>来保证。是因特网采用的网络层服务方式。</p>
+<ul>
+<li>
+<p>网络层向上只提供<strong>简单灵活的、无连接的、尽最大努力交付的数据报服务</strong>。</p>
+</li>
+<li>
+<p>网络在发送分组时<strong>不需要先建立网络层连接</strong>。每一个分组（即 IP 数据报）独立发送，与其前后的分组无关（不进行编号），都<strong>可以走不同的路径</strong>，意味着<strong>每个分组的首部都需要携带目的主机的完整地址</strong>。</p>
+</li>
+<li>
+<p><strong>网络层不提供服务质量的承诺，不提供端到端的可靠传输服务</strong>。即所传送的分组可能出错、丢失、重复和失序（不按序到达终点），当然也不保证分组传送的时限，使得路由器就好做便宜。</p>
+</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241124181852960.png" alt="image-20241124181852960"></p>
+<blockquote>
+<p><strong>发送方</strong> 发送给 <strong>接收方</strong> 的分组可能沿着<strong>不同路径</strong>传送</p>
+<ul>
+<li>如果主机（即端系统）中的进程之间的通信需要是可靠的，那么就由网络的主机中的<strong>运输层</strong>负责可靠交付（包括差错处理、流量控制等） 。</li>
+<li>互连网能够发展到今日的规模，充分证明了当初采用这种设计思路的正确性。</li>
+</ul>
+</blockquote>
+<hr>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241124192934720.png" alt="image-20241124192934720"></p>
+<h2 id="IPv4地址">IPv4地址</h2>
+<h3 id="基本概念-3">基本概念</h3>
+<ul>
+<li>
+<p>IPv4地址就是因特网上每一台主机（或者路由器的每一个接口）分配一个在<strong>全世界范围内唯一的32bit的标识符</strong>。</p>
+</li>
+<li>
+<p>IP地址由因特网名字和数字分配机构ICANN进行分配</p>
+</li>
+<li>
+<p>IPv4地址的编制方法经历了下面的发展阶段：<strong>分类编址-&gt;划分子网-&gt;无分类编址</strong></p>
+</li>
+<li>
+<p>IPv4地址采用<strong>点分十进制</strong>表示方法进行表示</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241124193850454.png" alt="image-20241124193850454"></p>
+</li>
+</ul>
+<h3 id="分类编址的IPv4地址">分类编址的IPv4地址</h3>
+<p>这个阶段中的IPv4地址可分为5类：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241124194114548.png" alt="image-20241124194114548" style="zoom:67%;" />
+<p>这里的红数字表示该类地址的固定首部数字。</p>
+<ul>
+<li>只有A、B、C类地址可以分配给主机或路由器接口</li>
+<li><strong>主机号全为0</strong>称为<strong>网络地址</strong>，不能分配给主机或路由器接口</li>
+<li><strong>主机号全为1</strong>称为<strong>广播地址</strong>，不能分配给主机或路由器接口</li>
+</ul>
+<hr>
+<h4 id="A类地址">A类地址</h4>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241124195649991.png" alt="image-20241124195649991"></p>
+<ul>
+<li>对于<strong>网络号</strong>而言，其首位固定为0，则其所有可能情况共<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mn>8</mn><mo>−</mo><mn>1</mn></mrow></msup><mo>−</mo><mn>2</mn><mo>=</mo><mn>126</mn></mrow><annotation encoding="application/x-tex">2^{8-1}-2=126</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">8</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">126</span></span></span></span>种（这里的减2是为了去除保留网络号<code>00000000</code>和本地回环测试地址<code>01111111</code>），因此可指派的网络数量为126。</li>
+<li>对于<strong>主机号</strong>而言，其所有可能情况共<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>24</mn></msup><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2^{24}-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">24</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span>种（这里的减2是去掉全0的网络地址和全1的广播地址），即每个网络中可分配的IP地址数量为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>24</mn></msup><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2^{24}-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">24</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span>。</li>
+</ul>
+<hr>
+<h4 id="B类地址">B类地址</h4>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241125183721798.png" alt="image-20241125183721798"></p>
+<ul>
+<li>对于网络号而言，其首位固定为10，故可指派的网络数量为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mn>16</mn><mo>−</mo><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{16-2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">16</span><span class="mbin mtight">−</span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span>个</li>
+<li>对于主机号而言，每个网络中可分配的IP地址数量为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>16</mn></msup><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2^{16}-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">16</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span>个（这里的减2是去掉全0的网络地址和全1的广播地址）。</li>
+</ul>
+<hr>
+<h4 id="C类地址"><strong>C类地址</strong></h4>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241125184059381.png" alt="image-20241125184059381"></p>
+<ul>
+<li>对于网络号而言，其首位固定为110，故可指派的网络数量为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mn>24</mn><mo>−</mo><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{24-3}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">24</span><span class="mbin mtight">−</span><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span>个</li>
+<li>对于主机号而言，每个网络中可分配的IP地址数量为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>8</mn></msup><mo>−</mo><mn>2</mn><mo>=</mo><mn>254</mn></mrow><annotation encoding="application/x-tex">2^{8}-2=254</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">8</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">254</span></span></span></span>个（这里的减2是去掉全0的网络地址和全1的广播地址）。</li>
+</ul>
+<hr>
+<h4 id="小结">小结</h4>
+<ul>
+<li>根据地址第一个十进制数的值即可确定其地址类别：<strong>0-127为A类，128-191为B类，192-223为C类</strong></li>
+<li>三种情况的地址不能分配给主机或路由器：
+<ul>
+<li>A类网络，且其网络号为0或127</li>
+<li>主机号全为0的网络地址</li>
+<li>主机号全为1的广播地址</li>
+</ul>
+</li>
+<li>特殊的IPv4地址
+<ul>
+<li><code>0.0.0.0</code>表示在本网络上的本主机，只能作为源地址使用</li>
+<li><code>255.255.255.255</code>表示只在本网络上进行广播，路由器不进行转发，只能用于目的地址。</li>
+<li>以127开头，且后面3个十进制数非“全0”“全1”，用于本地软件回环测试，既能用于源地址，也能用于目的地址。</li>
+</ul>
+</li>
+</ul>
+<h3 id="划分子网的IPv4地址">划分子网的IPv4地址</h3>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-7e6aa3fe4c6184e4.png" alt="img" style="zoom: 25%;" />
+<p>如图，现在需要把该网络划分为3个独立的网络，即子网1、子网2、子网3。如果仍然采用老方法：申请新的IP地址，就会面临以下问题：</p>
+<ul>
+<li>等待时间很长还要爆米</li>
+<li>要增加路由器中路由表记录的数量</li>
+<li>浪费原来网络中的IP地址</li>
+</ul>
+<p>因此，我们可以从主机号中取出几个比特来标识这是子网几。为了让计算机知道哪几位用来标识子网，有了<strong>子网掩码</strong>这个东西。</p>
+<h4 id="子网掩码"><strong>子网掩码</strong></h4>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-0050159cd99737aa.png" alt="img"></p>
+<h4 id="举个栗子">举个栗子</h4>
+<p>举例1：子网掩码为255.255.255.128，而<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>128</mn><mo>=</mo><mo stretchy="false">(</mo><mn>10000000</mn><msub><mo stretchy="false">)</mo><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">128=(10000000)_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">128</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">10000000</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，从主机号中借了1位用来区分子网，即子网有两个。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-24fc0f5e02ad49ab.png" alt="img"></p>
+<hr>
+<p>栗子2：子网掩码为255.255.255.192，即有4个子网</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-4e988e8ed1e154e3.png" alt="img"></p>
+<h4 id="默认子网掩码">默认子网掩码</h4>
+<p>就是默认不划分子网时的子网掩码</p>
+<ul>
+<li>A类地址默认子网掩码为<code>255.0.0.0</code></li>
+<li>B类地址默认子网掩码为<code>255.255.0.0</code></li>
+<li>C类地址默认子网掩码为<code>255.255.255.0</code></li>
+</ul>
+<h3 id="无分类编址的IPv4地址">无分类编址的IPv4地址</h3>
+<h4 id="无分类域间路由选择CIDR">无分类域间路由选择CIDR</h4>
+<p>该地址模式称为<strong>CIDR</strong>（无分类域间路由选择），消除了原先的ABC地址分类和划分子网这一概念。CIDR通过“<strong>网络前缀</strong>”的方式来标识网络号和子网号。</p>
+<p>例如地址<code>128.14.35.7/20</code>，表示地址<code>128.14.35.7</code>的前20位bit为网络前缀，剩余12位为主机号。可见下面的栗子：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-bdff407b4d15ec43.png" alt="img"></p>
+<ul>
+<li>
+<p>这里的聚合C类网数量即</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mtext>地址数量</mtext><mrow><mi>C</mi><mtext>类网地址数量，即</mtext><msup><mn>2</mn><mn>8</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{地址数量}{C类网地址数量，即2^8}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.0463em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord cjk_fallback">类网地址数量，即</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord cjk_fallback">地址数量</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+</li>
+<li>
+<p>地址掩码即：网络前缀全取1，主机号全取0</p>
+</li>
+<li>
+<p>注意这里当主机号全取0时也是网络地址；全取1时也是广播地址，能够分配给主机使用的地址数为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mo stretchy="false">(</mo><mn>32</mn><mo>−</mo><mn>20</mn><mo stretchy="false">)</mo></mrow></msup><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2^{(32-20)}-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9713em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.888em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mtight">32</span><span class="mbin mtight">−</span><span class="mord mtight">20</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span>。</p>
+</li>
+</ul>
+<hr>
+<h4 id="路由聚合">路由聚合</h4>
+<p>又称构造超网</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-a495310e8e5bc13a.png" alt="img"></p>
+<p>当R1将其所有路由记录告诉R2时，R2的路由表中就要存5条记录，而我们可以通过路由聚合的方式，把这5条记录合并为1条。</p>
+<p>在上例中，先找记录目的地址的<strong>共同前缀</strong>为22位（在聚合地址块中记为<code>/22</code>)，剩余10位均取0，得到的地址块<code>172.1.4.0</code>，就能得到<strong>聚合地址块（超网）</strong><code>172.1.4.0/22</code>。</p>
+<p>可以看出，网络共同前缀越长，地址块就越小，路由越具体。还有最长前缀匹配的问题见上图。</p>
+<hr>
+<p><strong><u>例题</u></strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112230828217.png" alt="image-20250112230828217"></p>
+<h3 id="IPv4地址的使用流程">IPv4地址的使用流程</h3>
+<p>给定一个IPv4地址块，如何将其划分成几个更小的地址块，并将这些地址块分配给互联网中不同网络，进而可以给各网络中的主机和路由器接口分配IPv4地址？</p>
+<p>这个分配有两种方法：<strong>定长的子网掩码FLSM和变长的子网掩码VLSM</strong></p>
+<hr>
+<h4 id="定长的子网掩码FLSM">定长的子网掩码FLSM</h4>
+<ul>
+<li>使用<strong>同一子网掩码</strong>来划分子网</li>
+<li>划分出的子网数固定，为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">2^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6644em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span>个，n为从主机号中取出来用于表示子网号的比特数</li>
+<li><strong>每个子网的IP地址数量一样</strong>，会造成IP地址浪费</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-814f06bb5874b724.png" alt="img"></p>
+<ul>
+<li>5个网络中，IP地址需求最大的是N2，其需要28个地址</li>
+<li>还需要划分5个子网，因此从主机号中取出的用于表示子网的应该有3个bit。对于C类网而言，主机号剩余的5个bit能表示32个地址，满足28个地址的需求。</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-a90a636c0ff5f71c.png" alt="img"></p>
+<p>用子网掩码<code>255.255.255.224</code>来划分C类网络<code>218.75.230.0</code>的细节如下：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-da16abd19e811578.png" alt="img"></p>
+<p>我们可以从子网1~8中任取5个分配给5个子网即可。</p>
+<hr>
+<h4 id="变长的子网掩码VLSM">变长的子网掩码VLSM</h4>
+<ul>
+<li>使用<strong>不同子网掩码</strong>来划分子网</li>
+<li>子网划分灵活，可以按需分配</li>
+<li><strong>每个子网的IP地址数量可以不一样</strong>，进而减少IP地址的浪费</li>
+</ul>
+<p>当我们已知了每个网络所需的IP地址数量后，就可以<strong>确定其需要的主机号位数，再拿32-主机号位数即网络前缀位数</strong>：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-e7a3b3efa0032ed5.png" alt="img"></p>
+<p>现在问题就变成了把地址块<code>218.75.230.0/24</code>分为5个地址块。<code>218.75.230.0/24</code>的所有取值可能为：<code>218.75.230.0</code>至<code>218.75.230.255</code>。</p>
+<p>分配准则为：<strong>每个子块的初始位置只能选取块大小整数倍的位置作为起点，一般先分配大子块（即IP数多的，这里的N2）</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-b855ffbf02fe4306.png" alt="img"></p>
+<h2 id="IP数据报的发送与转发">IP数据报的发送与转发</h2>
+<p>IP数据报的发送与转发分为<strong>主机发送IP数据报</strong>和<strong>路由器转发IP数据报</strong>。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-cb603ff4350d2927.png" alt="img"></p>
+<p>各主机和路由器R的两个接口对应的IP地址和子网掩码如图。如果主机A要向主机C发送数据包（<strong>同一网络</strong>）属于<strong>直接交付</strong>；主机A向主机D发送数据包（<strong>不同网络</strong>）属于<strong>间接交付</strong>。现在以主机A向主机D发送数据包为例分析：</p>
+<ul>
+<li>
+<p>主机A如何知道主机D和它是不是在一个网络里？</p>
+<p>主机A会将自己的IP与子网掩码进行逻辑与运算得到<strong>源网络地址</strong>，将主机D的IP与子网掩码进行逻辑与运算得到<strong>目的网络地址</strong>。</p>
+<ul>
+<li>
+<p>如果<strong>目的网络地址</strong>和<strong>源网络地址</strong>  <strong>相同</strong>，就是<strong>在同一个网络</strong>中，属于<strong>直接交付</strong></p>
+</li>
+<li>
+<p>如果<strong>目的网络地址</strong>和<strong>源网络地址</strong>  <strong>不相同</strong>，就<strong>不在同一个网络</strong>中，属于<strong>间接交付</strong>，传输给主机所在网络的<strong>默认网关</strong>（路由器——下图会讲解）,由默认网关帮忙转发</p>
+</li>
+</ul>
+</li>
+<li>
+<p>主机A如何知道有路由器R的存在？</p>
+<p>用户为了让本网络中的主机能和其他网络中的主机进行通信，就必须给其指定本网络的一个路由器的接口，由该路由器帮忙进行转发，所指定的路由器，也被称为<strong>默认网关</strong>。例如。路由器的接口0的IP地址192.168.0.128做为左边网络的默认网关。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-5f7abd26ae50d253.png" alt="img"></p>
+</li>
+<li>
+<p>主机A会将该IP数据报传输给自己的默认网关，也就是图中所示的路由器接口0。路由器收到IP数据报后如何转发？</p>
+<ul>
+<li>检查IP数据报<strong>首部是否出错</strong>。若出错，则直接丢弃该IP数据报并通告源主机；若没有出错，则进行转发。</li>
+<li>根据IP数据报的目的地址在<strong>路由表</strong>中查找匹配的条目。若找到匹配的条目，则转发给条目中指示的下一跳；若找不到，则丢弃该数据报并通告源主机。</li>
+</ul>
+<p>在本例中，IP数据报首部地址为：源地址<code>192.168.0.1</code>，目的地址<code>192.168.0.129</code>。</p>
+</li>
+<li>
+<p>路由器R进行<strong>路由表查表</strong>的过程是什么样的？</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241125203249848.png" alt="image-20241125203249848" style="zoom:67%;" />
+<p>逐条检查路由条目，将目的地址与路由条目中的地址掩码进行逻辑与运算得到<strong>目的网络地址</strong>，然后与<strong>路由条目中的目的网络</strong>进行比较，如果相同，则这条路由条目就是匹配的路由条目，按照它的下一条指示，图中所示的也就是接口1转发该IP数据报。</p>
+</li>
+<li>
+<p>若A主机进行广播会发生什么？</p>
+<p>若A主机进行广播，其IP数据报首部目的地址为<code>192.168.0.127</code>（本网络广播地址）或者<code>255.255.255.255</code>（受限广播地址）。<strong>此时的路由器并不会对该广播进行转发</strong>，只有B和C主机能收到该广播消息。<strong>这说明路由器是隔离广播域的，能够防止广播风暴</strong>。（如果因特网中的路由器都能转发广播，那世界上所有主机都能收到这个广播，造成网络资源的严重浪费）</p>
+<blockquote>
+<ul>
+<li>中继器和集线器工作于物理层，既不隔离冲突域也不隔离广播域</li>
+<li>网桥和交换机（多端口网桥）工作于数据链路层，可以隔离冲突域，但不能隔离广播域</li>
+<li>路由器工作于网络层，既隔离冲突域也隔离广播域</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h2 id="静态路由配置与路由环路">静态路由配置与路由环路</h2>
+<blockquote>
+<p>这部分不是考试要求</p>
+</blockquote>
+<p>静态路由配置指用户或管理员为路由器人工配置路由表。这种配置方式简单、开销小，但不能及时适应网络状态变化。</p>
+<p>使用静态路由配置可能出现以下错误，而这些错误可能导致<strong>路由环路</strong>：</p>
+<ul>
+<li>配置错误</li>
+<li>聚合不存在的网络</li>
+<li>网络故障</li>
+</ul>
+<h3 id="静态路由配置">静态路由配置</h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-214e6a6830649edd.png" alt="img"></p>
+<p>例如上图中，R2要向<code>192.168.1.0/24</code>转发数据，但是在其路由表中没有这一目的地址，因此需要手动添加。R2的下一跳转发给R1的1接口，所以在其路由表中添加最后一行的值，即为静态路由配置，其类型为静态。</p>
+<h3 id="默认路由">默认路由</h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-8887ba23edaae006.png" alt="img"></p>
+<p>上图中，若R1想要向因特网中的某台主机发送数据报。因特网中主机数量数不胜数，人工配置显然不可能，所以使用<strong>默认路由</strong>。默认路由可以被所有网络匹配，但路由匹配有优先级，<strong>默认路由是优先级最低的</strong>。</p>
+<h3 id="特定主机路由">特定主机路由</h3>
+<p>我们可以给路由器添加针对某个主机的特定主机路由条目，一般用于网络管理人员对网络的管理和测试。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-434c1eec83abd86f.png" alt="img"></p>
+<p>上图中的R1要为其配置一个指向特地主机<code>192.168.2.1</code>的路由。其目的网络格式为<code>特定主机IP（这里是192.168.2.1）/32</code>。</p>
+<h3 id="路由环路">路由环路</h3>
+<h4 id="配置错误导致路由环路">配置错误导致路由环路</h4>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-d30fc31c76fe75b2.png" alt="img"></p>
+<p>在上图中，由于配置错误，R2路由表第三条配置的下一跳搞错了（应该指向R1的接口1，即<code>10.0.0.1</code>，这里被错误设置成R3的接口0）。R2将数据报发送给R3的接口0后，R3进行查表转发，选中R3路由表第3条配置，又将数据报发送至<code>10.0.1.1</code>（即R2的接口1）。就这样数据报在R2和R3间循环打转。</p>
+<p>解决方法见上图右上角。</p>
+<h4 id="聚合不存在的网络导致路由环路">聚合不存在的网络导致路由环路</h4>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-030c93bce1443043.png" alt="img"></p>
+<p>R2路由表中第3条为聚合路由，其指向的具体地址见上图右上角。当目的网络为<code>192.168.3.3/24</code>时，R2本应不予转发（因为该IP在网络中不存在），但其实际上转发给了R1的1接口。R1查表后按默认路由进行转发，又转发给了R2的0接口，就这样又产生了路由环路。</p>
+<p>解决方案为：添加<strong>黑洞路由</strong>，下一跳为<code>null0</code>的数据报直接丢弃。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-caeddc52bde20f9c.png" alt="img"></p>
+<h4 id="网络故障导致路由环路">网络故障导致路由环路</h4>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-e3848e2bfcfc2c62.png" alt="img"></p>
+<p>R1到主机<code>192.168.1.0/24</code>的线路故障后，R1会将其路由表中的对应条目删除。此时R2还想向主机<code>192.168.1.0/24</code>转发数据，走R2的聚合路由到R1的1号口；R1收到后走默认路由，又回到了R2的0号口。</p>
+<p>解决方案为：给故障网络添加黑洞路由</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-d8107f8fc71dd1f4.png" alt="img"></p>
+<p>如果后续该网络故障修复，R1会自动回复正常的<code>192.168.1.0/24</code>转发项，并使黑洞路由自动失效。</p>
+<h2 id="路由选择协议">路由选择协议</h2>
+<h3 id="概述-5">概述</h3>
+<p>路由选择协议分为<strong>静态路由选择和动态路由选择</strong>。静态路由选择就是上面的人工配置；动态路由协议则是路由器通过路由选择协议自动获取路由信息。</p>
+<p>显然静态路由选择简单开销小，但不能及时适应网络状态的变化（如流量变化、网络拓扑结构变化），适用于小型网络；动态路由则比较复杂开销大，能适应网络状态的变化，适用于大型网络。</p>
+<p><strong>因特网采用的路由选择协议的特点：</strong></p>
+<ul>
+<li><strong>自适应</strong>：路由动态选择，能适应网络变化</li>
+<li><strong>分布式</strong>：路由器之间交换路由信息</li>
+<li><strong>分层次</strong>：因特网被划分为诸多娇小的自治系统</li>
+</ul>
+<hr>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-9e37d1229ec7836e.png" alt="img"></p>
+<blockquote>
+<p><strong>域间路由</strong>选择使用<strong>外部网关协议EGP</strong></p>
+<p><strong>域内路由</strong>选择使用<strong>内部网关协议IGP</strong></p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-8729bdd2bd367edf.png" alt="img"></p>
+<p><strong>常见路由选择协议如下：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-6b1876963d6d9de0.png" alt="img"></p>
+<hr>
+<p><strong>路由器的基本结构</strong></p>
+<p>路由选择协议是在路由器上运行的。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113202204246.png" alt="image-20250113202204246"></p>
+<h3 id="路由信息协议RIP">路由信息协议RIP</h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-850c29aaf1e744d6.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-81a38e546cd55ec2.png" alt="img"></p>
+<hr>
+<p><strong>基本工作过程：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-6bf4e045a90846e0.png" alt="img"></p>
+<hr>
+<p><strong>RIP协议如何更新路由表：</strong></p>
+<p>1.路由器C的表到达各目的网络的下一条都记为问号，可以理解为路由器D并不需要关心路由器C的这些内容</p>
+<p>假设路由器C的RIP更新报文发送周期到了，则路由器C将自己路由表中的相关路由信息封装到RIP更新报文中发送给路由器D</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-671231845f242b38.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-bacf546778de9f8a.png" alt="img"></p>
+<p>2.路由器C能到达这些网络，说明路由器C的相邻路由器也能到达，只是比路由器C的距离大1，于是根据距离的对比，路由器D更新自己的路由表</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-79852776853b7463.png" alt="img"></p>
+<hr>
+<p><strong>RIP算法的缺陷：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-3a055002b79a9cda.png" alt="img"></p>
+<p><strong>RIP 协议的优缺点</strong></p>
+<p>优点：</p>
+<ol>
+<li>实现简单，开销较小。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>
+<p>RIP 限制了网络的规模，它能使用的最大距离为 15（16 表示不可达）</p>
+</li>
+<li>
+<p>路由器之间交换的路由信息是路由器中的完整路由表，因而随着网络规模的扩大，开销也就增加。</p>
+</li>
+<li>
+<p>“坏消息传播得慢”，使更新过程的收敛时间过长。</p>
+</li>
+</ol>
+<h3 id="开放最短路径优先-OSPF">开放最短路径优先 OSPF</h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-f5dc77f36b5b1047.png" alt="img"></p>
+<hr>
+<p><strong>问候分组：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-f9c642e76e871651.png" alt="img"></p>
+<blockquote>
+<p>IP数据报首部中协议号字段的取值应为89，来表明IP数据报的数据载荷为OSPF分组</p>
+</blockquote>
+<hr>
+<p><strong>发送链路状态通告LSA</strong>:</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-bbed8a0d31bf19c3.png" alt="img"></p>
+<blockquote>
+<p>洪泛转发即从自己的所有接口发送出去</p>
+</blockquote>
+<hr>
+<p><strong>链路状态数据库同步</strong>：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-6b8e10e2d82cfa6f.png" alt="img"></p>
+<hr>
+<p><strong>使用SPF算法计算出各自路由器到达其他路由器的最短路径</strong>：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-4239eee0b6040f52.png" alt="img"></p>
+<h3 id="边界网关协议BGP">边界网关协议BGP</h3>
+<p>BGP是自治系统间的路由协议，其目标是找到一条能到达目的网络且比较好的路由（不兜圈子），并不是要找到最佳路由。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-04fe6f98036db57c.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-bc71c2ee5976ac53.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-b472dd1a51f30666.png" alt="img"></p>
+<h2 id="IPv4数据报的首部格式">IPv4数据报的首部格式</h2>
+<p>一个 IP 数据报由<strong>首部</strong>和<strong>数据</strong>两部分组成。**首部的前一部分是固定长度，共 20 字节，是所有 IP 数据报必须具有的。**在首部的固定部分的后面是一些可选字段，其长度是可变的。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-73800cce52c3a91e.png" alt="img"></p>
+<p>图中的每一行都由32个比特（也就是4个字节）构成，每个小格子称为<strong>字段或者域</strong>，每个字段或某些字段的组合用来表达IP协议的相关功能</p>
+<hr>
+<p><strong>第一行的内容：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-f1cf7dd2ea4eb52e.png" alt="img"></p>
+<blockquote>
+<p>为什么要有填充字段：</p>
+<p><strong>IP数据报的首部长度一定是4字节的整数倍</strong></p>
+<p>因为首部中的可选字段的长度从1个字节到40个字节不等，那么，当20字节的固定部分加上1到40个字节长度不等的可变部分，<strong>会造成首部长度不是4字节整数倍时，就用取值为全0的填充字段填充相应个字节</strong>，以确保IP数据报的首部长度是4字节的整数倍</p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-f7bb4a2e440abdc6.png" alt="img"></p>
+<hr>
+<p><strong>第2行的内容：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-a014cde6b0ff9691.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-d7b3a6145ac1dde9.png" alt="img"></p>
+<p>现在假定分片2的IP数据报经过某个网络时还需要进行分片：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-5d538557f988dc41.png" alt="img"></p>
+<hr>
+<p><strong>第3行内容：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-45ab400eac660e4a.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-94a3b7c0b1f01488.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-b074f6fffe538c0e.png" alt="img"></p>
+<hr>
+<p><strong>源IP地址和目的IP地址：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-07ac459878b48666.png" alt="img"></p>
+<h2 id="网际控制报文协议ICMP"><strong>网际控制报文协议ICMP</strong></h2>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-8739d970a0300acc.png" alt="img"></p>
+<blockquote>
+<p><strong>ICMP 不是高层协议（看起来好像是高层协议，因为 ICMP 报文是装在 IP 数据报中，作为其中的数据部分），而是 IP层的协议</strong></p>
+</blockquote>
+<hr>
+<p>差错报告报文的五种情况：</p>
+<p>终点不可达：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-855edabd9c1e6298.png" alt="img"></p>
+<p>源点抑制：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-e7f27ef6c93c9621.png" alt="img"></p>
+<p>时间超过：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-49d82185c88813fe.png" alt="img"></p>
+<p>参数问题：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-e2457fe1291c9bca.png" alt="img"></p>
+<p>改变路由：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-0ef50227f921ca79.png" alt="img"></p>
+<hr>
+<p><strong>不应发送ICMP差错报告报文情况：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-a0c3a21bb04ede42.png" alt="img"></p>
+<hr>
+<p><strong>ICMP的应用：</strong></p>
+<p>分组网间探测PING：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-75d7bc12ca942415.png" alt="img"></p>
+<p>跟踪路由（traceroute）：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-185af899d5e5a922.png" alt="img"></p>
+<h2 id="虚拟专用网VPN与网络地址转换NAT">虚拟专用网VPN与网络地址转换NAT</h2>
+<p><strong>虚拟专用网VPN：</strong></p>
+<p>由于 <strong>IP 地址的紧缺</strong>，一个机构能够申请到的IP地址数往往远小于本机构所拥有的主机数。</p>
+<p>考虑到<strong>互联网并不很安全</strong>，一个机构内也并不需要把所有的主机接入到外部的互联网。</p>
+<p>假定在一个机构内部的计算机通信也是采用 TCP/IP 协议，那么从原则上讲，对于这些仅在<strong>机构内部使用</strong>的计算机就可以由本机构<strong>自行分配其 IP 地址</strong>。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-aee1ae10f8ccb65f.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-93cca695182bf40f.png" alt="img"></p>
+<blockquote>
+<p>私有地址只能用于一个机构的内部通信，而不能用于和因特网上的主机通信</p>
+<p>私有地址只能用作本地地址而不能用作全球地址</p>
+<p>因特网中所有路由器对目的地址是私有地址的IP数据报一律不进行转发</p>
+<p><strong>本地地址与全球地址</strong></p>
+<ul>
+<li>
+<p><strong>本地地址</strong>——仅在机构内部使用的 IP 地址，可以由本机构自行分配，而不需要向互联网的管理机构申请。</p>
+</li>
+<li>
+<p><strong>全球地址</strong>——全球唯一的 IP 地址，必须向互联网的管理机构申请。</p>
+</li>
+<li>
+<p><strong>问题</strong>：在内部使用的本地地址就有可能和互联网中某个 IP 地址重合，这样就会出现地址的二义性问题</p>
+</li>
+</ul>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-3a739ef0d60a031e.png" alt="img"></p>
+<p>两个专用网内的主机间发送的数据报是通过了公用的因特网，但在效果上就好像是在本机构的专用网上传送一样</p>
+<p>数据报在因特网中可能要经过多个网络和路由器，但从逻辑上看，R1和R2之间好像是一条直通的点对点链路,因此也被称为<strong>IP隧道技术</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-ad9e5dcca8c0a1c9.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-6731dbc8b1ee1abc.png" alt="img"></p>
+<hr>
+<p><strong>网络地址转换NAT（Network Address Translation）</strong>:</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-f9f42bd392a2375a.png" alt="img"></p>
+<p>使用私有地址的主机，如何才能与因特网上使用全球IP地址的主机进行通信？</p>
+<p>这需要在专用网络连接到因特网的路由器上安装NAT软件</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-41ae75149e86d0fc.png" alt="img"></p>
+<blockquote>
+<p>专有NAT软件的路由器叫做NAT路由器</p>
+<p>它至少有一个有效的外部全球IP地址</p>
+<p>这样，所有使用私有地址的主机在和外界通信时，都要在NAT路由器上将其私有地址转换为全球IP地址</p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-a74e4efad5297fc9.png" alt="img"></p>
+<hr>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-ff2eca30cc7a7b41.png" alt="img"></p>
+<p>解决方案如下：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-05d3e1e3fd4b1998.png" alt="img"></p>
+<hr>
+<p>内网主机与外网主机的通信，是否能由外网主机首先发起？<strong>不行</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-d2fd109d060e4853.png" alt="img"></p>
+<h1>运输层</h1>
+<h2 id="概述-6">概述</h2>
+<ul>
+<li><strong>物理层、数据链路层、网络层</strong>实现了<strong>主机到主机</strong>的通信</li>
+<li><strong>运输层</strong>负责为不同主机上的<strong>应用进程</strong>提供直接通信服务</li>
+<li>运输层协议又称为<strong>端到端协议</strong></li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241127141439232.png" alt="image-20241127141439232"></p>
+<p>进程间的通信可以被称为<strong>逻辑通信</strong>，即是指运输层之间的通信好像是沿水平方向传送数据，但事实上，这两条数据并没有一条水平方向的物理连接，要传送的数据是沿着图中上下多次的虚线方向传送的。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-d9a70806edc95dc0.png" alt="img"></p>
+<blockquote>
+<p>如上图</p>
+<p>进程Ap1与Ap4之间进行基于网络的通信，进程Ap2与Ap3之间进行基于网络的通信。发送方在运输层使用<strong>不同的端口</strong>，来对应不同的应用进程，然后通过网络层及其下层来传输应用层报文；接收方的运输层通过不同的端口，将收到的应用层报文，交付给应用层中相应的应用进程。</p>
+<p>这里端口并不是指看得见、摸得着的物理端口，而是指用来<strong>区分不同应用进程的标识符</strong></p>
+</blockquote>
+<h2 id="运输层端口号、复用与分用">运输层端口号、复用与分用</h2>
+<h3 id="运输层端口号">运输层端口号</h3>
+<ul>
+<li>
+<p>运行于计算机上的进程使用<strong>进程标识符PID</strong>进行标识。</p>
+</li>
+<li>
+<p>但是运行于因特网上的计算机系统不同，其标识进程的方式也不同。因此TCP/IP体系需要采用另外的方法来统一应用程序的标识。</p>
+</li>
+<li>
+<p>TCP/IP体系的运输层采用<strong>端口号</strong>来区分不同应用层的不同进程。端口号有16bit，取值范围0~65535。端口号分为以下三类：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241127145128119.png" alt="image-20241127145128119"></p>
+</li>
+<li>
+<p>端口号只具有<strong>本地意义</strong>（端口号只标识本计算机应用层中的各进程）。在因特网中计算机不同，哪怕端口号一样，他们也不一定是一个应用层服务。</p>
+</li>
+</ul>
+<h3 id="复用与分用">复用与分用</h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-2a4ec3f5d5c11433.png" alt="img"></p>
+<ul>
+<li><strong>多个进程（这里一个端口表示一个进程）</strong> 利用一个运输层协议（或者称为运输层接口）<strong>发送</strong>数据称为 <strong>复用</strong></li>
+<li><strong>多个进程（这里一个端口表示一个进程）</strong> 利用一个运输层协议（或者称为运输层接口）<strong>接收</strong>时叫做 <strong>分用</strong>。</li>
+<li>采用不同的运输层协议（TCP、UDP），在IP复用、分用时的协议字段不同。</li>
+</ul>
+<h3 id="常用协议端口号">常用协议端口号</h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-2117fa99a7f2a89c.png" alt="img"></p>
+<p>这里有一个栗子，说明了用户浏览器向Web浏览器请求数据的全过程：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c4411d7jb/?p=58&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=355">【计算机网络微课堂（有字幕无背景音乐版）】 【精准空降到 05:55】 </a></p>
+<h2 id="运输层协议TCP与UDP">运输层协议TCP与UDP</h2>
+<p><strong>UDP</strong> 和 <strong>TCP</strong> 是TCP/IP体系结构<strong>运输层</strong>中的两个重要协议</p>
+<p>当运输层采用面向连接的 <strong>TCP</strong> 协议时，尽管下面的网络是不可靠的（只提供尽最大努力服务），但这种逻辑通信信道就相当于一条<strong>全双工的可靠信道</strong>。</p>
+<p>当运输层采用无连接的 <strong>UDP</strong> 协议时，这种逻辑通信信道是一条<strong>不可靠信道</strong>。</p>
+<hr>
+<p><strong><u>连接情况和单播广播情况对比：</u></strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-58c94f043969af9a.png" alt="img"></p>
+<hr>
+<p><strong>在运输过程方面：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113162357690.png" alt="image-20250113162357690"></p>
+<ul>
+<li>
+<p>UDP对应用进程交下来的报文<strong>既不合并也不拆分，而是保留这些报文的边界</strong>。换句话说，UDP是面向应用报文的</p>
+</li>
+<li>
+<p>TCP是面向字节流的，这正是TCP实现可靠传输、流量控制、以及拥塞控制的基础</p>
+<ul>
+<li>
+<p>对于发送方而言，TCP会把应用进程交付下来的数据块看作是<strong>一连串无结构的字节流</strong>，TCP并不知道这些待传送的字节流的含义，并将他们编号，并存储在自己发送缓存中。TCP会根据发送策略，提取一定量的字节构建TCP报文并发送</p>
+</li>
+<li>
+<p>对于接收方而言，一方面从所接受到的TCP报文段中，取出数据载荷部分并存储在接收缓存中；一方面将接收缓存中的一些字节交付给应用进程。</p>
+<p>TCP不保证接收方应用进程所收到的数据块与发送方发送的数据块，具有对应大小的关系（例如，发送方应用进程交给发送方的TCP共10个数据块，但接收方的TCP可能只用了4个数据块，就把收到的字节流交付给了上层的应用进程，但<strong>接收方收到的字节流必须和发送方应用进程发出的字节流完全一样</strong>）</p>
+<p>接收方的应用进程必须有能力识别收到的字节流，把它还原成有意义的应用层数据</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>提供服务的情况：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113162751265.png" alt="image-20250113162751265"></p>
+<hr>
+<p><strong>报文首部不同：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113162855371.png" alt="image-20250113162855371"></p>
+<h2 id="TCP流量控制">TCP流量控制</h2>
+<p>一般来说，我们总是希望数据传输得更快一些。但如果发送方把数据发送得过快，接收方就可能来不及接收，这就会造成数据的丢失。</p>
+<p>所谓<strong>流量控制(flow control)<strong>就是让发送方的发送速率不要太快，要让接收方来得及接收，利用</strong>滑动窗口</strong>机制可以很方便地在TCP连接上实现对发送方的流量控制。</p>
+<p>详细视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c4411d7jb/?p=60&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=91">https://www.bilibili.com/video/BV1c4411d7jb/?p=60&amp;share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=91</a></p>
+<h2 id="TCP拥塞控制">TCP拥塞控制</h2>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-9d4b410b2a44c125.png" alt="img"></p>
+<p>下面介绍TCP拥塞控制的四种算法，假定如下条件成立：</p>
+<ul>
+<li>
+<p>数据是单方向传送，而另一个方向只传送确认。</p>
+</li>
+<li>
+<p>接收方总是有足够大的缓存空间，因而发送方发送窗口的大小由网络的拥塞程度来决定，</p>
+</li>
+<li>
+<p>以最大报文段MSS的个数为讨论问题的单位，而不是以字节为单位。</p>
+<blockquote>
+<p>最大报文段长度 MSS (Maximum Segment Size) 是每个 TCP报文段中的数据字段的最大长度</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113202107027.png" alt="image-20250113202107027"></p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-c7682fe29ebcb6fd.png" alt="img"></p>
+<hr>
+<p><strong>慢开始（slow-start）</strong>：由小到大逐渐增大拥塞窗口数值。</p>
+<p>两个变量：</p>
+<ul>
+<li><strong>拥塞窗口（cwnd）</strong>：初始拥塞窗口值：2 种设置方法。窗口值逐渐增大。
+<ul>
+<li>1 至 2 个最大报文段 （旧标准）</li>
+<li>2 至 4 个最大报文段 （RFC 5681）</li>
+</ul>
+</li>
+<li><strong>慢开始门限（ssthresh）</strong>：防止拥塞窗口增长过大引起网络拥塞。</li>
+</ul>
+<blockquote>
+<p>其增长过程是指数级的，拥塞窗口一直增长到慢开始门限的值为止</p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-47dba7f2068f35df.png" alt="img"></p>
+<p><strong>拥塞避免（congestion avoidance）</strong>：让拥塞窗口 cwnd <strong>缓慢地增大</strong>，避免出现拥塞。每经过一个传输轮次，拥塞窗口 <strong>cwnd = cwnd + 1</strong>。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-28dacc122d9ef398.png" alt="img"></p>
+<p>如果在发送过程中出现部分报文段丢失，这必然会造成发送方对这些丢失报文段的超时重传。在下面图中，假设拥塞窗口为24时重传计时器超时：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-c35271774108d273.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-98094e880a6fad4e.png" alt="img"></p>
+<hr>
+<p><strong>快重传和快恢复</strong>实际上是慢开始和拥塞避免的升级版，用于改进TCP的性能。</p>
+<blockquote>
+<p>有时，个别报文段会在网络中丢失，但实际上网络并未发生拥塞。<br>
+这将导致发送方超时重传，并误认为网络发生了拥塞;<br>
+发送方把拥塞窗口cwnd又设置为最小值1，并错误地启动慢开始算法，因而降低了传输效率</p>
+</blockquote>
+<p>采用<strong>快重传</strong>算法可以让发送方尽早知道发生了个别报文段的丢失。所谓快重传，就是使发送方<strong>尽快进行重传</strong>，而不是等超时重传计时器超时再重传</p>
+<ul>
+<li>要求接收方不要等待自己发送数据时才进行捎带确认，而是要<strong>立即发送确认</strong>;</li>
+<li>即使收到了失序的报文段也要立即发出对已收到的报文段的<strong>重复确认</strong>。</li>
+<li>发送方一旦收到3个连续的重复确认，就将相应的报文段立即重传，而不是等该报文段的超时重传计时器超时再重传。</li>
+</ul>
+<p>发送方一旦收到3个重复确认，就知道现在只是丢失了个别的报文段。于是不启动慢开始算法，而执行<strong>快恢复算法</strong></p>
+<ul>
+<li>发送方将慢开始门限ssthresh值和拥塞窗口cwnd值调整为当前窗口的一半;开始执行拥塞避免算法。</li>
+<li>也有的快恢复实现是把快恢复开始时的拥塞窗口cwnd值再增大一些，即等于新的ssthresh +3.
+<ul>
+<li>既然发送方收到3个重复的确认，就表明有3个数据报文段已经离开了网络;</li>
+<li>这3个报文段不再消耗网络资源而是停留在接收方的接收缓存中;</li>
+<li>可见现在网络中不是堆积了报文段而是减少了3个报文段。因此可以适当把拥塞窗口扩大些</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-8f61b8eddb5b2624.png" alt="img"></p>
+<h2 id="TCP超时重传时间的选择">TCP超时重传时间的选择</h2>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-20d1cf6bb211fe7e.png" alt="img"></p>
+<p><strong>RFC6298建议使用下式计算超时重传时间RTO</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-39ab62874e65b623.png" alt="img"  />
+<p>产生的新问题：超时重传无法测准RTT</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113194848998.png" alt="image-20250113194848998"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113195422654.png" alt="image-20250113195422654"></p>
+<h2 id="TCP可靠传输">TCP可靠传输</h2>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-35bff0a8cc5b0d71.png" alt="img"></p>
+<p>TODO</p>
+<h2 id="TCP的运输连接方式">TCP的运输连接方式</h2>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-84c2b6dbb20379bd.png" alt="img"></p>
+<ul>
+<li>TCP 连接的建立<strong>采用客户服务器方式</strong>。</li>
+<li>主动发起连接建立的应用进程叫做<strong>TCP客户</strong> (client)。</li>
+<li>被动等待连接建立的应用进程叫做<strong>TCP服务器</strong> (server)。</li>
+</ul>
+<hr>
+<p><strong>TCP三次握手建立连接</strong></p>
+<p>“握手”需要在TCP客户端和服务器之间交换三个TCP报文段</p>
+<p>1.最初两端的TCP进程都处于关闭状态：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-9f509a892fb0f5c1.png" alt="img"></p>
+<p>2.一开始，TCP<strong>服务器进程首先创建传输控制块</strong>，用来存储TCP连接中的一些重要信息。例如TCP连接表、指向发送和接收缓存的指针、指向重传队列的指针，当前的发送和接收序号等。之后，就准备接受TCP客户端进程的连接请求。此时，<strong>TCP服务器进程就进入监听状态</strong>，等待TCP客户端进程的连接请求</p>
+<p>TCP服务器进程是被动等待来自TCP客户端进程的连接请求，因此成为<strong>被动打开</strong>连接</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-e69d0e450b080e1f.png" alt="img"></p>
+<p>3.TCP客户进程也是首先创建传输控制块，由于TCP连接建立是由TCP客户端主动发起的，因此称为<strong>主动打开</strong>连接</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-9e597559ec8fcae8.png" alt="img"></p>
+<p>4.然后，客户端在打算建立TCP连接时，向TCP服务器进程发送TCP连接请求报文段，并进入<strong>同步已发送</strong>状态</p>
+<p>TCP连接请求报文段首部中</p>
+<ul>
+<li>
+<p>同步位SYN被设置为1，表明这是一个TCP连接请求报文段</p>
+</li>
+<li>
+<p>序号字段seq被设置了一个初始值x，作为TCP客户端进程所选择的初始序号</p>
+</li>
+</ul>
+<blockquote>
+<p>请注意：TCP规定SYN被设置为1的报文段不能携带数据，但要消耗掉一个序号</p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-46865d700124bfd1.png" alt="img"></p>
+<p>5.TCP服务器进程收到TCP连接请求报文段后，如果同意建立连接，则向TCP客户进程发送TCP连接请求确认报文段，并进入<strong>同步已接收状态</strong></p>
+<p>TCP连接请求确认报文段首部中</p>
+<ul>
+<li>
+<p>同步位SYN和确认为ACK都设置为1，表明这是一个TCP连接请求确认报文段</p>
+</li>
+<li>
+<p>序号字段seq被设置了一个初始值y，作为TCP服务器进程所选择的初始序号，</p>
+</li>
+<li>
+<p>确认号字段ack的值被设置成了x+1，这是对TCP客户进程所选择的初始序号（seq）的确认</p>
+</li>
+</ul>
+<blockquote>
+<p>请注意：这个报文段也不能携带数据，因为它是SYN被设置为1的报文段，但同样要消耗掉一个序号</p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-f8dec0443dc56584.png" alt="img"></p>
+<p>6.TCP客户进程收到TCP连接请求确认报文段后，还要向TCP服务器进程发送一个普通的TCP确认报文段，并进入<strong>连接已连接</strong>状态</p>
+<p>普通的TCP确认报文段首部中</p>
+<ul>
+<li>
+<p>确认位ACK被设置为1，表明这是一个普通的TCP确认报文段</p>
+</li>
+<li>
+<p>序号字段seq被设置为x+1，这是因为TCP客户进程发送的第一个TCP报文段的序号为x，所以TCP客户进程发送的第二个报文段的序号为x+1</p>
+</li>
+<li>
+<p>确认号字段ack被设置为y+1，这是对TCP服务器进程所选择的初始序号的确认</p>
+</li>
+</ul>
+<blockquote>
+<p>请注意：TCP规定普通的TCP确认报文段可以携带数据，<strong>但如果不携带数据，则不消耗序号</strong></p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-987d5c8512392422.png" alt="img"></p>
+<blockquote>
+<p>这里第3次发送的确认报文段并不多余，这是为了<strong>防止已失效的连接请求报文段突然又传送到了TCP服务器</strong>，因而导致错误</p>
+</blockquote>
+<hr>
+<p><strong>TCP四报文挥手释放连接</strong></p>
+<p>1.现在TCP客户进程和TCP服务器进程<strong>都处于连接已建立</strong>状态</p>
+<p>TCP客户进程的应用进程通知其主动关闭TCP连接</p>
+<p>TCP客户进程会发送TCP<strong>连接释放报文</strong>段，并进入<strong>终止等待1</strong>状态</p>
+<p>TCP连接释放报文段首部中</p>
+<ul>
+<li>
+<p>终止位FIN和确认为ACK的值都被设置为1，表明这是一个TCP连接释放报文段，同时也对之前收到的报文段进行确认</p>
+</li>
+<li>
+<p>序号seq字段的值设置为u，它等于TCP客户进程之前已传送过的数据的最后一个字节的序号加1</p>
+</li>
+<li>
+<p>确认号ack字段的值设置为v，它等于TCP客户进程之前已收到的、数据的最后一个字节的序号加1</p>
+</li>
+</ul>
+<blockquote>
+<p>请注意：TCP规定终止位FIN等于1的报文段即使不携带数据，也要消耗掉一个序号</p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-d56a05b1da63bf01.png" alt="img"></p>
+<p>2.TCP服务器进程收到TCP连接释放报文段后，会<strong>发送一个普通的TCP确认报文段并进入关闭等待状态</strong></p>
+<p>普通的TCP确认报文段首部中</p>
+<ul>
+<li>
+<p>确认位ACK的值被设置为1，表明这是一个普通的TCP确认报文段</p>
+</li>
+<li>
+<p>序号seq字段的值设置为v，它等于TCP服务器进程之前已传送过的数据的最后一个字节的序号加1，这也与之前收到的TCP连接释放报文段中的确认号匹配</p>
+</li>
+<li>
+<p>确认号ack字段的值设置为u+1，这是对TCP连接释放报文段的确认</p>
+</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-d8be7c2c584d245a.png" alt="img"></p>
+<p>3.TCP服务器进程应该通知高层应用进程，TCP客户进程要断开与自己的TCP连接</p>
+<p>此时，从TCP客户进程到TCP服务器进程这个方向的连接就释放了</p>
+<p>这时的TCP连接属于<strong>半关闭</strong>状态，也就是TCP客户进程已经没有数据要发送了</p>
+<p>但如果TCP服务器进程还有数据要发送，TCP客户进程仍要接收，也就是说<strong>从TCP服务器进程到TCP客户进程这个方向的连接并未关闭</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-733705e761921b6b.png" alt="img"></p>
+<p>4.TCP客户进程收到TCP确认报文段后就进入<strong>终止等待2</strong>状态，等待TCP服务器进程发出的TCP连接释放报文段</p>
+<p>若使用TCP服务器进程的应用进程已经没有数据要发送了，应用进程就通知其TCP服务器进程释放连接</p>
+<p>由于TCP连接释放是由TCP客户进程主动发起的，因此<strong>TCP服务器进程对TCP连接的释放称为被动关闭连接</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-583da1984154448c.png" alt="img"></p>
+<p>5**.TCP服务器进程<strong>发送TCP连接释放报文段并进入</strong>最后确认状态**</p>
+<p>该报文段首部中</p>
+<ul>
+<li>
+<p>终止位FIN和确认位ACK的值都被设置为1，表明这是一个TCP连接释放报文段，同时也对之前收到的报文段进行确认</p>
+</li>
+<li>
+<p>序号seq字段的值为w，这是因为在半关闭状态下，TCP服务器进程可能又发送</p>
+</li>
+<li>
+<p>确认号ack字段的值为u+1，这是对之前收到的TCP连接释放报文段的重复确认</p>
+</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-60b55978f2d24a50.png" alt="img"></p>
+<p>6.TCP客户进程收到TCP连接释放报文段后，必须针对该报文段发送普通的TCP确认报文段，之后进入<strong>时间等待状态</strong></p>
+<p>该报文段首部中</p>
+<ul>
+<li>
+<p>确认为ACK的值被设置为1，表明这是一个普通的TCP确认报文段</p>
+</li>
+<li>
+<p>序号seq字段的值设置为u+1，这是因为TCP客户进程之前发送的TCP连接释放报文段虽然不携带数据，但要消耗掉一个序号</p>
+</li>
+<li>
+<p>确认号ack字段的值设置为w+1，这是对所收到的TCP连接释放报文段的确认</p>
+</li>
+</ul>
+<p>TCP服务器进程收到该报文段后就进入关闭状态，而TCP客户进程还要进过2MSL后才能进入关闭状态</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-1c5e0c6357d039ed.png" alt="img"></p>
+<blockquote>
+<p>TCP客户进程在发送完最后一个确认报文后，为什么不直接进入关闭状态？而是要进入时间等待状态？</p>
+<p>因为时间等待状态以及处于该状态2MSL时长，可以确保TCP服务器进程可以收到最后一个TCP确认报文段而进入关闭状态</p>
+</blockquote>
+<h2 id="TCP报文的首部格式">TCP报文的首部格式</h2>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-df9263a14e1da2c1.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250114000951748.png" alt="image-20250114000951748"></p>
+<hr>
+<p>第一行：源端口和目的端口</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250114001014943.png" alt="image-20250114001014943"></p>
+<hr>
+<p><strong>序号、确认号和确认标志位</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-fd0e64d8be3f598b.png" alt="img"></p>
+<hr>
+<p><strong>数据偏移、保留、窗口和校验和</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-d3d4c61af68fdb6d.png" alt="img"></p>
+<hr>
+<p><strong>同步标志位、终止标志位、复位标志位、推送标志位、紧急标志位和紧急指针</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-f09bdaba863c4ca3.png" alt="img"></p>
+<hr>
+<p><strong>选项和填充</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-d1a8d3ca5ac7f39d.png" alt="img"></p>
+<h1>应用层</h1>
+<h2 id="概述-7">概述</h2>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-968c1bcea54ea1f4.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-3d48b52ccf2bda5f.png" alt="img"></p>
+<h2 id="C-S模式和P2P模式">C/S模式和P2P模式</h2>
+<p>网络应用程序运行在处于网络边缘的不同的端系统上，通过彼此间的通信来共同完成某项任务。开发一种新的网络应用首先要考虑的问题就是<strong>网络应用程序在各种端系统上的组织方式和它们之间的关系</strong>,目前流行的主要有以下两种:</p>
+<ul>
+<li>客户/服务器(Client/Server，C/S)方式</li>
+<li>对等(Peer-to-Peer，P2P)方式</li>
+</ul>
+<hr>
+<p><strong>客户/服务器(Client/Server，C/S)方式：</strong></p>
+<ul>
+<li>客户和服务器是指通信中所涉及的两个应用进程。</li>
+<li>客户/服务器方式所描述的是进程之间<strong>服务和被服务</strong>的关系。</li>
+<li><strong>客户是服务请求方，服务器是服务提供方。</strong></li>
+<li>服务器总是处于运行状态，并等待客户的服务请求。<strong>服务器具有固定端口</strong>号(例如HTTP服务器的默认端口号为80)，而运行<strong>服务器的主机也具有固定的IP地址。</strong></li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112235224775.png" alt="image-20250112235224775" style="zoom:67%;" />
+<blockquote>
+<p>C/S方式是因特网上传统的、同时也是最成熟的方式，很多我们熟悉的网络应用采用的都是C/S方式包括万维网WWW、电子邮件、文件传输FTP等。</p>
+</blockquote>
+<p>基于C/S方式的应用服务通常是服务集中型的，即应用服务<strong>集中在</strong>网络中比客户计算机少得多的<strong>服务器计算机</strong>上。</p>
+<ul>
+<li>由于一台服务器计算机要为多个客户机提供服务，在C/S应用中，常会出现服务器计算机跟不上众多客户机请求的情况。</li>
+<li>为此，在C/S应用中，常用计算机群集(或服务器场)构建一个强大的虚拟服务器</li>
+</ul>
+<hr>
+<p><strong>对等(Peer-to-Peer，P2P)方式：</strong></p>
+<p>在P2P方式中，没有固定的服务请求者和服务提供者，分布在网络边缘各端系统中的应用进程是对等的，被称为对等方。对等方相互之间直接通信，<strong>每个对等方既是服务的请求者，又是服务的提供者。</strong></p>
+<blockquote>
+<p>目前，在因特网上流行的P2P应用主要包括P2P文件共享、即时通信、P2P流媒体、分布式存储等。</p>
+</blockquote>
+<p>基于P2P的应用是<strong>服务分散型</strong>的，因为服务不是集中在少数几个服务器计算机中，而是分散在大量对等计算机中，这些计算机并不为服务提供商所有，而是为个人控制的桌面计算机和笔记本电脑，它们通常位于住宅、校园和办公室中。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250112235551762.png" alt="image-20250112235551762" style="zoom:67%;" />
+<p>P2P方式的最突出特性之一就是它的<strong>可扩展性</strong>。因为系统每增加一个对等方，不仅增加的是服务的请求者，同时也增加了服务的提供者，<strong>系统性能不会因规模的增大而降低。</strong></p>
+<p>P2P方式<strong>具有成本上的优势</strong>，因为它通常不需要庞大的服务器设施和服务器带宽。为了降低成本，服务提供商对于将P2P方式用于应用的兴趣越来越大。</p>
+<h2 id="动态主机配置协议DHCP">动态主机配置协议DHCP</h2>
+<p>互联网广泛使用的<strong>动态主机配置协议 DHCP</strong> (Dynamic Host Configuration Protocol) 提供了<strong>即插即用连网</strong> (plug-and-play networking) 的机制。这种机制允许一台计算机加入新的网络和获取 IP 地址，而不用手工配置。</p>
+<blockquote>
+<p>当在网络中配置一台DHCP服务器后，网络中新增一台主机时，该主机就能通过向DHCP服务器发送请求来获取自己的IP地址、子网掩码、默认网关、DNS服务器等。</p>
+</blockquote>
+<hr>
+<p>DHCP 使用<strong>客户-服务器</strong>方式，采用请求/应答方式工作。</p>
+<p>DHCP 基于 UDP 工作（DHCP报文在运输层会被封装成为UDP用户数据报），DHCP 服务器运行在 67 号端口， DHCP客户运行在 68 号端口。</p>
+<p>首先，<strong>DHCP客户端将<u>广播</u>发送DHCP发现报文（DHCP DISCOVER）</strong>：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-6f9a9715f8b1c74a.png" alt="img"></p>
+<ul>
+<li>报文内部封装有事物ID和DHCP客户端的MAC地址</li>
+<li><strong>封装该报文的IP数据报的源IP地址为0.0.0.0，这是因为主机目前还未分配到IP地址</strong>，因此使用该地址代替</li>
+<li><strong>目的IP地址为广播地址255.255.255.255，之所以广播发送，是因为主机现在并不知道网络中有哪几个DHCP服务器</strong>。</li>
+</ul>
+<hr>
+<p>然后，DHCP服务器<strong>将<u>广播</u>发送DHCP提供报文（DHCP OFFER）</strong>：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-03ecd6d2838d4274.png" alt="img"></p>
+<ul>
+<li>
+<p><strong>DHCP服务器收到DHCP发现报文后，根据其中封装的DHCP客户端的MAC地址来查找自己的数据库</strong>，如果查到匹配信息，则使用这些配置信息来构建并发送DHCP提供报文，如果没有则采用默认配置信息来构建报文并发送</p>
+</li>
+<li>
+<p>报文内部封装有事物ID和配置信息（IP地址：DHCP服务器从自己的IP地址池中挑选待租用给主机的IP地址（使用ARP来确保所选IP地址未被网络中其他主机占用）</p>
+</li>
+<li>
+<p>事务ID：DHCP客户端会与之前DHCP发现报文的事务ID做对比，来判断该DHCP提供报文是否是自己的</p>
+</li>
+<li>
+<p>源IP地址：发送DHCP提供报文的DHCP服务器的IP</p>
+<p>目的地址：因为目的主机还没分配到IP，所以使用广播地址</p>
+</li>
+</ul>
+<hr>
+<p>接着，<strong>DHCP客户端将<u>广播</u>发送DHCP请求报文（DHCP REQUEST）</strong>：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-009b1e9a88976880.png" alt="img"></p>
+<blockquote>
+<p>当DHCP客户收到两个或多个DHCP服务器发来的DHCP提供报文，DHCP客户从中选择一个，一般选择先到的，并向所选择的DHCP服务器发送DHCP请求报文</p>
+</blockquote>
+<ul>
+<li>报文中有事务ID、DHCP客户端的MAC地址、接收的租约中的IP地址、提供此租约的DHCP服务器端的IP地址</li>
+<li>源地址：0.0.0.0，因为此时DHCP客户才从多个DHCP服务器中挑选一个作为自己的DHCP服务器。它首先要征得该服务器的同意，之后才能正式使用向该DHCP服务器租用的IP地址</li>
+<li>目的地址：广播地址，这样可以一次性向所有DHCP服务器发送DHCP请求报文，来告知它们是否请求它们作为自己的DHCP服务器</li>
+</ul>
+<hr>
+<p>最后，被选中的DHCP服务器给DHCP客户端发送<strong>DHCP确认报文（DHCP ACK）</strong>：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-35c9002bba766476.png" alt="img"></p>
+<ul>
+<li>
+<p>源地址：DHCP服务器1的IP地址</p>
+</li>
+<li>
+<p>目的地址：广播地址</p>
+</li>
+<li>
+<p>DHCP客户收到该报文后就可以使用租用的IP地址，在使用前还会进行ARP检测</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-044fb99d76bd279c.png" alt="img"></p>
+</li>
+</ul>
+<hr>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-a01eacfba40e9098.png" alt="img"></p>
+<hr>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-37d8836f5ed85036.png" alt="img"></p>
+<h2 id="域名系统DNS">域名系统DNS</h2>
+<p>DNS就是将域名转换为IP地址的工具。</p>
+<p>在因特网中，采用的DNS服务器不止一台。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-423a48c721a4a5d0.png" alt="img"></p>
+<hr>
+<p><strong>域名是什么？</strong></p>
+<ul>
+<li>因特网采用<strong>层次树状结构的域名结构</strong></li>
+<li>域名的结构由若干个分量组成，各分量之间用“点”隔开，分别代表不同级别的域名
+<ul>
+<li>每一级的域名都由英文字母和数字组成，不超过63个字符，不区分大小写字母。</li>
+<li><strong>级别最低的域名写在最左边，而级别最高的顶级域名写在最右边。</strong></li>
+<li>完整的域名不超过255个字符。</li>
+</ul>
+</li>
+<li>域名系统既不规定一个域名需要包含多少个下级域名，也不规定每一级的域名代表什么意思。</li>
+<li>各级域名由其上一级的域名管理机构管理，而最高的顶级域名则由因特网名称与数字地址分配机构ICANN进行管理。</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113140044866.png" alt="image-20250113140044866"></p>
+<hr>
+<p>域名分类情况：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-31a3076fe8055379.png" alt="img"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-4655232a57435f63.png" alt="img"></p>
+<blockquote>
+<p>名称相同的域名其等级未必相同</p>
+</blockquote>
+<hr>
+<p><strong>DNS有什么用？</strong></p>
+<p>域名和IP地址的映射关系必须保存在域名服务器中，供所有其他应用查询。显然不能将所有信息都储存在一台域名服务器中。<strong>DNS使用分布在各地的域名服务器来实现域名到IP地址的转换。</strong></p>
+<p>域名服务器可以划分为以下四种不同的类型:</p>
+<ul>
+<li>
+<p>根域名服务器</p>
+<p>根域名服务器是<strong>最高层次</strong>的域名服务器。每个根域名服务器都知道所有的<strong>顶级域名</strong>服务器的域名及其IP地址。因特网上共有13个不同IP地址的根域名服务器。</p>
+<p>尽管我们将这13个根域名服务器中的每一个都视为单个的服务器，但“每台服务器”实际上是由许多分布在世界各地的计算机构成的服务器群集。当本地域名服务器向根域名服务器发出查询请求时，路由器就把查询请求报文转发到离这个DNS客户最近的一个根域名服务器。这就加快了DNS的查询过程，同时也更合理地利用了因特网的资源。</p>
+<p><strong>根域名服务器通常并不直接对域名进行解析，而是返回该域名所属顶级域名的顶级域名服务器的IP地址。</strong></p>
+</li>
+<li>
+<p>顶级域名服务器</p>
+<p>这些域名服务器负责管理在该顶级域名服务器注册的<strong>所有二级域名</strong>。当收到DNS查询请求时就给出相应的回答(可能是最后的结果，也可能是下一级权限域名服务器的IP地址)。</p>
+</li>
+<li>
+<p>权限域名服务器</p>
+<p>这些域名服务器负责管理<strong>某个区的域名</strong>。每一个主机的域名都必须在某个权限域名服务器处注册登记。因此权限域名服务器知道其管辖的域名与IP地址的映射关系。另外，权限域名服务器还知道其下级域名服务器的地址。</p>
+</li>
+<li>
+<p>本地域名服务器</p>
+<p>本地域名服务器不属于上述的域名服务器的等级结构。当一个主机发出DNS请求报文时，这个报文就首先被送往该主机的本地域名服务器。</p>
+<p>本地域名服务器起着代理的作用，会将该报文转发到上述的域名服务器的等级结构中。每一个因特网服务提供者ISP，一个大学，甚至一个大学里的学院，都可以拥有一个本地域名服务器，它有时也称为<strong>默认域名服务器。</strong></p>
+<p>本地域名服务器离用户较近，一般不超过几个路由器的距离，也有可能就在同一个局域网中。本地域名服务器的IP地址需要直接配置在需要域名解析的主机中。</p>
+</li>
+</ul>
+<hr>
+<p>**域名解析的流程：**有递归查询和迭代查询两种方式</p>
+<p><strong>递归查询：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113142312737.png" alt="image-20250113142312737"></p>
+<p>1234代表请求查询的顺序，5678代表返回请求结果的顺序。</p>
+<p>迭代查询：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113142515595.png" alt="image-20250113142515595"></p>
+<hr>
+<p><strong>高速缓存功能：</strong></p>
+<ul>
+<li>为了提高DNS的查询效率，并减轻根域名服务器的负荷和减少因特网上的DNS查询报文数量，在域名服务器中广泛地使用了<strong>高速缓存</strong>。高速缓存用来存放最近查询过的域名以及从何处获得域名映射信息的记录。</li>
+<li>由于域名到IP地址的映射关系并不是永久不变，为保持高速缓存中的内容正确，域名服务器<strong>应为每项内容设置计时器并删除超过合理时间的项</strong>(例如，每个项目只存放两天)。</li>
+<li>不但在本地域名服务器中需要高速缓存，在用户主机中也很需要。许多用户主机在启动时从本地域名服务器下载域名和IP地址的全部数据库，维护存放自己最近使用的域名的高速缓存，并且<strong>只在从缓存中找不到域名时才向域名服务器查询</strong>。同理，主机也需要保持高速缓存中内容的正确性。</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-d2652511b6f2280d.png" alt="img"></p>
+<h2 id="文件传输协议FTP">文件传输协议FTP</h2>
+<p>将某台计算机中的文件通过网络传送到可能相距很远的另一台计算机中，是一项基本的网络应用，即文件传送。**文件传送协议FTP(File Transfer Protocol)**是因特网上使用得最广泛的文件传送协议。</p>
+<ul>
+<li>FTP提供<strong>交互式的访问</strong>，允许客户<strong>指明文件的类型与格式</strong>(如指明是否使用ASCI码)，并允许文件<strong>具有存取权限</strong>(如访问文件的用户必须经过授权，并输入有效的口令)。</li>
+<li>FTP屏蔽了各计算机系统的细节，因而适合于在异构网络中任意计算机之间传送文件</li>
+</ul>
+<p>FTP采用C/S方式（客户/服务器方式）。FTP客户计算机可将各种类型的文件上传到FTP服务器，FTP客户计算机也可以从FTP服务器下载文件。</p>
+<p>FTP的常见用途是在计算机之间传输文件，尤其是用于批量传输文件。FTP的另一个常见用途是让网站设计者将构成网站内容的大量文件批量上传到他们的Web服务器。</p>
+<hr>
+<p><strong>FTP工作原理：</strong></p>
+<p><strong>FTP服务器监听熟知端口（端口号为 21）</strong>，使客户进程能够连接上。</p>
+<p>FTP客户随机选择一个临时端口号与其建立TCP连接，这条TCP连接用于FTP客户与服务器之间传送FTP的<strong>相关控制命令</strong>（这条连接是FTP客户与服务器之间的命令通道）</p>
+<p>当有数据传输时，FTP客户端通过上面的命令通道告知FTP服务器与自己的另一个端口号建立连接。<strong>FTP服务器使用自己的熟知端口号20</strong>与其建立TCP连接，这条TCP连接用于FTP客户与服务器之间<strong>传送文件</strong>。</p>
+<p>由于建立数据通路时，FTP服务器主动连接FTP客户，因此是<strong>主动模式</strong>。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-37858686cb4a05aa.png" alt="img"></p>
+<p>同样还有<strong>被动模式</strong>：FTP服务器在收到FTP客户通过控制通道发来的命令后才被动打开数据通道。这里服务器端的接口也不再是20端口，而是与FTP客户端约定的端口。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-7125f10efdf012e1.png" alt="img" style="zoom: 50%;" />
+<blockquote>
+<p>注意两种模式都是：控制连接在整个会话期间保持打开状态，数据连接传输完毕后就关闭</p>
+</blockquote>
+<h2 id="电子邮件">电子邮件</h2>
+<p>电子邮件(E-mail)是因特网上最早流行的一种应用，并且仍然是当今因特网上最重要、最实用的应用之一。</p>
+<p>电子邮件与邮政系统的寄信相似。</p>
+<ul>
+<li>发件人将邮件发送到自己使用的邮件服务器</li>
+<li>发件人的邮件服务器将收到的邮件按其目的地址转发到收件人邮件服务器中的收件人邮箱</li>
+<li>收件人在方便的时候访问收件人邮件服务器中自己的邮箱，获取收到的电子邮件。</li>
+</ul>
+<p>电子邮件系统采用<strong>客户/服务器方式</strong>。</p>
+<p>电子邮件系统的三个主要组成构件：<strong>用户代理，邮件服务器，以及电子邮件所需的协议</strong>。</p>
+<ul>
+<li><strong>用户代理</strong>是用户与电子邮件系统的接口，又称为<strong>电子邮件客户端软件</strong>。</li>
+<li><strong>邮件服务器</strong>是电子邮件系统的基础设施。因特网上所有的ISP都有邮件服务器，其功能是发送和接收邮件，同时还要负责维护用户的邮箱。</li>
+<li><strong>协议</strong>包括邮件发送协议(例如SMTP)和邮件读取协议(例如POP3，IMAP)</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113145723388.png" alt="image-20250113145723388"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113145919971.png" alt="image-20250113145919971"></p>
+<hr>
+<p><strong>SMTP协议的工作流程：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-03f4877d2621c261.png" alt="img"></p>
+<hr>
+<p><strong>电子邮件的信息格式：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113150413311.png" alt="image-20250113150413311"></p>
+<hr>
+<p><strong>多用途因特网邮件扩展MIME(MulipurposelIntemetMail Extensions)：</strong></p>
+<p><strong>SMTP协议只能传送ASCII码文本数据</strong>，不能传送可执行文件或其他的二进制对象。这就意味着SMTP不能满足传送多媒体邮件(例如带有图片、音频或视频数据)的需要。并且许多其他非英语国家的文字(例如中文、俄文、甚至带有重音符号的法文或德文)也无法用SMTP传送。</p>
+<p>为解决SMTP传送非ASCII码文本的问题，提出了<strong>多用途因特网邮件扩展MIME(MulipurposelIntemetMail Extensions)。</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113150643695.png" alt="image-20250113150643695"></p>
+<p>MIME有下列的改变：</p>
+<ul>
+<li>增加了<strong>5个新的邮件首部字段</strong>，这些字段提供了有关邮件主体的信息，</li>
+<li>定义了<strong>许多邮件内容的格式</strong>，对多媒体电子邮件的表示方法进行了标准化口</li>
+<li>定义了<strong>传送编码</strong>，可对任何内容格式进行转换，而不会被邮件系统改变。</li>
+</ul>
+<blockquote>
+<p>实际上，MIME不仅仅用于SMTP，也用于后来的同样面向ASCII字符的HTTP。</p>
+</blockquote>
+<hr>
+<p>常用的<strong>邮件读取协议</strong>有以下两个:</p>
+<ul>
+<li>
+<p><strong>邮局协议POP(Post0fficeProtocol)</strong>，POP3是其第三个版本，是因特网正式标准。</p>
+<p>非常简单、功能有限的邮件读取协议。用户只能以<strong>下载并删除方式</strong>或<strong>下载并保留方式</strong>从邮件服务器下载邮件到用户方计算机。<strong>不允许用户在邮件服务器上管理自己的邮件。</strong>(例如创建文件夹，对邮件进行分类管理等)。</p>
+</li>
+<li>
+<p><strong>因特网邮件访问协议IMAP(Interet Message Access Protocol)</strong>，IMAP4是其第四个版本，目前还只是因特网建议标准。</p>
+<p>功能比POP3强大的邮件读取协议。用户<strong>在自己的计算机上就可以操控邮件服务器中的邮箱</strong>，就像在本地操控一样，因此IMAP是一个联机协议。</p>
+</li>
+</ul>
+<blockquote>
+<p>POP3和IMAP4都采用基于TCP连接的客户/服务器方式。POP3使用熟知端口110，IMAP4使用熟知端口143。</p>
+</blockquote>
+<hr>
+<p><strong>基于万维网的电子邮件：</strong></p>
+<ul>
+<li>通过<strong>浏览器</strong>登录(提供用户名和口令)邮件服务器万维网网站就可以撰写、收发、阅读和管理电子邮件。这种工作模式与IMAP很类似，不同的是用户计算机无需安装专门的用户代理程序，只需要使用通用的万维网浏览器。</li>
+<li>邮件服务器网站通常都提供非常强大和方便的邮件管理功能，用户可以在邮件服务器网站上管理和处理自己的邮件，而不需要将邮件下载到本地进行管理。</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113151309032.png" alt="image-20250113151309032"></p>
+<h2 id="万维网WWW">万维网WWW</h2>
+<p>万维网WWW(World Wide Web)并非某种特殊的计算机网络。它是一个大规模的、联机式的信息储藏所是<strong>运行在因特网上的一个分布式应用</strong>。万维网利用网页之间的<strong>超链接</strong>将不同网站的网页链接成一张逻辑上的信息网。</p>
+<blockquote>
+<p>浏览器最重要的部分是<strong>渲染引擎，也就是浏览器内核</strong>。负责对网页内容进行解析和显示。</p>
+</blockquote>
+<p><strong>万维网的工作方式</strong>：</p>
+<ul>
+<li>万维网以<strong>客户 - 服务器</strong>方式工作。</li>
+<li><strong>浏览器</strong>就是在用户计算机上的万维网<strong>客户程序</strong>。万维网文档所驻留的计算机则运行<strong>服务器程序</strong>，因此这个计算机也称为<strong>万维网服务器</strong>。</li>
+<li>客户程序向服务器程序发出请求，服务器程序向客户程序送回客户所要的<strong>万维网文档</strong>。</li>
+<li>在一个客户程序主窗口上显示出的万维网文档称为<strong>页面</strong> (page)。</li>
+</ul>
+<hr>
+<p><strong>统一资源定位符URL：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-05ae15f55de2ba0a.png" alt="img"></p>
+<hr>
+<p><strong>万维网的文档：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-5240e0cba8fd0a62.png" alt="img"></p>
+<hr>
+<p><strong>超文本传输协议HTTP（Hyper Transfer Protocol）：</strong></p>
+<ul>
+<li>在万维网客户程序与万维网服务器程序之间进行交互所使用的协议，是<strong>超文本传送协议</strong> HTTP (HyperText Transfer Protocol)。</li>
+<li>HTTP 是一个应用层协议，它使用 TCP 连接进行可靠的传送。</li>
+<li>每个万维网网点都有一个服务器进程，它不断地<strong>监听 TCP 的端口 80</strong>，以便发现是否有浏览器向它发出连接建立请求。</li>
+<li>一旦监听到连接建立请求并建立了 TCP 连接之后，浏览器就向万维网服务器发出浏览某个页面的请求，服务器接着就返回所请求的页面作为响应。</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250113152416596.png" alt="image-20250113152416596"></p>
+<hr>
+<p><strong>HTTP/1.0与HTTP/1.1的区别：</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-614d1960b2b805d9.png" alt="img"></p>
+<hr>
+<p><strong>HTTP请求报文和响应报文的格式：</strong></p>
+<p><u>请求报文：</u></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-22dfb8a34acf459c.png" alt="img"></p>
+<p><u>响应报文：</u></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-0409ca153701fbb4.png" alt="img"></p>
+<hr>
+<p><strong>使用Cookie在服务器上记录用户信息</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-969dc15b42399e98.png" alt="img"></p>
+<hr>
+<p><strong>万维网缓存与代理服务器</strong></p>
+<ul>
+<li>在万维网中还可以使用缓存机制以提高万维网的效率。</li>
+<li>万维网缓存又称为<strong>Web缓存(WebCache)</strong>，可位于客户机，也可位于中间系统上，<strong>位于中间系统上的Web缓存又称为代理服务器(ProxyServer)</strong>。</li>
+<li>Web缓存把最近的一些请求和响应暂存在本地磁盘中。当新请求到达时，若发现这个请求与暂时存放的请求相同，就<strong>返回暂存的响应</strong>，而不需要按URL的地址再次去因特网访问该资源。</li>
+</ul>
+<p>当主机要向原始服务器请求数据时，<strong>会先向代理服务器发送请求</strong>。</p>
+<p>如果该请求在代理服务器中有缓存：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-b0ccf228d3132c12.png" alt="img"></p>
+<p>若没有缓存：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-049121882eafde97.png" alt="img"></p>
+<p>若缓存的命中率比较高，则会大大减小了该链路上的通信量，因而减少了访问因特网的时延。</p>
+<p>此外，假设<strong>原始服务器的文档被更改，这样代理服务器的文档就不是最新的</strong>。所以原始服务器通常会为每个响应的对象设定一个<strong>修改时间字段</strong>和一个<strong>有效日期字段</strong></p>
+<p>若文件尚未过期：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-a5de1829c0777328.png" alt="img"></p>
+<p>若<strong>过期</strong>并且代理服务器的文档和原始服务器的<strong>文档一致</strong>，原始服务器则给代理服务器发送不包含实体主体的响应：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-abf0fcf785757c26.png" alt="img"></p>
+<p>若<strong>过期</strong>并且代理服务器的文档和原始服务器的<strong>文档不一致</strong>，原始服务器则给代理服务器发送封装有该文档的响应报文：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/24878825-14ec3f45c4af32f9.png" alt="img"></p>
+<h2 id="远程终端协议TELNET">远程终端协议TELNET</h2>
+<p>TODO</p>
+<h2 id="简单网络管理协议SNMP">简单网络管理协议SNMP</h2>
+<p><strong>网络管理</strong>包括对硬件、软件和人力的使用、综合与协调，以便对网络资源进行监视、测试、配置、分析、评价和控制，这样就能以合理的价格满足网络的一些需求，如实时运行性能，服务质量等。网络管理常简称为<strong>网管</strong></p>
+<h2 id="应用进程跨越网络的通信">应用进程跨越网络的通信</h2>
+<p>TODO</p>
+<h2 id="P2P应用">P2P应用</h2>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io">Linghao Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io/2024/10/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">https://zlh123123.github.io/2024/10/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zlh123123.github.io" target="_blank">好急好急的Hexo博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%BD%91/">计网</a></div><div class="post-share"><div class="social-share" data-image="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】动漫少女-樱花庄.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/10/12/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】二次元-动漫.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">密码学</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/07/21/%E6%97%A5%E8%AF%AD%E5%8A%A9%E8%AF%8D%E5%8A%A8%E8%AF%8D%E4%B8%8E%E5%BD%A2%E5%AE%B9%E8%AF%8D%E5%8F%98%E5%BD%A2/" title="日语助词动词与形容词变形"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】二次元-动漫1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">日语助词动词与形容词变形</div></div><div class="info-2"><div class="info-item-1">动词变形 原形与动词分类 一类动词 非る结尾的动词或る前的假名为あ段、う段和お段。  行く（いく） 始まる（はじまる）  特殊一类动词：以る结尾，且る前面的假名为い段或え段，但其是一类动词。 口诀：要知入归走切减滑  要る（いる） 知る（しる） 入る（はいる） 帰る（かえる） 走る（はしる） 切る（きる） 減る（へる） 滑る（すえる）  二类动词 以る结尾，且る前面的假名为い段或え段。  起きる（おきる） 寝る（ねる）  三类动词 即来る（くる）和する。 其中，动名词 +...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/06/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云-动画片-动画电影.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-14</div><div class="info-item-2">操作系统原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】二次元-动漫.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-12</div><div class="info-item-2">密码学</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" title="数据库原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】多啦a梦-日本动漫.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-12</div><div class="info-item-2">数据库原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/06/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】间谍过家家-阿尼亚.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-19</div><div class="info-item-2">编译原理</div></div><div class="info-2"><div class="info-item-1">注意！这里的表述不一定精准，且不一定覆盖考点！ 基本定义 字母表 由字母、数字、标点符号组成的集合  乘积：A中取一个元素，B中取一个元素，两个连接起来后的集合 n次幂：长度为n的符号串构成的集合。n=0叫空串$\varepsilon $ 正闭包：各个正数次幂的并集，长度为正数的符号串构成的集合，用+号 克林闭包：正闭包⋃\bigcup⋃空串集合，长度为非负数的符号串构成的集合，用*号  串 由字母表中符号组成的有穷序列，包括空串。长度记作$\left | s \right | $，就是符号数  连接运算：x和y的连接就是xy，空串是单位元 x=yz：...</div></div></div></a><a class="pagination-related" href="/2025/04/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="操作系统安全技术"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】AI-AI风景-山景.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-10</div><div class="info-item-2">操作系统安全技术</div></div><div class="info-2"><div class="info-item-1">概述 安全等级 《可信计算机系统评估标准》将操作系统、网络组件和可信应用程序所提供的安全保护等级分为4大类，7小类，从高到低为： A1、B3、B2、B1、C2、C1、D。   目前尚没有任何操作系统满足A1等级；仅有很少一部分操作系统满足B等级；C2等级被认为针对通用操作系统来说已经足够安全的了。（目前的Windows、MAC、IOS等系统均是C2等级）    D级，最低保护（Minimal Protection） 没有通过其他安全等级测试项目的系统即属于该级，如DOS、Windows 9x系统   C级，自主访问控制（Discretionary Protection） 系统客体（被访问的，如文件、目录）可由系统主体（能够发起行为的，如用户、应用程序）自主定义访问权。例如：管理员可以决定系统中任意文件的权限。  客体的权限是可以自主决定的。    B级，强制访问控制（Mandatory Protection） 由系统强制对客体进行安全保护，每个系统客体（如文件、目录等资源）及主体（如系统管理员、用户、应用程序）都有自己的安全标签（Security...</div></div></div></a><a class="pagination-related" href="/2025/06/13/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8%E5%8F%8A%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84/" title="网络空间安全及法律法规"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】乡村-晴空-田野.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-13</div><div class="info-item-2">网络空间安全及法律法规</div></div><div class="info-2"><div class="info-item-1">Teruteru的学习笔记 第一章 网络空间安全概述 第一节...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Linghao Zhang</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zlh123123"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/zlh123123" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lh.zhang.work@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，这里是我的个人博客，主要用来记录一些学习笔记和生活感悟，希望能给你带来一些帮助。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%A0%E7%89%B9%E7%BD%91"><span class="toc-number">1.1.</span> <span class="toc-text">因特网</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.1.</span> <span class="toc-text">几个概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">发展历程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%A0%E7%89%B9%E7%BD%91%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9B%E8%80%85ISP"><span class="toc-number">1.1.3.</span> <span class="toc-text">因特网服务提供者ISP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%A0%E7%89%B9%E7%BD%91%E7%9A%84%E6%A0%87%E5%87%86%E5%8C%96"><span class="toc-number">1.1.4.</span> <span class="toc-text">因特网的标准化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%A0%E7%89%B9%E7%BD%91%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-number">1.1.5.</span> <span class="toc-text">因特网的组成</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E4%BA%A4%E6%8D%A2%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">三种交换方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E8%B7%AF%E4%BA%A4%E6%8D%A2"><span class="toc-number">1.2.1.</span> <span class="toc-text">电路交换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2"><span class="toc-number">1.2.2.</span> <span class="toc-text">分组交换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A5%E6%96%87%E4%BA%A4%E6%8D%A2"><span class="toc-number">1.2.3.</span> <span class="toc-text">报文交换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E4%BA%A4%E6%8D%A2%E6%96%B9%E5%BC%8F%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">1.2.4.</span> <span class="toc-text">三种交换方式的对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.</span> <span class="toc-text">计算机网络的定义与分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.2.</span> <span class="toc-text">分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E4%BD%BF%E7%94%A8%E8%80%85%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">按使用者分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E8%A6%86%E7%9B%96%E8%8C%83%E5%9B%B4%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">按覆盖范围分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">按拓扑结构分类</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="toc-number">1.4.</span> <span class="toc-text">性能指标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9F%E7%8E%87"><span class="toc-number">1.4.1.</span> <span class="toc-text">速率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A6%E5%AE%BD"><span class="toc-number">1.4.2.</span> <span class="toc-text">带宽</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%9E%E5%90%90%E9%87%8F"><span class="toc-number">1.4.3.</span> <span class="toc-text">吞吐量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E5%BB%B6"><span class="toc-number">1.4.4.</span> <span class="toc-text">时延</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E5%BB%B6%E5%B8%A6%E5%AE%BD%E7%A7%AF"><span class="toc-number">1.4.5.</span> <span class="toc-text">时延带宽积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%80%E8%BF%94%E6%97%B6%E9%97%B4RTT"><span class="toc-number">1.4.6.</span> <span class="toc-text">往返时间RTT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E7%8E%87"><span class="toc-number">1.4.7.</span> <span class="toc-text">利用率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A2%E5%8C%85%E7%8E%87"><span class="toc-number">1.4.8.</span> <span class="toc-text">丢包率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-number">1.5.</span> <span class="toc-text">计算机网络体系结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OSI%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%92%8CTCP-IP%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-number">1.5.1.</span> <span class="toc-text">OSI体系结构和TCP&#x2F;IP体系结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%88%86%E5%B1%82%E7%9A%84%E5%BF%85%E8%A6%81%E6%80%A7"><span class="toc-number">1.5.2.</span> <span class="toc-text">计算机网络分层的必要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD%E8%A7%A3%E9%87%8A"><span class="toc-number">1.5.3.</span> <span class="toc-text">专业术语解释</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">实体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.5.3.3.</span> <span class="toc-text">服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE%E7%82%B9SAP"><span class="toc-number">1.5.3.4.</span> <span class="toc-text">服务访问点SAP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%8E%9F%E8%AF%AD"><span class="toc-number">1.5.3.5.</span> <span class="toc-text">服务原语</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98"><span class="toc-number">1.6.</span> <span class="toc-text">习题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">物理层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">2.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E4%B8%8B%E7%9A%84%E4%BC%A0%E8%BE%93%E5%AA%92%E4%BD%93"><span class="toc-number">2.2.</span> <span class="toc-text">物理层下的传输媒体</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%BC%95%E5%9E%8B%E4%BC%A0%E8%BE%93%E5%AA%92%E4%BD%93"><span class="toc-number">2.2.1.</span> <span class="toc-text">导引型传输媒体</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8C%E8%BD%B4%E7%94%B5%E7%BC%86"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">同轴电缆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8C%E7%BB%9E%E7%BA%BF"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">双绞线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%89%E7%BA%A4"><span class="toc-number">2.2.1.3.</span> <span class="toc-text">光纤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%B5%E5%8A%9B%E7%BA%BF"><span class="toc-number">2.2.1.4.</span> <span class="toc-text">电力线</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E5%AF%BC%E5%BC%95%E5%9E%8B%E4%BC%A0%E8%BE%93%E5%AA%92%E4%BD%93"><span class="toc-number">2.2.2.</span> <span class="toc-text">非导引型传输媒体</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E7%BA%BF%E7%94%B5%E6%B3%A2"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">无线电波</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AE%E6%B3%A2"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">微波</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%A2%E5%A4%96%E7%BA%BF"><span class="toc-number">2.2.2.3.</span> <span class="toc-text">红外线</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E6%96%B9%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">传输方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B2%E8%A1%8C%E4%B8%8E%E5%B9%B6%E8%A1%8C"><span class="toc-number">2.3.1.</span> <span class="toc-text">串行与并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E4%B8%8E%E5%BC%82%E6%AD%A5"><span class="toc-number">2.3.2.</span> <span class="toc-text">同步与异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%90%91%E4%B8%8E%E5%8F%8C%E5%90%91"><span class="toc-number">2.3.3.</span> <span class="toc-text">单向与双向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E4%B8%8E%E8%B0%83%E5%88%B6"><span class="toc-number">2.4.</span> <span class="toc-text">编码与调制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-2"><span class="toc-number">2.4.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%BC%96%E7%A0%81%E6%96%B9%E6%B3%95"><span class="toc-number">2.4.2.</span> <span class="toc-text">常用编码方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E5%BD%92%E9%9B%B6%E7%BC%96%E7%A0%81"><span class="toc-number">2.4.2.1.</span> <span class="toc-text">不归零编码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%92%E9%9B%B6%E7%BC%96%E7%A0%81"><span class="toc-number">2.4.2.2.</span> <span class="toc-text">归零编码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%BC%E5%BD%BB%E6%96%AF%E7%89%B9%E7%BC%96%E7%A0%81"><span class="toc-number">2.4.2.3.</span> <span class="toc-text">曼彻斯特编码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%AE%E5%88%86%E6%9B%BC%E5%BD%BB%E6%96%AF%E7%89%B9%E7%BC%96%E7%A0%81"><span class="toc-number">2.4.2.4.</span> <span class="toc-text">差分曼彻斯特编码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E8%B0%83%E5%88%B6%E6%96%B9%E6%B3%95"><span class="toc-number">2.4.3.</span> <span class="toc-text">常用调制方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%B0%83%E5%88%B6%E6%96%B9%E6%B3%95"><span class="toc-number">2.4.3.1.</span> <span class="toc-text">基本调制方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E8%B0%83%E5%88%B6"><span class="toc-number">2.4.3.2.</span> <span class="toc-text">混合调制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E9%81%93%E7%9A%84%E6%9E%81%E9%99%90%E5%AE%B9%E9%87%8F"><span class="toc-number">2.5.</span> <span class="toc-text">信道的极限容量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E5%A4%B1%E7%9C%9F"><span class="toc-number">2.5.1.</span> <span class="toc-text">信号失真</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99"><span class="toc-number">2.5.2.</span> <span class="toc-text">奈氏准则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%99%E5%86%9C%E5%85%AC%E5%BC%8F"><span class="toc-number">2.5.3.</span> <span class="toc-text">香农公式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E9%81%93%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF"><span class="toc-number">2.6.</span> <span class="toc-text">信道复用技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%91%E5%88%86%E5%A4%8D%E7%94%A8FDM"><span class="toc-number">2.6.1.</span> <span class="toc-text">频分复用FDM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E5%88%86%E5%A4%8D%E7%94%A8TDM"><span class="toc-number">2.6.2.</span> <span class="toc-text">时分复用TDM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%97%B6%E5%88%86%E5%A4%8D%E7%94%A8STDM"><span class="toc-number">2.6.3.</span> <span class="toc-text">统计时分复用STDM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A2%E5%88%86%E5%A4%8D%E7%94%A8WDM"><span class="toc-number">2.6.4.</span> <span class="toc-text">波分复用WDM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A0%81%E5%88%86%E5%A4%8D%E7%94%A8CDM"><span class="toc-number">2.6.5.</span> <span class="toc-text">码分复用CDM</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%E4%B8%8E%E5%AE%BD%E5%B8%A6%E6%8E%A5%E5%85%A5%E6%8A%80%E6%9C%AF"><span class="toc-number">2.7.</span> <span class="toc-text">数字传输系统与宽带接入技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98-2"><span class="toc-number">2.8.</span> <span class="toc-text">习题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">数据链路层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">3.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E6%88%90%E5%B8%A7"><span class="toc-number">3.2.</span> <span class="toc-text">封装成帧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%AE%E9%94%99%E6%A3%80%E6%B5%8B"><span class="toc-number">3.3.</span> <span class="toc-text">差错检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93"><span class="toc-number">3.4.</span> <span class="toc-text">可靠传输</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0-2"><span class="toc-number">3.4.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2-%E7%AD%89%E5%BE%85%E5%8D%8F%E8%AE%AESW"><span class="toc-number">3.4.2.</span> <span class="toc-text">停止-等待协议SW</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E9%80%80N%E5%B8%A7%E5%8D%8F%E8%AE%AEGBN"><span class="toc-number">3.4.3.</span> <span class="toc-text">回退N帧协议GBN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%87%8D%E4%BC%A0%E5%8D%8F%E8%AE%AESR"><span class="toc-number">3.4.4.</span> <span class="toc-text">选择重传协议SR</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E5%8D%8F%E8%AE%AEPPP"><span class="toc-number">3.5.</span> <span class="toc-text">点对点协议PPP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AA%92%E4%BD%93%E6%8E%A5%E5%85%A5%E6%8E%A7%E5%88%B6MAC"><span class="toc-number">3.6.</span> <span class="toc-text">媒体接入控制MAC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0-3"><span class="toc-number">3.6.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%92%E5%88%86%E4%BF%A1%E9%81%93"><span class="toc-number">3.6.2.</span> <span class="toc-text">静态划分信道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%8E%A5%E5%85%A5%E6%8E%A7%E5%88%B6"><span class="toc-number">3.6.3.</span> <span class="toc-text">动态接入控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CSMA-CD%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.6.3.1.</span> <span class="toc-text">CSMA&#x2F;CD协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CSMA-CA%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.6.3.2.</span> <span class="toc-text">CSMA&#x2F;CA协议</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MAC%E5%9C%B0%E5%9D%80%E3%80%81IP%E5%9C%B0%E5%9D%80%E5%92%8CARP%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.7.</span> <span class="toc-text">MAC地址、IP地址和ARP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MAC%E5%9C%B0%E5%9D%80"><span class="toc-number">3.7.1.</span> <span class="toc-text">MAC地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IP%E5%9C%B0%E5%9D%80"><span class="toc-number">3.7.2.</span> <span class="toc-text">IP地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ARP%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.7.3.</span> <span class="toc-text">ARP协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BA%BF%E5%99%A8%E4%B8%8E%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="toc-number">3.8.</span> <span class="toc-text">集线器与交换机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E7%BA%BF%E5%99%A8HUB"><span class="toc-number">3.8.1.</span> <span class="toc-text">集线器HUB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="toc-number">3.8.2.</span> <span class="toc-text">以太网交换机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E7%BA%BF%E5%99%A8%E4%B8%8E%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">3.8.3.</span> <span class="toc-text">集线器与交换机的对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA%E8%87%AA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E8%BD%AC%E5%8F%91%E5%B8%A7%E3%80%81%E7%94%9F%E6%88%90%E6%A0%91%E5%8D%8F%E8%AE%AESTP"><span class="toc-number">3.9.</span> <span class="toc-text">交换机自学习与转发帧、生成树协议STP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%B1%80%E5%9F%9F%E7%BD%91VLAN"><span class="toc-number">3.10.</span> <span class="toc-text">虚拟局域网VLAN</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">网络层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0-4"><span class="toc-number">4.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82%E6%8F%90%E4%BE%9B%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.2.</span> <span class="toc-text">网络层提供的两种服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E7%9A%84%E8%99%9A%E7%94%B5%E8%B7%AF%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.2.1.</span> <span class="toc-text">面向连接的虚电路服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.2.2.</span> <span class="toc-text">无连接的数据报服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IPv4%E5%9C%B0%E5%9D%80"><span class="toc-number">4.3.</span> <span class="toc-text">IPv4地址</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-3"><span class="toc-number">4.3.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%B1%BB%E7%BC%96%E5%9D%80%E7%9A%84IPv4%E5%9C%B0%E5%9D%80"><span class="toc-number">4.3.2.</span> <span class="toc-text">分类编址的IPv4地址</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A%E7%B1%BB%E5%9C%B0%E5%9D%80"><span class="toc-number">4.3.2.1.</span> <span class="toc-text">A类地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B%E7%B1%BB%E5%9C%B0%E5%9D%80"><span class="toc-number">4.3.2.2.</span> <span class="toc-text">B类地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C%E7%B1%BB%E5%9C%B0%E5%9D%80"><span class="toc-number">4.3.2.3.</span> <span class="toc-text">C类地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">4.3.2.4.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%92%E5%88%86%E5%AD%90%E7%BD%91%E7%9A%84IPv4%E5%9C%B0%E5%9D%80"><span class="toc-number">4.3.3.</span> <span class="toc-text">划分子网的IPv4地址</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81"><span class="toc-number">4.3.3.1.</span> <span class="toc-text">子网掩码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E6%A0%97%E5%AD%90"><span class="toc-number">4.3.3.2.</span> <span class="toc-text">举个栗子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81"><span class="toc-number">4.3.3.3.</span> <span class="toc-text">默认子网掩码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E5%88%86%E7%B1%BB%E7%BC%96%E5%9D%80%E7%9A%84IPv4%E5%9C%B0%E5%9D%80"><span class="toc-number">4.3.4.</span> <span class="toc-text">无分类编址的IPv4地址</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E5%88%86%E7%B1%BB%E5%9F%9F%E9%97%B4%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9CIDR"><span class="toc-number">4.3.4.1.</span> <span class="toc-text">无分类域间路由选择CIDR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88"><span class="toc-number">4.3.4.2.</span> <span class="toc-text">路由聚合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IPv4%E5%9C%B0%E5%9D%80%E7%9A%84%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="toc-number">4.3.5.</span> <span class="toc-text">IPv4地址的使用流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E9%95%BF%E7%9A%84%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81FLSM"><span class="toc-number">4.3.5.1.</span> <span class="toc-text">定长的子网掩码FLSM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%95%BF%E7%9A%84%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81VLSM"><span class="toc-number">4.3.5.2.</span> <span class="toc-text">变长的子网掩码VLSM</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E7%9A%84%E5%8F%91%E9%80%81%E4%B8%8E%E8%BD%AC%E5%8F%91"><span class="toc-number">4.4.</span> <span class="toc-text">IP数据报的发送与转发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE%E4%B8%8E%E8%B7%AF%E7%94%B1%E7%8E%AF%E8%B7%AF"><span class="toc-number">4.5.</span> <span class="toc-text">静态路由配置与路由环路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE"><span class="toc-number">4.5.1.</span> <span class="toc-text">静态路由配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E8%B7%AF%E7%94%B1"><span class="toc-number">4.5.2.</span> <span class="toc-text">默认路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%AE%9A%E4%B8%BB%E6%9C%BA%E8%B7%AF%E7%94%B1"><span class="toc-number">4.5.3.</span> <span class="toc-text">特定主机路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E7%8E%AF%E8%B7%AF"><span class="toc-number">4.5.4.</span> <span class="toc-text">路由环路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E9%94%99%E8%AF%AF%E5%AF%BC%E8%87%B4%E8%B7%AF%E7%94%B1%E7%8E%AF%E8%B7%AF"><span class="toc-number">4.5.4.1.</span> <span class="toc-text">配置错误导致路由环路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%9A%E5%90%88%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E7%BD%91%E7%BB%9C%E5%AF%BC%E8%87%B4%E8%B7%AF%E7%94%B1%E7%8E%AF%E8%B7%AF"><span class="toc-number">4.5.4.2.</span> <span class="toc-text">聚合不存在的网络导致路由环路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%95%85%E9%9A%9C%E5%AF%BC%E8%87%B4%E8%B7%AF%E7%94%B1%E7%8E%AF%E8%B7%AF"><span class="toc-number">4.5.4.3.</span> <span class="toc-text">网络故障导致路由环路</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.6.</span> <span class="toc-text">路由选择协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0-5"><span class="toc-number">4.6.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E4%BF%A1%E6%81%AF%E5%8D%8F%E8%AE%AERIP"><span class="toc-number">4.6.2.</span> <span class="toc-text">路由信息协议RIP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E6%94%BE%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E4%BC%98%E5%85%88-OSPF"><span class="toc-number">4.6.3.</span> <span class="toc-text">开放最短路径优先 OSPF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%B9%E7%95%8C%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AEBGP"><span class="toc-number">4.6.4.</span> <span class="toc-text">边界网关协议BGP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IPv4%E6%95%B0%E6%8D%AE%E6%8A%A5%E7%9A%84%E9%A6%96%E9%83%A8%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.7.</span> <span class="toc-text">IPv4数据报的首部格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E9%99%85%E6%8E%A7%E5%88%B6%E6%8A%A5%E6%96%87%E5%8D%8F%E8%AE%AEICMP"><span class="toc-number">4.8.</span> <span class="toc-text">网际控制报文协议ICMP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E4%B8%93%E7%94%A8%E7%BD%91VPN%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2NAT"><span class="toc-number">4.9.</span> <span class="toc-text">虚拟专用网VPN与网络地址转换NAT</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">运输层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0-6"><span class="toc-number">5.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%BE%93%E5%B1%82%E7%AB%AF%E5%8F%A3%E5%8F%B7%E3%80%81%E5%A4%8D%E7%94%A8%E4%B8%8E%E5%88%86%E7%94%A8"><span class="toc-number">5.2.</span> <span class="toc-text">运输层端口号、复用与分用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%BE%93%E5%B1%82%E7%AB%AF%E5%8F%A3%E5%8F%B7"><span class="toc-number">5.2.1.</span> <span class="toc-text">运输层端口号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E7%94%A8%E4%B8%8E%E5%88%86%E7%94%A8"><span class="toc-number">5.2.2.</span> <span class="toc-text">复用与分用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%8D%8F%E8%AE%AE%E7%AB%AF%E5%8F%A3%E5%8F%B7"><span class="toc-number">5.2.3.</span> <span class="toc-text">常用协议端口号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%BE%93%E5%B1%82%E5%8D%8F%E8%AE%AETCP%E4%B8%8EUDP"><span class="toc-number">5.3.</span> <span class="toc-text">运输层协议TCP与UDP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="toc-number">5.4.</span> <span class="toc-text">TCP流量控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="toc-number">5.5.</span> <span class="toc-text">TCP拥塞控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP%E8%B6%85%E6%97%B6%E9%87%8D%E4%BC%A0%E6%97%B6%E9%97%B4%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">5.6.</span> <span class="toc-text">TCP超时重传时间的选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93"><span class="toc-number">5.7.</span> <span class="toc-text">TCP可靠传输</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP%E7%9A%84%E8%BF%90%E8%BE%93%E8%BF%9E%E6%8E%A5%E6%96%B9%E5%BC%8F"><span class="toc-number">5.8.</span> <span class="toc-text">TCP的运输连接方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP%E6%8A%A5%E6%96%87%E7%9A%84%E9%A6%96%E9%83%A8%E6%A0%BC%E5%BC%8F"><span class="toc-number">5.9.</span> <span class="toc-text">TCP报文的首部格式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">应用层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0-7"><span class="toc-number">6.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-S%E6%A8%A1%E5%BC%8F%E5%92%8CP2P%E6%A8%A1%E5%BC%8F"><span class="toc-number">6.2.</span> <span class="toc-text">C&#x2F;S模式和P2P模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8D%8F%E8%AE%AEDHCP"><span class="toc-number">6.3.</span> <span class="toc-text">动态主机配置协议DHCP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E7%B3%BB%E7%BB%9FDNS"><span class="toc-number">6.4.</span> <span class="toc-text">域名系统DNS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AEFTP"><span class="toc-number">6.5.</span> <span class="toc-text">文件传输协议FTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6"><span class="toc-number">6.6.</span> <span class="toc-text">电子邮件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%87%E7%BB%B4%E7%BD%91WWW"><span class="toc-number">6.7.</span> <span class="toc-text">万维网WWW</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%8D%8F%E8%AE%AETELNET"><span class="toc-number">6.8.</span> <span class="toc-text">远程终端协议TELNET</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E5%8D%8F%E8%AE%AESNMP"><span class="toc-number">6.9.</span> <span class="toc-text">简单网络管理协议SNMP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E8%BF%9B%E7%A8%8B%E8%B7%A8%E8%B6%8A%E7%BD%91%E7%BB%9C%E7%9A%84%E9%80%9A%E4%BF%A1"><span class="toc-number">6.10.</span> <span class="toc-text">应用进程跨越网络的通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2P%E5%BA%94%E7%94%A8"><span class="toc-number">6.11.</span> <span class="toc-text">P2P应用</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/dark.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="日语语法蓝宝书总结"/></a><div class="content"><a class="title" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结">日语语法蓝宝书总结</a><time datetime="2026-06-26T09:47:36.000Z" title="发表于 2026-06-26 17:47:36">2026-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】可爱小狗-小狗-护眼.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="leetcode刷题日记"/></a><div class="content"><a class="title" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记">leetcode刷题日记</a><time datetime="2026-04-03T06:26:47.000Z" title="发表于 2026-04-03 14:26:47">2026-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云彩-夜晚-夜景.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="口令复用综述"/></a><div class="content"><a class="title" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述">口令复用综述</a><time datetime="2026-01-21T12:58:23.000Z" title="发表于 2026-01-21 20:58:23">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】兔子朱迪-彩云-朱迪.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Github Page更换新域名后如何更新配置"/></a><div class="content"><a class="title" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置">Github Page更换新域名后如何更新配置</a><time datetime="2026-01-01T04:13:51.000Z" title="发表于 2026-01-01 12:13:51">2026-01-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】卡通羊-可爱小羊.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM Post-training"/></a><div class="content"><a class="title" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training">LLM Post-training</a><time datetime="2025-11-30T14:14:52.000Z" title="发表于 2025-11-30 22:14:52">2025-11-30</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2026 By Linghao Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":200,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body></html>

@@ -1,0 +1,747 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数据库原理 | 好急好急的Hexo博客</title><meta name="author" content="Linghao Zhang"><meta name="copyright" content="Linghao Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="非常好考试题 不过这里的题偏简单，但是用来看概念很好，要注意MOOC作业题！ 数据库系统概论SQL编程题合集（包含期末题、考研初试题以及复试题）_数据库编程题-CSDN博客 数据库原理及应用期末复习汇总(附某高校期末真题试卷)_数据库原理期末考试题-CSDN博客 【数据库原理及应用】期末复习汇总&amp;高校期末真题试卷11_数据库原理及应用教程期末考试-CSDN博客 课程作业_温柔说给风的博客-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库原理">
+<meta property="og:url" content="https://zlh123123.github.io/2024/10/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="好急好急的Hexo博客">
+<meta property="og:description" content="非常好考试题 不过这里的题偏简单，但是用来看概念很好，要注意MOOC作业题！ 数据库系统概论SQL编程题合集（包含期末题、考研初试题以及复试题）_数据库编程题-CSDN博客 数据库原理及应用期末复习汇总(附某高校期末真题试卷)_数据库原理期末考试题-CSDN博客 【数据库原理及应用】期末复习汇总&amp;高校期末真题试卷11_数据库原理及应用教程期末考试-CSDN博客 课程作业_温柔说给风的博客-">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%A4%9A%E5%95%A6a%E6%A2%A6-%E6%97%A5%E6%9C%AC%E5%8A%A8%E6%BC%AB.png">
+<meta property="article:published_time" content="2024-10-12T10:16:40.000Z">
+<meta property="article:modified_time" content="2024-11-26T14:25:38.000Z">
+<meta property="article:author" content="Linghao Zhang">
+<meta property="article:tag" content="基础课">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%A4%9A%E5%95%A6a%E6%A2%A6-%E6%97%A5%E6%9C%AC%E5%8A%A8%E6%BC%AB.png"><link rel="shortcut icon" href="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png"><link rel="canonical" href="https://zlh123123.github.io/2024/10/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数据库原理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/welcome-image.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】多啦a梦-日本动漫.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" alt="Logo"><span class="site-name">好急好急的Hexo博客</span></a><a class="nav-page-title" href="/"><span class="site-name">数据库原理</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">数据库原理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-12T10:16:40.000Z" title="发表于 2024-10-12 18:16:40">2024-10-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-26T14:25:38.000Z" title="更新于 2024-11-26 22:25:38">2024-11-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p><strong>非常好考试题</strong></p>
+<p>不过这里的题偏简单，但是用来看概念很好，要注意MOOC作业题！</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/L6666688888/article/details/135314385">数据库系统概论SQL编程题合集（包含期末题、考研初试题以及复试题）_数据库编程题-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Dustinthewine/article/details/129072315">数据库原理及应用期末复习汇总(附某高校期末真题试卷)_数据库原理期末考试题-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45741872/article/details/138653517">【数据库原理及应用】期末复习汇总&amp;高校期末真题试卷11_数据库原理及应用教程期末考试-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45741872/category_12630412.html">课程作业_温柔说给风的博客-CSDN博客</a></p>
+<h1>概念辨析（1~3章）</h1>
+<h2 id="几个缩写"><strong>几个缩写</strong></h2>
+<ul>
+<li>DBMS：数据库管理系统</li>
+<li>DBS：数据库系统：包括DB、DBMS、应用系统、数据库管理员（DBA）</li>
+<li>DDL：数据定义语言，定义数据库中各个对象的组成和结构。<strong>常见语句</strong>：<code>CREATE</code>、<code>ALTER</code>、<code>DROP</code>、<code>TRUNCATE</code>等。</li>
+<li>DML：数据操纵语言，增删查改。<strong>常见语句</strong>：<code>SELECT</code>、<code>INSERT</code>、<code>UPDATE</code>、<code>DELETE</code>等。</li>
+<li>DCL：数据控制语言，用于控制对数据库的访问权限和安全性。<strong>常见语句</strong>：<code>GRANT</code>（授予权限）、<code>REVOKE</code>（撤销权限）等。</li>
+<li>数据模型的组成要素：数据结构、数据操作、数据完整性约束</li>
+</ul>
+<h2 id="三级模式"><strong>三级模式</strong></h2>
+<p>模式：对数据库中全体数据的逻辑结构和特征的描述，一个数据库只有一个模式</p>
+<ul>
+<li>外模式（子模式、用户模式）：是模式的子集，指用户使用的<strong>局部数据</strong>的逻辑结构和特征的描述，同一外模式可以被某一个用户的多个应用程序使用。用户只能访问自己的外模式中的数据。</li>
+<li>内模式（存储模式）：数据物理结构和存储方式的描述，内涵记录如何存储？用B+tree存储？这种信息，一个数据库只有一个内模式。</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241120212947336.png" alt="image-20241120212947336"></p>
+<h2 id="二级映像"><strong>二级映像</strong></h2>
+<ul>
+<li>外模式/模式映像：定义外模式和模式间的对应关系。每个外模式都对应一个外模式/模式映像，其<strong>定义在外模式</strong>的描述中。当模式改变时，只需要修改外模式/模式映像，而不需要修改外模式本身（应用是依据外模式的），应用程序就不用修改了，保证数据的<strong>逻辑独立性</strong> 。</li>
+<li>模式/内模式映像：定义了数据全局逻辑结构与存储结构之间的对应关系。数据库中模式/内模式映象是唯一的；该映象<strong>定义通常包含在模式描述</strong>中。当数据库的存储结构改变了（ 例如选用了另一种存储结构） ，数据库管理员修改模式／内模式映象， 使模式保持不变；保证了数据与程序的<strong>物理独立性</strong> 。</li>
+</ul>
+<h2 id="笛卡尔积和基数"><strong>笛卡尔积和基数</strong></h2>
+<p>基数：笛卡尔积后集合元素个数</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241120214141618.png" alt="image-20241120214141618"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241120214151034.png" alt="image-20241120214151034"></p>
+<h2 id="码"><strong>码</strong></h2>
+<blockquote>
+<p>n目关系对应n个属性</p>
+</blockquote>
+<ul>
+<li>候选码：关系中某一属性组（说明可以不止一个属性）能唯一标识该元组，而其子集不能。</li>
+<li>全码：该关系的所有属性组构成该关系的候选码</li>
+<li>主码：若该关系有多个候选码（<strong>不是</strong>说候选码由多属性组成！），那这多个候选码中的随便一个即主码。</li>
+<li>外码：属性F是R的一个属性，但不是R的主码，同时F又是关系K的主码。称F是R的外码。R叫<strong>参照关系</strong>、K叫<strong>被参照关系</strong></li>
+<li>候选码的诸属性叫主属性，其他属性叫非主属性。</li>
+</ul>
+<blockquote>
+<p>这里的外码中，关系R和K不一定是不同的关系；F在R和K中的名字也可能不一样，可见下面的例子</p>
+</blockquote>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241120215322830.png" alt="image-20241120215322830"></p>
+<p>利用传递函数可以给出更好的定义：U为关系R的全部属性</p>
+<ul>
+<li>候选码K：属性K满足<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi><mo><mover><mo><mo>→</mo></mo><mi>F</mi></mover></mo><mi>U</mi></mrow><annotation encoding="application/x-tex">K\stackrel{F}{\to}U</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1452em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.1452em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">→</span></span></span><span style="top:-3.5669em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">F</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span></span></span></span>，K称为R的一个候选码</li>
+<li>超码：属性K满足<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi><mo><mover><mo><mo>→</mo></mo><mi>P</mi></mover></mo><mi>U</mi></mrow><annotation encoding="application/x-tex">K\stackrel{P}{\to}U</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1452em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.1452em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">→</span></span></span><span style="top:-3.5669em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">P</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span></span></span></span>，K称为R的一个超码。我们往候选码上随便加点其他属性上去就能构成超码，即候选码是最小的超码</li>
+</ul>
+<h2 id="关系模型中三类完整性约束"><strong>关系模型中三类完整性约束</strong></h2>
+<ul>
+<li>实体完整性：主属性不能取空值</li>
+<li>参照完整性：若属性F是R的外码，那F的取值必须在K中出现过（或者直接取空值）</li>
+<li>用户定义的完整性：用户自己定义，比如检查“成绩”项的值小于100</li>
+</ul>
+<h2 id="关系代数"><strong>关系代数</strong></h2>
+<p>基本的关系代数：并、差、笛卡尔积、选择、投影。</p>
+<p>这部分建议做题。</p>
+<p>连接运算有三种</p>
+<ul>
+<li>等值连接：记得要写条件A=B</li>
+<li>自然连接：等值连接后去掉重复的属性列，不用写连接条件</li>
+<li>外连接：把舍弃掉的元组也保存，其余属性上填NULL</li>
+</ul>
+<p>通常先选择，再投影，最后连接</p>
+<p>除法的计算：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241120223210379.png" alt="image-20241120223210379" style="zoom: 67%;" />
+<h2 id="函数依赖"><strong>函数依赖</strong></h2>
+<p>已知X能确定唯一的Y，即X函数确定Y、Y函数依赖与X，记为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>→</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X\to Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></p>
+<ul>
+<li>平凡函数依赖：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>→</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X\to Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span>，Y是X的子集（平凡函数依赖是必然成立的）</li>
+<li>非平凡函数依赖：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>→</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X\to Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span>，Y不是X的子集</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241120231123909.png" alt="image-20241120231123909"></p>
+<ul>
+<li>完全函数依赖：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>→</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X\to Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span>，而X的任意真子集X’，都没法实现X’函数确定Y，则称Y完全函数依赖于X（即就是X中的所有元素缺一不可）记做<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo><mover><mo><mo>→</mo></mo><mi>F</mi></mover></mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X\stackrel{F}{\to}Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1452em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.1452em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">→</span></span></span><span style="top:-3.5669em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">F</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></li>
+<li>部分函数依赖：X中的真子集就能函数确定Y，记作<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo><mover><mo><mo>→</mo></mo><mi>P</mi></mover></mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X\stackrel{P}{\to}Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1452em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.1452em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">→</span></span></span><span style="top:-3.5669em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">P</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241120231731724.png" alt="image-20241120231731724"></p>
+<ul>
+<li>
+<p>传递函数依赖：<strong>这个注很重要</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241120231905587.png" alt="image-20241120231905587"></p>
+</li>
+</ul>
+<h2 id="范式"><strong>范式</strong></h2>
+<ul>
+<li>
+<p>1NF：R中所有属性都不可再分（表里不能再有表），不满足1NF就不能被称为关系数据库。</p>
+</li>
+<li>
+<p>2NF：消除非主属性对码的部分函数依赖</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241120234050605.png" alt="image-20241120234050605"></p>
+</li>
+<li>
+<p>3NF：消除非主属性对码的传递函数依赖</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241120234108666.png" alt="image-20241120234108666"></p>
+</li>
+<li>
+<p>BC范式：消除主属性对码的部分函数和传递函数依赖</p>
+</li>
+</ul>
+<p>还有满足3NF为什么满足2NF，满足BCNF为什么满足3NF：<a target="_blank" rel="noopener" href="http://180.76.151.202/portal/session/26743/forum/294458/post-346521-1.mooc?forumType=session&amp;threadPageIndex=1">好大学在线CNMOOC_中国顶尖的慕课平台</a></p>
+<p>3个实体型间的关系讨论：<a target="_blank" rel="noopener" href="http://180.76.151.202/portal/session/26743/forum/294455/post-345436-1.mooc?forumType=session&amp;threadPageIndex=1">好大学在线CNMOOC_中国顶尖的慕课平台</a></p>
+<p>还有一些最小依赖集、极小化的内容直接做题</p>
+<p><a target="_blank" rel="noopener" href="http://180.76.151.202/examTest/stuExamList/26743.mooc">好大学在线CNMOOC_中国顶尖的慕课平台</a></p>
+<p>关系模式的分解要遵循的原则：</p>
+<ul>
+<li>无损连接：关系分解后得到的关系按外码自然连接能得到原先的关系。</li>
+<li>保持原先的函数依赖：分解后的每个关系的最小函数依赖集是原关系最小函数依赖集的子集，并且小的并一下就变成原关系的。</li>
+</ul>
+<h1>SQL语言（第4章）</h1>
+<h2 id="数据定义"><strong>数据定义</strong></h2>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121001406491.png" alt="image-20241121001406491"></p>
+<h3 id="模式"><strong>模式</strong></h3>
+<p>创建：CREATE SCHEMA &lt;模式名&gt; AUTHORIZATION &lt;用户名&gt;</p>
+<p>删除：DROP SCHEMA &lt;模式名&gt;&lt;CASCADE|RESTRICT&gt;</p>
+<ul>
+<li>CASCADE：级联删除，删除模式的时候把里面所有数据库对象都删除</li>
+<li>RESTRICT：限制删除，如果该模式中定义了下属的数据库对象（ 如表、 视图等），则拒绝该删除语句的执行， 没有任何下属的对象时才能执行。</li>
+</ul>
+<h3 id="表"><strong>表</strong></h3>
+<p><strong>创建</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121001847522.png" alt="image-20241121001847522" style="zoom:67%;" />
+<p>要注意：</p>
+<ul>
+<li>主码：PRIMARY KEY  ，要注意当主码由两个属性构成时，要进行单独定义</li>
+<li>唯一性（不能重名）：UNIQUE</li>
+<li>非空/空：NULL/NOT NULL</li>
+<li>外码：FOREIGN  KEY REFERENCES</li>
+<li>约束加条件：CHECK</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121002138477.png" alt="image-20241121002138477"></p>
+<p><strong>修改</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121002318511.png" alt="image-20241121002318511" style="zoom:67%;" />
+<p><strong>删除</strong></p>
+<p>DROP TABLE &lt;表名&gt; [RESTRICT | CASCADE];</p>
+<h3 id="索引"><strong>索引</strong></h3>
+<p><strong>创建</strong></p>
+<ul>
+<li>
+<p>聚簇索引</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121004259832.png" alt="image-20241121004259832"></p>
+</li>
+<li>
+<p>唯一值索引</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121004341869.png" alt="image-20241121004341869"></p>
+</li>
+</ul>
+<p><strong>修改</strong></p>
+<p>ALTER INDEX &lt;旧索引名&gt; RENAME TO &lt;新索引名&gt; ；</p>
+<p><strong>删除</strong></p>
+<p>DROP INDEX &lt;索引名&gt;；</p>
+<h3 id="视图"><strong>视图</strong></h3>
+<ul>
+<li><strong>虚表</strong>， 是从一个或几个基本表（ 或视图） 导出的表;</li>
+<li>只存放视图的定义， 不会出现数据冗余;</li>
+<li>基表中的数据发生变化， 从视图中查询出的数据也随之改变;</li>
+</ul>
+<p><strong>创建视图</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121171011193.png" alt="image-20241121171011193" style="zoom:67%;" />
+<ul>
+<li>
+<p>注意这里的AS关键字</p>
+</li>
+<li>
+<p>这里的“列名”要么全部省略，要么全部指定。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121202940113.png" alt="image-20241121202940113"></p>
+</li>
+<li>
+<p>子查询可以是任意的SELECT语句， 是否含有ORDER BY子句和DISTINCT短语， 取决于具体系统的实现；</p>
+</li>
+<li>
+<p>WITH CHECK OPTION表示对视图进行更新、 插入或删除操作时， 要保证满足视图定义中的谓词条件（ 子查询条件表达式） 。</p>
+</li>
+<li>
+<p>DBMS执行CREATE VIEW语句时只是把视图的定义存入数据字典， 并不执行其中的SELECT语句。</p>
+</li>
+<li>
+<p>当视图中某属性是带表达式时，必须明确定义视图各属性列名</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121203619678.png" alt="image-20241121203619678" style="zoom:67%;" />
+</li>
+<li>
+<p>当不指定属性列时，可以将所有记录定义为一个视图。但这样会存在缺陷。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121203731428.png" alt="image-20241121203731428" style="zoom:67%;" />
+</li>
+</ul>
+<p>行列子集视图：若一个视图由单个基本表导出， 只是去掉某些行列， 但保留主码</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121203312550.png" alt="image-20241121203312550" style="zoom:67%;" />
+<p><strong>删除视图</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121203803242.png" alt="image-20241121203803242"></p>
+<p>CASCADE表示级联删除</p>
+<p><strong>视图查询</strong></p>
+<p>DBMS进行视图查询有两种方法</p>
+<ul>
+<li>实体化视图：为视图新建一个临时表
+<ul>
+<li>有效性检查： 检查所查询的视图是否存在</li>
+<li>执行视图定义， 将视图临时实体化， 生成临时表</li>
+<li>查询视图转换为查询临时表</li>
+<li>查询完毕删除被实体化的视图(临时表)</li>
+</ul>
+</li>
+<li>视图消解法：对查询语句进行拼接，然后在原表上弄
+<ul>
+<li>进行有效性检查， 检查查询的表、 视图等是否存在。 如果存在， 则从数据字典中取出视图的定义</li>
+<li>把视图定义中的子查询与用户的查询结合起来， 转换成等价的对基本表的查询</li>
+<li>执行修正后的查询</li>
+</ul>
+</li>
+</ul>
+<p>用视图消解法进行视图查询的示例：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121204548391.png" alt="image-20241121204548391" style="zoom:67%;" />
+<p>但是视图消解法存在局限性：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121204828738.png" alt="image-20241121204828738" style="zoom:67%;" />
+<p>在这里AVG是聚集函数，聚集函数只能在SELECT和HAVING中使用，故出现语法错误。在这种情况下， 视图消解法不能生成正确查询， DBMS会限制这类查询</p>
+<p><strong>视图更新</strong></p>
+<p>也是有视图实体化和视图消解法两种方法。在定义视图时使用了WITH CHECK OPTION子句后，DBMS在更新视图时会进行检查， 防止用户通过视图对不属于视图范围内的基本表数据进行更新。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121205248128.png" alt="image-20241121205248128"></p>
+<p><strong>视图的作用</strong></p>
+<ul>
+<li>视图能够简化用户的操作</li>
+<li>视图机制<strong>能使不同用户以不同方式看待同一数据</strong>， 适应不同种类的用户数据库共享的需要</li>
+<li>视图对重构数据库提供了一定程度的逻辑独立性</li>
+<li>视图能够对机密数据提供安全保护
+<ul>
+<li>对不同用户定义不同视图， 使每个用户只能看到他有权看到的数据；</li>
+<li>通过WITH CHECK OPTION对关键数据定义操作时间限制；</li>
+</ul>
+</li>
+<li>适当的视图能够更清晰表达查询</li>
+</ul>
+<h2 id="数据查询">数据查询</h2>
+<h3 id="单表查询">单表查询</h3>
+<h4 id="SELECT操作">SELECT操作</h4>
+<p><strong>消除取值重复的行</strong>的关键字</p>
+<ul>
+<li>DISTINCT：消除重复取值后输出</li>
+<li>ALL：默认选项，输出全部</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121160001847.png" alt="image-20241121160001847" style="zoom: 67%;" />
+<h4 id="WHERE操作">WHERE操作</h4>
+<p>确定<strong>范围</strong>关键字：注意这个区间是双闭区间</p>
+<ul>
+<li>BETWEEN AND</li>
+<li>NOT BETWEEN AND</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121160240075.png" alt="image-20241121160240075" style="zoom: 67%;" />
+<p>在<strong>集合中选值</strong>关键字：</p>
+<ul>
+<li>IN &lt;一组值&gt;</li>
+<li>NOT IN &lt;一组值&gt;</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121160417706.png" alt="image-20241121160417706" style="zoom:67%;" />
+<p>字符串匹配关键词：[NOT] LIKE ‘ &lt;匹配串&gt;’ [ESCAPE ‘ &lt;换码字符&gt;’ ]</p>
+<p>这里的<strong>匹配串</strong>可以是：</p>
+<ul>
+<li>
+<p>固定字符串，此时可以用 = 运算符取代 LIKE 谓词，用 != 或 &lt; &gt;运算符取代 NOT LIKE 谓词</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121160651090.png" alt="image-20241121160651090" style="zoom:67%;" />
+</li>
+<li>
+<p>含有通配符的字符串，要老老实实用LIKE关键词</p>
+<ul>
+<li>
+<p>% (百分号)： 代表任意长度（ 长度可以为0） 的字符串</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121160838033.png" alt="image-20241121160838033" style="zoom:67%;" />
+</li>
+<li>
+<p>_ (下横线)： 代表任意单个字符</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121160852814.png" alt="image-20241121160852814" style="zoom:67%;" />
+</li>
+</ul>
+</li>
+<li>
+<p>当固定字符串中含有%、_符号时，要用\符号来转义</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121161104435.png" alt="image-20241121161104435" style="zoom:67%;" />
+</li>
+<li>
+<p>涉及空值查询时</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121161215952.png" alt="image-20241121161215952" style="zoom:67%;" />
+</li>
+</ul>
+<h4 id="对查询结果排序"><strong>对查询结果排序</strong></h4>
+<p>使用ORDER BY子句</p>
+<ul>
+<li>可以按一个或多个属性列排序</li>
+<li>升序： ASC； 降序： DESC； 缺省值为升序</li>
+<li>当排序列含空值时 ，ASC： 排序列为空值的元组最后显示   ；DESC： 排序列为空值的元组最先显示  。类似于把空值当成无穷大。</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121161615091.png" alt="image-20241121161615091" style="zoom:67%;" />
+<h4 id="对查询结果分组">对查询结果分组</h4>
+<p>聚集函数</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121161827567.png" alt="image-20241121161827567" style="zoom:67%;" />
+<p>使用GROUP BY子句分组， 按某一列或多列的值分组， 值相等的为一组。  对查询结果分组后， 聚集函数将分别作用于每个组  。最后使用HAVING短语筛选最终输出结果  。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121162039725.png" alt="image-20241121162039725" style="zoom:67%;" />
+<h4 id="限制查询结果的数量LIMIT"><strong>限制查询结果的数量LIMIT</strong></h4>
+<p>LIMIT &lt;行数1&gt;[ OFFSET &lt;行数2&gt;];</p>
+<p>语义是忽略前&lt;行数2&gt;行， 然后取&lt;行数1&gt;作为查询结果数据。LIMIT子句经常和ORDER BY子句一起使用  。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121162156825.png" alt="image-20241121162156825" style="zoom:67%;" />
+<h3 id="连接查询">连接查询</h3>
+<p>同时涉及多个表的查询。</p>
+<h4 id="等值连接">等值连接</h4>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121162344728.png" alt="image-20241121162344728" style="zoom:67%;" />
+<h4 id="自然连接">自然连接</h4>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121162424133.png" alt="image-20241121162424133" style="zoom:67%;" />
+<p>通过SELECT值的不同来实现自然连接</p>
+<h4 id="自身连接">自身连接</h4>
+<ul>
+<li>一个表与其自己进行连接， 称为表的自身连接；</li>
+<li>需要给表起别名以示区别；</li>
+<li>由于所有属性名都是同名属性， 因此必须使用别名前缀；即FIRET.Cno这种</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121162629121.png" alt="image-20241121162629121" style="zoom:67%;" />
+<h4 id="外连接"><strong>外连接</strong></h4>
+<ul>
+<li>普通连接操作只输出满足连接条件的元组；</li>
+<li>外连接操作以指定表为连接主体， 将主体表中不满足连接条件的悬浮元组一并输出；</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121162758812.png" alt="image-20241121162758812" style="zoom:67%;" />
+<h3 id="嵌套查询">嵌套查询</h3>
+<p>把一次查询的结果作为下一次查询的输入源。将一个查询块嵌套在另一个查询块的WHERE子句或HAVING短语的条件中的查询称为嵌套查询;</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121162953357.png" alt="image-20241121162953357" style="zoom:67%;" />
+<p>子查询的SELECT语句中不能使用ORDER BY子句，因为ORDER BY子句只能对最终查询结果排序</p>
+<h4 id="IN谓词查询">IN谓词查询</h4>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121163249326.png" alt="image-20241121163249326"></p>
+<h4 id="比较运算符查询">比较运算符查询</h4>
+<p>当子查询返回一个值时，就可以用比较运算符（ &gt;， &lt;， =，&gt;=， &lt;=， !=或&lt; &gt;）。</p>
+<p>即当我们确定子查询只返回单值时，可以用=来代替IN关键字。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121163516439.png" alt="image-20241121163516439" style="zoom:67%;" />
+<p>同时可以使用ANY或者ALL关键词</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121164454218.png" alt="image-20241121164454218" style="zoom:67%;" />
+<h4 id="EXISTS谓词子查询">EXISTS谓词子查询</h4>
+<ul>
+<li>带有EXISTS谓词的子查询不返回任何数据， 只产生逻辑真值“ true” 或逻辑假值“ false” 。</li>
+<li>由EXISTS引出的子查询， 其目标列表达式通常都用* ， 因为带EXISTS的子查询只返回真值或假值， 给出列名无实际意义</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121164834428.png" alt="image-20241121164834428" style="zoom:67%;" />
+<p>这种要往子查询里传入Student这个参数的，就叫做相关查询，子查询的结果依赖于父查询。</p>
+<p><strong>用EXISTS和NOT EXISTS来实现全称量词</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121205857844.png" alt="image-20241121205857844" style="zoom:67%;" />
+<p><strong>用EXISTS和NOT EXISTS来实现逻辑蕴含</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121210051292.png" alt="image-20241121210051292"></p>
+<h3 id="集合查询">集合查询</h3>
+<p>用于把两个（或者多个）查询结果组合。这就要求各查询结果的列数必须相同； 对应项的数据类型也必须相同</p>
+<h4 id="并操作">并操作</h4>
+<ul>
+<li>UNION： 将多个查询结果合并起来时， 系统自动去掉重复元组</li>
+<li>UNION ALL： 将多个查询结果合并起来时， 保留重复元组。</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121165016416.png" alt="image-20241121165016416" style="zoom:67%;" />
+<h4 id="交操作">交操作</h4>
+<p>INTERSECT</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121165131608.png" alt="image-20241121165131608" style="zoom:67%;" />
+<h4 id="差操作">差操作</h4>
+<p>EXCEPT</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121165258112.png" alt="image-20241121165258112" style="zoom:67%;" />
+<h3 id="派生查询">派生查询</h3>
+<p>子查询不仅可以用在WHERE中，也可以用在FROM中，此时要用AS关键词为该表起个新名字，便于WHERE中写条件用。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121165520814.png" alt="image-20241121165520814" style="zoom:67%;" />
+<h2 id="数据更新"><strong>数据更新</strong></h2>
+<h3 id="插入数据">插入数据</h3>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121165634137.png" alt="image-20241121165634137" style="zoom:67%;" />
+<h3 id="修改数据">修改数据</h3>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121165828666.png" alt="image-20241121165828666" style="zoom:67%;" />
+<ul>
+<li>SET字句：指定修改方式  、要修改的列  、修改后的取值。</li>
+<li>WHERE子句：指定修改哪个元组，缺省表示修改全部元组</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121165946404.png" alt="image-20241121165946404"></p>
+<h3 id="插入数据-2">插入数据</h3>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121170025979.png" alt="image-20241121170025979" style="zoom:67%;" />
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121170057783.png" alt="image-20241121170057783"></p>
+<h2 id="空值NULL相关"><strong>空值NULL相关</strong></h2>
+<p>空值就是“ 不知道” 或“ 不存在” 或“ 无意义” 的值  。空值可能来自：</p>
+<ul>
+<li>赋值时赋的值就是NULL，或者没有进行赋值</li>
+<li>外连接时，没有定义的数值会被定义成空值</li>
+<li>空值的关系运算</li>
+</ul>
+<p>在WHERE关键词中涉及到NULL时，采用IS NULL 或 IS NOT NULL  判断一个属性的值是否为空值  。</p>
+<p>不能取空值的情况：</p>
+<ul>
+<li>属性定义（ 或域定义） 中有NOT NULL约束条件的不能取空值；</li>
+<li>加了UNIQUE限制的属性不能取空值；</li>
+<li>码属性不能取空值；</li>
+</ul>
+<p>空值运算：</p>
+<ul>
+<li>
+<p>空值与另一个值（ 包括另一个空值） 的<strong>算术运算</strong>结果为空值；</p>
+</li>
+<li>
+<p>空值与另一个值（ 包括另一个空值） 的<strong>比较运算</strong>结果为UNKNOWN；</p>
+</li>
+<li>
+<p><strong>逻辑运算</strong>真值表：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121170705210.png" alt="image-20241121170705210" style="zoom:67%;" />
+</li>
+</ul>
+<h1>数据库设计与安全（5~6章）</h1>
+<h2 id="数据库设计流程"><strong>数据库设计流程</strong></h2>
+<ul>
+<li>需求分析：需求分析的重点是“数据” 和“处理” ，调查、收集与分析用户在数据管理中  信息要求（查询内容与性质）、处理要求（功能、响应时间、方式）、安全性与完整性要求  。需求分析阶段描述的用户应用需求是现实世界的具体需求；</li>
+<li>概念结构设计：嗯画ER图，将需求分析得到的用户需求抽象为信息结构即<strong>概念模型</strong>的过程就是概念结构设计；其常用策略是<strong>自顶向下地进行需求分析  、自底向上地设计概念结构  。</strong></li>
+<li>逻辑结构设计：ER图向关系模型的转换，这个直接做题去</li>
+<li>数据库物理设计：数据库在物理设备上的<strong>存储结构</strong>与<strong>存取方法</strong>称为数据库的<strong>物理结构</strong>，它依赖于选定的数据库管理系统。为一个给定的逻辑数据模型选取一个最适合应用环境的物理结构的过程，就是数据库的物理设计。</li>
+<li>数据库实施与维护</li>
+</ul>
+<h2 id="数据字典"><strong>数据字典</strong></h2>
+<p>数据字典是各类数据描述的集合；数据字典是进行详细的数据收集和数据分析所获得的主要结果。数据字典是关于数据库中<strong>数据的描述</strong>，是元数据，<strong>而不是数据本身</strong>。数据字典在<strong>需求分析阶段</strong>建立，在数据库设计过程中不断修改、充实、完善。数据字典包括：</p>
+<ul>
+<li>
+<p>数据项：数据的最小组成单位</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121134119969.png" alt="image-20241121134119969" style="zoom:50%;" />
+</li>
+<li>
+<p>数据结构：反映了数据之间的组合关系。一个数据结构可以由若干个数据项组成，也可以由若干个数据结构组成，或由若干个数据项和数据结构混合组成。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121134305854.png" alt="image-20241121134305854" style="zoom: 50%;" />
+</li>
+<li>
+<p>数据流：数据结构在系统内传输的路径。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121134356358.png" alt="image-20241121134356358" style="zoom: 50%;" />
+</li>
+<li>
+<p>数据存储：数据结构停留或保存的地方，也是数据流的来源和去向之一。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121135138737.png" alt="image-20241121135138737" style="zoom:50%;" />
+</li>
+<li>
+<p>处理过程</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121210229551.png" alt="image-20241121210229551" style="zoom:50%;" />
+</li>
+</ul>
+<h2 id="概念结构设计"><strong>概念结构设计</strong></h2>
+<p><strong>三类常用数据抽象</strong></p>
+<ul>
+<li>
+<p>分类：对应一个实体的具体取值</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121210902533.png" alt="image-20241121210902533" style="zoom:50%;" />
+</li>
+<li>
+<p>聚集：对应一个实体的属性</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121211104143.png" alt="image-20241121211104143" style="zoom:50%;" />
+</li>
+<li>
+<p>概括：定义类型间的子集联系</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121211150229.png" alt="image-20241121211150229" style="zoom:67%;" />
+</li>
+</ul>
+<p><strong>合并分ER图时存在的冲突</strong></p>
+<ul>
+<li>
+<p>属性冲突：属性值的类型、 取值范围或取值集合不同  ；属性取值单位冲突。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121211302986.png" alt="image-20241121211302986" style="zoom:67%;" />
+</li>
+<li>
+<p>命名冲突：不同的东西在两个应用中名字一样；同一东西在两个应用中名字不同</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121211827308.png" alt="image-20241121211827308" style="zoom:67%;" />
+</li>
+<li>
+<p>结构冲突</p>
+<ul>
+<li>同一对象在不同应用中具有不同的抽象；</li>
+<li>同一实体在不同分E-R图中所包含的属性个数和属性排列次序不完全相同；</li>
+<li>实体之间的联系在不同局部视图中呈现不同的类型；</li>
+</ul>
+</li>
+</ul>
+<p><strong>冗余消除</strong></p>
+<ul>
+<li>冗余的数据是指可由基本数据导出的数据，冗余的联系是指可由其他联系导出的联系。</li>
+<li>冗余数据和冗余联系<strong>容易破坏数据库的完整性</strong>，给数据库维护增加困难</li>
+<li>并不是所有的冗余数据与冗余联系都必须加以消除，有时为了提高某些应用的效率， 不得不以冗余信息作为代价</li>
+</ul>
+<h2 id="数据库物理设计">数据库物理设计</h2>
+<p>下次一定</p>
+<p>😭再也不下次一定了还真考了这个</p>
+<h2 id="数据库安全">数据库安全</h2>
+<h3 id="概述">概述</h3>
+<p><strong>TCSEC/TDI安全级别划分</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121215001588.png" alt="image-20241121215001588"></p>
+<p>C2是安全产品的最低档，B1有强制存取控制MAC</p>
+<p><strong>数据库安全性控制的常用方法  ：</strong></p>
+<ul>
+<li>用户标识和鉴定：最外层安保，拿静态口令、动态口令来辨别用户</li>
+<li>存取控制：<strong>用户权限定义</strong>和<strong>合法权检查机制</strong>一起组成了DBMS的存取控制子系统。</li>
+<li>视图</li>
+<li>审计</li>
+<li>密码存储</li>
+</ul>
+<h3 id="存取控制"><strong>存取控制</strong></h3>
+<ul>
+<li>自主存取控制DAC：<strong>C2级别就有了</strong>，用户对不同的数据对象有不同的存取权限，不同的用户对同一对象也有不同的权限，用户还可将其拥有的存取权限转授给其他用户。</li>
+<li>强制存取控制MAC：<strong>B1级别才有</strong>，每一个数据对象被标以一定的密级，每一个用户也被授予某一个级别的许可证。对任意一个对象，只有具有合法许可证的用户才可以存取。</li>
+</ul>
+<p><strong>自主存取控制DAC</strong></p>
+<p><strong>赋予权限</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241122001206013.png" alt="image-20241122001206013" style="zoom:67%;" />
+<p>注意ON后面是什么表和什么对象，TO后面是具体的用户</p>
+<ul>
+<li>
+<p>权限中要赋予全部操作权限用ALL PRIVILIGES</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241122001604595.png" alt="image-20241122001604595" style="zoom:67%;" />
+</li>
+<li>
+<p>授予全部用户用PUBLIC</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241122001701107.png" alt="image-20241122001701107" style="zoom:67%;" />
+</li>
+<li>
+<p>如果授予的权限仅针对一个属性值</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241122001746192.png" alt="image-20241122001746192" style="zoom:67%;" />
+</li>
+<li>
+<p>WITH GRANT OPTION子句加上后表明可以再授予，注意不能进行循环授权</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241122001843771.png" alt="image-20241122001843771" style="zoom:67%;" />
+</li>
+</ul>
+<p><strong>收回权限</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241122001929669.png" alt="image-20241122001929669"  />
+<p><strong>数据库角色</strong></p>
+<p>相当于一个函数，给ROLE赋予权限后，相当于一个模板，可以直接把ROLE所有的权限赋给真实的用户。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241122002111084.png" alt="image-20241122002111084"></p>
+<p><strong>强制存取控制MAC</strong></p>
+<ul>
+<li>强制存取控制(MAC)是指系统为保证更高程度的安全性，按照TDI/TCSEC标准中安全策略的要求，所采取的强制存取检查手段。</li>
+<li>MAC不是用户能直接感知或进行控制的。</li>
+<li>在MAC中， DBMS所管理的全部实体被分为主体和客体两大类  。主体是系统中的活动实体，即各个用户（或进程）；客体是系统中的被动实体，即表、视图这种。</li>
+<li>对于主体和客体， DBMS为它们每个实例（值）指派一个敏感度标记（ Label），分别为绝密、机密、可信、公开。</li>
+<li>主体的敏感度标记称为许可证级别；客体的敏感度标记称为密级</li>
+<li><strong>主体的敏感度级别&gt;=客体，主体可读该客体</strong></li>
+<li><strong>主体的敏感度级别&lt;=客体，主体可写该客体</strong></li>
+</ul>
+<h3 id="视图-2"><strong>视图</strong></h3>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121230028807.png" alt="image-20241121230028807"></p>
+<h3 id="审计"><strong>审计</strong></h3>
+<ul>
+<li>启用一个专用的审计日志（Audit Log）将用户对数据库的所有操作记录在上面；</li>
+<li>DBA可以利用审计日志中的追踪信息找出非法存取数据的人；</li>
+<li><strong>C2以上安全级别的DBMS必须具有审计功能；</strong></li>
+<li>审计很费时间和空间  ，DBA可以根据应用对安全性的要求，灵活地打开或关闭审计功能</li>
+</ul>
+<p><strong>审计的分类</strong></p>
+<ul>
+<li>用户级审计
+<ul>
+<li>针对自己创建的数据库表或视图进行审计。</li>
+<li>记录所有用户对这些表或视图的一切成功和（或）不成功的访问要求，以及各种类型的SQL操作。</li>
+</ul>
+</li>
+<li>系统级审计
+<ul>
+<li>DBA设置。</li>
+<li>监测成功或失败的登录要求。</li>
+<li>监测GRANT和REVOKE操作以及其他数据库级权限下的操作。</li>
+</ul>
+</li>
+</ul>
+<p><strong>审计语句</strong></p>
+<p>AUDIT和NOAUDIT</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121221248563.png" alt="image-20241121221248563" style="zoom:67%;" />
+<h3 id="统计数据库安全性"><strong>统计数据库安全性</strong></h3>
+<ul>
+<li>
+<p>规则1：任何查询至少要涉及N(N足够大)个以上的记录</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121215943095.png" alt="image-20241121215943095" style="zoom: 67%;" />
+</li>
+<li>
+<p>规则2：任意两个查询的相交数据项不能超过M个</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121220821041.png" alt="image-20241121220821041" style="zoom:67%;" />
+</li>
+<li>
+<p>规则3：任一用户的查询次数不能超过1+(N-2)/M</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121220902656.png" alt="image-20241121220902656" style="zoom:67%;" />
+</li>
+</ul>
+<h1><strong>几个题</strong></h1>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121140918359.png" alt="image-20241121140918359"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121140936224.png" alt="image-20241121140936224"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121141252568.png" alt="image-20241121141252568"></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241121141626146.png" alt="image-20241121141626146"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io">Linghao Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io/2024/10/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/">https://zlh123123.github.io/2024/10/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zlh123123.github.io" target="_blank">好急好急的Hexo博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div><div class="post-share"><div class="social-share" data-image="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】多啦a梦-日本动漫.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/11/26/%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8/" title="系统软件安全"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】全职高手-苏沐橙.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">系统软件安全</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】二次元-动漫.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">密码学</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/06/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云-动画片-动画电影.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-14</div><div class="info-item-2">操作系统原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】二次元-动漫.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-12</div><div class="info-item-2">密码学</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/06/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】间谍过家家-阿尼亚.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-19</div><div class="info-item-2">编译原理</div></div><div class="info-2"><div class="info-item-1">注意！这里的表述不一定精准，且不一定覆盖考点！ 基本定义 字母表 由字母、数字、标点符号组成的集合  乘积：A中取一个元素，B中取一个元素，两个连接起来后的集合 n次幂：长度为n的符号串构成的集合。n=0叫空串$\varepsilon $ 正闭包：各个正数次幂的并集，长度为正数的符号串构成的集合，用+号 克林闭包：正闭包⋃\bigcup⋃空串集合，长度为非负数的符号串构成的集合，用*号  串 由字母表中符号组成的有穷序列，包括空串。长度记作$\left | s \right | $，就是符号数  连接运算：x和y的连接就是xy，空串是单位元 x=yz：...</div></div></div></a><a class="pagination-related" href="/2025/04/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="操作系统安全技术"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】AI-AI风景-山景.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-10</div><div class="info-item-2">操作系统安全技术</div></div><div class="info-2"><div class="info-item-1">概述 安全等级 《可信计算机系统评估标准》将操作系统、网络组件和可信应用程序所提供的安全保护等级分为4大类，7小类，从高到低为： A1、B3、B2、B1、C2、C1、D。   目前尚没有任何操作系统满足A1等级；仅有很少一部分操作系统满足B等级；C2等级被认为针对通用操作系统来说已经足够安全的了。（目前的Windows、MAC、IOS等系统均是C2等级）    D级，最低保护（Minimal Protection） 没有通过其他安全等级测试项目的系统即属于该级，如DOS、Windows 9x系统   C级，自主访问控制（Discretionary Protection） 系统客体（被访问的，如文件、目录）可由系统主体（能够发起行为的，如用户、应用程序）自主定义访问权。例如：管理员可以决定系统中任意文件的权限。  客体的权限是可以自主决定的。    B级，强制访问控制（Mandatory Protection） 由系统强制对客体进行安全保护，每个系统客体（如文件、目录等资源）及主体（如系统管理员、用户、应用程序）都有自己的安全标签（Security...</div></div></div></a><a class="pagination-related" href="/2025/06/13/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8%E5%8F%8A%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84/" title="网络空间安全及法律法规"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】乡村-晴空-田野.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-13</div><div class="info-item-2">网络空间安全及法律法规</div></div><div class="info-2"><div class="info-item-1">Teruteru的学习笔记 第一章 网络空间安全概述 第一节...</div></div></div></a><a class="pagination-related" href="/2024/11/26/%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8/" title="系统软件安全"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】全职高手-苏沐橙.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-26</div><div class="info-item-2">系统软件安全</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Linghao Zhang</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zlh123123"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/zlh123123" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lh.zhang.work@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，这里是我的个人博客，主要用来记录一些学习笔记和生活感悟，希望能给你带来一些帮助。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">概念辨析（1~3章）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E7%BC%A9%E5%86%99"><span class="toc-number">1.1.</span> <span class="toc-text">几个缩写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%BA%A7%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">三级模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E6%98%A0%E5%83%8F"><span class="toc-number">1.3.</span> <span class="toc-text">二级映像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%9B%E5%8D%A1%E5%B0%94%E7%A7%AF%E5%92%8C%E5%9F%BA%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">笛卡尔积和基数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%81"><span class="toc-number">1.5.</span> <span class="toc-text">码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B%E4%B8%AD%E4%B8%89%E7%B1%BB%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F"><span class="toc-number">1.6.</span> <span class="toc-text">关系模型中三类完整性约束</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E4%BB%A3%E6%95%B0"><span class="toc-number">1.7.</span> <span class="toc-text">关系代数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96"><span class="toc-number">1.8.</span> <span class="toc-text">函数依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8C%83%E5%BC%8F"><span class="toc-number">1.9.</span> <span class="toc-text">范式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">SQL语言（第4章）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89"><span class="toc-number">2.1.</span> <span class="toc-text">数据定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.1.1.</span> <span class="toc-text">模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8"><span class="toc-number">2.1.2.</span> <span class="toc-text">表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95"><span class="toc-number">2.1.3.</span> <span class="toc-text">索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE"><span class="toc-number">2.1.4.</span> <span class="toc-text">视图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.2.</span> <span class="toc-text">数据查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.2.1.</span> <span class="toc-text">单表查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SELECT%E6%93%8D%E4%BD%9C"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">SELECT操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WHERE%E6%93%8D%E4%BD%9C"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">WHERE操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E6%8E%92%E5%BA%8F"><span class="toc-number">2.2.1.3.</span> <span class="toc-text">对查询结果排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E5%88%86%E7%BB%84"><span class="toc-number">2.2.1.4.</span> <span class="toc-text">对查询结果分组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E7%9A%84%E6%95%B0%E9%87%8FLIMIT"><span class="toc-number">2.2.1.5.</span> <span class="toc-text">限制查询结果的数量LIMIT</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.2.2.</span> <span class="toc-text">连接查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%89%E5%80%BC%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">等值连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E7%84%B6%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">自然连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E8%BA%AB%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.2.2.3.</span> <span class="toc-text">自身连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.2.2.4.</span> <span class="toc-text">外连接</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.2.3.</span> <span class="toc-text">嵌套查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IN%E8%B0%93%E8%AF%8D%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">IN谓词查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.2.3.2.</span> <span class="toc-text">比较运算符查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EXISTS%E8%B0%93%E8%AF%8D%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.2.3.3.</span> <span class="toc-text">EXISTS谓词子查询</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.2.4.</span> <span class="toc-text">集合查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E6%93%8D%E4%BD%9C"><span class="toc-number">2.2.4.1.</span> <span class="toc-text">并操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A4%E6%93%8D%E4%BD%9C"><span class="toc-number">2.2.4.2.</span> <span class="toc-text">交操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%AE%E6%93%8D%E4%BD%9C"><span class="toc-number">2.2.4.3.</span> <span class="toc-text">差操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B4%BE%E7%94%9F%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.2.5.</span> <span class="toc-text">派生查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0"><span class="toc-number">2.3.</span> <span class="toc-text">数据更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">2.3.1.</span> <span class="toc-text">插入数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE"><span class="toc-number">2.3.2.</span> <span class="toc-text">修改数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE-2"><span class="toc-number">2.3.3.</span> <span class="toc-text">插入数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E5%80%BCNULL%E7%9B%B8%E5%85%B3"><span class="toc-number">2.4.</span> <span class="toc-text">空值NULL相关</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">数据库设计与安全（5~6章）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E6%B5%81%E7%A8%8B"><span class="toc-number">3.1.</span> <span class="toc-text">数据库设计流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8"><span class="toc-number">3.2.</span> <span class="toc-text">数据字典</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">3.3.</span> <span class="toc-text">概念结构设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%89%A9%E7%90%86%E8%AE%BE%E8%AE%A1"><span class="toc-number">3.4.</span> <span class="toc-text">数据库物理设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8"><span class="toc-number">3.5.</span> <span class="toc-text">数据库安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">3.5.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6"><span class="toc-number">3.5.2.</span> <span class="toc-text">存取控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE-2"><span class="toc-number">3.5.3.</span> <span class="toc-text">视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A1%E8%AE%A1"><span class="toc-number">3.5.4.</span> <span class="toc-text">审计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7"><span class="toc-number">3.5.5.</span> <span class="toc-text">统计数据库安全性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">几个题</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/dark.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="日语语法蓝宝书总结"/></a><div class="content"><a class="title" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结">日语语法蓝宝书总结</a><time datetime="2026-06-26T09:47:36.000Z" title="发表于 2026-06-26 17:47:36">2026-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】可爱小狗-小狗-护眼.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="leetcode刷题日记"/></a><div class="content"><a class="title" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记">leetcode刷题日记</a><time datetime="2026-04-03T06:26:47.000Z" title="发表于 2026-04-03 14:26:47">2026-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云彩-夜晚-夜景.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="口令复用综述"/></a><div class="content"><a class="title" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述">口令复用综述</a><time datetime="2026-01-21T12:58:23.000Z" title="发表于 2026-01-21 20:58:23">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】兔子朱迪-彩云-朱迪.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Github Page更换新域名后如何更新配置"/></a><div class="content"><a class="title" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置">Github Page更换新域名后如何更新配置</a><time datetime="2026-01-01T04:13:51.000Z" title="发表于 2026-01-01 12:13:51">2026-01-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】卡通羊-可爱小羊.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM Post-training"/></a><div class="content"><a class="title" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training">LLM Post-training</a><time datetime="2025-11-30T14:14:52.000Z" title="发表于 2025-11-30 22:14:52">2025-11-30</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2026 By Linghao Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":200,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body></html>

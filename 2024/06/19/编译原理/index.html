@@ -1,0 +1,354 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>编译原理 | 好急好急的Hexo博客</title><meta name="author" content="Linghao Zhang"><meta name="copyright" content="Linghao Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="注意！这里的表述不一定精准，且不一定覆盖考点！ 基本定义 字母表 由字母、数字、标点符号组成的集合  乘积：A中取一个元素，B中取一个元素，两个连接起来后的集合 n次幂：长度为n的符号串构成的集合。n&#x3D;0叫空串$\varepsilon $ 正闭包：各个正数次幂的并集，长度为正数的符号串构成的集合，用+号 克林闭包：正闭包⋃\bigcup⋃空串集合，长度为非负数的符号串构成的集合，用*号  串 由字">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理">
+<meta property="og:url" content="https://zlh123123.github.io/2024/06/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="好急好急的Hexo博客">
+<meta property="og:description" content="注意！这里的表述不一定精准，且不一定覆盖考点！ 基本定义 字母表 由字母、数字、标点符号组成的集合  乘积：A中取一个元素，B中取一个元素，两个连接起来后的集合 n次幂：长度为n的符号串构成的集合。n&#x3D;0叫空串$\varepsilon $ 正闭包：各个正数次幂的并集，长度为正数的符号串构成的集合，用+号 克林闭包：正闭包⋃\bigcup⋃空串集合，长度为非负数的符号串构成的集合，用*号  串 由字">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E9%97%B4%E8%B0%8D%E8%BF%87%E5%AE%B6%E5%AE%B6-%E9%98%BF%E5%B0%BC%E4%BA%9A.png">
+<meta property="article:published_time" content="2024-06-19T05:23:21.000Z">
+<meta property="article:modified_time" content="2024-11-26T14:37:46.000Z">
+<meta property="article:author" content="Linghao Zhang">
+<meta property="article:tag" content="基础课">
+<meta property="article:tag" content="编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E9%97%B4%E8%B0%8D%E8%BF%87%E5%AE%B6%E5%AE%B6-%E9%98%BF%E5%B0%BC%E4%BA%9A.png"><link rel="shortcut icon" href="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png"><link rel="canonical" href="https://zlh123123.github.io/2024/06/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '编译原理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/welcome-image.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】间谍过家家-阿尼亚.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" alt="Logo"><span class="site-name">好急好急的Hexo博客</span></a><a class="nav-page-title" href="/"><span class="site-name">编译原理</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">编译原理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-06-19T05:23:21.000Z" title="发表于 2024-06-19 13:23:21">2024-06-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-26T14:37:46.000Z" title="更新于 2024-11-26 22:37:46">2024-11-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>注意！这里的表述不一定精准，且不一定覆盖考点！</p>
+<h1>基本定义</h1>
+<h5 id="字母表">字母表</h5>
+<p>由字母、数字、标点符号组成的集合</p>
+<ul>
+<li>乘积：A中取一个元素，B中取一个元素，两个连接起来后的集合</li>
+<li>n次幂：长度为n的符号串构成的集合。n=0叫空串$\varepsilon $</li>
+<li>正闭包：各个正数次幂的并集，长度为正数的符号串构成的集合，用+号</li>
+<li>克林闭包：正闭包<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋃</mo></mrow><annotation encoding="application/x-tex">\bigcup</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop op-symbol small-op" style="position:relative;top:0em;">⋃</span></span></span></span>空串集合，长度为非负数的符号串构成的集合，用*号</li>
+</ul>
+<h5 id="串">串</h5>
+<p>由字母表中符号组成的有穷序列，包括空串。长度记作$\left | s \right | $，就是符号数</p>
+<ul>
+<li>连接运算：x和y的连接就是xy，空串是单位元</li>
+<li>x=yz： y叫做x的前缀，z叫做x的后缀</li>
+<li>幂运算：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>s</mi><mn>3</mn></msup><mo>=</mo><mi>s</mi><mi>s</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">s^3=sss</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">sss</span></span></span></span>，0次就是空串</li>
+</ul>
+<h5 id="文法的形式化定义">文法的形式化定义</h5>
+<ul>
+<li>用四元组G表示，里面有<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">V_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>、Vn、P、S</li>
+<li>终结符Vt：<strong>不能再分割</strong>的基本符号</li>
+<li>非终结符Vn：<strong>可以再分割</strong>的中间符号，可以推导出其他东西</li>
+<li>终结符和非终结符没有公共元素，他们并起来叫文法符号</li>
+<li>P叫产生式，就是一个串怎么变成另一个串的方法</li>
+<li>S叫开始符号，就是推导开始的第一个串</li>
+</ul>
+<h5 id="推导和规约">推导和规约</h5>
+<p>推导就是拿P中的规则来去替换串中的某个元素，规约就是反操作</p>
+<h5 id="句型和句子">句型和句子</h5>
+<ul>
+<li>句型就是由开始符号S推导出的一个串，里面可能有Vt、Vn和空串。</li>
+<li>句子是特殊的句型，里面只有终结符</li>
+<li>由文法G推出的所有句子叫文法G生成的语言，记作L(G)</li>
+</ul>
+<p>看一下这个视频巩固基础概念：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hD4y1H72n?p=3&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">前导知识_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hD4y1H72n?p=4&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">根据文法G写出LG_哔哩哔哩_bilibili</a></p>
+<h5 id="文法的分类">文法的分类</h5>
+<ul>
+<li>
+<p>0型文法：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>⟶</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a\longrightarrow b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⟶</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>，a中至少有一个非终结符</p>
+</li>
+<li>
+<p>1型文法（上下文有关文法）：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo fence="true">∣</mo><mi>a</mi><mo fence="true">∣</mo></mrow><annotation encoding="application/x-tex">\left | a \right |</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">∣</span><span class="mord mathnormal">a</span><span class="mclose delimcenter" style="top:0em;">∣</span></span></span></span></span>&lt;=<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo fence="true">∣</mo><mi>b</mi><mo fence="true">∣</mo></mrow><annotation encoding="application/x-tex">\left | b \right |</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">∣</span><span class="mord mathnormal">b</span><span class="mclose delimcenter" style="top:0em;">∣</span></span></span></span></span>，标准格式是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mn>1</mn></msub><mi>A</mi><msub><mi>α</mi><mn>2</mn></msub><mo>→</mo><msub><mi>α</mi><mn>1</mn></msub><mi>B</mi><msub><mi>α</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\alpha _{1} A\alpha _{2}\to  \alpha _{1} B\alpha _{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">A</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。就是说非终结符A，只有当它的上下文分别是a1,a2时，才能被替换为B。</p>
+</li>
+<li>
+<p>2型文法（上下文无关文法）：左部的a是非终结符即可</p>
+</li>
+<li>
+<p>3型文法（正则文法）：分为左线性文法和右线性文法</p>
+<p>比如左线性文法，右部要么是一个非终结符w，要么是终结符B+非终结符w，即A-&gt;Bw|w。右线性就是：A-&gt;wB|w</p>
+</li>
+<li>
+<p>1型文法建立在0型文法的基础上，2、3型文法同理。</p>
+</li>
+</ul>
+<h5 id="上下文无关文法的分析树">上下文无关文法的分析树</h5>
+<p><img src="https://s2.loli.net/2024/06/19/dp5ZB1g9hQOP8yk.jpg" alt=""></p>
+<h5 id="短语">短语</h5>
+<p>选定一个根节点后，这个根节点延申出的子树的边缘。比如</p>
+<ul>
+<li>-（E+E)</li>
+<li>(E+E)</li>
+<li>E+E</li>
+</ul>
+<h5 id="直接短语">直接短语</h5>
+<p>就是这棵子树高度是2，只有父子节点，然后它的边缘叫直接短语，就是这里的E+E。直接短语肯定是某个产生式P的右部，反之不一定。</p>
+<h5 id="句柄">句柄</h5>
+<p>在分析树最左边的直接短语</p>
+<h5 id="素短语和最左素短语">素短语和最左素短语</h5>
+<p>素短语，是指至少含有一个终结符的短语，并且其内部不再含有素短语。<br>
+最左素短语是句型中最左边的素短语。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_55168827/article/details/124236531">短语，直接短语，素短语与最左素短语（语法树求法）-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1CU421o7ze/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">编译原理－求短语，直接短语，句柄，素短语，最左素短语_哔哩哔哩_bilibili</a></p>
+<h5 id="文法二义性">文法二义性</h5>
+<p>这个文法能够为一个句子生成多棵分析树</p>
+<p>怎么判断和怎么修正二义性：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV13L4y1K7Np/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">消除文法二义性总结_哔哩哔哩_bilibili</a></p>
+<p>必考题型：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hD4y1H72n?p=5&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">分析句型构造语法树_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hD4y1H72n?p=6&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">根据语法树求短语，直接短语，句柄_哔哩哔哩_bilibili</a></p>
+<p>这里还会有给你一个语言，要你写出语法的题型：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Follower_JC/article/details/84036349">由语言构造文法-CSDN博客</a></p>
+<h1>词法分析</h1>
+<h5 id="正则表达式">正则表达式</h5>
+<p><img src="https://s2.loli.net/2024/06/19/hLag4HOy1VlvKip.jpg" alt=""></p>
+<p>正则表达式和正则文法是等价的，一个存在另一个也存在。</p>
+<p>这个要会转换</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hD4y1H72n?p=7&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">正规式转正规文法_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hD4y1H72n?p=8&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">正规文法转正规式_哔哩哔哩_bilibili</a></p>
+<h5 id="正则定义">正则定义</h5>
+<p><img src="https://s2.loli.net/2024/06/19/I8rvxybiM1qf5JF.jpg" alt=""></p>
+<p>这个好像没什么用?^?</p>
+<h5 id="有穷自动机定义">有穷自动机定义</h5>
+<h6 id="转换图"><strong>转换图</strong></h6>
+<p><img src="https://s2.loli.net/2024/06/19/qTF2DEKxaSfyY6N.jpg" alt=""></p>
+<h6 id="串能够被FA接收"><strong>串能够被FA接收</strong></h6>
+<p>给一个串s，一个一个字母输入转换图中，最后<strong>存在到达终止状态的一种可能</strong>，就叫可被接收。</p>
+<p>比如s=abbaabb，前4个abba先在状态0上旋转，后三个abb正好能到状态3（终止状态），只要有这种可能就说明串可被接收。</p>
+<p>一个自动机M可以接收的所有串的集合叫FA接收的语言，记作L(M)。对上面这个例子来说，L(M)就是{a,b}*+abb</p>
+<h6 id="最长字串匹配原则"><strong>最长字串匹配原则</strong></h6>
+<p>就是有穷自动机的运行准则。自动机会永远<strong>选择最长的前缀进行匹配</strong>直到匹配不上为止。</p>
+<p><img src="https://s2.loli.net/2024/06/19/3hdfw9LInSUOiNg.jpg" alt=""></p>
+<p>比如上图这种，如果输入是&lt;=，那会到2这个终态；输入是++，会到4这个状态。</p>
+<h5 id="有穷自动机分类">有穷自动机分类</h5>
+<h6 id="确定有穷自动机DFA"><strong>确定有穷自动机</strong>DFA</h6>
+<p><img src="https://s2.loli.net/2024/06/19/MgRwDBTbjSHta6v.jpg" alt=""></p>
+<p>举个栗子看下图</p>
+<p><img src="https://s2.loli.net/2024/06/19/CaxeFmWvXOyBjuG.jpg" alt=""></p>
+<p>上图中</p>
+<ul>
+<li>有穷状态集S就是0、1、2、3四种状态</li>
+<li>输入字母表<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Σ</mi></mrow><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">Σ</span></span></span></span>就是a、b</li>
+<li>转换函数就是上图中的转换表</li>
+<li>开始状态s0就是0，接收状态F就是3</li>
+</ul>
+<h6 id="非确定有穷自动机NFA"><strong>非确定有穷自动机</strong>NFA</h6>
+<p><img src="https://s2.loli.net/2024/06/19/qjWwKDLOrcygkt9.jpg" alt=""></p>
+<p>NFA和DFA的唯一区别就在于：从某个状态出发，沿着某个输入，<strong>可以有多个目标结果</strong>，可以看下图的栗子。</p>
+<p><img src="https://s2.loli.net/2024/06/19/qzPlUcGrKdgZIRx.jpg" alt=""></p>
+<h6 id="带空串的NFA">带空串的NFA</h6>
+<p>而且空串也可以作为转换函数的输入，看下面的图。</p>
+<p><img src="https://s2.loli.net/2024/06/19/KIWoNAsMnP2QLBD.jpg" alt=""></p>
+<p>这个的意思是A不需要接收什么信号就可以到B，B到C同理。但是并不说明A和B是相同的状态，因为A可以接收0输入，而一旦到了B，就只能接收1输入而无法接收0输入了。这个图的正则表达式是：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>0</mn><mo>∗</mo></msup><msup><mn>1</mn><mo>∗</mo></msup><mn>2</mn></mrow><annotation encoding="application/x-tex">0^*1^*2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6887em;"></span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6887em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6887em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mord">2</span></span></span></span></p>
+<p>实际上，DFA、NFA和带空串的NFA之间是可以互相转换的，后面就开始讲这个</p>
+<h5 id="从正则表达式构造DFA">从正则表达式构造DFA</h5>
+<p>这个分两步完成，先从正则表达式构造NFA，再把NFA转换成DFA</p>
+<p>正则表达式构造NFA：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hD4y1H72n?p=9&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">正归式转NFA_哔哩哔哩_bilibili</a></p>
+<p><img src="https://s2.loli.net/2024/06/19/jpAXS8qbw1gtT2K.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/19/D9YxO1UW8ZodqbA.jpg" alt=""></p>
+<p>NFA转换成DFA：这个也叫确定化。这个有点抽象，直接看例子去吧。</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1dL4y1H7T8?p=17&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">3-6从NFA到DFA的转换_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hD4y1H72n?p=10&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">DFA（NFA确定化）以及DFA最小化_哔哩哔哩_bilibili</a></p>
+<p>DFA化简：最小化</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1mh41187fN/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">编译原理正规表达式转NFA到DFA再化简_哔哩哔哩_bilibili</a>看这个视频直接一步到位</p>
+<h1>语法分析</h1>
+<h4 id="自顶向下分析">自顶向下分析</h4>
+<p>从分析树根节点向叶节点构造，就是从开始符号S推具体串的</p>
+<p><img src="https://s2.loli.net/2024/06/19/ECPOMQwKpeA7uxV.jpg" alt=""></p>
+<p>这种情况下替换非终结符要考虑两方面：替换哪个E、用哪条文法准则来替换</p>
+<p>先讲替换哪个E怎么确定：<strong>最左推导和最右推导</strong></p>
+<h5 id="最左-右推导">最左/右推导</h5>
+<p><strong>最左</strong>：把最左边的非终结符替换到只剩终结符为止</p>
+<p><img src="https://s2.loli.net/2024/06/19/38ILl9XaKuVkP5Z.jpg" alt=""></p>
+<p>这个东西从上到下叫<strong>最左推导</strong>，从下到上叫<strong>最右规约</strong>。</p>
+<p>经过最左推导推出的叫<strong>最左句型</strong></p>
+<p><strong>最右</strong>：和上面那个反过来</p>
+<p><img src="https://s2.loli.net/2024/06/19/oR4YbcgKmi58AjE.jpg" alt=""></p>
+<p><strong>把最左规约称为规范规约（因为自底向上分析用最左规约），最右推导称为规范推导</strong></p>
+<p>在自顶向下分析用最左推导，下面图片是一个栗子：</p>
+<p><img src="https://s2.loli.net/2024/06/19/Eeg2MkaDoJOdLwr.jpg" alt=""></p>
+<h5 id="递归下降分析程序">递归下降分析程序</h5>
+<p><img src="https://s2.loli.net/2024/06/19/sLtlrdwT4uM16Ix.jpg" alt=""></p>
+<h5 id="左递归">左递归</h5>
+<p>而当一个非终结符的多个候选式存在共同前缀时，会发生<strong>回溯</strong>现象，例如S-&gt;aAd|aBe，当输入字符串为a时，S需要尝试两种可能情况；例如文法E-&gt;E+T|E-T|T，当输入字符串为id时，文法的三个选择中均没有id项，要尝试多种情况，甚至陷入无限循环。</p>
+<p>形如A-&gt;Aa的文法叫<strong>直接左递归</strong>，经过多步推导产生的左递归叫<strong>间接左递归</strong>；发生这种情况的文法叫<strong>左递归文法</strong>，左递归文法会使递归下降分析程序陷入无限循环。</p>
+<p><strong>如何消除左递归？</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hD4y1H72n?p=11&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">消除文法左公共因子和左递归_哔哩哔哩_bilibili</a></p>
+<p><img src="https://s2.loli.net/2024/06/19/aRkjOZBcAbiyHVN.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/19/pHRbx1nvCTjS6hu.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/19/iMRDa4rwAnt3zkT.jpg" alt=""></p>
+<h5 id="LL-1-文法">LL(1)文法</h5>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1EQ4y1k7fJ/?spm_id_from=333.337.search-card.all.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">LL(1)文法的判别_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hD4y1H72n?p=12&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">求FIRST集，FOLLOW集，SELECT集_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hD4y1H72n?p=13&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">构造LL(1)预测分析表_哔哩哔哩_bilibili</a></p>
+<h1>必考题型</h1>
+<ul>
+<li>给一个句型和语法，画语法树，然后写短语、直接短语、句柄、素短语、最左素短语。</li>
+<li>给一些条件，写正规表达式，然后把正规表达式变成正规文法，然后要会正规式转NFA、NFA转DFA和DFA的最小化。</li>
+<li>给一个语法，会算FIRST集、FOLLOW集和SELECT集，要会画构造分析表，并且能够判断这个文法是不是LL1型文法，最后要写它的递归下降分析程序。</li>
+</ul>
+<h1>可能题型</h1>
+<ul>
+<li>给一个语言或者一些条件，写出它的文法。</li>
+<li>给一个句子和文法，让你写最左推导和最右推导</li>
+<li>判断某个文法是否有二义性，以及如何消除二义性</li>
+<li>给正规文法让你写正规式</li>
+<li>证明两个正规式等价：即说明两者的最小DFA一致</li>
+<li>拿到正规式，写左线性文法和右线性文法</li>
+</ul>
+<h1>图片</h1>
+<h2 id="必考题2">必考题2</h2>
+<p>正规式转正规文法：</p>
+<p><img src="https://s2.loli.net/2024/06/19/VElPXMdLgtciIun.jpg" alt=""></p>
+<p>正规文法转正规式：</p>
+<p><img src="https://s2.loli.net/2024/06/19/SHwgQhKveR98jca.jpg" alt=""></p>
+<h2 id="可能题6">可能题6</h2>
+<p><img src="https://s2.loli.net/2024/06/19/oQckwApBt9fbEI5.jpg" alt=""></p>
+<h2 id="必考题3">必考题3</h2>
+<p><img src="https://s2.loli.net/2024/06/19/x74MHiYkLVzbPZo.jpg" alt=""></p>
+<p><img src="https://s2.loli.net/2024/06/19/1FJDRL8ObIgyEj4.jpg" alt=""></p>
+<p>写某个串的分析过程：</p>
+<p><img src="https://s2.loli.net/2024/06/19/vpIEihwY5DB1LSx.jpg" alt=""></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io">Linghao Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io/2024/06/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">https://zlh123123.github.io/2024/06/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zlh123123.github.io" target="_blank">好急好急的Hexo博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a><a class="post-meta__tags" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></div><div class="post-share"><div class="social-share" data-image="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】间谍过家家-阿尼亚.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/07/21/%E6%97%A5%E8%AF%AD%E5%8A%A9%E8%AF%8D%E5%8A%A8%E8%AF%8D%E4%B8%8E%E5%BD%A2%E5%AE%B9%E8%AF%8D%E5%8F%98%E5%BD%A2/" title="日语助词动词与形容词变形"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】二次元-动漫1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">日语助词动词与形容词变形</div></div><div class="info-2"><div class="info-item-1">动词变形 原形与动词分类 一类动词 非る结尾的动词或る前的假名为あ段、う段和お段。  行く（いく） 始まる（はじまる）  特殊一类动词：以る结尾，且る前面的假名为い段或え段，但其是一类动词。 口诀：要知入归走切减滑  要る（いる） 知る（しる） 入る（はいる） 帰る（かえる） 走る（はしる） 切る（きる） 減る（へる） 滑る（すえる）  二类动词 以る结尾，且る前面的假名为い段或え段。  起きる（おきる） 寝る（ねる）  三类动词 即来る（くる）和する。 其中，动名词 +...</div></div></div></a><a class="pagination-related" href="/2024/06/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云-动画片-动画电影.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">操作系统原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/06/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云-动画片-动画电影.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-14</div><div class="info-item-2">操作系统原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】二次元-动漫.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-12</div><div class="info-item-2">密码学</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" title="数据库原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】多啦a梦-日本动漫.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-12</div><div class="info-item-2">数据库原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2025/04/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="操作系统安全技术"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】AI-AI风景-山景.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-10</div><div class="info-item-2">操作系统安全技术</div></div><div class="info-2"><div class="info-item-1">概述 安全等级 《可信计算机系统评估标准》将操作系统、网络组件和可信应用程序所提供的安全保护等级分为4大类，7小类，从高到低为： A1、B3、B2、B1、C2、C1、D。   目前尚没有任何操作系统满足A1等级；仅有很少一部分操作系统满足B等级；C2等级被认为针对通用操作系统来说已经足够安全的了。（目前的Windows、MAC、IOS等系统均是C2等级）    D级，最低保护（Minimal Protection） 没有通过其他安全等级测试项目的系统即属于该级，如DOS、Windows 9x系统   C级，自主访问控制（Discretionary Protection） 系统客体（被访问的，如文件、目录）可由系统主体（能够发起行为的，如用户、应用程序）自主定义访问权。例如：管理员可以决定系统中任意文件的权限。  客体的权限是可以自主决定的。    B级，强制访问控制（Mandatory Protection） 由系统强制对客体进行安全保护，每个系统客体（如文件、目录等资源）及主体（如系统管理员、用户、应用程序）都有自己的安全标签（Security...</div></div></div></a><a class="pagination-related" href="/2025/06/13/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8%E5%8F%8A%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84/" title="网络空间安全及法律法规"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】乡村-晴空-田野.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-13</div><div class="info-item-2">网络空间安全及法律法规</div></div><div class="info-2"><div class="info-item-1">Teruteru的学习笔记 第一章 网络空间安全概述 第一节...</div></div></div></a><a class="pagination-related" href="/2024/11/26/%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8/" title="系统软件安全"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】全职高手-苏沐橙.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-26</div><div class="info-item-2">系统软件安全</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Linghao Zhang</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zlh123123"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/zlh123123" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lh.zhang.work@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，这里是我的个人博客，主要用来记录一些学习笔记和生活感悟，希望能给你带来一些帮助。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">基本定义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E6%AF%8D%E8%A1%A8"><span class="toc-number">1.0.0.0.1.</span> <span class="toc-text">字母表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%B2"><span class="toc-number">1.0.0.0.2.</span> <span class="toc-text">串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E6%B3%95%E7%9A%84%E5%BD%A2%E5%BC%8F%E5%8C%96%E5%AE%9A%E4%B9%89"><span class="toc-number">1.0.0.0.3.</span> <span class="toc-text">文法的形式化定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC%E5%92%8C%E8%A7%84%E7%BA%A6"><span class="toc-number">1.0.0.0.4.</span> <span class="toc-text">推导和规约</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%A5%E5%9E%8B%E5%92%8C%E5%8F%A5%E5%AD%90"><span class="toc-number">1.0.0.0.5.</span> <span class="toc-text">句型和句子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E6%B3%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.0.0.0.6.</span> <span class="toc-text">文法的分类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95%E7%9A%84%E5%88%86%E6%9E%90%E6%A0%91"><span class="toc-number">1.0.0.0.7.</span> <span class="toc-text">上下文无关文法的分析树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9F%AD%E8%AF%AD"><span class="toc-number">1.0.0.0.8.</span> <span class="toc-text">短语</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E7%9F%AD%E8%AF%AD"><span class="toc-number">1.0.0.0.9.</span> <span class="toc-text">直接短语</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%A5%E6%9F%84"><span class="toc-number">1.0.0.0.10.</span> <span class="toc-text">句柄</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B4%A0%E7%9F%AD%E8%AF%AD%E5%92%8C%E6%9C%80%E5%B7%A6%E7%B4%A0%E7%9F%AD%E8%AF%AD"><span class="toc-number">1.0.0.0.11.</span> <span class="toc-text">素短语和最左素短语</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E6%B3%95%E4%BA%8C%E4%B9%89%E6%80%A7"><span class="toc-number">1.0.0.0.12.</span> <span class="toc-text">文法二义性</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">词法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">2.0.0.0.1.</span> <span class="toc-text">正则表达式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E5%AE%9A%E4%B9%89"><span class="toc-number">2.0.0.0.2.</span> <span class="toc-text">正则定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%89%E7%A9%B7%E8%87%AA%E5%8A%A8%E6%9C%BA%E5%AE%9A%E4%B9%89"><span class="toc-number">2.0.0.0.3.</span> <span class="toc-text">有穷自动机定义</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E5%9B%BE"><span class="toc-number">2.0.0.0.3.1.</span> <span class="toc-text">转换图</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%B2%E8%83%BD%E5%A4%9F%E8%A2%ABFA%E6%8E%A5%E6%94%B6"><span class="toc-number">2.0.0.0.3.2.</span> <span class="toc-text">串能够被FA接收</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%9C%80%E9%95%BF%E5%AD%97%E4%B8%B2%E5%8C%B9%E9%85%8D%E5%8E%9F%E5%88%99"><span class="toc-number">2.0.0.0.3.3.</span> <span class="toc-text">最长字串匹配原则</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%89%E7%A9%B7%E8%87%AA%E5%8A%A8%E6%9C%BA%E5%88%86%E7%B1%BB"><span class="toc-number">2.0.0.0.4.</span> <span class="toc-text">有穷自动机分类</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E6%9C%89%E7%A9%B7%E8%87%AA%E5%8A%A8%E6%9C%BADFA"><span class="toc-number">2.0.0.0.4.1.</span> <span class="toc-text">确定有穷自动机DFA</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%9D%9E%E7%A1%AE%E5%AE%9A%E6%9C%89%E7%A9%B7%E8%87%AA%E5%8A%A8%E6%9C%BANFA"><span class="toc-number">2.0.0.0.4.2.</span> <span class="toc-text">非确定有穷自动机NFA</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%B8%A6%E7%A9%BA%E4%B8%B2%E7%9A%84NFA"><span class="toc-number">2.0.0.0.4.3.</span> <span class="toc-text">带空串的NFA</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%8E%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%9E%84%E9%80%A0DFA"><span class="toc-number">2.0.0.0.5.</span> <span class="toc-text">从正则表达式构造DFA</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">语法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E5%88%86%E6%9E%90"><span class="toc-number">3.0.0.1.</span> <span class="toc-text">自顶向下分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%80%E5%B7%A6-%E5%8F%B3%E6%8E%A8%E5%AF%BC"><span class="toc-number">3.0.0.1.1.</span> <span class="toc-text">最左&#x2F;右推导</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E5%88%86%E6%9E%90%E7%A8%8B%E5%BA%8F"><span class="toc-number">3.0.0.1.2.</span> <span class="toc-text">递归下降分析程序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B7%A6%E9%80%92%E5%BD%92"><span class="toc-number">3.0.0.1.3.</span> <span class="toc-text">左递归</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#LL-1-%E6%96%87%E6%B3%95"><span class="toc-number">3.0.0.1.4.</span> <span class="toc-text">LL(1)文法</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">必考题型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">可能题型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">图片</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%85%E8%80%83%E9%A2%982"><span class="toc-number">6.1.</span> <span class="toc-text">必考题2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E9%A2%986"><span class="toc-number">6.2.</span> <span class="toc-text">可能题6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%85%E8%80%83%E9%A2%983"><span class="toc-number">6.3.</span> <span class="toc-text">必考题3</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/dark.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="日语语法蓝宝书总结"/></a><div class="content"><a class="title" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结">日语语法蓝宝书总结</a><time datetime="2026-06-26T09:47:36.000Z" title="发表于 2026-06-26 17:47:36">2026-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】可爱小狗-小狗-护眼.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="leetcode刷题日记"/></a><div class="content"><a class="title" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记">leetcode刷题日记</a><time datetime="2026-04-03T06:26:47.000Z" title="发表于 2026-04-03 14:26:47">2026-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云彩-夜晚-夜景.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="口令复用综述"/></a><div class="content"><a class="title" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述">口令复用综述</a><time datetime="2026-01-21T12:58:23.000Z" title="发表于 2026-01-21 20:58:23">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】兔子朱迪-彩云-朱迪.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Github Page更换新域名后如何更新配置"/></a><div class="content"><a class="title" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置">Github Page更换新域名后如何更新配置</a><time datetime="2026-01-01T04:13:51.000Z" title="发表于 2026-01-01 12:13:51">2026-01-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】卡通羊-可爱小羊.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM Post-training"/></a><div class="content"><a class="title" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training">LLM Post-training</a><time datetime="2025-11-30T14:14:52.000Z" title="发表于 2025-11-30 22:14:52">2025-11-30</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2026 By Linghao Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":200,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body></html>

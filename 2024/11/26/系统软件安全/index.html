@@ -1,0 +1,1560 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>系统软件安全 | 好急好急的Hexo博客</title><meta name="author" content="Linghao Zhang"><meta name="copyright" content="Linghao Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这门课从操作系统安全机制到网络安全这几节属于系统安全；从安全编程往后为软件安全（虽然后面开始接着编译原理了，还夹杂着一些软件分析的内容） 课上画的重点  概述这一章以了解为主即可 操作系统安全机制：安全威胁的表现形式（病毒、木马这种）、各种分类、常用安全机制、设计与实现 Windows系统：用户模式和内核模式、安全组件的每个步骤（每个是干什么用的）。访问控制这块 Linux系统：密码保存、proc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="系统软件安全">
+<meta property="og:url" content="https://zlh123123.github.io/2024/11/26/%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8/index.html">
+<meta property="og:site_name" content="好急好急的Hexo博客">
+<meta property="og:description" content="这门课从操作系统安全机制到网络安全这几节属于系统安全；从安全编程往后为软件安全（虽然后面开始接着编译原理了，还夹杂着一些软件分析的内容） 课上画的重点  概述这一章以了解为主即可 操作系统安全机制：安全威胁的表现形式（病毒、木马这种）、各种分类、常用安全机制、设计与实现 Windows系统：用户模式和内核模式、安全组件的每个步骤（每个是干什么用的）。访问控制这块 Linux系统：密码保存、proc">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%85%A8%E8%81%8C%E9%AB%98%E6%89%8B-%E8%8B%8F%E6%B2%90%E6%A9%99.png">
+<meta property="article:published_time" content="2024-11-26T08:57:28.000Z">
+<meta property="article:modified_time" content="2025-01-07T17:32:22.000Z">
+<meta property="article:author" content="Linghao Zhang">
+<meta property="article:tag" content="基础课">
+<meta property="article:tag" content="安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%85%A8%E8%81%8C%E9%AB%98%E6%89%8B-%E8%8B%8F%E6%B2%90%E6%A9%99.png"><link rel="shortcut icon" href="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png"><link rel="canonical" href="https://zlh123123.github.io/2024/11/26/%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '系统软件安全',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/welcome-image.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】全职高手-苏沐橙.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" alt="Logo"><span class="site-name">好急好急的Hexo博客</span></a><a class="nav-page-title" href="/"><span class="site-name">系统软件安全</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">系统软件安全</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-26T08:57:28.000Z" title="发表于 2024-11-26 16:57:28">2024-11-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-07T17:32:22.000Z" title="更新于 2025-01-08 01:32:22">2025-01-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>这门课从<code>操作系统安全机制</code>到<code>网络安全</code>这几节属于系统安全；从<code>安全编程</code>往后为软件安全（虽然后面开始接着编译原理了，还夹杂着一些软件分析的内容）</p>
+<h1>课上画的重点</h1>
+<ul>
+<li>概述这一章以了解为主即可</li>
+<li>操作系统安全机制：安全威胁的表现形式（病毒、木马这种）、各种分类、常用安全机制、设计与实现</li>
+<li>Windows系统：用户模式和内核模式、安全组件的每个步骤（每个是干什么用的）。访问控制这块</li>
+<li>Linux系统：密码保存、procfs、文件属性、文件访问流程</li>
+<li>移动系统：系统对比、宏内核微内核</li>
+<li>网络安全：不同协议安全、防火墙、入侵检测</li>
+<li>安全编程：理解即可</li>
+<li>语义分析：综合属性和继承属性、SL属性形式、语法制导翻译方案、递归下降和LL语法分析</li>
+<li>中间代码生成：三地址码、类型检查（综合与推导）、类型推导、控制流</li>
+<li>代码生成：基本块、流图、窥孔优化</li>
+<li>课设相关</li>
+<li>指针分析里面那个anderson算法</li>
+<li>防火墙，访问控制，入侵检测系统的分类，还有系统安全那部分那种对比的表格里面的东西</li>
+</ul>
+<h1>概述</h1>
+<h2 id="系统安全与软件安全概述">系统安全与软件安全概述</h2>
+<ul>
+<li>系统安全：<strong>系统</strong>是由多个组件相互协作形成的整体，安全是其稳定运行的基础。<strong>安全目标</strong>是确保系统的<strong>机密性、完整性和可用性</strong>，防止未经授权的访问和破坏。</li>
+<li>软件安全：保护软件免受恶意攻击、未经授权访问和数据泄露等威胁。核心要素包括<strong>机密性、完整性和可用性</strong>，确保软件正常运行且信息不被篡改或泄露。</li>
+</ul>
+<h3 id="威胁与风险">威胁与风险</h3>
+<p><strong>威胁</strong>指可能破坏系统或软件安全性的潜在因素，<strong>风险</strong>则是威胁发生的可能性及其造成的后果。</p>
+<p>通过<strong>风险评估和威胁建模</strong>来<strong>识别</strong>潜在威胁与风险，并采取相应的安全策略和控制措施以降低风险。</p>
+<h3 id="漏洞与补丁">漏洞与补丁</h3>
+<ul>
+<li>漏洞：指系统或软件中可被利用的弱点或缺陷</li>
+<li>补丁：修复系统或软件中已知漏洞的程序更新或修正</li>
+</ul>
+<h3 id="加密与解密">加密与解密</h3>
+<ul>
+<li>加密技术：采用特定算法将明文转换为密文，确保数据在传输或存储过程中不被未授权访问</li>
+<li>解密技术：将密文还原为原始明文的过程，确保合法用户能够正常访问数据内容</li>
+</ul>
+<h2 id="系统软件安全事件">系统软件安全事件</h2>
+<p>事件发生的原因有：</p>
+<ul>
+<li><strong>技术漏洞</strong>：系统或软件中的技术缺陷导致安全漏洞，成为攻击者的突破口。</li>
+<li><strong>人为失误</strong>：操作不当或管理疏忽引发安全事件，如弱密码、未及时更新等。</li>
+<li><strong>外部攻击</strong>：黑客利用技术手段入侵系统或软件，窃取数据或破坏系统正常运行。</li>
+</ul>
+<h2 id="系统软件安全威胁">系统软件安全威胁</h2>
+<ul>
+<li><strong>外部威胁：黑客攻击与病毒传播</strong>
+<ul>
+<li>黑客攻击：黑客利用漏洞入侵系统，窃取数据、破坏系统，严重威胁系统安全。</li>
+<li>病毒传播：恶意软件通过网络传播，感染系统，导致数据丢失、系统崩溃等严重后果。</li>
+</ul>
+</li>
+<li><strong>内部威胁：误操作与权限滥用</strong>
+<ul>
+<li>误操作：因疏忽大意或缺乏培训导致的错误操作，可能引入安全漏洞</li>
+<li>权限滥用：内部人员利用被授予的权限进行非法活动，如数据泄露、篡改或破坏</li>
+</ul>
+</li>
+<li><strong>供应链威胁：第三方组件漏洞</strong>
+<ul>
+<li>组件漏洞：第三方组件中的漏洞可能被恶意利用，影响整个系统的安全性</li>
+<li>供应链攻击：攻击者可能通过供应链中的薄弱环节，植入恶意代码或篡改组件，对系统造成损害。</li>
+</ul>
+</li>
+</ul>
+<h2 id="系统软件安全防护">系统软件安全防护</h2>
+<p>常用安全技术与工具：</p>
+<ul>
+<li><strong>防火墙技术</strong>：部署防火墙来监控和过滤网络流量，阻止未经授权的访问和恶意攻击。</li>
+<li><strong>加密技术</strong>：使用加密技术对敏感数据进行加密处理，确保数据在传输和存储过程中的机密性和完整性。</li>
+<li><strong>安全漏洞扫描</strong>：利用安全漏洞扫描工具定期检测系统和软件中的安全漏洞，及时发现并修复潜在的安全威胁。</li>
+</ul>
+<h1>操作系统安全机制</h1>
+<h2 id="操作系统安全威胁">操作系统安全威胁</h2>
+<p>安全威胁有3种分类方式：</p>
+<ul>
+<li>按<strong>形成安全威胁的途径</strong>划分：不合理的授权机制、不恰当的代码执行、不恰当的主体控制、不安全的进程间通信（IPC）、网络协议的安全漏洞、服务的不当配置</li>
+<li>按<strong>威胁的行为方式</strong>划分：切断、截取、篡改、伪造</li>
+<li>按<strong>安全威胁的表现形式</strong>划分：逻辑炸弹、计算机病毒、特洛伊木马、后门（也叫天窗）、隐蔽信道</li>
+</ul>
+<p>有关按<strong>安全威胁的表现形式</strong>划分下面比较详细讲一下：</p>
+<ul>
+<li>
+<p><strong>逻辑炸弹</strong>：通常被添加在被感染<strong>应用程序的起始处</strong>，每当该应用运行时，<strong>检查是否满足运行炸弹的条件，如满足就执行炸弹的其余代码</strong>。造成终止机器、制造刺耳噪音、更改视频显示、破坏磁盘数据、利用硬件缺点引发硬件失效、使操作系统减慢或崩溃等。<strong>其特点是不能复制自身。</strong></p>
+</li>
+<li>
+<p><strong>计算机病毒</strong>：能<strong>自我复制</strong>的一组计算机指令或程序代码，通过编译或者在计算机程序中插入这段代码，以达到<strong>破坏计算机功能、毁坏数据</strong>从而影响计算机使用的目的。<strong>其特点是隐蔽性、传染性、潜伏性、破坏性。</strong></p>
+<p>例如蠕虫病毒，一种常见的计算机病毒，是<strong>无须计算机使用者干预即可运行的独立程序</strong>，它通过不停的获得网络中存在漏洞的计算机上的部分或全部控制权来进行传播</p>
+</li>
+<li>
+<p><strong>特洛伊木马</strong>：自身是一段独立的计算机程序，<strong>表面上执行合法功能</strong>，实际上却完成用户不曾料到的非法功能，如释放病毒/蠕虫或其它隐藏在木马程序中的恶意代码，<strong>不具备自我复制能力</strong>。</p>
+<p>其成功的条件在于：程序表面的行为方式<strong>不会引起用户的怀疑</strong>；攻击者必须设计出某种策略诱使受骗者接受这段程序；受害者<strong>必须运行该程序</strong>；特洛伊木马发作为攻击者带来实际收益</p>
+</li>
+<li>
+<p><strong>后门</strong>：是<strong>嵌在操作系统里</strong>的一段非法代码，攻击者利用该代码所提供的方法侵入操作系统而不受检查。</p>
+<p>其特点是：由专门的命令激活，一般不容易发现。拥有攻击者所没有的特权，方便以后再次秘密进入或者控制系统。安装后门的目的就是渗透，只能利用操作系统的缺陷或者混入系统的开发队伍中进行安装</p>
+</li>
+<li>
+<p><strong>隐蔽信道</strong>：系统中不受安全策略控制的、违反安全策略的<strong>信息泄露路径</strong></p>
+<ul>
+<li>
+<p><strong>存储隐蔽信道</strong>：系统中两个进程利用不受安全策略控制的<strong>存储单元</strong>传递信息。</p>
+<p>进程A通过<strong>改变</strong>存储单元的内容<strong>发送消息</strong>（如：增加或删除某文件）；进程B通过<strong>观察</strong>相同存储单元的变化来<strong>接收消息</strong>（如：观察某文件是否存在）</p>
+</li>
+<li>
+<p><strong>时间隐蔽信道</strong>：系统中两个进程利用不受安全策略控制的系统在<strong>当前时间段内某方面的状态</strong>来传递信息。</p>
+<p>进程A在<strong>该时间段内改变</strong>系统某状态（如：连续使用某一特殊I/O端口）；进程B<strong>在该时间段内观察</strong>系统某状态（如：观察某一特殊I/O端口是否被使用）</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="操作系统安全的基本要求">操作系统安全的基本要求</h2>
+<p>操作系统种的几个概念：</p>
+<ul>
+<li><strong>主体（subject）</strong>：操作系统中主动的实体，即某种行为的<strong>发起实体</strong>，包括用户、用户组、进程等</li>
+<li><strong>客体（object）</strong>：操作系统中被动的实体，是<strong>主体行为的接受者</strong>，包括信息实体（如文件）、设备实体和进程等</li>
+<li><strong>安全属性</strong>：主体或客体的<strong>与安全相关的特定敏感标记</strong>，这些安全标记是<strong>实时访问控制</strong>的基础（敏感标记：表示实体<strong>安全级别</strong>并描述实体数据<strong>敏感性</strong>的一组信息）</li>
+<li>系统事件：两个系统实体之间的<strong>交互</strong>，表示为&lt;主体，操作，客体&gt;</li>
+</ul>
+<p>操作系统的安全<strong>需求</strong>：</p>
+<ul>
+<li><strong>保密性</strong>：原始信息的隐藏能力，让原始信息对非授权用户呈现不可见状态</li>
+<li><strong>完整性</strong>：信息在存储或传输过程中保持不被修改、破坏和丢失</li>
+<li><strong>可用性</strong>：系统能够正常运行或提供必要服务的能力</li>
+<li><strong>可靠性</strong>：系统提供信息的可信赖程度</li>
+</ul>
+<p>操作系统的安全<strong>漏洞</strong>：</p>
+<ul>
+<li>可能导致<strong>获取系统控制权</strong>的漏洞</li>
+<li>可能导致<strong>获取隐私信息</strong>的漏洞</li>
+<li>可能导致<strong>受到拒绝服务攻击</strong>的漏洞</li>
+</ul>
+<p>操作系统安全基本要求的概念：</p>
+<ul>
+<li>
+<p><strong>安全策略</strong>：有关如何<strong>管理、保护与分发</strong>敏感信息的法律、规定、条例和实施细则的集合，通常由一组<strong>安全规则</strong>描述</p>
+</li>
+<li>
+<p><strong>安全模型</strong>：对安全策略所表达的安全需求<strong>进行简单、抽象和无歧义的描述</strong>，包括<strong>形式化和非形式化</strong>安全模型。</p>
+<p>安全模型是对<strong>安全策略</strong>所表达的安全需求的精确、无歧义抽象描述，在<strong>安全策略与安全实现机制</strong>的关联之间提供一种框架</p>
+</li>
+<li>
+<p><strong>安全机制</strong>：实现安全策略的<strong>具体方法及过程</strong>，通常在安全模型指导下设计实现。<strong>安全机制是安全策略的设计实现</strong>，是指导操作系统安全内核开发的重要依据</p>
+<blockquote>
+<p>下面一节就专门讲各种各样的安全机制</p>
+</blockquote>
+</li>
+<li>
+<p><strong>安全内核</strong>：计算机系统中通过控制对系统资源的访问来实现安全策略的中心部分或技术</p>
+</li>
+</ul>
+<h2 id="操作系统的常用安全机制">操作系统的常用安全机制</h2>
+<h3 id="访问控制">访问控制</h3>
+<p>访问控制是操作系统<strong>使用最频繁</strong>的安全机制。</p>
+<p>定义：系统对<strong>用户身份</strong>及其所属的预先定义的<strong>策略组</strong>限制其使用数据资源能力的手段。</p>
+<p><strong>主要任务：</strong></p>
+<ul>
+<li><strong>授权</strong>：确定可给予哪些主体访问客体的权限</li>
+<li><strong>确定访问权限</strong>：读、写、执行、删除、追加等访问方式及其组合</li>
+<li><strong>实施访问权限</strong></li>
+</ul>
+<p><strong>主要功能：</strong></p>
+<ul>
+<li>保护存储在主机上的个人信息</li>
+<li>保护重要信息的机密性</li>
+<li>维护计算机内信息的完整性</li>
+<li>减少病毒感染机会，从而延缓感染的传播</li>
+<li>保证系统的安全性和有效性，以免受到偶然和蓄意的危害</li>
+</ul>
+<p><strong>三要素：</strong></p>
+<ul>
+<li><strong>主体S（Subject）</strong>：指<strong>提出</strong>访问资源具体<strong>请求</strong>的实体。是某一操作动作的<strong>发起者</strong>，但不一定是动作的执行者。可能是某一用户，也可以是用户启动的进程、服务和设备等。</li>
+<li><strong>客体O（Object）</strong>：是指<strong>被访问</strong>资源的实体。包括被操作的信息、资源、对象等。可以是信息、文件、记录等集合体，也可以是网络上硬件设施、无限通信中的终端，甚至可以包含另外一个客体</li>
+<li><strong>策略A（Access Control Policy）</strong>：是<strong>主体对客体</strong>的相关<strong>访问规则集合</strong>，即属性集合。体现了一种<strong>授权行为</strong>，也是客体对主体某些操作行为的默认</li>
+</ul>
+<p><strong>按访问控制的<u>对象</u>进行分类：</strong></p>
+<ul>
+<li>对<strong>文件</strong>的访问控制：读/拷贝（read-copy）、写/删除（write-delete）（附加、删除、修改）、 执行（execute）（通常同时具有读权限）</li>
+<li>对<strong>目录</strong>的访问控制：读、写扩展（write-expand）（修改、附加、删除）</li>
+<li>对<strong>目录</strong>的访问控制<strong>粒度</strong>：<strong>对目录</strong>而不对目录下文件实施访问控制、<strong>对目录下的文件</strong>而不对目录实施访问控制、对目录以及目录下的文件<strong>都</strong>实施访问控制（<strong>最好</strong>）</li>
+</ul>
+<p><strong>按访问控制的<u>方式</u>进行分类：</strong></p>
+<ul>
+<li>
+<p><strong>自主访问控制（DAC）</strong>：是<strong>最常用</strong>的一类访问控制机制，用来决定一个用户是否有权访问一些特定客体的一种访问约束机制</p>
+<ul>
+<li>允许访问对象的属主制定<strong>针对该对象</strong>访问的控制策略</li>
+<li>每个客体有一个所有者，可按照各自意愿将客体访问控制权限授予其他主体</li>
+<li>几乎所有的系统在自主访问控制机制中都包含文件、目录、IPC以及设备的访问控制</li>
+</ul>
+</li>
+<li>
+<p><strong>强制访问控制（MAC）</strong>：系统强制主体服从访问控制策略，按照访问控制策略实施对客体的访问操作</p>
+<ul>
+<li>系统中的<strong>每个</strong>进程、文件、IPC（消息队列、信号量集合、共享存储区）都被赋予相应的安全属性</li>
+<li>安全属性只能<strong>由安全管理员或操作系统</strong>自动按照严格的规则来设置，不能随意修改。代表用户的进程不能改变自身的安全属性，也不能改变任何客体（包括用户所拥有的客体）的安全属性；进程不能将所代表用户的客体访问权限授予其它用户，来实现客体共享。</li>
+<li>主体访问客体时：根据进程的安全属性和访问方式，<strong>比较进程的安全属性和客体的安全属性</strong>，从而确定是否允许进程对客体的访问</li>
+</ul>
+</li>
+<li>
+<p><strong>基于角色的访问控制（RBAC）</strong>：通过<strong>定义角色的权限</strong>，并且对用户<strong>授予某个角色</strong>来控制用户的权限，从而实现了用户和权限的逻辑分离，方便了权限的管理。</p>
+<blockquote>
+<p>下面有这个控制方式的原理和安全原则</p>
+</blockquote>
+</li>
+</ul>
+<p>有关RBAC，其<strong>基本原理</strong>如下：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241223144038116.png" alt="image-20241223144038116"></p>
+<ul>
+<li>user（用户）：每个用户都有不同且唯一的ID，用来进行识别，并被授予不同的角色</li>
+<li>role（角色）：不同的角色具有不同的权限</li>
+<li>jurisdiction（权限）：访问权限</li>
+<li>映射关系（<strong>多对多</strong>）：
+<ul>
+<li>“用户-&gt;角色”映射：为用户分配不同的角色</li>
+<li>“角色-&gt;权限”映射：为角色分配不同的权限</li>
+</ul>
+</li>
+</ul>
+<p><strong>RBAC的安全原则：</strong></p>
+<ul>
+<li><strong>最小权限原则</strong>：将角色配置成其完成所需的最小权限集合</li>
+<li><strong>责任分离原则</strong>：通过调用相互独立且互斥的角色来完成敏感任务，例如：记账员和财务管理员共同参与过账操作</li>
+<li><strong>数据抽象原则</strong>：借助于<strong>抽象许可权</strong>这样的概念实现，如在账目管理活动中，可以使用信用、借方等抽象许可权，而不是使用典型的读、写、执行权限</li>
+</ul>
+<p>对3种不同的访问控制机制进行<strong>优缺点对比</strong>：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241223144526940.png" alt="image-20241223144526940"></p>
+<h3 id="认证机制">认证机制</h3>
+<ul>
+<li><strong>标识</strong>：操作系统能够通过内部识别码或标识符正确识别用户的身份，即<strong>用户向系统表明的身份</strong>。应具有唯一性，不能被伪造</li>
+<li><strong>鉴别</strong>：对用户所宣称的身份标识的有效性进行<strong>校验和测试</strong>的过程，用户声明自己身份的几种方法包括
+<ul>
+<li>证实自己所知道的：密码、身份证号、最喜欢的人名字等</li>
+<li>出示自己所拥有的：智能卡、USBkey等</li>
+<li>证明自己是谁：指纹、掌纹、声纹、视网膜、面部特征扫描等</li>
+<li>表现自己的动作：签名、按键的速度与力量、语速等</li>
+</ul>
+</li>
+<li><strong>授权</strong>：<strong>确定</strong>给予哪些主体存取哪些客体的<strong>权限</strong>，并<strong>实施</strong>这些存取<strong>权限</strong></li>
+</ul>
+<h3 id="加密机制">加密机制</h3>
+<ul>
+<li>数据<strong>传输</strong>加密：分为链加密和端加密</li>
+<li>数据<strong>存储</strong>加密：分为文件级加密（对单个文件加密）和驱动器级加密（对逻辑驱动器上的所有文件加密）</li>
+</ul>
+<h3 id="最小特权管理">最小特权管理</h3>
+<p>主流多用户操作系统中，超级用户一般具有所有特权，而普通用户不具有任何特权  。这样对于超级用户而言，若其口令被破解或发生误操作就会发生安全威胁。因此我们需要引入最小特权管理。</p>
+<p>关于最小特权的定义：要求赋予系统中每个使用者执行授权任务所需的<strong>限制性最强的一组特权，即最低许可</strong>，可以限制因意外、错误或未经授权使用而造成的损害  。</p>
+<p>最小特权原则：<strong>必不可少的特权</strong></p>
+<ul>
+<li>充分性：保证所有的主体都能在所赋予的特权之下完成所需要完成的任务或操作</li>
+<li>必要性：在充分的前提下加以限制</li>
+</ul>
+<p>即在系统中定义负责不同事物的人员，比如系统安全管理员、审计员、操作员、安全操作员、网络管理员。任何一个用户都不能获取足够的权利破坏系统的安全策略  ；也不应赋予某人一个以上的职责。</p>
+<h3 id="安全审计机制">安全审计机制</h3>
+<p>几个概念：</p>
+<ul>
+<li><strong>审计</strong>：是一种事后（线下）分析法，一般通过对日志的分析来完成。对日志记录进行分析，能够以清晰的、能理解的方式表述系统信息</li>
+<li><strong>安全审计</strong>：对系统中有关安全的活动进行记录、检查及审核；认定违反安全规则的行为</li>
+<li><strong>审计事件</strong>：是系统审计用户动作的基本单位</li>
+</ul>
+<p><strong>如何实现审计系统：</strong></p>
+<ul>
+<li>日志记录器：收集数据，根据要审计的审计事件范围记录信息</li>
+<li>分析器：分析数据，分析日志数据，使用不同的分析方法来监测日志数据中的异常行为</li>
+<li>通告器：通报结果，将结果通知系统管理员或其他主体，为这些主体提供系统的安全信息，辅助对系统可能出现的问题进行决策</li>
+</ul>
+<p>日志：记录事件或统计数据，提供关于系统使用及性能方面的信息。<strong>日志的分类</strong>如下：</p>
+<ul>
+<li>系统日志：跟踪各种系统事件，记录由系统组件产生的事件</li>
+<li>应用程序日志：跟踪各种系统事件，记录由系统组件产生的事件</li>
+<li>安全日志：记录安全相关的关键安全事件</li>
+</ul>
+<h3 id="存储、运行、IO保护">存储、运行、IO保护</h3>
+<h4 id="存储保护">存储保护</h4>
+<p>存储保护即保护用户存储在存储器中的数据</p>
+<ul>
+<li>保护单元与保护精度：字/块/页面/段</li>
+<li>系统要求：单道系统 vs 多道系统 vs 多用户系统</li>
+</ul>
+<p>存储器管理和存储保护之间的关系：</p>
+<ul>
+<li>存储基本概念：虚拟地址空间、段</li>
+<li>基于内存管理的访问控制
+<ul>
+<li><strong>系统段与用户段</strong></li>
+<li>基于物理页号的识别（秘钥机制）</li>
+<li>基于描述符的地址解释机制（用户模式 vs 系统模式）</li>
+</ul>
+</li>
+</ul>
+<h4 id="运行保护">运行保护</h4>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107212241843.png" alt="image-20250107212241843" style="zoom:67%;" />
+<p>等级域保护机制：</p>
+<ul>
+<li>保护某一环不被其<strong>外层环侵入</strong></li>
+<li>允许在某一环内的进程能够有效控制其外层的环</li>
+</ul>
+<p>与<strong>进程隔离机制</strong>不同：</p>
+<ul>
+<li>在任意时刻，进程可以在任何一个环内运行</li>
+<li>保护进程免遭在同一环内同时运行的其它进程对该进程的破坏</li>
+</ul>
+<h4 id="IO保护">IO保护</h4>
+<p>I/O操作一般是特权操作，操作系统对I/O操作进行封装，提供对应的系统调用。将设备看成一个客体，对其应用相应的访问控制规则：读写、针对从处理器到设备间的路径</p>
+<h2 id="安全操作系统的设计与实现">安全操作系统的设计与实现</h2>
+<p>可信平台模块TPM：建立个人电脑的可信计算概念；在计算和通信系统中广泛使用基于硬件安全模块支持下的可信计算平台，以提高整体的安全性</p>
+<p>可信密码模块TCM：中国标准的TPM</p>
+<p><strong>TPM/TCM</strong>安全芯片的用途：</p>
+<ul>
+<li>存储、管理BIOS开机密码以及硬盘密码</li>
+<li>TPM/TCM安全芯片可以进行范围较广的加密</li>
+<li>加密硬盘的任意分区</li>
+</ul>
+<p>核心理念是基于TPM/TCM这样一个硬件核心，配合上<strong>可信软件栈（TSS）</strong>，来实现一个<strong>信任根</strong>。即使操作系统不可信，仍然可以在其中执行可信的、不被干扰的某项任务。比如：在不可信的操作系统上安全地存储密钥</p>
+<p><strong>ARM TrustZone</strong>：ARM TrustZone®技术是系统范围的安全方法，针对高性能计算平台上的大量应用，包括安全支付、数字版权管理、企业服务和基于Web的服务</p>
+<p>核心设计思想是“<strong>隔离</strong>” ，将系统运行环境划分为<strong>可信的和普通的</strong>两部分：</p>
+<ul>
+<li>可信的部分：TEE (Trusted Execution Environment)</li>
+<li>普通的部分：REE (Rich Execution Environment)</li>
+</ul>
+<p><strong>SGX</strong>：Intel SGX技术是英特尔于2015年推出的一项安全技术，允许用户级代码分配专用内存区域（称为<strong>隔区</strong>，enclave），以免受到拥有更高权限的进程的影响</p>
+<p>安全特性：</p>
+<ul>
+<li>
+<p>应用程序分为两部分：<strong>安全部分和非安全部分</strong></p>
+</li>
+<li>
+<p>应用程序启动 enclave，它被放置在受保护的内存中，enclave只有在安全条件下才可以访问</p>
+</li>
+<li>
+<p>当调用enclave函数时，<strong>只有enclave内部的代码才能查看其数据</strong>，并始终拒绝外部访问，当调用结束时，enclave的数据会留在受保护的内存中</p>
+<p>应用程序封装在enclave中的安全操作，OS和BIOS等<strong>特权系统都无法访问</strong></p>
+</li>
+</ul>
+<p>安全执行环境是宿主进程的一部分：</p>
+<ul>
+<li>应用程序包含自己的代码、数据和 enclave</li>
+<li>enclave 也包含自己的代码和自己的数据</li>
+<li>SGX 保护enclave代码和数据的<strong>机密性和完整性</strong></li>
+<li>enclave入口点是在编译期间预定义的</li>
+<li>支持多线程</li>
+<li><strong>enclave可以访问其他应用程序的内存，但反过来不行</strong></li>
+</ul>
+<h1>各操作系统安全性分析</h1>
+<h2 id="Windows操作系统">Windows操作系统</h2>
+<h3 id="Windows系统概述">Windows系统概述</h3>
+<p><u>介绍</u>：Microsoft Windows是美国微软公司以图形用户界面为基础研发的操作系统，主要运用于计算机、智能手机等设备，是全球应用最广泛的操作系统之一。</p>
+<p><u>里程碑</u>：Windows 95引入图形用户界面，Windows XP增强稳定性和安全性，Windows 10和11继续优化用户体验。</p>
+<p><u>Windows NT系统</u>：<strong>Windows NT</strong>（New Technology）是微软公司<strong>第一个</strong>真正意义上的网络操作系统，发展经过NT 3.0-10.0等众多版本，并逐步占据了广大的中小网络操作系统的市场。</p>
+<p>Windows NT<strong>支持多种网络协议，内置Internet功能，还支持NTFS文件系统</strong>。（使用NTFS的好处：可以提高<strong>文件管理的安全性</strong>，用户可以对NTFS系统中的任何文件、目录设置权限，这样当多用户同时访问系统的时候，可以增加文件的安全性）</p>
+<p><u>Windows系统架构</u>：分为<strong>用户模式和内核模式</strong>，基于<strong>CPU运行状态</strong>划分。即<strong>用户模式</strong>下，应用程序代码运行在CPU<strong>非特权</strong>模式；<strong>内核模式</strong>下，内核代码运行在CPU<strong>特权</strong>模式。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20241223201721300.png" alt="image-20241223201721300" style="zoom:67%;" />
+<blockquote>
+<p><strong>用户模式</strong>即<strong>运行应用程序</strong>的模式，应用程序可以访问一些系统资源，如文件系统、网络、进程和线程等，但<strong>不能直接访问内核模式或底层硬件设备</strong>。</p>
+</blockquote>
+<p>用户模式的组成如下：</p>
+<ul>
+<li><strong>用户进程</strong>：用户应用程序相关。用户应用程序无法直接调用原生的Windows操作系统服务，而是需要**通过一个或多个子系统动态链接库（DLL）**调用</li>
+<li><strong>服务进程</strong>： Windows服务相关，如Task Scheduler和Print Spooler服务</li>
+<li><strong>系统进程</strong>：静态或硬编码的进程，如非Windows 服务的登录进程和会话管理器</li>
+<li><strong>环境子系统服务进程</strong>：实现操作系统环境的支持部分的进程（环境是指呈现给用户和程序员的、操作系统中可进行个性化的部分）</li>
+</ul>
+<blockquote>
+<p>内核模式下<strong>一切程序都可运行</strong>。任务可以执行特权级指令，对任何I/O设备有全部的访问权，还能够访问任何虚地址和控制虚拟内存硬件</p>
+</blockquote>
+<p>内核模式的组成如下：</p>
+<ul>
+<li><strong>执行体</strong>：包含操作系统的基础服务，例如内存管理、进程和线程管理、安全性、I/O、网络以及进程之间通信</li>
+<li><strong>Windows内核</strong>：包含底层操作系统函数，例如线程调度、中断和异常分发、多处理器同步。还提供了一系列的例程和基本对象，执行体的其他部分会使用它们实现更高层次的功能</li>
+<li><strong>设备驱动程序</strong>：包括将用户I/O函数调用转换为特定硬件设备I/O请求的硬件设备驱动程序，以及诸如文件系统和网络驱动程序等非硬件设备驱动程序</li>
+<li><strong>硬件抽象层</strong>（HAL，hardware abstraction layer）：负责将内核、设备驱动程序以及Windows执行体的其他部分与和具体平台有关的差异进行隔离</li>
+<li><strong>窗口和图形系统</strong>：用于实现用户界面（GUI）功能，例如处理窗口、用户界面控件以及进行绘制</li>
+<li><strong>虚拟机监控程序层</strong>：只包含<strong>虚拟机监控程序</strong>本身，由多种内部层和驱动程序组成，如自己的内存管理器、虚拟处理器调度器、中断和计时器管理、同步例程、分区（虚拟机实例）管理、分区间通信（IPC）等，不包含其他驱动程序或模块</li>
+</ul>
+<h3 id="Windows安全组件">Windows安全组件</h3>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107222333411.png" alt="image-20250107222333411" style="zoom:80%;" />
+<p>Windows安全性由<strong>核心组件和数据库</strong>实现。</p>
+<p><strong>标识</strong>：辨认你是谁的方法</p>
+<ul>
+<li>
+<p>安全账户管理器（Security Accounts Manager，<strong>SAM</strong>）：维护SAM数据库，负责管理本机定义的用户名和组等信息</p>
+</li>
+<li>
+<p>SAM数据库：由SAM管理，其中包括已定义的本地用户、组以及密码和其它属性信息。</p>
+<p>该数据库存储在注册表HKEY_LOCAL_MACHINE\SAM键下，受到ACL保护。</p>
+<p>磁盘保存位置：%systemroot%\system32\config\sam；一个比较复杂的结构；SAM在系统启动后就处于锁定状态，用户无法擅自更改其内容；SAM不听从用户的指挥，只听从LSASS的差遣</p>
+</li>
+</ul>
+<p><strong>鉴别</strong>：根 据 <strong>获 得的 标 识 信息</strong> 验 证 客户的身份</p>
+<ul>
+<li>交互式登录管理器（Interactive Logon Manager，即Winlogon）：管理交互式登录会话。当用户<strong>登录时，创建用户的第一个进程</strong></li>
+<li>登录用户界面（Logon User Interface，LogonUI）：为用户提供向系统验证自己身份所需的用户界面。使用凭据提供程序，通过多种方式查询用户凭据</li>
+<li>凭据提供程序（Credential Provider，CP）：是一种在LogonUI进程中运行的进程内COM对象。用于获取用户的用户名、密码、智能卡PIN码、生物验证数据（如指纹、面部识别数据）等</li>
+<li>身份验证包（Authentication Package，AP）：检查特定用户名与密码（或者用于提供凭证的其它任何机制）是否匹配，进而对用户进行身份验证</li>
+</ul>
+<p><strong>授权与审计</strong>：授权用于设置不同对象的访问权限（ACL）；审计用于对整个过程（标识鉴别、对象授权、访问控制）进行审核</p>
+<ul>
+<li>
+<p>本地安全机构子系统服务（Local Security Authority Subsystem Service， <strong>LSA</strong>SS）</p>
+<ul>
+<li>负责本地系统安全策略：允许哪些用户登录到计算机、密码策略、为用户和组分配特权、系统安全审核设置</li>
+<li>负责用户身份验证</li>
+<li>负责将安全审核信息发送给事件日志</li>
+</ul>
+</li>
+<li>
+<p>LSASS策略数据库：包含了本地系统安全策略设置，存储在注册表HKLM\SECURITY键下一个受ACL保护的区域内</p>
+</li>
+<li>
+<p>内核安全设备驱动程序（Kernel Security Device Driver，KSecDD）</p>
+<ul>
+<li>
+<p>运行于<strong>内核模式</strong></p>
+</li>
+<li>
+<p>实现了高级本地过程调用接口，其它内核模式安全组件，包括加密文件系统（Encryption FileSystem，EFS），可以用来在用户模式下与LSASS通信</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>访问控制</strong>：根据用户标识和对象的ACL进行访问控制</p>
+<ul>
+<li>安全引用监视器（Security Reference Monitor, <strong>SRM</strong>）：或称安全参考监视器，定义代表安全上下文的访问令牌数据结构。针对对象执行安全访问检查、操作特权（用户权限）检查，以及生成所产生的各类安全审核信息</li>
+<li>APPLocker：该机制供管理员决定用户和组允许使用哪些<strong>可执行文件、DLL和脚本</strong>。包含一个驱动程序（%SystemRoot%\System32\Drivers\AppId.sys）和一个服务（ %SystemRoot%\System32\AppIdSvc.dll）。运行于标准SvcHost进程中</li>
+<li>APPContainer：提供一个<strong>限制性的进程执行环境</strong>（或称容器）。 应用的进程及其子进程在轻型应用容器中运行，它们只能访问专门授予它们的资源</li>
+</ul>
+<h3 id="Windows访问控制">Windows访问控制</h3>
+<p>系统通过查看<strong>访问者的访问令牌</strong>与<strong>被访问对象的安全描述符</strong>中的内容来确定访问者是否能访问对象</p>
+<p><strong>访问令牌（Access Token）</strong>：包含有关<strong>已登录用户</strong>的信息</p>
+<ul>
+<li>用户登录时 ，系统会对用户的帐户名和密码进行身份验证。如果登录成功，系统将创建访问令牌。<strong>代表此用户执行的每一个进程都将具有此访问令牌的副本</strong></li>
+<li>访问令牌包含的内容：<strong>包含安全标识符</strong>，用于标识用户的帐户以及该用户所属的任何组帐户。包含用户或用户组拥有的权限列表，当进程尝试访问安全对象或执行需要特权的系统管理任务时，系统使用此令牌来标识关联的用户</li>
+</ul>
+<p><strong>安全描述符（Security Descriptor）</strong>：包含用于<strong>保护安全对象</strong>的安全信息</p>
+<ul>
+<li>创建安全对象时，系统会为其分配一个安全描述符，其中包含其创建者指定的安全信息，如果未指定任何安全信息，则为其分配默认安全信息</li>
+<li>应用程序可以使用函数检索和设置现有对象的安全信息</li>
+</ul>
+<p><strong>访问控制列表（Access Control List, ACL）</strong>：表示用户（组）权限的列表</p>
+<p><strong>访问控制项（ACE）</strong>：是访问控制列表（ACL）中的元素，每个ACE控制或监视指定受托者（Trustees）对对象的访问，用于指定特定用户/组的访问权限。<strong>一个ACL可以包含零个或多个ACE</strong></p>
+<p><strong>访问控制列表ACL可分为自主访问控制列表DACL，系统访问控制列表SACL</strong>：</p>
+<ul>
+<li>自主访问控制列表（Discretionary Access Control List, DACL）：DACL标识是否允许或拒绝访问安全对象：当进程尝试访问安全对象时，系统将<strong>检查该对象的DACL中的ACE</strong>，以确定是否授予对该对象的访问权限
+<ul>
+<li>所有ACE所赋予的权限累加就组成该ACL最终可授予的访问权</li>
+<li>若SD中不存在DACL：每个用户都可获得对象的完整访问权</li>
+<li>若DACL为空（即没有ACE）：任何用户都无法获得对象访问权</li>
+</ul>
+</li>
+<li>系统访问控制列表（System Access Control List， SACL）：SACL其实就是一个<strong>审计中心</strong>，这个列表里面列举着哪些类型的访问请求需要被系统记录。一旦有用户访问一个安全对象，其请求的访问权限和SACL中的一个ACE符合，那么系统会记录这个用户的请求是被拒绝还是被允许</li>
+</ul>
+<h2 id="Linux操作系统">Linux操作系统</h2>
+<p>Linux系统：是一套可以免费使用和自由传播的类Unix操作系统，主要用于基于Intel X86系列CPU的计算机上</p>
+<h3 id="Linux系统用户管理">Linux系统用户管理</h3>
+<p>Linux系统将用户分为超级用户和普通用户两个类别。</p>
+<p><strong>超级用户：root</strong></p>
+<ul>
+<li><strong>进程控制</strong>：改变进程优先级，向任何进程发送任何信号，修改系统硬件限制（如最大CPU时间、最大打开文件句柄数等），调试任何进程（使用strace等），向运行中内核动态加载、卸载模块……</li>
+<li><strong>设备控制</strong>：格式化硬盘、关机和重启服务器、读取和修改任何内存区域、设置日期和时间</li>
+<li><strong>网络控制</strong>：在1~1024端口上运行网络服务，配置和重新配置网络，将网卡设置成混杂模式，设置网络防火墙（如iptables）</li>
+<li><strong>文件系统控制</strong>：读取、修改、删除系统上的任何文件，运行任何程序，挂装和卸载文件系统、启用和禁止磁盘配额等</li>
+<li><strong>用户控制</strong>：增加和删除用户、用户组，为任何用户（包括超级用户自己）修改密码和改变属性</li>
+</ul>
+<p><strong>普通用户</strong>：只能在高端口（1024以上）监听和运行网络服务、只能修改自己的密码等</p>
+<p><strong>用户管理中的两个重要文件：</strong></p>
+<p><strong><code>/etc/passwd</code></strong>：记录系统中所有用户的信息，共7个字段，以“:”隔开</p>
+<ul>
+<li>帐号名称</li>
+<li>密码：放置于/etc/shadow，用x代替</li>
+<li>UID：系统创建用户时会给每个用户分配一个UID。0为系统管理员，其他账号UID为0时拥有root权限；1～499为系统账号；500～＄为一般用户登录的账号。</li>
+<li>GID：与/etc/group有关，如果建立用户时，不指明所创建的用户属于哪个组，系统会自动建立一个跟用户名同名的组</li>
+<li>用户信息说明</li>
+<li>主文件夹</li>
+<li>shell类型</li>
+</ul>
+<p><code>/etc/shadow</code>：存放系统中所有用户的密码</p>
+<ul>
+<li>账号名称</li>
+<li>经过加密的密码</li>
+<li>最近更改密码的日期 （从1970年月1日开始到当前的日期）</li>
+<li>密码不可被更改的天数</li>
+<li>密码需要被更改的天数（99999计算为273年，表示没有限制之意）</li>
+<li>密码需要更改期限前的警告天数</li>
+<li>密码过期后的宽限日</li>
+<li>账户失效日期 （从1970年月1日开始到当前的日期）</li>
+<li>保留</li>
+</ul>
+<h3 id="Linux系统访问控制">Linux系统访问控制</h3>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250102144023589.png" alt="image-20250102144023589" style="zoom:67%;" />
+<p><strong>文件基本属性：</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250102144259952.png" alt="image-20250102144259952" style="zoom:67%;" />
+<ul>
+<li>
+<p>第0个字符：代表<strong>文件类型</strong>是目录、文件或链接文件等</p>
+<ul>
+<li>d ：目录</li>
+<li>- ：文件</li>
+<li>l ：链接文档(link file)；</li>
+<li>b ：为装置文件里面的可供储存的接口设备(可随机存取装置)；</li>
+<li>c：为装置文件里面的串行端口设备，例如键盘、鼠标(一次性读取装置)）</li>
+</ul>
+</li>
+<li>
+<p>第<strong>1-3位</strong>确定属主（该<strong>文件的所有者</strong>）拥有该文件的权限</p>
+</li>
+<li>
+<p>第<strong>4-6位</strong>确定属组（<strong>所有者的同组用户</strong>）拥有该文件的权限</p>
+</li>
+<li>
+<p>第<strong>7-9位</strong>确定<strong>其他用户</strong>拥有该文件的权限</p>
+<ul>
+<li>r 代表可读(read) -&gt; 数字4</li>
+<li>w 代表可写(write) -&gt; 数字2</li>
+<li>x 代表可执行(execute) -&gt; 数字1</li>
+<li>这三个权限的位置不会改变，如果没有权限，就会出现减号</li>
+</ul>
+</li>
+</ul>
+<p><strong>文件访问流程：</strong></p>
+<p>当用户程序需要访问文件时，便会调用相应的系统调用如open()。open系统调用在执行时会通过系统调用服务例程进入内核，然后调用VFS中相关操作对该请求进行处理</p>
+<blockquote>
+<p><strong>虚拟文件系统VFS</strong>：对高层进程和应用程序隐藏了Linux支持的所有文件系统的区别，不论文件系统是存储在本地设备，还是需要通过网络访问远程设备</p>
+</blockquote>
+<p>当要访问文件对应的内核数据时，内核会先检查该用户是否具有访问权限，如果权限检查通过，此时才能真正访问相应的数据，否则拒绝用户的请求。</p>
+<p>在进行权限检查时，依次会进行<strong>普通的权限检查、DAC检查和MAC检查</strong>，如果所有的检查均通过则允许用户访问该文件。</p>
+<p>在进行DAC检查时，VFS会根据用户请求的文件的类型来调用相应文件系统中实现的函数来从文件的扩展属性中查找文件的ACL权限，如果文件中指定了相应的权限，则检查通过，否则函数直接返回，即拒绝用户的访问请求</p>
+<h2 id="移动操作系统">移动操作系统</h2>
+<h3 id="三种移动操作系统对比">三种移动操作系统对比</h3>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250102145926331.png" alt="image-20250102145926331" style="zoom:80%;" />
+<p><strong>宏内核与微内核：</strong></p>
+<ul>
+<li>宏内核（Monolithic Kernel）是一个大内核（单内核），是个单独的二进制大映象，内部再被分为若干模块，<strong>模块间的通讯是靠调用函数实现</strong>的。单内核<strong>所有的服务都在一个内核空间上运行</strong>，运行效率高，但如果其中<strong>一个模块出现 bug，容易导致整个系统崩溃</strong></li>
+<li>微内核（Micro Kernel）是一种<strong>只提供必要服务的操作系统内核</strong>，比如任务、线程、交互进程通信、内存管理等等。所有其他服务及驱动都在<strong>用户模式下</strong>运行，处理这些服务等于运行程序，每个服务都在自己的地址空间运行</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250102151134658.png" alt="image-20250102151134658" style="zoom:80%;" />
+<h3 id="鸿蒙系统">鸿蒙系统</h3>
+<p>华为主导开发的一款全新的面向全场景的<strong>分布式操作系统</strong>，创造一个超级虚拟终端互联的世界，将人、设备、场景有机地联系在一起，将消费者在全场景生活中接触的<strong>多种智能终端</strong>，实现极速发现、极速连接、硬件互助、资源共享，用合适的设备提供场景体验。</p>
+<ul>
+<li>全球排名第三的智能手机操作系统，开创性的<strong>物联网领域第一款操作系统</strong></li>
+<li>提供强大的<strong>分布式体系</strong>，带来的稳定、快速的用户体验以及多设备协同体系</li>
+<li>具备安全的架构设计和内置的安全功能，包括<strong>受保护的内核、安全存储和用户身份验证</strong>等</li>
+</ul>
+<h3 id="安卓系统">安卓系统</h3>
+<p>一种基于Linux内核（不包含GNU组件）的自由及开放源代码的移动操作系统。主要应用于移动设备，如智能手机和平板电脑。</p>
+<ul>
+<li>每个应用都以一个系统识别身份运行（Linux用户ID与群组ID）</li>
+<li>安全特性包括应用<strong>权限管理、应用隔离和硬件级别的安全保护</strong>等</li>
+</ul>
+<p><strong>其核心安全机制如下：</strong></p>
+<ul>
+<li><strong>访问控制</strong>：权限管理：通过<strong>给不同的应用程序分配不同的权限</strong>，保证不同的应用程序可以访问不同的数据；敏感权限管理：对一些敏感操作进行审核和监管</li>
+<li><strong>沙箱模拟</strong>：假定应用软件之间以及用户自行安装的应用程序是不可信的，需要将应用程序<strong>置于“沙箱”之内以限制应用程序的功能</strong>，实现应用程序之间的隔离
+<ul>
+<li>设定允许或拒绝API调用的权限</li>
+<li>控制应用程序对资源的访问，如访问文件，目录，网络，传感器等</li>
+</ul>
+</li>
+</ul>
+<h3 id="苹果系统">苹果系统</h3>
+<p>由苹果公司开发的移动操作系统，与苹果的macOS操作系统一样，属于<strong>类Unix</strong>的商业操作系统，主要是给iPhone、iPod touch以及iPad使用</p>
+<p><strong>其内核架构由Mach、BSD和IOKit组成：</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250102192424438.png" alt="image-20250102192424438" style="zoom:67%;" />
+<ul>
+<li>Mach：<strong>微内核</strong>，微内核可以提高系统的模块化程度，提供内存保护的消息传递机制</li>
+<li>BSD：是<strong>对 Mach再次封装的宏内核</strong>, 提供了更现代、更易用的内核接口。宏内核（单内核）<strong>性能更高</strong>, 在高负荷状态时依然保持高效运作</li>
+<li>IOKit：是<strong>硬件驱动程序的运行环境</strong>，包含电源、内存、CPU 等信息</li>
+</ul>
+<p>其<strong>安全机制</strong>如下：</p>
+<ul>
+<li>
+<p><strong>更小的受攻击面</strong>：尽可能<strong>降低攻击者可以访问（尤其是可以远程访问）的代码量</strong></p>
+</li>
+<li>
+<p><strong>精简的操作系统</strong>：精简若干应用</p>
+</li>
+<li>
+<p><strong>权限分离</strong>：使用用户、组和其他传统UNIX<strong>文件权限机制分离各进程</strong>。易被攻击的程序会被限制在用户mobile身份下运行；而重要的系统进程会在root身份下运行。</p>
+</li>
+<li>
+<p><strong>代码签名机制</strong>：所有的二进制文件（binary）和类库在<strong>被内核允许执行之前都必须经过受信任机构（比如苹果公司）的签名</strong></p>
+</li>
+<li>
+<p><strong>数据执行保护</strong>（DEP：Data Execution Prevention）：处理器能区分哪部分内存是可执行代码以及哪部分内存是数据，而<strong>DEP不允许数据的执行，只允许代码执行</strong>。</p>
+<p>当漏洞攻击试图运行有效载荷时，它会将有效载荷注入进程并执行该有效载荷。DEP会让这种攻击行不通，因为有效载荷会被识别为数据而非代码</p>
+</li>
+<li>
+<p><strong>地址空间布局随机化</strong>（ASLR：Address Space Layout Randomization）：二进制文件、库文件、动态链接文件、栈和堆<strong>内存地址的位置全部随机化</strong></p>
+<p>当系统同时具有DEP和ASLR机制时，针对该系统编写漏洞攻击代码的一般方法完全无效（攻击者需要两个漏洞，一个用来获取代码执行权，另一个用来获取内存地址以执行ROP攻击）</p>
+</li>
+<li>
+<p><strong>沙盒机制</strong>：面向进程可执行的行动提供更细粒度的控制。限制恶意软件对设备造成的破坏，即限制恶意软件的有效载荷在沙盒可访问的内容中</p>
+</li>
+</ul>
+<h1>系统日志攻击检测与安全分析</h1>
+<p>这节是课设内容。</p>
+<h2 id="系统日志">系统日志</h2>
+<ul>
+<li>系统实体：主要3种实体，即文件、进程、网络连接，用不同的图形表示</li>
+<li>系统事件：&lt;主体，操作，客体&gt;
+<ul>
+<li>主体：系统进程实体，如浏览器</li>
+<li>操作：事件动作，如读/写</li>
+<li>客体：系统文件、进程或网络连接实体。根据客体划分，系统事件可称为文件事件、进程事件和网络事件</li>
+</ul>
+</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250105202140562.png" alt="image-20250105202140562" style="zoom:80%;" />
+<h2 id="溯源图与溯源分析">溯源图与溯源分析</h2>
+<p><strong>溯源图：</strong></p>
+<ul>
+<li>系统实体（主体和客体）用顶点表示</li>
+<li>事件类型用边表示：边的尾部连接主体，头部连接客体</li>
+<li>在不同的时间，2个顶点之间<strong>可以有多条边相连</strong></li>
+</ul>
+<p><strong>因果分析</strong>：用于推断系统审计事件中的因果依赖，并形成因果依赖图。依赖图为有向图：节点为系统实体，边为系统审计事件</p>
+<ul>
+<li>对于依赖图G(E, V)，单个系统审计事件为e(u, v)，其中u ∈ V, v ∈ V, e ∈ E</li>
+<li>边的方向代表<strong>数据流</strong>的方法（即从u流动到v），边的属性包括开始时间(<a target="_blank" rel="noopener" href="http://e.st">e.st</a>)和结束时间(<a target="_blank" rel="noopener" href="http://e.et">e.et</a>)</li>
+<li>给定两个节点n1和n2，存在n2因果依赖于n1，如果存在：两条边e1(n1, v1)和e2(v2, n2)满足v1 = v2，以及<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mn>1.</mn><mi>s</mi><mi>t</mi><mo>≤</mo><mi>e</mi><mn>2.</mn><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">e1.st ≤ e2.et</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7804em;vertical-align:-0.136em;"></span><span class="mord mathnormal">e</span><span class="mord">1.</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord mathnormal">e</span><span class="mord">2.</span><span class="mord mathnormal">e</span><span class="mord mathnormal">t</span></span></span></span>（e1在e2结束前开始）</li>
+</ul>
+<h1>网络安全</h1>
+<h2 id="概述">概述</h2>
+<p>网络<strong>存在不安全的原因</strong>：</p>
+<ul>
+<li>自身缺陷</li>
+<li>开放性：网络使用公开的协议；其远程访问的特性使得攻击无需线下；连接是基于主机上的社团彼此信任的原则</li>
+<li>黑客攻击</li>
+</ul>
+<p>网络面临的<strong>四种威胁</strong>：</p>
+<ul>
+<li>截取：从网络上窃听他人的通信内容。</li>
+<li>切断：有意中断他人在网络上的通信。</li>
+<li>篡改：故意篡改网络上传送的报文。</li>
+<li>伪造：伪造信息在网络上传送。</li>
+</ul>
+<p><strong>威胁的分类</strong>：</p>
+<ul>
+<li>被动攻击：截获信息的攻击，攻击者只是观察和分析某一个协议数据单元 PDU （ProtocolData Unit）而不干扰信息流。</li>
+<li>主动攻击：更改信息和拒绝用户使用资源的攻击，攻击者对某个连接中通过的 PDU 进行各种处理（更改报文流、拒绝报文服务、伪造连接初始化）</li>
+</ul>
+<p>计算机<strong>通信安全的目标</strong>：</p>
+<ul>
+<li>机密性：消息不泄露给未授权的实体。</li>
+<li>完整性：只有被授权后才能进行资源修改。</li>
+<li>可用性：即便遭受攻击，攻击者也不能占用所有资源而阻碍授权者工作。</li>
+<li>可追溯性：即使出现安全问题，也有可供调查的依据和手段</li>
+<li>抗抵赖性：对导致安全事件出现的行为不能抵赖</li>
+<li>真实性：能判断消息的来源，能鉴别那些伪造来源的消息</li>
+<li>可控性：在授权范围内，可以控制信息的流向和行为</li>
+</ul>
+<h2 id="因特网安全协议">因特网安全协议</h2>
+<h3 id="网络层安全协议">网络层安全协议</h3>
+<p>体现于<strong>完整性保护</strong>和<strong>机密性保护</strong>（对所有在 IP 数据报中的数据加密）</p>
+<p><strong>IPsec 协议</strong>：</p>
+<ul>
+<li>
+<p>鉴别首部 AH (Authentication Header)：鉴别源点、检查数据完整性，<strong>不提供保密性</strong></p>
+<p>在<strong>传输过程</strong>中，<strong>中间路由器不查看 AH 首部</strong>；当数据报到达终点时，目的主机处理 AH 字段，以鉴别源点和检查数据报的完整性</p>
+</li>
+<li>
+<p>封装安全有效载荷 ESP (Encapsulation Security Payload)：鉴别源点、检查<strong>数据完整性、提供保密性</strong></p>
+</li>
+</ul>
+<p>IPsec的工作方式：<strong>传输模式、隧道模式</strong></p>
+<p>安全关联 SA (Security Association)：建立一条从<strong>源主机到目的主机网络层</strong>的<strong>逻辑连接</strong>—— IPsec 将无连接的网络层转换为具有逻辑连接的层。定义实体间如何使用安全服务进行通信</p>
+<p><strong>单向连接</strong>：在一次通信中，IPSec需要建立两个SA，分别用于入站通信、出站通信</p>
+<p><strong>安全关联SA的组成</strong>（<strong>三元组</strong>）：</p>
+<ul>
+<li>安全协议（使用 AH 或 ESP）的<strong>标识符</strong>；</li>
+<li>此单向连接的<strong>源 IP 地址</strong>；</li>
+<li>安全参数索引 SPI (Security Parameter Index)：32 位的连接标识符：每个SA用唯一的SPI索引标识；每一个 IPsec 数据报都有一个存放 SPI 的字段，接收端根据SPI值决定使用哪个SA</li>
+</ul>
+<p><strong>安全关联的创建——IKE</strong> (Internet Key Exchange)：</p>
+<ul>
+<li><strong>主模式协商</strong>
+<ul>
+<li>通信双方的身份认证：共享密钥或公钥证书</li>
+<li>协商IKE SA：以保护后继的IPsec SA协商过程</li>
+</ul>
+</li>
+<li><strong>快速模式协商</strong>：IPsec SA</li>
+</ul>
+<h3 id="传输层安全协议">传输层安全协议</h3>
+<p><strong>安全套接层 SSL</strong> (Secure Socket Layer)：</p>
+<ul>
+<li>是一种在应用层协议和TCP/IP之间提供数据安全性分层的机制，为TCP/IP连接提供数据加密、服务器认证、消息完整性以及可选的客户机认证</li>
+<li>SSL 由Netscape于1994年开发，广泛应用于基于万维网的各种网络应用（但不限于万维网应用，如http、telnet、NNTP、FTP等 ）</li>
+<li>1996年发布 SSL 3.0，成为 Web 安全的事实标准</li>
+<li>在发送方，SSL接收应用层的数据（如 HTTP 或 IMAP 报文），对数据进行加密，然后将加了密的数据送往 <strong>TCP</strong> 套接字；在接收方，SSL从 <strong>TCP</strong> 套接字读取数据，解密后将数据交给应用层</li>
+</ul>
+<p><strong>传输层安全 TLS</strong> (Transport Layer Security)：1999年，IETF 在 SSL 3.0 基础上推出了传输层安全标准 TLS，为所有基于 TCP 的网络应用提供安全数据传输服务</p>
+<p><strong>SSL的功能：</strong></p>
+<ul>
+<li>SSL服务器鉴别：允许<strong>用户证实服务器的身份</strong>——具有 SSL功能的浏览器维持一个表，维护可信赖的<strong>认证中心CA</strong>和它们的公钥</li>
+<li>SSL客户鉴别： SSL的可选安全服务，允许<strong>服务器证实客户的身份</strong></li>
+<li>加密的SSL会话：客户和服务器交互的所有数据都在发送方加密，在接收方解密</li>
+</ul>
+<h3 id="应用层安全协议">应用层安全协议</h3>
+<p><strong>PGP</strong> (Pretty Good Privacy)：提供<strong>电子邮件的保密性、发送方鉴别、完整性</strong>（一次一密）</p>
+<p>工作过程（A向B发邮件明文Ｘ）</p>
+<ul>
+<li>对明文X，计算MD5摘要H，用自己私钥签名形成D(H)，拼接原文得到报文（X+D(H)）</li>
+<li>用自己生成的一次性密钥加密（X+D(H)）</li>
+<li>用Ｂ公钥加密自己生成的一次性密钥</li>
+<li>向Ｂ发送加了密的（X+D(H)）、加密后的一次性密钥</li>
+</ul>
+<h2 id="访问控制和防火墙">访问控制和防火墙</h2>
+<h3 id="访问控制-2">访问控制</h3>
+<p><strong>访问控制</strong>：按用户身份来限制用户对某些信息项的访问，或限制对某些控制功能的使用——限制访问主体（如用户、进程等）对访问客体（如文件、系统等）的访问权限</p>
+<p>访问控制的<strong>三要素</strong>：主体、客体、权限——形成<strong>访问控制矩阵</strong></p>
+<p>访问控制矩阵的实际存储：</p>
+<ul>
+<li><strong>访问控制表</strong>：每个<strong>客体</strong>有一个访问控制表</li>
+<li><strong>访问能力表</strong>：每个<strong>主体</strong>有一个访问能力表</li>
+<li><strong>授权关系表</strong>：访问控制矩阵中的非空元素</li>
+</ul>
+<p>访问控制策略：</p>
+<ul>
+<li>自主访问控制（Discretionary Access Control，DAC）：<strong>主体</strong>可自主地将其拥有客体的访问权限全部或部分地授予其它主体</li>
+<li>强制访问控制（Mandatory Access Control，MAC）：<strong>系统</strong>将主体和客体分成不同的安全等级，主体和客体之间的安全等级符合一定要求，才可进行访问</li>
+<li>基于角色的访问控制策略：权限分配给角色，通过用户承担的角色来授予一定的权限</li>
+</ul>
+<blockquote>
+<p>这部分在操作系统的访问控制中也有涉及</p>
+</blockquote>
+<h3 id="防火墙">防火墙</h3>
+<p>防火墙 (firewall) ：是由软件、硬件构成的系统，一般部署需要保护的内部网络出口处，<strong>对该网络与外部网络之间的访问实施安全控制</strong></p>
+<p>防火墙的分类：</p>
+<ul>
+<li><strong>网络级</strong>防火墙：对<strong>网络报文</strong>进行分析，利用报文过滤技术，阻止不合理的网络连接或数据传递</li>
+<li><strong>应用级</strong>防火墙：使用应用网关或代理服务器技术，对特定的<strong>网络应用</strong>进行分析，以阻止非法的网络应用</li>
+</ul>
+<p>防火墙的技术发展：</p>
+<ul>
+<li><strong>包过滤</strong>：通过ACL检查数据流中每个数据包的源宿地址，端口号、协议状态等来确定是否允许该数据包通过</li>
+<li><strong>应用代理</strong>：工作在OSI模型的应用层，主要使用<strong>代理技术</strong>来阻断内部网络和外部网络之间的通信，达到<strong>隐藏内部网络</strong>的目的</li>
+<li><strong>状态检测</strong>：也被称作自适应防火墙或动态包过滤防火墙</li>
+<li><strong>UTM</strong>（Unified Threat Management，统一威胁管理） ，将IDP/IPS、反病毒、反垃圾邮件、URL过滤等功能集成在一起的防火墙设备产品</li>
+<li><strong>NGFW</strong>（Next Generation Firewall） ，即下一代防火墙，该防火墙不再基于端口而是<strong>基于应用程序</strong>来执行相关的安全策略</li>
+</ul>
+<h2 id="常见攻击类型和入侵检测">常见攻击类型和入侵检测</h2>
+<p>常见攻击类型：漏洞扫描、端口扫描、网络嗅探（sniffer）、拒绝服务攻击、欺骗攻击（ARP欺骗、IP欺骗、DNS欺骗等）</p>
+<p>入侵检测：指通过行为、安全日志、审计数据或其它网络上可获得的信息进行操作，检测到对系统的攻击或攻击企图</p>
+<p><strong>入侵检测系统IDS</strong>的分类：</p>
+<ul>
+<li>
+<p>依据<strong>数据来源</strong>的不同</p>
+<ul>
+<li><strong>主机</strong>入侵检测</li>
+<li><strong>网络</strong>入侵检测</li>
+<li><strong>混合分布式</strong>入侵检测系统</li>
+</ul>
+</li>
+<li>
+<p>依据<strong>数据分析</strong>方法的不同</p>
+<ul>
+<li>基于<strong>异常</strong>（如：机器学习）的入侵检测系统</li>
+<li>基于<strong>误用</strong>（如：规则）的入侵检测系统</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107235000080.png" alt="image-20250107235000080" style="zoom:80%;" />
+</li>
+</ul>
+<p><strong>IDS vs IPS vs FW vs WAF四种技术的对比</strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107235035312.png" alt="image-20250107235035312"></p>
+<h1>安全编程</h1>
+<h2 id="概述-2">概述</h2>
+<p>为什么要安全编程？</p>
+<ul>
+<li>保障数据安全：防止数据泄露、篡改和非法访问，确保用户隐私和业务连续性。</li>
+<li>防范网络攻击：提高代码安全性，减少漏洞，降低被黑客攻击的风险。</li>
+<li>提升软件质量：通过安全编程实践，减少因安全问题导致的软件故障和修复成本</li>
+</ul>
+<h2 id="安全编程原则">安全编程原则</h2>
+<ul>
+<li>
+<p><strong>了解威胁模型</strong>：威胁模型即攻击者是谁以及他们拥有什么资源的模型。要搞明白谁攻击我、为什么攻击我。</p>
+</li>
+<li>
+<p><strong>最小特权原则</strong>：考虑实体或程序需要什么权限才能正确完成工作。将权限限制为上下文的最小值。</p>
+<p>在评估系统设计的安全性时，可以使用<strong>可信计算基</strong>（Trusted Computing Base, TCB）。安全要求TCB是正确的、完整的（无法绕过）、本身是安全的（不能被篡改）</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250102195800887.png" alt="image-20250102195800887" style="zoom:67%;" />
+</li>
+<li>
+<p><strong>责任分离</strong>：也称为分布式信任。顾名思义就是负责A模块的人无权访问或者控制B模块功能。</p>
+</li>
+<li>
+<p><strong>确保完全调解/仲裁</strong>：确保每个接入点都受到监控和保护</p>
+<p><strong>参考监视器</strong>：所有访问都必须通过的单点（比如机场安检，在网络中比如防火墙）。参考监视器要具备的特性是正确性（可验证）、完整性（不能绕过）、安全性（不可篡改）</p>
+</li>
+<li>
+<p><strong>考虑人为因素</strong>：是个人都想怎么方便怎么来，然后人还容易犯错</p>
+</li>
+<li>
+<p><strong>从不发明安全技术</strong>：不要创建自己的安全技术，始终使用经过验证的组件。说白了就是自己菜没金刚钻不揽瓷器活。</p>
+</li>
+<li>
+<p><strong>安全即经济</strong>：成本/收益分析经常出现在安全方面：防御的预期收益应该与攻击的预期成本成正比。好钢用在刀刃上！</p>
+</li>
+</ul>
+<h2 id="安全编程实践">安全编程实践</h2>
+<p>SQL注入防护：</p>
+<ul>
+<li>参数化查询：使用参数化查询防止SQL注入，确保输入值被正确处理，而非直接嵌入SQL语句</li>
+<li>最小权限原则：遵循最小权限原则，限制数据库账号的权限，避免攻击者通过SQL注入获得更高的权限</li>
+</ul>
+<p>跨站脚本（XSS）防护：</p>
+<ul>
+<li>
+<p>输入验证：对用户输入进行严格的验证和过滤，防止恶意脚本的注入。</p>
+<blockquote>
+<p>对所有来自用户的输入进行严格的验证，确保它们符合预期的格式和类型；使用<strong>白名单技术来允许特定字符或字符集</strong>，并拒绝所有其他字符；清理或转义输入数据中的<strong>特殊字符</strong>（如&lt;, &gt;, &amp;, &quot;, ', (, ), #等），以防止它们被解释为HTML或JavaScript代码的一部分</p>
+</blockquote>
+</li>
+<li>
+<p>输出编码：对输出到HTML页面的数据进行适当的编码，确保恶意脚本不会被浏览器执行。</p>
+<blockquote>
+<p>在将用户输入的数据显示回浏览器之前，对其进行适当的HTML编码或JavaScript编码。这可以防止浏览器将用户输入当作HTML或JavaScript代码执行，而是将其显示为纯文本</p>
+</blockquote>
+</li>
+<li>
+<p>使用HTTP头：设置适当的HTTP头，如Content-Security-Policy，来限制外部资源的加载，减少XSS攻击的风险。</p>
+<blockquote>
+<p>CSP是一个额外的安全层，用于检测并减少某些类型的攻击，包括数据注入攻击。通过设置CSP，可以指示浏览器仅从可信来源加载资源，如脚本、样式表和字体</p>
+</blockquote>
+</li>
+</ul>
+<h1>语义分析</h1>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250102110955111.png" alt="image-20250102110955111"></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uB4y1i7pX?spm_id_from=333.788.videopod.sections&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">【编译原理期末版】第五章 语法制导翻译（1）思路清晰，快速判断综合属性和继承属性_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1yt4y1t7HC?spm_id_from=333.788.videopod.sections&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">【编译原理期末版】第五章 语法制导翻译（2），构造注释分析树，计算翻译结果，指出语义功能_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV12F411j7AX/?spm_id_from=333.1387.collection.video_card.click&amp;vd_source=e8e75c8a3156e152507ea0d6c7da00e4">编译原理第7章-语法制导的语义计算-1_哔哩哔哩_bilibili</a></p>
+<p>语义分析的结果就是为了产生中间代码，而我们希望在语法分析的同时就完成语义分析的相关内容，故称为<strong>语法制导翻译</strong>。</p>
+<h2 id="基于属性文法的语义计算">基于属性文法的语义计算</h2>
+<p><strong>属性文法</strong>：为<strong>文法符号</strong>（终结符、非终结符）配置若干属性，比如类型、值等；为<strong>产生式</strong>配置一组属性的语义动作，用于对属性进行计算与传递。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250102130359175.png" alt="image-20250102130359175" style="zoom:67%;" />
+<p>对于一个给定的输入串（比如<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>∗</mo><mn>5</mn><mo>+</mo><mn>4</mn><mi mathvariant="normal">#</mi></mrow><annotation encoding="application/x-tex">3*5+4\#</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">4#</span></span></span></span>），我们先构建其语法分析树，然后用语义规则来计算分析树各节点的属性值。把这些属性值都标在分析树上就是<strong>带注释的语法树</strong>。</p>
+<blockquote>
+<p>如何绘制带注释语法树：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV12F411j7AX/?share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=1559">https://www.bilibili.com/video/BV12F411j7AX/?share_source=copy_web&amp;vd_source=b52385681217343bb296f541bb29d8ed&amp;t=1559</a></p>
+</blockquote>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250102130757999.png" alt="image-20250102130757999" style="zoom:67%;" />
+<p>属性可以分为两类：综合属性和继承属性。</p>
+<ul>
+<li>
+<p>综合属性是来自于<strong>子节点属性或自己的属性</strong>算出来的，在语法树中体现为<strong>自下而上</strong>传递信息。</p>
+</li>
+<li>
+<p>继承属性来自于父节点与兄弟节点，在语法树中体现为<strong>自上而下</strong>传递信息。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250102133410707.png" alt="image-20250102133410707" style="zoom: 80%;" />
+<p>比如这里第一个<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">L.in</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span><span class="mord">.</span><span class="mord mathnormal">in</span></span></span></span>，其取值来自它的兄弟<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mi mathvariant="normal">.</mi><mi>t</mi><mi>y</mi><mi>p</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">T.type</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord">.</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">p</span><span class="mord mathnormal">e</span></span></span></span>，就属于继承属性；后面的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mn>1</mn></msub><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">L_{1}.in</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal">in</span></span></span></span>，其取值来自它的父亲<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">L.in</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span><span class="mord">.</span><span class="mord mathnormal">in</span></span></span></span>，也是继承属性。</p>
+</li>
+<li>
+<p><strong>仅使用综合属性的属性文法叫S-属性文法；含有综合属性也含有继承属性的文法叫L-属性文法。</strong></p>
+</li>
+</ul>
+<p>对于<strong>终结符</strong>而言，其<strong>可以具有综合属性</strong>，但是其综合属性直接<strong>由词法分析器</strong>给定，不会有计算终结符属性的语义规则；<strong>终结符没有继承属性。</strong></p>
+<p>对于非终结符而言，其综合属性的计算一定是当改非终结符位于<strong>产生式左边</strong>时计算。</p>
+<blockquote>
+<p>比如产生式<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi><mo>:</mo><mo>=</mo><msub><mi>E</mi><mn>1</mn></msub><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi><mo>+</mo><mi>T</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">E.val:=E_{1}.val+T.val</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>，其中的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">T.val</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>在产生式右边，那么其计算一定是在<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi><mo>:</mo><mo>=</mo><msub><mi>T</mi><mn>1</mn></msub><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi><mo>∗</mo><mi>F</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi><mtext>或者</mtext><mi>T</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi><mo>=</mo><mi>F</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">T.val:=T_{1}.val*F.val\text{或者}T.val=F.val</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord text"><span class="mord cjk_fallback">或者</span></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>中完成。</p>
+</blockquote>
+<p>那么属性值的计算应该按照什么顺序？</p>
+<p>课上讲的是通过<strong>依赖图</strong>的方式完成。当然也有其他方法。</p>
+<p>属性依赖：对于属性b，其要通过属性<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>c</mi><mn>2</mn></msub><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><msub><mi>c</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">c_{1},c_2,...,c_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>计算出来，就称属性b依赖于属性<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>c</mi><mn>2</mn></msub><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><msub><mi>c</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">c_{1},c_2,...,c_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。</p>
+<p>依赖图就是一个<strong>描述分析树中节点属性依赖关系的有向图</strong>。依赖图中每个节点代表一个属性，每条边代表谁依赖于谁（比如属性a依赖于属性b，那么就有一条从b指向a的边）</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104145045261.png" alt="image-20250104145045261" style="zoom:67%;" />
+<blockquote>
+<p>上图中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">E.val</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>依赖于<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>E</mi><mn>1</mn></msub><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">E_{1}.val</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">T.val</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>，所以由<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>E</mi><mn>1</mn></msub><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">E_{1}.val</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">T.val</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>有指向<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">E.val</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>的边。</p>
+</blockquote>
+<p>一个依赖图的任意<strong>拓扑排序</strong>即一个语法树中节点的语义规则计算有效顺序。</p>
+<blockquote>
+<p>拓扑排序的流程是这样的：对于有向无环图，选择一个入度为0的节点输出，并在图中删除该节点和所有以它为起点的边。重复该操作使得图为空即可。</p>
+</blockquote>
+<p><strong><u>例题</u></strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104152055827.png" alt="image-20250104152055827" style="zoom:67%;" />
+<p>利用上面的语义规则给出<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>∗</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">3*5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span>这个表达式的求值顺序：</p>
+<ul>
+<li>
+<p>用虚线画语法树</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104152508520.png" alt="image-20250104152508520" style="zoom: 25%;" />
+</li>
+<li>
+<p>往终结符或者非终结符旁边标属性。一般综合属性标右边，继承属性标左边。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104153129693.png" alt="image-20250104153129693" style="zoom:25%;" />
+</li>
+<li>
+<p>根据依赖关系画出依赖图，就能得出计算顺序（这里给每个属性标号方便查看，其中画波浪线的表明顺序可调换）</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104153649558.png" alt="image-20250104153649558" style="zoom:33%;" />
+</li>
+</ul>
+<h2 id="语法制导翻译SDT">语法制导翻译SDT</h2>
+<p>把语义规则放在{}里，插入到产生式的右侧合适位置上，进一步细化语义计算的时机。</p>
+<blockquote>
+<p>SDT可以看作是对 SDD 的⼀种补充，是 SDD 的具体实施⽅案，SDT 显式 地指明了语义规则的计算顺序，以便说明某些实现细节</p>
+</blockquote>
+<p>在课上讲的是针对L-属性文法进行SDT。首先是如何将原先的产生式和语义规则间的映射关系转换为SDT：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104165033036.png" alt="image-20250104165033036" style="zoom:67%;" />
+<ul>
+<li>对于继承属性，如这里的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>h</mi><mo>=</mo><mi>F</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">T&#x27;.inh=F.val</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal">inh</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">T&#x27;.inh</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal">inh</span></span></span></span>为继承属性，这种就放在产生式右部<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mrow><annotation encoding="application/x-tex">T&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span>的前面。还有这里的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>T</mi><mn>1</mn><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msubsup><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>h</mi><mo>=</mo><msup><mi>T</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>h</mi><mo>×</mo><mi>F</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">T_1&#x27;.inh=T&#x27;.inh\times F.val</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.2481em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-2.4519em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2481em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal">inh</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8352em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal">inh</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>也是一样的</li>
+<li>对于综合属性，就直接放在整个产生式右部的后面。</li>
+</ul>
+<p><strong><u>例子</u></strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104171000048.png" alt="image-20250104171000048" style="zoom:67%;" />
+<ul>
+<li>L_en和L_bd不依赖于其他属性，它们可以被分配到产⽣式的第⼀个语义动作中</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi mathvariant="normal">.</mi><mi>f</mi><mi>a</mi><mi>l</mi><mi>s</mi><mi>e</mi><mo>=</mo><mi>S</mi><mi mathvariant="normal">.</mi><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">C.false=S.next</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">se</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord">.</span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mord mathnormal">x</span><span class="mord mathnormal">t</span></span></span></span>中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi mathvariant="normal">.</mi><mi>f</mi><mi>a</mi><mi>l</mi><mi>s</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">C.false</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">se</span></span></span></span>为继承属性，放在C的前面</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi mathvariant="normal">.</mi><mi>t</mi><mi>r</mi><mi>u</mi><mi>e</mi><mo>=</mo><mi>L</mi><mi mathvariant="normal">_</mi><mi>b</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">C.true=L\_bd</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord">.</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0044em;vertical-align:-0.31em;"></span><span class="mord mathnormal">L</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal">b</span><span class="mord mathnormal">d</span></span></span></span>中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi mathvariant="normal">.</mi><mi>t</mi><mi>r</mi><mi>u</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">C.true</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord">.</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span></span></span></span>为继承属性，放在C的前面</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mn>1</mn></msub><mi mathvariant="normal">.</mi><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi><mo>=</mo><mi>L</mi><mi mathvariant="normal">_</mi><mi>e</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">S_1.next=L\_en</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mord mathnormal">x</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9933em;vertical-align:-0.31em;"></span><span class="mord mathnormal">L</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span></span></span></span>中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mn>1</mn></msub><mi mathvariant="normal">.</mi><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">S_1.next</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mord mathnormal">x</span><span class="mord mathnormal">t</span></span></span></span>为继承属性，放在S1的前面</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi mathvariant="normal">.</mi><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">S.code</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord">.</span><span class="mord mathnormal">co</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span></span></span></span>那句是综合属性，放最后</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104172244925.png" alt="image-20250104172244925" style="zoom:67%;" />
+<h2 id="递归下降分析进行翻译">递归下降分析进行翻译</h2>
+<p>仍然以上面那个while为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">string S(label next) &#123;</span><br><span class="line">	//先把SDT中用到的各种属性初始化</span><br><span class="line">	string s_code, c_code;</span><br><span class="line">	label L_en, L_bd;</span><br><span class="line">	//检测到while</span><br><span class="line">	if (current input == token while) &#123;</span><br><span class="line">		advance input;</span><br><span class="line">		//检测左括号</span><br><span class="line">		check ‘(’ is the next, and advance;</span><br><span class="line">		//有左括号，开始走SDT中第一行</span><br><span class="line">		L_en = new_label();</span><br><span class="line">		L_bd = new_label();</span><br><span class="line">		c_code = C(next, L_bd);</span><br><span class="line">		//检测右括号</span><br><span class="line">		check ‘)’ is the next, and advance;</span><br><span class="line">		//有右括号，开始走SDT中第二行</span><br><span class="line">		s_code = S(L_en);</span><br><span class="line">		//走SDT第三行</span><br><span class="line">		return(“label”||L_en||c_code||L_bd||s_code)</span><br><span class="line">&#125;</span><br><span class="line">	else for other statement types</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一般而言，在写递归下降程序时，基本套路是这样的：</p>
+<ul>
+<li>为每个非终结符A都构造一个函数。<strong>函数的参数是A的每个继承属性；返回值为A的综合属性</strong></li>
+<li>在程序中，首先要为出现在A产生式右边的每个文法符号的每个属性都设置一个<strong>局部变量</strong>。用<code>D:</code>表示</li>
+</ul>
+<p><u><strong>例子</strong></u></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104165033036.png" alt="image-20250104165033036" style="zoom:67%;" />
+<p>首先是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mrow><annotation encoding="application/x-tex">T&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span>这两行，继承属性为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">T&#x27;.inh</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal">inh</span></span></span></span>，综合属性为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mi mathvariant="normal">.</mi><mi>s</mi><mi>y</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">T&#x27;.syn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9463em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">sy</span><span class="mord mathnormal">n</span></span></span></span>，则程序为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">T&#x27;syn T&#x27;(token, T&#x27;inh)&#123;</span><br><span class="line">	D: T1&#x27;inh, Fval, T1&#x27;syn;</span><br><span class="line">	//第2条</span><br><span class="line">	if(token==&#x27;*&#x27;)&#123;</span><br><span class="line">		Fval = F(token);</span><br><span class="line">		T1&#x27;inh = T&#x27;inh $\times$ Fval;</span><br><span class="line">		Getnext(token)</span><br><span class="line">		T1&#x27;syn = T1&#x27;(token,T1&#x27;inh);//调用自己</span><br><span class="line">		T&#x27;syn = T1&#x27;syn;</span><br><span class="line">		return T&#x27;syn;</span><br><span class="line">	&#125;</span><br><span class="line">	//第3条</span><br><span class="line">	else if(token==&#x27;$&#x27;)&#123;</span><br><span class="line">		T&#x27;syn = T&#x27;inh;</span><br><span class="line">		return T&#x27;syn;</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		error;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>比如这里T这行，没有T的继承属性，T的综合属性是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">T.val</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>，所有的局部变量为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>h</mi><mo separator="true">,</mo><mi>F</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi><mo separator="true">,</mo><msup><mi>T</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mi mathvariant="normal">.</mi><mi>s</mi><mi>y</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">T&#x27;.inh,F.val,T&#x27;.syn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9463em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal">inh</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">sy</span><span class="mord mathnormal">n</span></span></span></span>，则其递归下降程序如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Tval T(token)&#123;</span><br><span class="line">	D: T&#x27;inh, Fval, T&#x27;syn;</span><br><span class="line">	Fval = F(token);</span><br><span class="line">	T&#x27;inh = Fval;</span><br><span class="line">	Getnext(token);</span><br><span class="line">	T&#x27;syn = T&#x27;(token,T&#x27;inh);</span><br><span class="line">	Tval = T&#x27;syn;</span><br><span class="line">	return Tval;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后F那行，没有继承属性，综合属性是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">F.val</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Fval F(token)&#123;</span><br><span class="line">	if token is not digit return error;</span><br><span class="line">	Fval=token.lexval;</span><br><span class="line">	return Fval;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="LL、LR语法分析">LL、LR语法分析</h2>
+<p>TODO</p>
+<p>11.15课2</p>
+<h1>中间代码生成</h1>
+<h2 id="中间代码">中间代码</h2>
+<p>中间代码：顾名思义就是在编译过程中产生的代码。从广义上说其包括抽象语法树AST、控制流图CFG等；从狭义上说就是一种中间表示IR。</p>
+<p><strong>如何实现中间表示：</strong></p>
+<ul>
+<li>
+<p>三地址码：每个指令<strong>最多</strong>只有3个操作数（当然2个也行）</p>
+<blockquote>
+<p>比如a=b+c，abc就是3个操作数；a+b+c这种没有等号的就不是指令</p>
+</blockquote>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104202711776.png" alt="image-20250104202711776" style="zoom: 80%;" />
+</li>
+<li>
+<p>静态单赋值形式SSA：每个变量在程序中只会被使用一次，有利于进行某些代码优化</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104203224140.png" alt="image-20250104203224140" style="zoom: 80%;" />
+</li>
+</ul>
+<h2 id="表达式的翻译">表达式的翻译</h2>
+<p>![屏幕截图 2025-01-04 203718](<a target="_blank" rel="noopener" href="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE">https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/屏幕截图</a> 2025-01-04 203718.jpg)</p>
+<h2 id="类型检查">类型检查</h2>
+<p>类型检查有两种形式：<strong>综合和推导</strong></p>
+<h3 id="类型综合">类型综合</h3>
+<p>类型函数<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span>，其返回值为一个类型。记<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo separator="true">,</mo><mi>s</mi></mrow><annotation encoding="application/x-tex">t,s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8095em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">s</span></span></span></span>为两个type值，存在一个映射关系<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo>→</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">s\rightarrow t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span>，x的type值为s，则f(x)的type值为t。</p>
+<p><strong>类型转换</strong>：有两种转换方式</p>
+<ul>
+<li>自动类型转换：由编译器自动完成</li>
+<li>强制类型转换：由人指定</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104210433863.png" alt="image-20250104210433863" style="zoom:67%;" />
+<p><strong>语义动作：</strong></p>
+<ul>
+<li><code>max(t1, t2)</code>：在拓宽类型情况下，返回t1和t2哪个更精度高的<strong>类型</strong>。比如t1是int类，t2是double类，返回值就是double。</li>
+<li><code>widen(a, t, w)</code>：将类型为t的地址a中的内容转换成w类型的值，并返回a</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104211231156.png" alt="image-20250104211231156" style="zoom:50%;" />
+<h3 id="类型推导">类型推导</h3>
+<p>类型推导即根据语言构造的使用方式确定语言构造的类型。</p>
+<blockquote>
+<p>如果<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span>是一个表达式，那对于类型变量a和b，f有映射关系<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>→</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a\rightarrow b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>且x的类型为a，则<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span>的类型为b。</p>
+</blockquote>
+<p><strong>多态函数</strong>：支持多模态的输入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fun length(x) = if null(x) then 0 else length(tl(x)) + 1;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>列表x：该列表内的元素一定是统一的，比如都是int这种</p>
+</li>
+<li>
+<p>length：该函数用于确定列表的长度（列表中元素的个数）</p>
+<p>即<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>任意</mtext><mi>α</mi><mo separator="true">,</mo><mi>l</mi><mi>i</mi><mi>s</mi><mi>t</mi><mo stretchy="false">(</mo><mi>α</mi><mo stretchy="false">)</mo><mo>→</mo><mi>i</mi><mi>n</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\text{任意}\alpha,list(\alpha)\rightarrow int</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord cjk_fallback">任意</span></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">i</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">in</span><span class="mord mathnormal">t</span></span></span></span>，其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span>为某类型变量。</p>
+</li>
+<li>
+<p>null(x)：用于判断列表空或非空，其返回bool类型</p>
+</li>
+<li>
+<p>tl(x)：把列表中第一个元素去除，返回一个新列表</p>
+</li>
+</ul>
+<h2 id="控制流">控制流</h2>
+<p>控制流即程序指令的执行顺序，是通过布尔表达式来实现的。</p>
+<p>常见的布尔表达式有：</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>→</mo><mi>B</mi><mi mathvariant="normal">∥</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">B\rightarrow B \Vert B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord">∥</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span></li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>→</mo><mi>B</mi><mi mathvariant="normal">&amp;</mi><mi mathvariant="normal">&amp;</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">B\rightarrow B \&amp;\&amp; B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord">&amp;&amp;</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span></li>
+<li>$B\rightarrow !B $</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>→</mo><mi>E</mi><mo>⊖</mo><mi>E</mi><mo separator="true">,</mo><mi>T</mi><mi>r</mi><mi>u</mi><mi>e</mi><mo separator="true">,</mo><mi>F</mi><mi>a</mi><mi>l</mi><mi>s</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">B\rightarrow E\ominus E ,True,False</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⊖</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">se</span></span></span></span>，这里的E是数学表达式，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⊖</mo></mrow><annotation encoding="application/x-tex">\ominus</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord">⊖</span></span></span></span>是关系运算符（&lt;，&lt;=，==这种）</li>
+<li>优先级（高到低）：否、与、或</li>
+</ul>
+<p><strong>短路（跳转）代码</strong>：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104221652298.png" alt="image-20250104221652298" style="zoom: 67%;" />
+<p>注意这里的优先级！第1行的意思就是如果x&lt;100是True，而后面那个x&gt;200&amp;&amp;x!=y无所谓是啥，if一定是true，就直接做L2处的赋值语句。</p>
+<p>**控制流语句：**有3种</p>
+<ul>
+<li>S ⟶ if ( B ) S1</li>
+<li>S ⟶ if ( B ) S1 else S2</li>
+<li>S ⟶ while ( B ) S1</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250104222536822.png" alt="image-20250104222536822"></p>
+<p><strong>如何用控制流去写语义规则？</strong></p>
+<p>TODO</p>
+<p>11.22课2</p>
+<h1>目标代码生成与基本块优化</h1>
+<h2 id="目标代码生成器所面临的问题">目标代码生成器所面临的问题</h2>
+<ul>
+<li>
+<p><strong>代码生成器的输⼊</strong>：中间表示方法有很多种，比如三地址码、树、有向无环图等</p>
+</li>
+<li>
+<p><strong>目标程序</strong>：构造⼀个能产⽣⾼质量机器代码的代码⽣成器的难度会受到⽬标机器的指令集体系结构的极⼤影响</p>
+<ul>
+<li>
+<p>常见的<strong>指令集架构</strong>： CISC (复杂指令集计算机) vs. RISC (精简指令集计算机) vs. Stack-based (基于堆栈的结构)  Machine</p>
+</li>
+<li>
+<p><strong>地址模式</strong>的不同：Absolute (绝对地址) Machine-language Program vs. Relocatable (可重定位) Program。使⽤绝对地址的机器语⾔程序的优点是程序可以放在内存中的某个固定位置上，并⽴即执⾏；可重定位代码的内存位置不固定</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>指令选择</strong>：使用什么样的指令去实现目标代码。</p>
+<ul>
+<li>IR的层次： 高层次SRC（更贴近于高级语言，不利于深度优化）、低层次BIN（更高效的代码序列）</li>
+<li>指令集体系结构本身的特性
+<ul>
+<li>uniformity (统⼀性) vs. special cases</li>
+<li>instruction speed (指令速度) vs. machine idioms  (机器的特有⽤法)</li>
+</ul>
+</li>
+<li>想要达到的⽣成代码的质量： speed (运⾏速度) vs. size (⼤⼩)</li>
+</ul>
+</li>
+<li>
+<p><strong>寄存器分配：<strong>决定</strong>哪个值</strong>放在<strong>哪个寄存器</strong>里</p>
+<ul>
+<li>寄存器分配：给定寄存器，选哪个变量进去</li>
+<li>寄存器指派：给定变量，选哪个寄存器处理该变量</li>
+<li>这是一个NP-complete问题，没有最优解</li>
+</ul>
+</li>
+<li>
+<p><strong>求值顺序</strong>：用什么顺序来执行计算操作，也是NP-complete问题</p>
+</li>
+</ul>
+<h2 id="目标语言">目标语言</h2>
+<h3 id="基本概念">基本概念</h3>
+<p><strong>基本操作</strong>如下：</p>
+<ul>
+<li>
+<p>Load (加载运算) and Store (保存运算): LD and ST</p>
+<ul>
+<li>LD dst, addr  //把位置addr上的值加载到位置dst</li>
+<li>ST x, r  // 把寄存器r中的值保存到位置x，表示赋值x = r</li>
+</ul>
+</li>
+<li>
+<p>Arithmetic (计算运算): ADD, SUB, MUL</p>
+<p>OP dst, src1, src2  // OP所代表的运算作⽤于位置src1和src2中的值上，并把结果放到位置 dst中</p>
+</li>
+<li>
+<p>Unconditional Jump (⽆条件跳转): BR L  //控制流转向标号为L的机器指令</p>
+</li>
+<li>
+<p>Conditional Jumps (条件跳转): BCC, e.g., BLTZ r, L。BLTZ即Branch Less Than Zero，小于0跳转。</p>
+</li>
+</ul>
+<p><strong>寻址模式：</strong></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250105212111255.png" alt="image-20250105212111255" style="zoom:80%;" />
+<p>把汇编代码转换为高级语言（学计组学的）：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250105212737125.png" alt="image-20250105212737125" style="zoom:80%;" />
+<h3 id="基本块与流图">基本块与流图</h3>
+<p><strong>基本块</strong>：最⼤的连续（三地址）指令序列。在基本块中，只要第一条指令被执行，其余所有指令都能被执行</p>
+<p>如何确定<strong>首指令（基本块的第一个指令）</strong>：</p>
+<ul>
+<li>中间代码IR的第一条指令</li>
+<li>条件或无条件跳转的目标指令</li>
+<li>跟在条件或无条件跳转后面的那条指令</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250105214509897.png" alt="image-20250105214509897" style="zoom:67%;" />
+<p>在上图中按照刚才的定义，首指令分别为：</p>
+<ul>
+<li>中间代码IR的第一条指令：1</li>
+<li>条件或无条件跳转的目标指令：3、2、13</li>
+<li>跟在条件或无条件跳转后面的那条指令：10、12</li>
+</ul>
+<p>按照首指令对IR进行分隔就能得到基本块：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250105214658441.png" alt="image-20250105214658441" style="zoom:67%;" />
+<p><strong>通过基本块生成控制流图CFG</strong>：CFG中每个节点代表每个基本块；每条边代表怎么跳转。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250105215146697.png" alt="image-20250105215146697" style="zoom:80%;" />
+<h3 id="基本块的优化">基本块的优化</h3>
+<p>优化有两种方式：</p>
+<ul>
+<li><strong>局部优化</strong>：在基本块内部的优化</li>
+<li><strong>全局优化</strong>：基本块之间的优化</li>
+<li>为了进行优化需要绘制有向无环图DAG
+<ul>
+<li>叶子节点：初始化的变量</li>
+<li>中间节点：中间变量以及做了哪些操作</li>
+<li>边：表示变量和操作间有关系</li>
+</ul>
+</li>
+</ul>
+<p><u><strong>例子</strong></u>：绘制DAG图</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250105221142692.png" alt="image-20250105221142692" style="zoom:67%;" />
+<p><strong>有哪些优化方法？</strong></p>
+<ul>
+<li>
+<p><strong>寻找公共子表达式</strong>：对于重复的表达式可以删掉一个。</p>
+<p>例如上图中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>=</mo><mi>a</mi><mo>−</mo><mi>d</mi></mrow><annotation encoding="application/x-tex">b=a-d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mo>=</mo><mi>a</mi><mo>−</mo><mi>d</mi></mrow><annotation encoding="application/x-tex">d=a-d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span>是一样的（从DAG图中也能看出）</p>
+<p>但是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mi>b</mi><mo>+</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">a=b+c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>=</mo><mi>b</mi><mo>+</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">c=b+c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span>并不一样，因为参数b被改过了</p>
+</li>
+<li>
+<p><strong>代数恒等式的使⽤</strong>：比如<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x\times1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>就是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250105221821284.png" alt="image-20250105221821284" style="zoom:67%;" />
+</li>
+<li>
+<p><strong>强度消减</strong>：把乘法换加法，除法换乘法</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250105221859363.png" alt="image-20250105221859363" style="zoom:67%;" />
+</li>
+<li>
+<p><strong>常量合并</strong>：比如<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>3.14</mn></mrow><annotation encoding="application/x-tex">2\times3.14</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3.14</span></span></span></span>直接换成6.28；或者上面计算过的值拿下来接着用</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250105222007048.png" alt="image-20250105222007048" style="zoom:67%;" />
+</li>
+<li>
+<p><strong>数组引⽤的表示</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始代码</span></span><br><span class="line">x = a[i]</span><br><span class="line">a[j] = y</span><br><span class="line">z = a[i]</span><br><span class="line"><span class="comment">//是否能直接转换为以下代码？</span></span><br><span class="line">x = a[i]</span><br><span class="line">a[j] = y</span><br><span class="line">z = x</span><br><span class="line"><span class="comment">//当i!=j的时候才行，如果i==j就又会重新赋值了</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>复制传播</strong>：复制传播的基本思想是在复制语句u = v之后尽可能⽤v来替代u</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107110555798.png" alt="image-20250107110555798" style="zoom:80%;" />
+<p>这样改了以后可能就不需要<code>x=t3</code>这条代码了。此时我们把<code>x=t3</code>称为死代码，我们要对死代码进行消除。</p>
+</li>
+<li>
+<p><strong>代码移动</strong>：把循环中的计算移出循环</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107110758974.png" alt="image-20250107110758974" style="zoom:80%;" />
+</li>
+<li>
+<p><strong>归纳变量</strong>：在循环中多次递变的值（就是<code>i++</code>的i）看看能不能拿到循环外</p>
+</li>
+<li>
+<p><strong>窥孔优化</strong>：检查目标指令的滑动窗口，并将窗口内的指令替换为等价但更高效的指令序列（不能保证是全局最优）</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250108013156573.png" alt="image-20250108013156573" style="zoom:80%;" />
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250108013212555.png" alt="image-20250108013212555" style="zoom:80%;" />
+</li>
+</ul>
+<h2 id="寄存器分配和指派">寄存器分配和指派</h2>
+<p><strong>全局寄存器分配</strong>：对于一些频繁使用的变量而言，会倾向于把这些变量放到寄存器中。</p>
+<p><strong>循环中的全局寄存器分配</strong>：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250105230040553.png" alt="image-20250105230040553" style="zoom:67%;" />
+<p>上图中B指基本块，x指变量。</p>
+<p><strong><u>例子</u></strong></p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250105231027086.png" alt="image-20250105231027086"></p>
+<p>上图中的C(a)的use是在B2、B3中2次；hot在B1中1次。所以C(a)=4。</p>
+<p><strong>图着色法进行寄存器分配：</strong></p>
+<p>用于解决当所有寄存器都在使用时，又需求新的寄存器，就要有一个寄存器要被存到内存里去（溢出）。可以通过图着色法保证溢出的损失最小。</p>
+<p>如何绘制<strong>寄存器冲突图</strong>：</p>
+<ul>
+<li>节点：符号化的寄存器</li>
+<li>边：一头是活跃变量，另一头是被定义的变量</li>
+<li>有k个寄存器就有k种颜色</li>
+<li>对图进行涂色，一个节点一种颜色，相邻节点颜色不同。</li>
+</ul>
+<p>TODO：这里去找找例子看看</p>
+<h2 id="通过树重写来选择指令">通过树重写来选择指令</h2>
+<h2 id="表达式的优化代码的⽣成">表达式的优化代码的⽣成</h2>
+<p>TODO：11.29 课2 35:04</p>
+<h1>机器无关优化</h1>
+<h2 id="概述-3">概述</h2>
+<p>评估程序分析：</p>
+<ul>
+<li><strong>SOUNDNESS</strong> (don’t miss any error，不会遗漏) (可靠性)
+<ul>
+<li>soundness – Truth = False Positive (误报)</li>
+<li>Over-Approximation</li>
+</ul>
+</li>
+<li><strong>COMPLETENESS</strong> (don’t raise false alarms，不会检出错误结果)  (完备性)
+<ul>
+<li>Truth – completeness = False Negative (漏报)</li>
+<li>Under-Approximation</li>
+</ul>
+</li>
+<li>可靠性和完备性没有交集，我们做程序分析的目的是在两者中达到平衡。一般在程序安全中，<strong>漏报更加严重，即可靠性指标更加重要</strong>，我们会更着重考虑这个。</li>
+</ul>
+<p>莱斯定理：程序的属性不可判定（⽐如程序是否有内存泄露、是否可以被优化等）</p>
+<h2 id="数据流分析">数据流分析</h2>
+<h3 id="什么是数据流分析DFA">什么是数据流分析DFA</h3>
+<p>数据流：一个变量从被定义到被使用的数据流向</p>
+<p>数据流图：用于表示数据流关系</p>
+<ul>
+<li>节点：变量</li>
+<li><strong>有向边</strong>：定义-使用关系</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107112930029.png" alt="image-20250107112930029"></p>
+<blockquote>
+<p>数据流和控制流不同</p>
+<p>控制流：语句执行的顺序</p>
+<p>控制流图：节点表示一行代码或基本块；边表示执行顺序</p>
+<p>给你一段程序，要会画控制流图：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107114452017.png" alt="image-20250107114452017" style="zoom:80%;" />
+<p>上图中属于statement级别的CFG；可以把s2和s3合并为BB1基本块（其他的就是一行代码一个基本块）</p>
+</blockquote>
+<p><strong>数据流分析DFA</strong>：一种收集程序中各点可能计算值的信息的技术。作为静态分析而言，输入不同，再加上程序中的条件跳转语句，在程序中某点上的数据会不一致。</p>
+<blockquote>
+<p>我们会关注Program Point，即每行statement之前和之后的位置</p>
+</blockquote>
+<p><u><strong>例子</strong></u>：以上面那个控制流函数为例画一下数据流图：</p>
+<p>首先考虑进入while循环前的情况：这个很容易</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107120308608.png" alt="image-20250107120308608" style="zoom: 67%;" />
+<p>接下来看I(BB3)：注意这里是静态分析，我们要考虑所有可能的情况。那么I(BB3)中a的取值可以是来自T的1，也可以是来自F的2：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107120510519.png" alt="image-20250107120510519" style="zoom:67%;" />
+<p>最后在while循环中，BB4的output又会作为BB3的input，即I(BB3)中的a应该是两次的并集，即1，2，3。同理这个while循环接着下去，最后I(BB3)应该是1~9。</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107122813198.png" alt="image-20250107122813198" style="zoom:67%;" />
+<p><strong>静态分析的种类</strong>：</p>
+<ul>
+<li>
+<p>正向分析与反向分析：正向分析就是从entry到exit；反向分析就是反过来</p>
+</li>
+<li>
+<p>可能性和必然性分析：</p>
+<p>可能性分析：output may be true，会导致 over-approximation</p>
+<p>必然性分析：output must be true，会导致under-approximation</p>
+</li>
+</ul>
+<blockquote>
+<p>下面开始讲DFA的应用</p>
+</blockquote>
+<h3 id="活跃（或存活）变量分析LVA">活跃（或存活）变量分析LVA</h3>
+<p><strong>活跃变量</strong>：从程序某节点p到程序结束的某路径下，该变量的<strong>值</strong>能够被使用；否则就称该变量是死（dead）的。</p>
+<p>![屏幕截图 2025-01-07 124312](<a target="_blank" rel="noopener" href="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE">https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/屏幕截图</a> 2025-01-07 124312.jpg)</p>
+<p><strong>LVA属于后向可能性分析。</strong></p>
+<p>在LVA中，指令或块通过使用变量值来使其活跃；重定义变量值来使原变量值dead。</p>
+<p>在这里确定表达式或块的输入时，采用以下的公式：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>I</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">[</mo><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mi>d</mi><mi>e</mi><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo stretchy="false">]</mo><mo>∪</mo><mi>u</mi><mi>s</mi><mi>e</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mtext>，这里的n指代码行或基本块</mtext></mrow><annotation encoding="application/x-tex">I(n)=[O(n)/def(n)]\cup use(n)\text{，这里的n指代码行或基本块}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mord">/</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">u</span><span class="mord mathnormal">se</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mord text"><span class="mord cjk_fallback">，这里的</span><span class="mord">n</span><span class="mord cjk_fallback">指代码行或基本块</span></span></span></span></span></span></p>
+<p>当面临分支时，输出的确定按以下公式：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><munder><mo>⋃</mo><mrow><mi>s</mi><mo>∈</mo><mi>s</mi><mi>e</mi><mi>c</mi><mi>c</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow></munder><mi>I</mi><mo stretchy="false">(</mo><mi>s</mi><mo stretchy="false">)</mo><mtext>，这里的secc指后继节点</mtext></mrow><annotation encoding="application/x-tex">O(n)=\bigcup_{s\in secc(n)}I(s)\text{，这里的secc指后继节点}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.566em;vertical-align:-1.516em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.05em;"><span style="top:-1.809em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">s</span><span class="mrel mtight">∈</span><span class="mord mathnormal mtight">secc</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">n</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">⋃</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.516em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mclose">)</span><span class="mord text"><span class="mord cjk_fallback">，这里的</span><span class="mord">secc</span><span class="mord cjk_fallback">指后继节点</span></span></span></span></span></span></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107132619631.png" alt="image-20250107132619631" style="zoom:67%;" />
+<p>即上图中<code>b=5</code>这行代码的output来自于<code>m=a+7</code>和<code>n=b-11</code>这两个后继节点的input的并集。</p>
+<p>其算法表示如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Input: a Control Flow Graph G</span><br><span class="line">Output: I(B) and O(B) for each Basic Block B</span><br><span class="line">Algorithm LVA:</span><br><span class="line"></span><br><span class="line">for (each basic block b in G)</span><br><span class="line">	I(b) = &#123;&#125;//初始化</span><br><span class="line">	</span><br><span class="line">while (any I changes)</span><br><span class="line">	for (each basic block b in G\exit) &#123;</span><br><span class="line">		O(b) = ∪s为b的后继节点I(s)</span><br><span class="line">		I(b) = (O(b) \ def(b)) ∪ use(b)</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p><strong><u>例子</u></strong>：对CFG图做LVA</p>
+<p>初始下情况：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250108003131656.png" alt="image-20250108003131656"></p>
+<p>I改变后一次情况：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250108003143313.png" alt="image-20250108003143313"></p>
+<h3 id="可用表达式分析AEA">可用表达式分析AEA</h3>
+<p>可用表达式：对于表达式e而言，从其出现到程序点P，在<strong>任意</strong>的路径上都没有被修改过（表达式中的某个变量被重新定义过），则称e为可用表达式</p>
+<p><strong>AEA属于正向必然性分析。</strong></p>
+<p>在AEA中，用表达式在进行计算称为生成；如果任意其中的一个变量被定义了，就称为消灭。</p>
+<p>在这里确定表达式或块的输出时，采用以下的公式：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">[</mo><mi>I</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>∪</mo><mi>g</mi><mi>e</mi><mi>n</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo stretchy="false">]</mo><mi mathvariant="normal">/</mi><mi>k</mi><mi>i</mi><mi>l</mi><mi>l</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mtext>，这里的n指代码行或基本块</mtext></mrow><annotation encoding="application/x-tex">O(n)=[I(n)\cup gen(n)]/ kill(n)\text{，这里的n指代码行或基本块}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)]</span><span class="mord">/</span><span class="mord mathnormal">ki</span><span class="mord mathnormal" style="margin-right:0.01968em;">ll</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mord text"><span class="mord cjk_fallback">，这里的</span><span class="mord">n</span><span class="mord cjk_fallback">指代码行或基本块</span></span></span></span></span></span></p>
+<p>当面临分支时，输入的确定按以下公式：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>I</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><munder><mo>⋂</mo><mrow><mi>p</mi><mo>∈</mo><mi>p</mi><mi>r</mi><mi>e</mi><mi>d</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow></munder><mi>O</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mtext>，这里的pred指前序节点</mtext></mrow><annotation encoding="application/x-tex">I(n)=\bigcap_{p\in pred(n)}O(p)\text{，这里的pred指前序节点}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.566em;vertical-align:-1.516em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.05em;"><span style="top:-1.809em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mrel mtight">∈</span><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight">re</span><span class="mord mathnormal mtight">d</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">n</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">⋂</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.516em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span><span class="mord text"><span class="mord cjk_fallback">，这里的</span><span class="mord">pred</span><span class="mord cjk_fallback">指前序节点</span></span></span></span></span></span></p>
+<p>其算法表示如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Input: a Control Flow Graph G</span><br><span class="line">Output: I(B) and O(B) for each Basic Block B</span><br><span class="line"></span><br><span class="line">Algorithm AEA:</span><br><span class="line">O(entry) = &#123; &#125;/entry是空集</span><br><span class="line">for (each b in G\entry)</span><br><span class="line">	O(b) = ∪//初始化，除entry外的是全集</span><br><span class="line">while (any O changes)</span><br><span class="line">	for (each b in G\entry) &#123;</span><br><span class="line">		I(b) = ∩∈p为b的前序节点O(p)</span><br><span class="line">		O(b) = (I(b) ∪ gen(b)) \ kill(b)</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p><u><strong>例子</strong></u>：AEA</p>
+<p><strong>在进行AEA时，我们必须以BB为单位来进行分析，不能逐行代码来分析！</strong></p>
+<p>初次：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250108005639993.png" alt="image-20250108005639993"></p>
+<p>再来一轮没有变化。</p>
+<h2 id="数据流分析理论">数据流分析理论</h2>
+<h3 id="格Lattice">格Lattice</h3>
+<p>定义：偏序集<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>P</mi><mo separator="true">,</mo><mo>⊑</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(P,\sqsubseteq)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⊑</span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mclose">)</span></span></span></span>，且对于<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∀</mi><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>∈</mo><mi>P</mi><mo separator="true">,</mo><mi>a</mi><mo>⊔</mo><mi>b</mi><mtext>和</mtext><mi>a</mi><mo>⊓</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">\forall a,b \in P,a\sqcup b \text{和}a\sqcap b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">∀</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⊔</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mord text"><span class="mord cjk_fallback">和</span></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⊓</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>存在，则称P为格。</p>
+<ul>
+<li>偏序集：对于P中的一对集合元素，它们是不可比较的</li>
+<li>$a\sqcup b $：上确界（最小上界）</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>⊓</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a\sqcap b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5556em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⊓</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>：下确界（最大下界）</li>
+</ul>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⊑</mo></mrow><annotation encoding="application/x-tex">\sqsubseteq</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">⊑</span></span></span></span>（偏序）是一种定义在P上的二元关系，其满足<strong>自反、反对称、传递性</strong>：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107162615176.png" alt="image-20250107162615176" style="zoom:67%;" />
+<p><strong>如何判断一个偏序集是不是格？</strong></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/618016174">离散函数—哈斯图的画法 - 知乎</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/WUDIxi/article/details/115010786">如何从哈斯图判断一个偏序集是不是格？_怎么判断偏序集是否为格-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43391414/article/details/116022212">偏序集、偏序关系和格-CSDN博客</a></p>
+<p>上界和下界的确定：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107164857532.png" alt="image-20250107164857532" style="zoom:67%;" />
+<p>例如我这里要确定S的上下界：</p>
+<ul>
+<li>
+<p>对于P中的一个元素u，其满足对<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∀</mi><mi>x</mi><mo>∈</mo><mi>S</mi><mo separator="true">,</mo><mi>x</mi><mo>⊑</mo><mi>u</mi></mrow><annotation encoding="application/x-tex">\forall x\in S,x\sqsubseteq u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.0391em;"></span><span class="mord">∀</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⊑</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span>，则u为S的上界</p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⊔</mo></mrow><annotation encoding="application/x-tex">\sqcup</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5556em;"></span><span class="mord">⊔</span></span></span></span>S记为S的上确界</p>
+</li>
+<li>
+<p>下界和下确界的定义反过来就行</p>
+</li>
+<li>
+<p>上下确界不一定在S中，只需要在P中即可</p>
+</li>
+</ul>
+<p><strong>并不是所有偏序集都有上下确界；有上下确界的偏序集是唯一的。</strong></p>
+<p>叉乘格：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250108011325638.png" alt="image-20250108011325638"></p>
+<p>全格：对于格P，其<strong>任意</strong>子集格S上下确界都存在，则称P为全格</p>
+<p>几个定义：</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250108011620004.png" alt="image-20250108011620004"></p>
+<p>结论：</p>
+<ul>
+<li>任意非空有穷的格是全格，但全格不⼀定都是非空有穷的格</li>
+<li>一堆全格的叉乘格也是全格</li>
+</ul>
+<p>这里后面还有一些证明来不及看了，希望考试别考太多。</p>
+<h2 id="指针分析">指针分析</h2>
+<h3 id="基本概念-2">基本概念</h3>
+<p>指针分析顾名思义就是针对指针的分析，其可分为<strong>指向分析和别名分析</strong></p>
+<ul>
+<li>指向分析：一个指针指向哪一个内存地址</li>
+<li>别名分析：是否两个指针指向同一块内存地址</li>
+<li>实际上两者是一个东西，指向分析完成了别名分析自然完成。</li>
+</ul>
+<p><strong>上下文敏感/不敏感：</strong></p>
+<ul>
+<li>上下文敏感：每次调用函数都要区分其上下文，对每次上下文都要进行分析</li>
+<li>上下文不敏感：对所有的上下文只需要分析一次</li>
+</ul>
+<p><u><strong>例子</strong></u></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span>* <span class="title">id</span><span class="params">(<span class="type">int</span>* x)</span></span>&#123;<span class="keyword">return</span> x;&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="type">int</span> y, z;</span><br><span class="line"><span class="type">int</span> *y2 = <span class="built_in">id</span>(&amp;y);</span><br><span class="line"><span class="type">int</span> *z2 = <span class="built_in">id</span>(&amp;z);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/屏幕截图 2025-01-07 181642.jpg" alt="屏幕截图 2025-01-07 181642" style="zoom:67%;" />
+<p><strong>流敏感/不敏感：</strong></p>
+<ul>
+<li>流敏感：考虑语句的执行顺序，检查<strong>每个程序点</strong>的指向关系</li>
+<li>流不敏感：程序就是一组语句，从<strong>整个程序</strong>的角度检查指向关系</li>
+</ul>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/屏幕截图 2025-01-07 182126.jpg" alt="屏幕截图 2025-01-07 182126" style="zoom:67%;" />
+<p>我们这里考虑的指针分析是<strong>流不敏感的可能性分析</strong>。在目标函数中，可能存在下面四种指令：</p>
+<ul>
+<li>ADDROF: <code>p = &amp;a </code></li>
+<li>COPY :<code>p = q</code></li>
+<li>LOAD : <code>p = *q </code></li>
+<li>STORE : <code>*p = q</code></li>
+</ul>
+<h3 id="Andersen风格指针分析">Andersen风格指针分析</h3>
+<p>将指针分析视为解决集合包含问题，根据包含操作传播指向信息。</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107183018117.png" alt="image-20250107183018117"></p>
+<p><strong><u>例子</u></strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">p = &amp;a</span><br><span class="line">q = &amp;b</span><br><span class="line">*p = q</span><br><span class="line">r = &amp;c</span><br><span class="line">s = p</span><br><span class="line">t = *p</span><br><span class="line">*s = r</span><br></pre></td></tr></table></figure>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107190827453.png" alt="image-20250107190827453"></p>
+<p>上图中的结果属于是敏感的分析。这里也可以添加从t到c的有向边，这样就是非敏感的分析。</p>
+<p>**指针流图的画法：**仍然以上面那个为例</p>
+<p>其算法表示如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// Initialize the graph with ADDROF and COPY operations</span><br><span class="line">foreach p = &amp;a do // 𝑝⊇&#123;𝑎&#125; </span><br><span class="line">	add node &lt;p, &#123;a&#125;&gt; into G</span><br><span class="line">foreach p = q do // 𝑝⊇𝑞</span><br><span class="line">	add edge q→p into G</span><br><span class="line">Let WL = &#123; n | pts(n) != &#123;&#125; &#125;</span><br><span class="line">while WL is not empty do</span><br><span class="line">	n = pop one from WL</span><br><span class="line">	foreach v in pts(n) do</span><br><span class="line">		foreach p = *n do // 𝑝⊇∗𝑛</span><br><span class="line">			add edge v→p, and add v into WL if the edge is new</span><br><span class="line">		foreach *n = q do // ∗𝑛 ⊇𝑞</span><br><span class="line">			add edge q→v, and add q into WL if the edge is new</span><br><span class="line">	foreach edge n→m do</span><br><span class="line">		pts(m) += pts(n), and add m into WL if pts(m) changes</span><br></pre></td></tr></table></figure>
+<p>指令如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">p = &amp;a</span><br><span class="line">q = &amp;b</span><br><span class="line">*p = q</span><br><span class="line">r = &amp;c</span><br><span class="line">s = p</span><br><span class="line">t = *p</span><br><span class="line">*s = r</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>初始化：ADDROF操作的指令作为点，COPY操作的指令作为边</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107193435099.png" alt="image-20250107193435099" style="zoom:67%;" />
+</li>
+<li>
+<p>构建Worklist：找哪个节点指向的元素非空，这里的WL是{p,q,r}，从WL中依次取节点。</p>
+</li>
+<li>
+<p><u>当选取的节点为p时：</u></p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107200421710.png" alt="image-20250107200421710" style="zoom:80%;" />
+</li>
+<li>
+<p>选取节点为q：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107201825847.png" alt="image-20250107201825847" style="zoom:80%;" />
+</li>
+<li>
+<p>选取节点为r：没有*r，也没有指向边，故没有操作</p>
+</li>
+<li>
+<p>选取节点为a：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107205840422.png" alt="image-20250107205840422" style="zoom:80%;" />
+</li>
+<li>
+<p>选取节点为s：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107210332016.png" alt="image-20250107210332016" style="zoom:80%;" />
+</li>
+<li>
+<p>选取节点为t：没有*t，也没有指向边，故没有操作</p>
+</li>
+<li>
+<p>选取节点为r：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107210814099.png" alt="image-20250107210814099" style="zoom:80%;" />
+</li>
+<li>
+<p>选取节点为a：</p>
+<img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/image-20250107211011935.png" alt="image-20250107211011935" style="zoom:80%;" />
+</li>
+<li>
+<p>选取节点为t：没有*t，也没有指向边，故没有操作</p>
+</li>
+</ul>
+<p>Andersen风格指针分析的时间复杂度在最坏情况下为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>3</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>，但在生产环境下一般为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>。</p>
+<p>此外还有Steensgaard⻛格指针分析，这种指针分析能够将多节点合并为单节点，具备伸缩性，但是精度会变差。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io">Linghao Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io/2024/11/26/%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8/">https://zlh123123.github.io/2024/11/26/%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zlh123123.github.io" target="_blank">好急好急的Hexo博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a><a class="post-meta__tags" href="/tags/%E5%AE%89%E5%85%A8/">安全</a></div><div class="post-share"><div class="social-share" data-image="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】全职高手-苏沐橙.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/11/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/" title="机器学习与深度学习基础"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】动漫-少女.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">机器学习与深度学习基础</div></div><div class="info-2"><div class="info-item-1"> 基于李宏毅机器学习课程（22年春）所写的课程笔记 课程主页：ML 2022 Spring 此外，李老师在25年春开设新机器学习课程，主要内容为LLM及相关技术，课程主页为ML 2025...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" title="数据库原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】多啦a梦-日本动漫.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">数据库原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/06/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云-动画片-动画电影.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-14</div><div class="info-item-2">操作系统原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】二次元-动漫.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-12</div><div class="info-item-2">密码学</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" title="数据库原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】多啦a梦-日本动漫.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-12</div><div class="info-item-2">数据库原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/06/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】间谍过家家-阿尼亚.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-19</div><div class="info-item-2">编译原理</div></div><div class="info-2"><div class="info-item-1">注意！这里的表述不一定精准，且不一定覆盖考点！ 基本定义 字母表 由字母、数字、标点符号组成的集合  乘积：A中取一个元素，B中取一个元素，两个连接起来后的集合 n次幂：长度为n的符号串构成的集合。n=0叫空串$\varepsilon $ 正闭包：各个正数次幂的并集，长度为正数的符号串构成的集合，用+号 克林闭包：正闭包⋃\bigcup⋃空串集合，长度为非负数的符号串构成的集合，用*号  串 由字母表中符号组成的有穷序列，包括空串。长度记作$\left | s \right | $，就是符号数  连接运算：x和y的连接就是xy，空串是单位元 x=yz：...</div></div></div></a><a class="pagination-related" href="/2025/04/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="操作系统安全技术"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】AI-AI风景-山景.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-10</div><div class="info-item-2">操作系统安全技术</div></div><div class="info-2"><div class="info-item-1">概述 安全等级 《可信计算机系统评估标准》将操作系统、网络组件和可信应用程序所提供的安全保护等级分为4大类，7小类，从高到低为： A1、B3、B2、B1、C2、C1、D。   目前尚没有任何操作系统满足A1等级；仅有很少一部分操作系统满足B等级；C2等级被认为针对通用操作系统来说已经足够安全的了。（目前的Windows、MAC、IOS等系统均是C2等级）    D级，最低保护（Minimal Protection） 没有通过其他安全等级测试项目的系统即属于该级，如DOS、Windows 9x系统   C级，自主访问控制（Discretionary Protection） 系统客体（被访问的，如文件、目录）可由系统主体（能够发起行为的，如用户、应用程序）自主定义访问权。例如：管理员可以决定系统中任意文件的权限。  客体的权限是可以自主决定的。    B级，强制访问控制（Mandatory Protection） 由系统强制对客体进行安全保护，每个系统客体（如文件、目录等资源）及主体（如系统管理员、用户、应用程序）都有自己的安全标签（Security...</div></div></div></a><a class="pagination-related" href="/2025/06/13/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8%E5%8F%8A%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84/" title="网络空间安全及法律法规"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】乡村-晴空-田野.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-13</div><div class="info-item-2">网络空间安全及法律法规</div></div><div class="info-2"><div class="info-item-1">Teruteru的学习笔记 第一章 网络空间安全概述 第一节...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Linghao Zhang</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zlh123123"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/zlh123123" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lh.zhang.work@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，这里是我的个人博客，主要用来记录一些学习笔记和生活感悟，希望能给你带来一些帮助。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">课上画的重点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E4%B8%8E%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E6%A6%82%E8%BF%B0"><span class="toc-number">2.1.</span> <span class="toc-text">系统安全与软件安全概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A8%81%E8%83%81%E4%B8%8E%E9%A3%8E%E9%99%A9"><span class="toc-number">2.1.1.</span> <span class="toc-text">威胁与风险</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E4%B8%8E%E8%A1%A5%E4%B8%81"><span class="toc-number">2.1.2.</span> <span class="toc-text">漏洞与补丁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86"><span class="toc-number">2.1.3.</span> <span class="toc-text">加密与解密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text">系统软件安全事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81"><span class="toc-number">2.3.</span> <span class="toc-text">系统软件安全威胁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4"><span class="toc-number">2.4.</span> <span class="toc-text">系统软件安全防护</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">操作系统安全机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81"><span class="toc-number">3.1.</span> <span class="toc-text">操作系统安全威胁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%A6%81%E6%B1%82"><span class="toc-number">3.2.</span> <span class="toc-text">操作系统安全的基本要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%B8%B8%E7%94%A8%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6"><span class="toc-number">3.3.</span> <span class="toc-text">操作系统的常用安全机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">3.3.1.</span> <span class="toc-text">访问控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A4%E8%AF%81%E6%9C%BA%E5%88%B6"><span class="toc-number">3.3.2.</span> <span class="toc-text">认证机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E6%9C%BA%E5%88%B6"><span class="toc-number">3.3.3.</span> <span class="toc-text">加密机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E7%89%B9%E6%9D%83%E7%AE%A1%E7%90%86"><span class="toc-number">3.3.4.</span> <span class="toc-text">最小特权管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E5%AE%A1%E8%AE%A1%E6%9C%BA%E5%88%B6"><span class="toc-number">3.3.5.</span> <span class="toc-text">安全审计机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81IO%E4%BF%9D%E6%8A%A4"><span class="toc-number">3.3.6.</span> <span class="toc-text">存储、运行、IO保护</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4"><span class="toc-number">3.3.6.1.</span> <span class="toc-text">存储保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E4%BF%9D%E6%8A%A4"><span class="toc-number">3.3.6.2.</span> <span class="toc-text">运行保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IO%E4%BF%9D%E6%8A%A4"><span class="toc-number">3.3.6.3.</span> <span class="toc-text">IO保护</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.4.</span> <span class="toc-text">安全操作系统的设计与实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">各操作系统安全性分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-number">4.1.</span> <span class="toc-text">Windows操作系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="toc-number">4.1.1.</span> <span class="toc-text">Windows系统概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows%E5%AE%89%E5%85%A8%E7%BB%84%E4%BB%B6"><span class="toc-number">4.1.2.</span> <span class="toc-text">Windows安全组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">4.1.3.</span> <span class="toc-text">Windows访问控制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-number">4.2.</span> <span class="toc-text">Linux操作系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-number">4.2.1.</span> <span class="toc-text">Linux系统用户管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux%E7%B3%BB%E7%BB%9F%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">4.2.2.</span> <span class="toc-text">Linux系统访问控制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-number">4.3.</span> <span class="toc-text">移动操作系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E7%A7%BB%E5%8A%A8%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AF%B9%E6%AF%94"><span class="toc-number">4.3.1.</span> <span class="toc-text">三种移动操作系统对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%B8%BF%E8%92%99%E7%B3%BB%E7%BB%9F"><span class="toc-number">4.3.2.</span> <span class="toc-text">鸿蒙系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%8D%93%E7%B3%BB%E7%BB%9F"><span class="toc-number">4.3.3.</span> <span class="toc-text">安卓系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E7%B3%BB%E7%BB%9F"><span class="toc-number">4.3.4.</span> <span class="toc-text">苹果系统</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">系统日志攻击检测与安全分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97"><span class="toc-number">5.1.</span> <span class="toc-text">系统日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%AF%E6%BA%90%E5%9B%BE%E4%B8%8E%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90"><span class="toc-number">5.2.</span> <span class="toc-text">溯源图与溯源分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">网络安全</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">6.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%A0%E7%89%B9%E7%BD%91%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE"><span class="toc-number">6.2.</span> <span class="toc-text">因特网安全协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE"><span class="toc-number">6.2.1.</span> <span class="toc-text">网络层安全协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E5%B1%82%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE"><span class="toc-number">6.2.2.</span> <span class="toc-text">传输层安全协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE"><span class="toc-number">6.2.3.</span> <span class="toc-text">应用层安全协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E5%92%8C%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">6.3.</span> <span class="toc-text">访问控制和防火墙</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6-2"><span class="toc-number">6.3.1.</span> <span class="toc-text">访问控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">6.3.2.</span> <span class="toc-text">防火墙</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%94%BB%E5%87%BB%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%85%A5%E4%BE%B5%E6%A3%80%E6%B5%8B"><span class="toc-number">6.4.</span> <span class="toc-text">常见攻击类型和入侵检测</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">安全编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0-2"><span class="toc-number">7.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E5%88%99"><span class="toc-number">7.2.</span> <span class="toc-text">安全编程原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%AE%9E%E8%B7%B5"><span class="toc-number">7.3.</span> <span class="toc-text">安全编程实践</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">语义分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%B1%9E%E6%80%A7%E6%96%87%E6%B3%95%E7%9A%84%E8%AF%AD%E4%B9%89%E8%AE%A1%E7%AE%97"><span class="toc-number">8.1.</span> <span class="toc-text">基于属性文法的语义计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%BF%BB%E8%AF%91SDT"><span class="toc-number">8.2.</span> <span class="toc-text">语法制导翻译SDT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E5%88%86%E6%9E%90%E8%BF%9B%E8%A1%8C%E7%BF%BB%E8%AF%91"><span class="toc-number">8.3.</span> <span class="toc-text">递归下降分析进行翻译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LL%E3%80%81LR%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">8.4.</span> <span class="toc-text">LL、LR语法分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text">中间代码生成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81"><span class="toc-number">9.1.</span> <span class="toc-text">中间代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%BF%BB%E8%AF%91"><span class="toc-number">9.2.</span> <span class="toc-text">表达式的翻译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-number">9.3.</span> <span class="toc-text">类型检查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E7%BB%BC%E5%90%88"><span class="toc-number">9.3.1.</span> <span class="toc-text">类型综合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-number">9.3.2.</span> <span class="toc-text">类型推导</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">9.4.</span> <span class="toc-text">控制流</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">10.</span> <span class="toc-text">目标代码生成与基本块优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8%E6%89%80%E9%9D%A2%E4%B8%B4%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">10.1.</span> <span class="toc-text">目标代码生成器所面临的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E8%AF%AD%E8%A8%80"><span class="toc-number">10.2.</span> <span class="toc-text">目标语言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">10.2.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%9D%97%E4%B8%8E%E6%B5%81%E5%9B%BE"><span class="toc-number">10.2.2.</span> <span class="toc-text">基本块与流图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%9D%97%E7%9A%84%E4%BC%98%E5%8C%96"><span class="toc-number">10.2.3.</span> <span class="toc-text">基本块的优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D%E5%92%8C%E6%8C%87%E6%B4%BE"><span class="toc-number">10.3.</span> <span class="toc-text">寄存器分配和指派</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E6%A0%91%E9%87%8D%E5%86%99%E6%9D%A5%E9%80%89%E6%8B%A9%E6%8C%87%E4%BB%A4"><span class="toc-number">10.4.</span> <span class="toc-text">通过树重写来选择指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81%E7%9A%84%E2%BD%A3%E6%88%90"><span class="toc-number">10.5.</span> <span class="toc-text">表达式的优化代码的⽣成</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">11.</span> <span class="toc-text">机器无关优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0-3"><span class="toc-number">11.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%86%E6%9E%90"><span class="toc-number">11.2.</span> <span class="toc-text">数据流分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%86%E6%9E%90DFA"><span class="toc-number">11.2.1.</span> <span class="toc-text">什么是数据流分析DFA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B4%BB%E8%B7%83%EF%BC%88%E6%88%96%E5%AD%98%E6%B4%BB%EF%BC%89%E5%8F%98%E9%87%8F%E5%88%86%E6%9E%90LVA"><span class="toc-number">11.2.2.</span> <span class="toc-text">活跃（或存活）变量分析LVA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E7%94%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%88%86%E6%9E%90AEA"><span class="toc-number">11.2.3.</span> <span class="toc-text">可用表达式分析AEA</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%86%E6%9E%90%E7%90%86%E8%AE%BA"><span class="toc-number">11.3.</span> <span class="toc-text">数据流分析理论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BCLattice"><span class="toc-number">11.3.1.</span> <span class="toc-text">格Lattice</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E5%88%86%E6%9E%90"><span class="toc-number">11.4.</span> <span class="toc-text">指针分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-2"><span class="toc-number">11.4.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Andersen%E9%A3%8E%E6%A0%BC%E6%8C%87%E9%92%88%E5%88%86%E6%9E%90"><span class="toc-number">11.4.2.</span> <span class="toc-text">Andersen风格指针分析</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/dark.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="日语语法蓝宝书总结"/></a><div class="content"><a class="title" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结">日语语法蓝宝书总结</a><time datetime="2026-06-26T09:47:36.000Z" title="发表于 2026-06-26 17:47:36">2026-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】可爱小狗-小狗-护眼.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="leetcode刷题日记"/></a><div class="content"><a class="title" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记">leetcode刷题日记</a><time datetime="2026-04-03T06:26:47.000Z" title="发表于 2026-04-03 14:26:47">2026-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云彩-夜晚-夜景.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="口令复用综述"/></a><div class="content"><a class="title" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述">口令复用综述</a><time datetime="2026-01-21T12:58:23.000Z" title="发表于 2026-01-21 20:58:23">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】兔子朱迪-彩云-朱迪.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Github Page更换新域名后如何更新配置"/></a><div class="content"><a class="title" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置">Github Page更换新域名后如何更新配置</a><time datetime="2026-01-01T04:13:51.000Z" title="发表于 2026-01-01 12:13:51">2026-01-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】卡通羊-可爱小羊.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM Post-training"/></a><div class="content"><a class="title" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training">LLM Post-training</a><time datetime="2025-11-30T14:14:52.000Z" title="发表于 2025-11-30 22:14:52">2025-11-30</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2026 By Linghao Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":200,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body></html>

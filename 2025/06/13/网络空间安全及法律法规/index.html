@@ -1,0 +1,978 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>网络空间安全及法律法规 | 好急好急的Hexo博客</title><meta name="author" content="Linghao Zhang"><meta name="copyright" content="Linghao Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Teruteru的学习笔记 第一章 网络空间安全概述 第一节 信息时代下网络空间安全学科浅谈 信息论的基本观点:  信息是内涵，系统是载体。 信息不能脱离它的载体商孤立存在。 信息只有存储、处理、传输三种状态  信息的安全属性三要素（C、I、A）：  机密性（Confidentiality）：保证信息与信息系统不被非授权者截获和未经授权使用。 完整性（Integrity）：信息是完整的，真实的、未">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络空间安全及法律法规">
+<meta property="og:url" content="https://zlh123123.github.io/2025/06/13/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8%E5%8F%8A%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84/index.html">
+<meta property="og:site_name" content="好急好急的Hexo博客">
+<meta property="og:description" content="Teruteru的学习笔记 第一章 网络空间安全概述 第一节 信息时代下网络空间安全学科浅谈 信息论的基本观点:  信息是内涵，系统是载体。 信息不能脱离它的载体商孤立存在。 信息只有存储、处理、传输三种状态  信息的安全属性三要素（C、I、A）：  机密性（Confidentiality）：保证信息与信息系统不被非授权者截获和未经授权使用。 完整性（Integrity）：信息是完整的，真实的、未">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E4%B9%A1%E6%9D%91-%E6%99%B4%E7%A9%BA-%E7%94%B0%E9%87%8E.png">
+<meta property="article:published_time" content="2025-06-13T09:28:14.000Z">
+<meta property="article:modified_time" content="2025-07-14T13:07:12.000Z">
+<meta property="article:author" content="Linghao Zhang">
+<meta property="article:tag" content="基础课">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E4%B9%A1%E6%9D%91-%E6%99%B4%E7%A9%BA-%E7%94%B0%E9%87%8E.png"><link rel="shortcut icon" href="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png"><link rel="canonical" href="https://zlh123123.github.io/2025/06/13/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8%E5%8F%8A%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '网络空间安全及法律法规',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/welcome-image.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】乡村-晴空-田野.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" alt="Logo"><span class="site-name">好急好急的Hexo博客</span></a><a class="nav-page-title" href="/"><span class="site-name">网络空间安全及法律法规</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">网络空间安全及法律法规</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-13T09:28:14.000Z" title="发表于 2025-06-13 17:28:14">2025-06-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-07-14T13:07:12.000Z" title="更新于 2025-07-14 21:07:12">2025-07-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%BA%E7%A1%80%E8%AF%BE/%E5%A4%8F%E4%BB%A4%E8%90%A5/">夏令营</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p><a target="_blank" rel="noopener" href="http://teruteru.space/">Teruteru的学习笔记</a></p>
+<h1>第一章 网络空间安全概述</h1>
+<h2 id="第一节-信息时代下网络空间安全学科浅谈">第一节 信息时代下网络空间安全学科浅谈</h2>
+<p>信息论的基本观点:</p>
+<ol>
+<li>信息是内涵，系统是载体。</li>
+<li>信息不能脱离它的载体商孤立存在。</li>
+<li>信息只有存储、处理、传输三种状态</li>
+</ol>
+<p>信息的安全属性三要素（C、I、A）：</p>
+<ol>
+<li>机密性（Confidentiality）：保证信息与信息系统不被非授权者截获和未经授权使用。</li>
+<li>完整性（Integrity）：信息是完整的，真实的、未被篡改的、正确的。</li>
+<li>可用性（Avalaibility）：信息与信息系统服务可被授权人正常使用</li>
+</ol>
+<p>信息系统安全层次结构：面向应用信息安全框架（自高向低）</p>
+<ol>
+<li>
+<p>内容安全：信息安全在政治、法律、道德层次上的要求，是语义层次的安全</p>
+</li>
+<li>
+<p>数据安全：数据免受未授权的泄露、篡改和毁坏</p>
+<ul>
+<li>数据的秘密性（Secrecy)：数据不被未授权者知晓的属性</li>
+<li>数据的完整性(Integrity)：数据是正确的、真实的、未被篡改的、完整无缺的属性</li>
+<li>数据的可用性(Availabity)：数据可以随时正常使用的属性</li>
+</ul>
+</li>
+<li>
+<p>行为安全：主体行为的过程和结果来考察是否会危害信息安全</p>
+</li>
+<li>
+<p>设备安全：软硬件系统的安全（稳定、可靠、可用）</p>
+<ol>
+<li>信息系统设备的安全是信息系统安全的首要问题</li>
+<li>信息设备是信息系统安全的物质基础</li>
+</ol>
+<ul>
+<li>设备的稳定性（Stability)：设备在一定时间内不出故障的概率</li>
+<li>设备的可靠性(Reliability)：设备在一定时间内正常执行任务的概率</li>
+<li>设备的可用性(Availabity)：设备随时可以正常使用的概率</li>
+</ul>
+</li>
+</ol>
+<p>信息安全三大定律：</p>
+<ol>
+<li>普遍性定律：哪里有信息，哪里就有信息安全问题。</li>
+<li>中性定律：安全与方便是一对矛盾体</li>
+<li>就低性定律（木桶原理）：一个系统的安全性取决于它最薄弱部分的安全性</li>
+</ol>
+<p>网络空间安全学科是研究<strong>信息获取、信息存储、信息传输和信息处理领域中</strong>信息安全保障问题的一门新兴学科。</p>
+<p>研究方向：</p>
+<ol>
+<li>密码学：由密码编码学和密码分析学组成
+<ol>
+<li>密码编码学：主要研究对信息进行编码以实现信息隐藏</li>
+<li>密码分析学：主要研究通过密文获取对应的明文信息</li>
+</ol>
+</li>
+<li>网络安全：在网络的各个层次和范围内采取防护措施，以便能对各种<strong>网络安全威胁进行检测和发现</strong>，并采取相应的<strong>响应措施</strong>，确保网络环境的信息安全</li>
+<li>系统安全：
+<ul>
+<li>信息系统是信息的载体，一般是直接面对用户的服务系统</li>
+<li>信息系统安全的特点是从系统的整体上考虑安全威胁与防护</li>
+</ul>
+</li>
+<li>信息内容安全：
+<ul>
+<li>信息内容安全是信息安全在政治、法律、道德层次上的要求</li>
+<li>信息内容在政治上是健康的，是符合国家法律法规的，是符合中华民族优良的道德规范的</li>
+</ul>
+</li>
+<li>信息对抗：
+<ul>
+<li>信息对抗是为消弱、破坏对方电子信息设备和信息的使用效能，保障己方电子信息设备和信息正常发挥效能而采取的综合技术措施</li>
+<li>实质是斗争双方利用电磁波和信息的作用来争夺电磁频谱和信息的有效使用和控制权</li>
+</ul>
+</li>
+</ol>
+<h2 id="第二节-网络空间安全法律法规与标准">第二节 网络空间安全法律法规与标准</h2>
+<p>我国网络空间安全国家战略的五个具体要求：和平、安全、开放、合作、有序</p>
+<p>网络空间的安全威胁根据主体不同，可分为黑客攻击、有组织网络犯罪、网络恐怖主义、国家支持的网络战四种类型</p>
+<ul>
+<li>
+<p>《中华人民共和国网络安全法》是我国<strong>第一部全面规范网络空间安全管理</strong>方面问题的基础性法律，是我国网络空间法治建设的重要里程碑</p>
+<ul>
+<li>等级保护：
+<ul>
+<li>等级保护涉及的内容：信息系统、信息安全产品、信息安全事件</li>
+<li>分级依据：重要程度、危害程度、保护水平 (业务信息、系统服务）</li>
+<li>保护级别划分：自主保护级、指导保护级、监督保护级、强制保护级、专控保护级</li>
+<li>安全管理：自主定级-----审核批准----系统建设----安全测评</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>《中华人民共和国密码法》&amp;《保密法》</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/Untitled.png" alt="Untitled"></p>
+<p>根据秘密的性质不同，秘密可分为：</p>
+<ul>
+<li>
+<p>国家秘密：所谓国家秘密是指关系国家的安全和利益，依照法定程序确定，在一定时间内只限一定范围的人员知悉的事项（《保密法》第二条）</p>
+<ul>
+<li>绝密级：最重要的国家机密，泄露会使国家安全和利益遭受特别严重的损害</li>
+<li>机密级：重要的国家秘密，泄露会使国家安全和利益遭受严重的损害</li>
+<li>秘密级：一般的国家秘密，泄露会使国家安全和利益遭受损害</li>
+</ul>
+<p>解密期：绝密级不超过三十年，机密级不超过二十年，秘密级不超过十年（《保密法》第十五条）</p>
+</li>
+<li>
+<p>工作秘密：是各级国家机关产生的事项。工作秘密的主体是各级国家机关。工作秘密是涉及机关单位的公务活动和内部管理的事项。工作秘密是不属于国家秘密，又不宜公开的事项。</p>
+</li>
+<li>
+<p>商业秘密：是指不为公众所知悉，能为权利人带来经济利益，具有实用性并经权利人采取保密措施的技术信息和经营信息。</p>
+</li>
+<li>
+<p>个人秘密：个人隐私</p>
+</li>
+</ul>
+</li>
+<li>
+<p>《中华人民共和国数据安全法》重点确立了数据安全保护的各项基本制度，完善了多项重要管理制度，形成了我国数据安全的顶层设计</p>
+</li>
+<li>
+<p>《中华人民共和国个人信息保护法》：确立个人信息保护原则、规范处理活动保障权益、禁止“大数据杀熟”、严格保护敏感个人信息</p>
+</li>
+</ul>
+<h1>第二章 密码学基础</h1>
+<h2 id="第一节-密码学概述">第一节 密码学概述</h2>
+<p>古典密码：</p>
+<ul>
+<li>
+<p>古典替换：将明文字母替换成其他的字母、数字和符号</p>
+<ol>
+<li>
+<p>单表替换：一个明文字母对应的密文字母是确定的</p>
+<p>凯撒密码：每个字母用其后的第三个字母替换</p>
+</li>
+<li>
+<p>多表替换：一个明文字母可以表示为多个密文字母</p>
+<p>维吉尼亚密码：根据密钥来决定用哪一行的密表来进行代换。</p>
+</li>
+<li>
+<p>多字母替换：用密钥字母和其它字母构造一个5X5的密钥表矩阵，加密时则采用代换规则</p>
+<p>普莱费尔密码：将明文中的双字母组合作为一个单元，并将这些单元转换为密文的双字母组合。其三个步骤为：编制密码表、整理明文、编写密文 仿射密码–Hill密码：m个连续的明文字母用m个密文字母代替，该代替由m个线性方程决定</p>
+</li>
+</ol>
+</li>
+<li>
+<p>古典置换：又称换位密码，是通过重新排列明文中元素的位置而不改变元素本身来实现加密的体制</p>
+</li>
+</ul>
+<p>一次一密密码：</p>
+<ul>
+<li>一次一密密码需要使用一个大的真随机字母集作为密钥，这个字母集被写在纸上，并粘成一个乱码本。加密时，需要将明文字符和乱码本的密钥字符进行模26加法运算</li>
+<li>密钥本身随机，而且密钥只使用一次。即使获得了上次通信的密文和密钥，攻击者仍然无法确定下次通信的真正密钥。</li>
+</ul>
+<p>现代密码：</p>
+<ul>
+<li>DES算法（一种分组密码，其输入的明文长度为64bit，密钥长度为56bit，输出的密文长度为64bit）</li>
+<li>公钥密码体制，又称双钥密码体制或非对称密码体制（Two-key/AsymmetricCryptosystem），就是在加密和解密的过程中分别使用不同的密钥
+<ul>
+<li>对于公钥密码体制，安全性主要取决于构造算法所依赖的数学难题。</li>
+<li>多项式求根、离散对数问题（ECC/EIGamal）、大整数因式分解（RSA）、背包问题（背包密码）、DiffieHellman问题（Diffie-Hellman算法）、二次剩余问题(Rabin)、模n的平方根问题等</li>
+</ul>
+</li>
+<li>量子密码：保密通信的双方使用量子态作为信息载体，并利用量子力学原理，建立共享密钥的方法，具有不可窃听性+一次一密的不可破译性</li>
+</ul>
+<p>面临的挑战：</p>
+<ul>
+<li>云计算/存储：用密码感知数据存在、用密码确保数据的安全性、用密码确保用户的隐私</li>
+<li>大数据：大数据的数据量特别巨大，数据存在多样性，使密码算法需要处理的数据规模不断增大，使用密码技术的成本不断提高，这就要求密码算法具有高效性和很强的适应性（柔性性）</li>
+<li>物联网：密码要适应数据多样性、适应网络多样性和多层次、适应各层次的资源差异较大</li>
+<li>新型计算机：强大的计算能力</li>
+<li>区块链技术：区块链由于需要在众多节点间通过共识机制达成一致，因此其性能目前还比较低下</li>
+</ul>
+<h2 id="第二节-密码学基本概念">第二节 密码学基本概念</h2>
+<p>密码是通信双方按约定的法则进行信息特殊变换的一种重要保密手段。依照这些法则，变明文为密文，称为加密变换；变密文为明文，称为解密变换</p>
+<ul>
+<li>古典密码学包含两个互相对立的分支，即密码编码学（Cryptography）和密码分析学（Cryptanalytics）。前者编制密码以保护秘密信息，而后者则研究加密消息的破译以获取信息。二者相反相成，共处于密码学的统一体中。</li>
+<li>现代密码学除了包括密码编码学和密码分析学外，还包括安全管理、安全协议设计、散列函数 等内容。</li>
+</ul>
+<p>密码学的目的：使不知道如何解密的攻击者不可能由其截获的密文中得到任何有意义的明文信息</p>
+<p>保密通信：</p>
+<ul>
+<li>链路加密：在数据传输的每一节点上，对数据全部加密</li>
+<li>端到端加密：加密过程在两个端系统上完成，源主机或终端对数据进行加密，加密形式的数据原封不动传过网络到达目的主机或终端</li>
+<li>加密功能的逻辑位置越高层，得到加密的信息就越少，但是被加密的信息越安全</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/%E5%95%8A%E6%89%93%E5%8F%91%E6%89%93%E5%8F%911.png" alt="啊打发打发1"></p>
+<ul>
+<li>若ke = kd，则加密算法称为单钥加密体制（One-key Cryptosystem ）（对称加密体制（ Symmetric Cryptosystem ）或秘密密钥加密体制（Scret-key Cryptosystem)</li>
+<li>若ke ≠ kd，则加密算法称为双钥加密体制(Two-key Cryptosystem ）（非对称加密体制(Asymmetric Cryptosystem)或公钥加密体制（Public -key Cryptosystem）</li>
+</ul>
+<p>密码的安全性：</p>
+<ul>
+<li>无条件安全（Unconditionally secure）：无论破译者有多少密文,他也无法解出对应的明文,即使他解出了,他也无法验证结果的正确性.</li>
+<li>计算上安全（Computationally secure）：只要给攻击者足够的时间和存储资源， 都是可以破译的</li>
+<li>不可攻破的密码系统：理论上虽然可以攻破，但是真正要攻破的话，所需要的计算资源如计算机时间和容量超出了实际上的可能性</li>
+</ul>
+<p>密钥分析的实质就是在攻击者不知道密钥的情况下，对所截获的密文或明-密文对采用各种不同的密码分析方法试图恢复出明文或密钥，常见类型有：</p>
+<ul>
+<li>唯密文攻击：破译者具有密文串和加密算法</li>
+<li>已知明文攻击：破译者具有明文串和相应的密文串和加密算法，推算出密钥</li>
+<li>自适应选择明文攻击：破译者具备选择明文串并构造出相应的密文串，比“已知明文攻击”更有 效的推算出密钥和算法</li>
+<li>选择密文攻击：破译者密文串、加密算法、可选择密文串，并构造出相应的明文</li>
+</ul>
+<p>常见方法有：</p>
+<ul>
+<li>穷举攻击法：穷尽密钥搜索攻击</li>
+<li>数学攻击方法：
+<ul>
+<li>差分密码分析：通过分析明文对的差值对密文对的差值的影响来恢复某些密钥比特.（针对分组密码）</li>
+<li>确定性分析法–线性密码分析：本质上是一种已知明文攻击方法,通过寻找一个给定密码算法的有效的线性近似表达式来破译密码系统</li>
+<li>确定性分析法–插值攻击方法：使用一个代数函数来代表一个S-Box，此函数可以用已知明文攻击法取得样本点，再用拉格朗日插值法产生。这个代数函数可能是在有限体上的二次函数、多项式函数或有理函数</li>
+<li>统计分析法：利用明文的已知统计规律进行破译的方法。</li>
+</ul>
+</li>
+<li>物理攻击方法：
+<ul>
+<li>侧信道攻击（能够直接获取密码算法运算过程中的中间值信息；能够分段恢复较长的密钥） 侧信道攻击主要面向密码实现的物理安全性，采用能量分析攻击、电磁分析攻击、计时攻击、缓存攻击、故障攻击等一系列方法对其实现安全性进行分析</li>
+</ul>
+</li>
+</ul>
+<p>密码学基本数学知识：</p>
+<ul>
+<li>整数分解：整数分解又称为素因数分解，即任意一个大于1的自然数都可以写成素数乘积的形式</li>
+<li>模运算：给定一个正整数𝑛，任意一个整数𝑎,一定存在等式： 𝑎 = 𝑞𝑛+ 𝑟 , 0 ≤ 𝑟&lt;𝑛,𝑞=[𝑎/𝑛]</li>
+<li>有限域：元素个数有限的域，又被称为Galois域
+<ul>
+<li>定义了加法和乘法</li>
+<li>集合内的元素经过加法和乘法计算，结果仍然在集合内</li>
+<li>计算符合交换率、结合率、分配率</li>
+<li>加法和乘法有单位元素（所有的集合内的值都有对应的负数，所有集合内非零值都有倒数）</li>
+<li>有限域的元素个数一定是某个素数的幂</li>
+</ul>
+</li>
+<li>欧几里得算法：求两个整数最大公因子的快速算法gcd(a, b)= gcd(b, a mod b)</li>
+<li>中国剩余定理：求解一次同余式组</li>
+<li>实数域上椭圆曲线：满足方程：y2=x3+ax+b的所有点(x, y)的集合。</li>
+</ul>
+<p>国内外密码算法概览：</p>
+<ul>
+<li>序列密码原理：由种子密钥通过密钥流发生器得到的密钥流为：K=k1k2…kn,则加密变换为：C=c1c2…cn，其中 ci=mi⊕ki，(i=1,2,…,n),其中m,k,c是0，1 序列，⊕表示模2加法（异或）</li>
+<li>流密码：也称为序列密码，它是对称密码算法的一种。
+<ul>
+<li>流密码具有实现简单、便于硬件实施、加解密处理速度快、没有或只有有限的错误传播等特点。</li>
+<li>流密码强度依赖于密钥流产生器所生成序列的随机性和不可预测性。</li>
+</ul>
+</li>
+<li>分组密码：将明文消息编码表示后的数字（简称明文数字）序列，划分成长度为n的组 （可看成长度为n的矢量）x = (x0, x1,…, xn-1),分别在密钥 k = (k0, k1,… , kt-1) 的控制下变换成等长的输出数字序列y = (y0, y1,…, yn-1)
+<ul>
+<li>典型的分组密码：DES（三重DES）、IDEA、RC4、RC5、CAST-128 等</li>
+<li>设计要求：分组长度足够大（≥128~256比特）、密钥量要足够大（≥128~192~256比特）、算法足够复杂（包括子密钥产生算法）、加密、解密算法简单，易软、硬件实现等等</li>
+</ul>
+</li>
+<li>DES算法：
+<ul>
+<li>DES是一种分组密码,假设明文m是有0和1组成的长度为64比特的符号串,密钥k也是64比特的0,1符号串</li>
+<li>64比特密钥k只有56比特有效，其他8倍数的8位是奇偶校验位，在算法中不起作用</li>
+</ul>
+</li>
+<li>Feistel密码结构：将不够安全的单个循环扩展到多个循环</li>
+<li>高级加密标准 AES：Rijndael算法、最终标准FIPS PUB197</li>
+<li>公钥加密体制：  基于单向陷门函数的概念。单向函数是一些易于计算但难于求逆的函数，而单向陷门函数就是在已知一些额外信息的情况下易于求逆的单向函数，这些额外信息就是所谓的陷门。
+<ul>
+<li>典型公钥算法：RSA算法三种方式都适合，Diffe-Hellman算法只适合于密钥交换，DSS（数字签名标准）适合于数字签名，EIGamal适合于前两种，椭圆曲线算法（ECC）三种都适合。</li>
+</ul>
+</li>
+</ul>
+<h2 id="第三节-密码学新进展及研究方向">第三节 密码学新进展及研究方向</h2>
+<p>公钥基础设施（Public Key Infrastructure， PKI）是一个用公钥概念与技术来实施和提供安全服务的具有普适性的安全基础设施。</p>
+<ul>
+<li>数字证书库：是CA颁发证书和撤销证书的存放地</li>
+<li>认证机构（CA Certificate Authority)</li>
+<li>注册机构（RA Registration Authority），RA可单独实现，也可合并在CA中实现</li>
+<li>公钥证书由证书管理机构CA (Certificate Authority)为用户建立，其中的数据项包括与该用户的秘密钥相匹配的公开钥及用户的身份和时间戳等，所有的数据项经CA用自己的秘密钥签字后就形成证书</li>
+</ul>
+<p>身份基公钥密码(IdentityBasedCryptograph，IBC)，使用能唯一标识用户身份的信息作为公钥，例如电话号码或Email地址等，简化了传统公钥密码体系中的用户证书管理。</p>
+<p>身份基加密：</p>
+<ol>
+<li>系统建立算法：PKG生成系统公开参数和主密钥；</li>
+<li>密钥提取算法：用户将ID提交给PKG，PKG生成ID对应的私钥；</li>
+<li>加密算法：利用用户身份ID加密消息，生成加密密文；</li>
+<li>解密算法：利用身份ID对应的私钥解密密文，得到明文消息。</li>
+</ol>
+<p>身份基签名：</p>
+<ol>
+<li>系统建立算法：PKG生成系统公开参数和主密钥；</li>
+<li>密钥提取算法：用户将ID提交给PKG，PKG生成ID对应的私钥；</li>
+<li>签名算法：给定用户身份ID的私钥和消息，生成消息的签名；</li>
+<li>验证算法：给定用户身份ID、签名和消息，验证签名是否正确</li>
+</ol>
+<p>属性基公钥密码：密钥和密文都与一组属性相关联,加密者根据将要加密的消息和接收者的属性构造一个加密策略，当属性满足加密策略时，解密者才能够解密。</p>
+<p>在属性基加密中，系统的每个权限都可以用一个属性来表示。系统中存在一个属性权威(Attribute Authority，AA)，属性权威对每个用户的属性进行认证，并颁发相应密钥。</p>
+<p>属性基签名（Attribute-Based Signature，ABS）是由模糊身份签名发展而来的：</p>
+<ul>
+<li>根据签名的生成过程分为：密钥策略属性基签名（KP-ABS）、签名策略属性基签名（SP-ABS）</li>
+<li>当且仅当属性集合满足访问结构时，签名者可以对消息生成合法签名</li>
+<li>属性基签名特点是匿名性</li>
+</ul>
+<p>同态密码可以在不泄露敏感信息的前提下完成对密文的处理</p>
+<ul>
+<li>安全云计算与委托计算</li>
+<li>远程文件存储</li>
+</ul>
+<p>抗量子密码</p>
+<ul>
+<li>基于量子物理学的量子密码</li>
+<li>基于生物学的DNA密码</li>
+<li>基于数学的抗量子计算密</li>
+</ul>
+<p>轻量级密码：为资源受限的设备定制专属的密码解决方案；对吞吐率的要求比普通密码算法低；</p>
+<h1>第三章 网络安全基础</h1>
+<h2 id="第一节-网络安全概述">第一节 网络安全概述</h2>
+<p>计算机网络是指将地理位置不同，具有独立功能(或自治能力)的多个计算机系统用通信设备和线路连接起来，并以功能完善的网络软件（网络协议、网络操作系统等）进行信息交换,实现资源共享和协同工作的系统。</p>
+<p>安全威胁： 指某个人、物、事件或概念对某一资源的保密性、完整性、可用性或合法使用所造成的危险</p>
+<ol>
+<li>窃听</li>
+<li>信息泄露（密码破解、数据破译等）</li>
+<li>病毒感染、木马、蠕虫等恶意代码的攻击</li>
+<li>非法使用（如缓冲区溢出攻击）</li>
+<li>完整性侵犯(通过篡改、删除和插入等破坏信息）</li>
+<li>拒绝服务（DDOS攻击）</li>
+<li>假冒 (攻击者利用冒充手段窃取信息、入侵系统、 破坏网络正常通讯或欺骗合法主机和合法用户。)</li>
+<li>流量分析 (通过对网上的信息流的观察和分析推断出网上传输的有用信息，例如有无传输、传输的数量、方向和频率等。)</li>
+<li>其他威胁(人员疏忽/误操作、电磁泄漏、消息重发、业务否认、截获/修改等。。。。。。。)</li>
+</ol>
+<p>安全攻击：一种故意逃避安全服务（特别是从方法和技术上）并且破坏系统安全策略的智能行为；任何可能危及机构信息安全，破坏系统安全属性的行为；攻击就是某个安全威胁的具体实施。</p>
+<ul>
+<li>被动攻击：对所传输的信息进行窃听和监测</li>
+<li>主动攻击：恶意篡改数据流或伪造数据流等攻击行为</li>
+</ul>
+<p>攻击树：一种以分支模型直观地表示计算机安全威胁的方法（或威胁建模）</p>
+<p>攻击的目标，如访问机密文件，是攻击树的根。每个分支代表实现该目标的不同方法，这些分支机构可能会从多个方向跳出，有各种不同的选择来实施这些方法</p>
+<p>攻击过程：预攻击（踩点和扫描）→ 攻击（入侵、获取权限、提升权限）→ 后攻击（清除日志、安插后门）</p>
+<p>安全攻击常见的八种形式：</p>
+<ol>
+<li>
+<p>口令窃取：利用已知或假定的口令尝试登录（口令字典、 暴力破解）/根据窃取的口令文件进行猜测/窃听某次合法终端之间的会话，并记录所使用的口令</p>
+<p>可使用OTP或基于令牌的机制，例如一次性口令方案改进</p>
+</li>
+<li>
+<p>欺骗攻击：采用欺骗的方式（假冒、伪装等）获取合法信息并加以利用，获得权限</p>
+</li>
+<li>
+<p>缺陷和后门攻击：缓冲器溢出（堆栈粉碎）攻击或网络蠕虫攻击</p>
+<p>缺陷：指程序中某些代码不能满足特定需求。</p>
+<p>后门：指能绕开正常的安全访问机制而直接访问程序的程序代码。</p>
+</li>
+<li>
+<p>认证失效攻击：使系统对访问者所采取的身份认证措施无效，易导致服务器被攻击者欺骗</p>
+</li>
+<li>
+<p>协议缺陷攻击：利用协议本身的缺陷进行攻击，如TCP/IP协议、WEP协议等</p>
+</li>
+<li>
+<p>信息泄露攻击：利用协议、软硬件等获取信息，进而攻破系统</p>
+</li>
+<li>
+<p>指数攻击：能够使用程序快速复制并传播攻击</p>
+</li>
+<li>
+<p>拒绝服务攻击（DOS攻击）：使合法的系统用户不能及时地得到应得的服务或系统资源，即让目标机器停止提供服务或资源访问，如泛洪攻击和Smurf攻击</p>
+</li>
+</ol>
+<p>高隐蔽未知攻击：为了获取某个组织甚至是国家的重要信息有针对性的进行的一系列攻击行为的整个过程。具有极强的隐蔽能力和很强的针对性</p>
+<p>软件漏洞：信息安全风险的主要根源之一，是网络攻防对抗中的重要目标</p>
+<p>高级长期威胁（APT攻击）：定向信息收集→外网攻击突破→构建控制通道→内部横向渗透→数据收集上传→攻击痕迹清理</p>
+<p>社会工程学（Social Engineering）：通过受害者心里弱点、本能反应、好奇心、信任、贪婪等心里陷阱进行诸如欺骗、伤害等危害手段，取得自身利益的手法</p>
+<p>OSI安全体系结构：主要包括三部分内容，即安全服务、安全机制和安全攻击。</p>
+<ul>
+<li>
+<p>ISO 7498-2对 OSI规定了五个方面的安全服务：认证、数据保密性、数据完 整性、访问控制和非否认服务。</p>
+<ol>
+<li>
+<p>认证服务：提供关于某个实体(人或事物)身份的保证,这意味着当某个实体具有一个特定的身份时,认证服务将提供某种方法来证实这一声明是正确的</p>
+</li>
+<li>
+<p>访问控制服务：实施授权的一种方法，防止对资源的未授权使用，包括防止以未授权方式使用某一资源。</p>
+</li>
+<li>
+<p>机密性服务：保护信息不泄露或不暴露给那些未授权掌握这一信息的实体。包括数据的机密性服务和业务流机密性服务</p>
+<p>保密粒度：流（stream）、消息（message）、选择字段（field）</p>
+</li>
+<li>
+<p>完整性服务：确保数据的价值和存在性没有改变，针对对数据进行修改、增加、删除或重新排序等攻击行为所采用的安全服务。完整性服务能对抗篡改攻击。</p>
+</li>
+<li>
+<p>非否认服务：是指用以阻止参与某次通信交换的一方在事后否认曾经发生过本次交换这一事实</p>
+</li>
+</ol>
+</li>
+<li>
+<p>安全机制：加密、数字签名、访问控制、数据完整性、认证交换、路由控制、公证、流量填充</p>
+</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/gggb2.png" alt="gggb2"></p>
+<p>网络安全模型：</p>
+<ul>
+<li>网络通信：在开放网络环境中保护信息的传输
+<ol>
+<li>对发送的信息进行与安全相关的转换</li>
+<li>由两个主体共享的秘密信息，而对开放网络是保密的</li>
+</ol>
+</li>
+<li>访问安全：考虑了黑客攻击、病毒与蠕虫等的非授权访问。
+<ol>
+<li>网闸或看门人功能：组织非授权用户访问</li>
+<li>内部安全控制（监控）：监测有害入侵者的存在</li>
+</ol>
+</li>
+<li>P2DR-时间模型：可量化的、可由数学证明的、基于时间的的安全模型, 包含安全策略(Policy)、防护(Protection)、检测(Detection)和响应(Response);</li>
+</ul>
+<h2 id="第二节-网络安全防护技术">第二节 网络安全防护技术</h2>
+<p>防火墙：由软件和硬件组成的系统，它处于安全的网络和不安全的网络之间，属于边界防护设备，由系统管理员设置访问控制规则，对进出网络边界的数据流进行过滤</p>
+<ul>
+<li>
+<p>非军事化区（DMZ）：为了配置管理方便，内网中需要向外提供服务的服务器往往放在一个单独的网段，这个网段便是非军事化区。</p>
+</li>
+<li>
+<p>三种要求：</p>
+<ol>
+<li>所有进出网络数据流都必须经过防火墙</li>
+<li>只允许经授权的数据流通过防火墙</li>
+<li>防火墙自身对入侵免疫，即确保自身安全</li>
+</ol>
+</li>
+<li>
+<p>四种控制机制：</p>
+<ol>
+<li>服务控制:确定了可访问的Internet服务类型,这种控制是双向的</li>
+<li>方向控制:确定特定的服务请求可以发起和通过的方向,即允许通过防火墙进入或离开</li>
+<li>用户控制:控制特定用户对某些服务的访问权限</li>
+<li>行为控制:控制特定服务的应用方式,如控制外部用户只能访问只能访问本地web服务器的部分信息</li>
+</ol>
+</li>
+<li>
+<p>防火墙工作于OSI模型的层次越高，能提供的安全保护等级就越高</p>
+</li>
+<li>
+<p>防火墙分类：</p>
+<ul>
+<li>
+<p>应用级网关防火墙（应用层）：代理对整个数据包进行检查。</p>
+</li>
+<li>
+<p>电路级网关防火墙（会话层）：不允许端到端TCP直接连接，相反电路级网关充当中介，接收外来请求，转发请求。</p>
+<p>通常作为应用代理服务器的一部分。一旦会话连接有效后网关仅复制、传递数据，而不进行过滤，只在客户和服务器间中转数据。</p>
+</li>
+<li>
+<p>包过滤防火墙（网络层）：对数据包施加过滤规则，对数据包IP头和传输字段内容进行检查。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>如何用好防火墙</p>
+<ul>
+<li>制定完整的安全策略</li>
+<li>考虑防火墙的可扩充性</li>
+<li>考虑与其他安全产品的配合使用</li>
+<li>经常维护升级防火墙</li>
+</ul>
+</li>
+</ul>
+<p>入侵检测系统：通过可搜索的数据库的方式，发现网络或系统中存在的潜在安全问题和被攻击的迹象。不具有访问控制的能力，也不能独立地防止任何一种攻击。</p>
+<ul>
+<li>事件提取→入侵分析→入侵响应→远程管理</li>
+<li>异常检测技术：又称为基于行为的入侵检测技术，用来识别主机和网络中的异常行为。
+<ul>
+<li>阈值检测：异常检测技术先定义一组系统正常活动的阈值</li>
+<li>用户轮廓(Profile): 通常定义为各种行为参数及其阀值的集合，用于描述正常行为范围。</li>
+<li>异常检测系统的效率取决于用户轮廓的完备性和监控的频率。</li>
+</ul>
+</li>
+<li>误用检测技术：又称为基于知识（或规则）的检测技术或者模式匹配检测技术，收集非正常操作的行为特征，建立相关的特征库，当监测的用户或系统行为与库中的记录相匹配时，系统就认为这种行为是入侵</li>
+</ul>
+<p>虚拟专网（VPN）：将物理上分布在不同地点的网络通过公用网络连接而构成逻辑上的虚拟子网。通过加密和验证等安全机制建立虚拟的数据传输通道，以保障私有数据信息。</p>
+<ul>
+<li>
+<p>分类：</p>
+<ul>
+<li>远程访问（Access VPN）,也称为VPDN</li>
+<li>网关-网关VPN</li>
+</ul>
+</li>
+<li>
+<p>互联网安全协议（IPSEC）体系</p>
+<ul>
+<li>传输模式（主机与主机的直接通信）：保护IP载荷。应用于主机之间端对端通信，该模式要求主机支持IPSec。</li>
+<li>隧道模式（关联到多台主机的网络访问连入设备）：保护整个IP包。把一个包封装在另一个新包里面，整个源数据包作为新包的载荷部分。应用于网关模式中，即在主机的网关（防火墙、路由器）上加载IPSec。</li>
+</ul>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/77773.png" alt="77773"></p>
+</li>
+<li>
+<p>TLS：基于会话的加密和认证的Internet协议，为通信的两个实体提供了一个安全的通道。</p>
+</li>
+</ul>
+<p>计算机病毒防护技术：</p>
+<ul>
+<li>广义上讲，能够引起计算机故障、破坏计算机数据、影响计算机正常运行的指令或代码，均统称计算机病毒</li>
+<li>规定：计算机病毒，是指编制或者在计算机程序中插入 的破坏计算机功能或者毁坏数据，影响计算机使用， 并能自我复制的一组计算机指令或者程序代码</li>
+<li>反病毒技术的三个发展阶段：
+<ol>
+<li>基于简单特征码查杀的单一专杀工具阶段</li>
+<li>基于光谱特征码查杀、主动防御拦截的综合杀毒软件阶段</li>
+<li>基于云、人工智能和大数据技术的互联网查杀阶段</li>
+</ol>
+</li>
+</ul>
+<p>安全漏洞扫描技术：</p>
+<ul>
+<li>漏洞扫描即针对通用漏洞的检测，需要依据通用漏洞的形成原理和其造成的外部表现来判断。由系统维护人员识别安全风险，依据结果对漏洞实施有针对性的防护或修补</li>
+<li>漏洞按照被公布时间的不同阶段，可分为
+<ul>
+<li>1 Day 漏洞：发现并公布的最新漏洞</li>
+<li>N Day 漏洞：被公布的历史漏洞</li>
+<li>0 Day 漏洞：未被公开的漏洞</li>
+</ul>
+</li>
+<li>扫描过程：
+<ol>
+<li>存活判断：为保证扫描效率，启动扫描任务前会首先探测目标系统是否存活</li>
+<li>端口扫描：对已经存活的主机，需要探测主机上开启了哪些端口</li>
+<li>系统和服务识别：采用黑盒测试方法，通过研究其对各种探测的响应形成识别指纹，进而识别目标主机运行的操作系统</li>
+<li>漏洞检测：扫描器根据识别的系统与服务信息调用内置或用户外挂的口令字典进行口令猜测，并同时启动远程非登陆漏洞扫描</li>
+</ol>
+</li>
+<li>安全漏洞类别：
+<ul>
+<li>配置漏洞：由于软件的默认配置或者不恰当的配置导致的安全漏洞</li>
+<li>设计漏洞：指软件、硬件和固件设计方面的安全漏洞</li>
+<li>实现漏洞：由于软件、硬件和固件的实现错误导致</li>
+</ul>
+</li>
+<li>漏洞扫描的种类：
+<ul>
+<li>系统漏洞扫描</li>
+<li>特定服务的漏洞扫描：WEB服务/数据库服务/FTP服务/Mail服务</li>
+<li>信息泄漏漏洞扫描：用户信息/共享信息</li>
+<li>人为管理漏洞扫描：弱口令/错误配置</li>
+<li>网络及管理设备漏洞扫描：路由器、交换机/SNMP设备</li>
+</ul>
+</li>
+</ul>
+<h2 id="第三节-网络安全与工程管理及新兴网络安全技术">第三节 网络安全与工程管理及新兴网络安全技术</h2>
+<p>安全等级划分：</p>
+<ol>
+<li>用户自主保护级：一旦受到破坏会对相关公民、法人和其他组织的合法权益造成损害，但不危害国家安全、社会秩序和公共利益的一般网络</li>
+<li>系统审计保护级：一旦受到破坏会对相关公民、法人和其他组织的合法权益造成严重损害，或者对社会秩序和公共利益造成危害，但不危害国家安全的一般网络</li>
+<li>安全标记保护级：一旦受到破坏会对相关公民、法人和其他组织的合法权益造成特别严重损害，或者会对社会秩序和社会公共利益造成严重危害，或者对国家安全造成危害的重要网络</li>
+<li>结构化保护级：一旦受到破坏会对社会秩序和公共利益造成特别严重危害，或者对国家安全造成严重危害的特别重要网络</li>
+<li>访问验证保护级：一旦受到破坏后会对国家安全造成特别严重危害的极其重要网络</li>
+</ol>
+<p>网络安全管理内容：</p>
+<ul>
+<li>访问控制：出入控制/存取控制</li>
+<li>安全检测：安全扫描/入侵检测</li>
+<li>用户鉴权：主体特征/口令机制/智能卡/数字证书</li>
+<li>传输安全：传输数据加密/数据完整性鉴别/防抵赖</li>
+</ul>
+<p>网络安全事件分为7个基本分类，网络安全事件分为4个级别。</p>
+<p>网络安全应急处理过程：准备阶段→检测阶段→抑制阶段→根除阶段→恢复阶段→总结阶段</p>
+<p>网络安全挑战</p>
+<ul>
+<li>工业互联网：含有大量CPS设备，安全防护措施相对滞后</li>
+<li>移动互联网</li>
+<li>物联网安全：架构僵化，控制系统中心化单一化；通信兼容性差；多主体协同成本高</li>
+</ul>
+<h1>第四章 系统安全基础</h1>
+<h2 id="第一节-系统安全概述及原理">第一节 系统安全概述及原理</h2>
+<p>系统安全：系统安全是指在系统生命周期内应用系统安全工程和系统安全管理方法，辨识系统中的隐患，并采取有效的控制措施使其危险性最小，从而使系统在规定的性能、时间和成本范围内达到最佳的安全程度。</p>
+<p>在网络空间中观察系统的环境：系统在风险的包围之中，必须具有一定的安全性，才能正常运转，系统的安全性需要以系统化的视野去观察</p>
+<p>威胁建模：</p>
+<ul>
+<li>威胁：给某物造成伤害或损失的意图</li>
+<li>风险：某物遭受伤害或损失的可能性</li>
+<li>安全：某物能避免或抵御他物带来的潜在伤害或损失</li>
+<li>基本类型：以风险/资产/攻击者/软件为中心</li>
+</ul>
+<p>访问控制分类:</p>
+<ul>
+<li>基于身份/角色/标签的访问控制</li>
+<li>自主/强制访问控制</li>
+</ul>
+<p>入侵监测分类：</p>
+<ul>
+<li>基于监测的对象：主机/网络入侵检测</li>
+<li>基于监测方法：基于特征/异常的入侵检测</li>
+</ul>
+<h2 id="第二节-系统安全结构">第二节 系统安全结构</h2>
+<p>硬件系统安全：</p>
+<ul>
+<li>处理器硬件从可用指令集和可用内存区域两个方面出发，定义了处理器工作的两种状态：内核态和用户态，用户态程序不能干扰内核态的程序
+<ul>
+<li>内核态：操作系统用，看到所有的指令和地址空间</li>
+<li>用户态：其他程序用，看到其中部分的指令和地址空间</li>
+</ul>
+</li>
+<li>硬件防篡改方法：
+<ul>
+<li>提供密码计算功能</li>
+<li>提供数字指纹</li>
+</ul>
+</li>
+<li>硬件系统面临的威胁：硬件木马</li>
+</ul>
+<p>操作系统安全：</p>
+<ul>
+<li>安全功能：
+<ul>
+<li>用户管理与身份认证：注册用户档案；用户登录过程</li>
+<li>自主访问控制：文件的拥有者可以自主确定任何用户对该文件的访问权限；访问权限既可以授给用户，也可以授给用户组</li>
+<li>强制访问控制：信息按照保密程度划分了多个级别，用户按照职务层次划分了多个等级。访问许可的判断依据是信息的级别和用户的等级，不是用户的意愿</li>
+<li>日志功能：记录系统中发生的重要活动的详细信息</li>
+</ul>
+</li>
+</ul>
+<p>数据库系统安全：</p>
+<ul>
+<li>主要威胁：
+<ul>
+<li>非法访问数据库信息</li>
+<li>恶意破坏数据库或未经授非法修改数据库</li>
+<li>用户网络访问数据库时受到各种攻击，如搭线窃听等</li>
+</ul>
+</li>
+<li>攻击手段：
+<ul>
+<li>数据推理（Inference）：根据合法的非敏感数据推导出非法的敏感数据</li>
+<li>SQL注入攻击：SQL命令插入到Web表单的输入域或页面请求的查询字符串，欺骗服务器执行恶意的SQL命令</li>
+</ul>
+</li>
+</ul>
+<p>应用系统安全：</p>
+<ul>
+<li>跨站脚本（XSS）攻击：在网站上注入恶意的客户端代码。若受害者运行这些恶意代码，攻击者就可以突破网站的访问限制并冒充受害者。</li>
+<li>Cookie：浏览网站时由网络服务器创建并由网页浏览器存放在用户计算机或其他设备的小文本文件，包括用户的IP地址、用户密码个人资料等重要信息。</li>
+</ul>
+<h1>第五章 内容安全基础</h1>
+<h2 id="第一节-内容安全概述">第一节 内容安全概述</h2>
+<p>信息内容安全(Content-basedInformation Security)是研究利用计算机从包含海量信息并且迅速变化的网络中对特定安全主题相关信息进行自动获取、识别和分析的技术。</p>
+<p>安全威胁：</p>
+<ul>
+<li>泄露（指对信息的非授权访问）、欺骗、破环和篡夺</li>
+<li>恶意用户产生并传播的恶意内容</li>
+</ul>
+<p>以内容为中心的未来互联网：旨在将内容名称而不是IP地址作为传输内容的标识符，从而实现信息的路由。</p>
+<p>网络信息内容获取：</p>
+<ul>
+<li>网络爬虫
+<ul>
+<li>服务于搜索引擎等搜索类应用的网络爬虫</li>
+<li>针对性进行信息收集的网络爬虫</li>
+</ul>
+</li>
+<li>信息内容的特征抽取与选择：
+<ul>
+<li>文本信息：采用向量空间模型来描述文本向量。通过特征选择来降维，找到代表性特征</li>
+<li>音频信息：基于帧或片段进行特征分类</li>
+<li>图像信息：颜色特征；纹理特征；边缘特征；轮廓特征</li>
+</ul>
+</li>
+</ul>
+<p>信息过滤：对陆续到达的信息进行过滤，是满足用户信息需求的信息选择过程。</p>
+<h2 id="第二节-网络舆情内容监测">第二节 网络舆情内容监测</h2>
+<p>网络舆情内容监测功能分解：</p>
+<ul>
+<li>高仿真网络信息深度提取</li>
+<li>基于语义的海量文本特征快速提取与分类</li>
+<li>非结构信息自组织聚合表达</li>
+</ul>
+<p>内容中心网络：</p>
+<ul>
+<li>信息流：具备快速高效的数据传输能力和增强的可靠性</li>
+<li>架构：摒弃以IP地址为中心的传输架构，采用以内容名称为中心的传输架构
+<ul>
+<li>内容信息对象：存储在计算机中并通过计算机访问的所有类型的对象</li>
+<li>命名：信息对象的标识，具有全局性和唯一性。其地位与TCP/IP架构的IP地址类似</li>
+<li>路由</li>
+<li>缓存：每个CCN节点维护缓存表，用于缓存CCN路由器接收的内容消息对象，以便响应后继接收到的相同请求。</li>
+<li>应用程序编程接口：根据请求和交付内容信息对象定义，用于内容信息对象的发布和获取操作。</li>
+</ul>
+</li>
+<li>攻击分类：
+<ul>
+<li>命名相关攻击：监视列表攻击、嗅探攻击</li>
+<li>缓存相关攻击：驱逐流行内容攻击</li>
+<li>路由相关攻击：DDOS攻击、欺骗攻击</li>
+<li>其他攻击：假冒攻击、重放攻击</li>
+</ul>
+</li>
+</ul>
+<h1>第六章 应用安全基础</h1>
+<h2 id="第一节-应用安全概述及身份认证与信任管理">第一节 应用安全概述及身份认证与信任管理</h2>
+<p>应用安全是指为保障各种应用系统在信息的获取，存储，传输和处理各个环节的安全所涉及的相关技术的总称</p>
+<ul>
+<li>云计算：数据所有权和管理权的分离</li>
+<li>工业互联网：数据汇集到云端，要保证系统的可靠运行，需要保证数据的机密性、完整性、访问和流转的可控性以及系统软硬件的安全性</li>
+<li>大数据：大数据是一种规模大到在获取、存储、管理、分析方面大大超出了传统数据库软件工具能力范围的数据集合</li>
+<li>人工智能：网络安全防护、密码设计与分析领域</li>
+<li>区块链：信息共享、版权保护、物流、供应链金融、跨境支付、数字资产、数字货币。本身安全问题、隐私保护问题亟待解决</li>
+</ul>
+<p>身份认证：证实客户的真实身份与其所声称的身份是否相符的过程：</p>
+<ul>
+<li>用户名/口令认证（所知）</li>
+<li>动态口令/一次性口令OTP（所有）</li>
+<li>挑战 — 答应认证（所有）</li>
+<li>基于生物特征的认证（个人特征）</li>
+<li>图灵测试</li>
+<li>多因子认证</li>
+</ul>
+<p>公钥基础设施PKI：是一种遵循标准的利用公钥理论和技术建立的提供安全服务的基础设施。</p>
+<p>身份认证的主流标准：</p>
+<ul>
+<li>远程认证拨入业务协议RADIUS：用于接入认证和计费服务</li>
+<li>在线快速身份认证FIDO（Fast Identity Online）：完全通过本地身份认证实现无口令的登录</li>
+<li>联盟身份管理FIM（Federated Identity Management）：使用户使用同一个身份在组成联盟的所有企业中访问相应的资源，如Oauth认证服务</li>
+</ul>
+<p>访问控制：限制访问主体（用户、进程、服务等）对访问客体（文件、系统等）的访问权限，从而使计算机系统在合法范围内使用。控制模型有</p>
+<ul>
+<li>自主访问控制模型DAC：资源拥有者按照自己的意愿来决定是否将自己所拥有资源的访问权限授予其他用户，策略灵活但安全性较差</li>
+<li>强制访问控制模型MAC：为用户和数据划分安全等级，实现了信息的单向流动，但权限管理效率偏低、缺少灵活性</li>
+<li>基于角色的访问控制模型RBAC：通过角色对访问控制策略进行描述，系统中的用户和权限均对应于某些特定的角色。角色的引入实现了用户与权限之间的分离，简化了授权管理</li>
+</ul>
+<p>零信任模型：网络边界内外的任何实体,在未验证之前都不予以信任。即“持续验证，永不信任”</p>
+<h2 id="第二节-隐私保护与新兴应用及其安全">第二节 隐私保护与新兴应用及其安全</h2>
+<p>隐私保护：在发布或者共享数据中不能识别出具体个人的数据</p>
+<ul>
+<li>
+<p>K-匿名性：对同一个准标识符至少要有k条记录，使得一组公开的数据中，任何一个人的信息都不能和其他至少k-1人区分开</p>
+<p>无法防范同质化攻击和背景攻击</p>
+</li>
+<li>
+<p>L-多样性：在 K-匿名性的基础上对每个等价类都保证敏感属性至少有个L个取值，使得攻击者最多以1L的概率确认某个体的敏感信息</p>
+<p>难以防范偏斜攻击和相似度攻击</p>
+</li>
+<li>
+<p>T-相近性：要求每个 K-匿名性中敏感属性值的统计分布与该属性在整个数据集中的总体分布 “接近”。</p>
+</li>
+<li>
+<p>差分隐私：实现仅分享可以描述数据库的一些统计特征、而不公开具体到个人的信息。</p>
+</li>
+</ul>
+<p>移动应用安全风险</p>
+<p><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/Untitled4.png" alt="Untitled4"></p>
+<p>云计算及其安全：</p>
+<ul>
+<li>虚拟化技术：裸金属架构/寄居架构/容器</li>
+<li>攻击模式：
+<ul>
+<li>虚拟机逃逸：利用虚拟机管理软件或者虚拟机中运行软件的漏洞，控制虚拟机管理系统或者在宿主机上运行恶意软件，进而获得其他虚拟机的完全控制权限</li>
+<li>边信道攻击：攻击者控制的虚拟机与目标虚拟机使用相同的物理层硬件，二者交替执行。</li>
+</ul>
+</li>
+</ul>
+<p>区块链及其安全：用哈希串联信息，实现完整性，防止篡改，公开验证。</p>
+<ul>
+<li>比特币与区块链：
+<ul>
+<li>比特币网络中，数据以文件的形式被永久记录，称这些记录为区块</li>
+<li>新区块一旦被记录在区块链上，就不能被改变或者删除</li>
+<li>时间戳记录特定的数据生成时间</li>
+<li>默克尔树用来存储当前区块的所有交易信息</li>
+<li>难度系数用于控制区块的生成速度，比特币每10分钟产生一个区块</li>
+</ul>
+</li>
+<li>共识机制：网络中各个参与节点需要确认交易的机制，使得在网络中存在故障或不可信节点的情况下，区块链网络中的交易能按照预期的正确方式执行，确保各个节点最终结果的一致性。</li>
+<li>智能合约：运行在链上并可针对区块链数据库进行读写操作的代码，可以自动执行参与方指定的数字契约</li>
+<li>区块链主要类型：
+<ul>
+<li>公有链：自由加入和退出</li>
+<li>联盟链：通过授权加入和退出</li>
+<li>私有链：私有机构单中心网络</li>
+</ul>
+</li>
+<li>安全风险：
+<ul>
+<li>51%算力攻击：当攻击者掌握了超过全网50%的算力，就很容易阻止其他节点确认交易，也可以逆转当前区块已经完成的交易，并在网络中双花电子货币。</li>
+<li>攻击交易所：加密货币交易所拥有大量的加密货币，对交易所的攻击可能导致数字货币被窃。</li>
+<li>软件漏洞：需要完备的代码审计、渗透测试和智能合约监控</li>
+<li>隐私泄露：公有链数据可以公开获取，通过大数据关联分析，可能对特定用户去标识化，从而泄露用户隐私信息</li>
+</ul>
+</li>
+</ul>
+<p>人工智能及其安全：</p>
+<ul>
+<li>主要技术领域：
+<ul>
+<li>自然语言处理：通过计算机对自然语言的分析，对词法、句法、语法和语义进行理解分析，实现人机信息交流</li>
+<li>计算机视觉：让计算机具备理解图像表示内容、图像中物体存在的关系等能力。如文字识别、图像处理、图像识别</li>
+<li>深度学习：通过建立模拟人脑分析学习的神经网络对数据进行解释。</li>
+<li>数据挖掘：从数据中提取出具有潜在价值的信息和知识。</li>
+</ul>
+</li>
+<li>安全问题：
+<ul>
+<li>对抗样本：对待预测样本添加特定很小的扰动或者进行细微的修改，使模型对于该样本判断出错</li>
+<li>模型萃取：通过构造请求向目标服务发起查询，取得目标模型参数或者构造出与目标模型功能相似可替代的模型</li>
+<li>训练数据窃取：攻击模型训练集，获得训练数据集的具体样本及统计分布，或者判断某条数据是否在该训练数据集中</li>
+<li>投毒攻击：在模型训练过程中修改训练数据集或者投放精心构造的恶意样例，来使训练数据中毒或者被污染，从而干扰机器学习模型的训练过程，降低最终得到模型的判断准确性</li>
+</ul>
+</li>
+<li>人工智能与网络空间安全的影响：
+<ul>
+<li>复杂性挑战：复杂的技术构成和应用场景势必会产生新的安全漏洞</li>
+<li>网络犯罪：伪造语音、图片、视频，生成虚假内容，识别验证码</li>
+<li>隐私保护侵犯：收集、识别个人隐私，精准画像</li>
+<li>不确定性风险：人工智能不可控，产生意外损害</li>
+<li>智能网络攻防：自动化的网络攻防</li>
+<li>人工智能伦理：人工智能与人类的关系，是否会取代人类</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io">Linghao Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zlh123123.github.io/2025/06/13/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8%E5%8F%8A%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84/">https://zlh123123.github.io/2025/06/13/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8%E5%8F%8A%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zlh123123.github.io" target="_blank">好急好急的Hexo博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%BE/">基础课</a></div><div class="post-share"><div class="social-share" data-image="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】乡村-晴空-田野.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/07/09/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" title="排序算法"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】咖啡屋-夏日-插画.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">排序算法</div></div><div class="info-2"><div class="info-item-1">半小时速通十大排序算法，核心原理 +...</div></div></div></a><a class="pagination-related" href="/2025/06/12/N1%E5%A4%87%E8%80%83/" title="N1备考"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】大海-帆船-海景.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">N1备考</div></div><div class="info-2"><div class="info-item-1">N2考试题型 N2日语能力考试JLPT 题型详细说明 能力考考试攻略_哔哩哔哩_bilibili N1考试题型 日语能力考JLPT N1考试详细说明_哔哩哔哩_bilibili 语法 首先是hero老师的： N5蓝宝书：12.5h 蓝宝书N4：8.5h N3蓝宝书：18.5h N2蓝宝书 part1、N2蓝宝书 part2、N2蓝宝書 part3：4.5h+30h+11h N1蓝宝书：70h 还有搜罗到的考前急救系列（似乎每年考前都会更新）：25年7月N2急救系列 词汇 【日语|无敌绿宝书N2词汇】无例句精简版|读两遍(持更)_哔哩哔哩_bilibili 配合无敌绿宝书 新日语能力考试 N2词汇 | 李晓东, 沈英莉 | download on...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/06/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云-动画片-动画电影.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-14</div><div class="info-item-2">操作系统原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】二次元-动漫.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-12</div><div class="info-item-2">密码学</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/10/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" title="数据库原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】多啦a梦-日本动漫.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-12</div><div class="info-item-2">数据库原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2024/06/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】间谍过家家-阿尼亚.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-19</div><div class="info-item-2">编译原理</div></div><div class="info-2"><div class="info-item-1">注意！这里的表述不一定精准，且不一定覆盖考点！ 基本定义 字母表 由字母、数字、标点符号组成的集合  乘积：A中取一个元素，B中取一个元素，两个连接起来后的集合 n次幂：长度为n的符号串构成的集合。n=0叫空串$\varepsilon $ 正闭包：各个正数次幂的并集，长度为正数的符号串构成的集合，用+号 克林闭包：正闭包⋃\bigcup⋃空串集合，长度为非负数的符号串构成的集合，用*号  串 由字母表中符号组成的有穷序列，包括空串。长度记作$\left | s \right | $，就是符号数  连接运算：x和y的连接就是xy，空串是单位元 x=yz：...</div></div></div></a><a class="pagination-related" href="/2025/04/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="操作系统安全技术"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】AI-AI风景-山景.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-10</div><div class="info-item-2">操作系统安全技术</div></div><div class="info-2"><div class="info-item-1">概述 安全等级 《可信计算机系统评估标准》将操作系统、网络组件和可信应用程序所提供的安全保护等级分为4大类，7小类，从高到低为： A1、B3、B2、B1、C2、C1、D。   目前尚没有任何操作系统满足A1等级；仅有很少一部分操作系统满足B等级；C2等级被认为针对通用操作系统来说已经足够安全的了。（目前的Windows、MAC、IOS等系统均是C2等级）    D级，最低保护（Minimal Protection） 没有通过其他安全等级测试项目的系统即属于该级，如DOS、Windows 9x系统   C级，自主访问控制（Discretionary Protection） 系统客体（被访问的，如文件、目录）可由系统主体（能够发起行为的，如用户、应用程序）自主定义访问权。例如：管理员可以决定系统中任意文件的权限。  客体的权限是可以自主决定的。    B级，强制访问控制（Mandatory Protection） 由系统强制对客体进行安全保护，每个系统客体（如文件、目录等资源）及主体（如系统管理员、用户、应用程序）都有自己的安全标签（Security...</div></div></div></a><a class="pagination-related" href="/2024/11/26/%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8/" title="系统软件安全"><img class="cover" src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】全职高手-苏沐橙.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-26</div><div class="info-item-2">系统软件安全</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/apple-touch-icon-removebg-preview.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Linghao Zhang</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zlh123123"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/zlh123123" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lh.zhang.work@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，这里是我的个人博客，主要用来记录一些学习笔记和生活感悟，希望能给你带来一些帮助。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">第一章 网络空间安全概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E8%8A%82-%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3%E4%B8%8B%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8%E5%AD%A6%E7%A7%91%E6%B5%85%E8%B0%88"><span class="toc-number">1.1.</span> <span class="toc-text">第一节 信息时代下网络空间安全学科浅谈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E8%8A%82-%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E5%AE%89%E5%85%A8%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84%E4%B8%8E%E6%A0%87%E5%87%86"><span class="toc-number">1.2.</span> <span class="toc-text">第二节 网络空间安全法律法规与标准</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">第二章 密码学基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E8%8A%82-%E5%AF%86%E7%A0%81%E5%AD%A6%E6%A6%82%E8%BF%B0"><span class="toc-number">2.1.</span> <span class="toc-text">第一节 密码学概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E8%8A%82-%E5%AF%86%E7%A0%81%E5%AD%A6%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">2.2.</span> <span class="toc-text">第二节 密码学基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E8%8A%82-%E5%AF%86%E7%A0%81%E5%AD%A6%E6%96%B0%E8%BF%9B%E5%B1%95%E5%8F%8A%E7%A0%94%E7%A9%B6%E6%96%B9%E5%90%91"><span class="toc-number">2.3.</span> <span class="toc-text">第三节 密码学新进展及研究方向</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">第三章 网络安全基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E8%8A%82-%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%A6%82%E8%BF%B0"><span class="toc-number">3.1.</span> <span class="toc-text">第一节 网络安全概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E8%8A%82-%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E6%8A%80%E6%9C%AF"><span class="toc-number">3.2.</span> <span class="toc-text">第二节 网络安全防护技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E8%8A%82-%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E4%B8%8E%E5%B7%A5%E7%A8%8B%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%B0%E5%85%B4%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF"><span class="toc-number">3.3.</span> <span class="toc-text">第三节 网络安全与工程管理及新兴网络安全技术</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">第四章 系统安全基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E8%8A%82-%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E6%A6%82%E8%BF%B0%E5%8F%8A%E5%8E%9F%E7%90%86"><span class="toc-number">4.1.</span> <span class="toc-text">第一节 系统安全概述及原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E8%8A%82-%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BB%93%E6%9E%84"><span class="toc-number">4.2.</span> <span class="toc-text">第二节 系统安全结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">第五章 内容安全基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E8%8A%82-%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8%E6%A6%82%E8%BF%B0"><span class="toc-number">5.1.</span> <span class="toc-text">第一节 内容安全概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E8%8A%82-%E7%BD%91%E7%BB%9C%E8%88%86%E6%83%85%E5%86%85%E5%AE%B9%E7%9B%91%E6%B5%8B"><span class="toc-number">5.2.</span> <span class="toc-text">第二节 网络舆情内容监测</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">第六章 应用安全基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E8%8A%82-%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%BF%B0%E5%8F%8A%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E4%B8%8E%E4%BF%A1%E4%BB%BB%E7%AE%A1%E7%90%86"><span class="toc-number">6.1.</span> <span class="toc-text">第一节 应用安全概述及身份认证与信任管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E8%8A%82-%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%E4%B8%8E%E6%96%B0%E5%85%B4%E5%BA%94%E7%94%A8%E5%8F%8A%E5%85%B6%E5%AE%89%E5%85%A8"><span class="toc-number">6.2.</span> <span class="toc-text">第二节 隐私保护与新兴应用及其安全</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/dark.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="日语语法蓝宝书总结"/></a><div class="content"><a class="title" href="/2026/06/26/%E6%97%A5%E8%AF%AD%E8%AF%AD%E6%B3%95%E8%93%9D%E5%AE%9D%E4%B9%A6%E6%80%BB%E7%BB%93/" title="日语语法蓝宝书总结">日语语法蓝宝书总结</a><time datetime="2026-06-26T09:47:36.000Z" title="发表于 2026-06-26 17:47:36">2026-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】可爱小狗-小狗-护眼.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="leetcode刷题日记"/></a><div class="content"><a class="title" href="/2026/04/03/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" title="leetcode刷题日记">leetcode刷题日记</a><time datetime="2026-04-03T06:26:47.000Z" title="发表于 2026-04-03 14:26:47">2026-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】云彩-夜晚-夜景.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="口令复用综述"/></a><div class="content"><a class="title" href="/2026/01/21/%E5%8F%A3%E4%BB%A4%E5%A4%8D%E7%94%A8%E7%BB%BC%E8%BF%B0/" title="口令复用综述">口令复用综述</a><time datetime="2026-01-21T12:58:23.000Z" title="发表于 2026-01-21 20:58:23">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】兔子朱迪-彩云-朱迪.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Github Page更换新域名后如何更新配置"/></a><div class="content"><a class="title" href="/2026/01/01/Github-Page%E6%9B%B4%E6%8D%A2%E6%96%B0%E5%9F%9F%E5%90%8D%E5%90%8E%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/" title="Github Page更换新域名后如何更新配置">Github Page更换新域名后如何更新配置</a><time datetime="2026-01-01T04:13:51.000Z" title="发表于 2026-01-01 12:13:51">2026-01-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training"><img src="https://mypicturebed.obs.cn-east-3.myhuaweicloud.com/【哲风壁纸】卡通羊-可爱小羊.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM Post-training"/></a><div class="content"><a class="title" href="/2025/11/30/LLM-Post-training/" title="LLM Post-training">LLM Post-training</a><time datetime="2025-11-30T14:14:52.000Z" title="发表于 2025-11-30 22:14:52">2025-11-30</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2026 By Linghao Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":200,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body></html>
